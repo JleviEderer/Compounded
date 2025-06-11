@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 type Theme = 'light' | 'dark';
 
@@ -40,7 +40,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const value = { theme, toggleTheme };
 
-  return React.createElement(ThemeContext.Provider, { value }, children);
+  return (
+    <ThemeContext.Provider value={value}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }
 
 export function useTheme() {
