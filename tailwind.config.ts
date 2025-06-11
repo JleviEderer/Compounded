@@ -41,6 +41,7 @@ export default {
           DEFAULT: "var(--destructive)",
           foreground: "var(--destructive-foreground)",
         },
+        coral: "var(--coral)",
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",

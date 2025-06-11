@@ -95,7 +95,7 @@
   }
 
   .btn-coral {
-    @apply bg-[var(--coral)] hover:bg-[var(--coral)]/90 text-white font-semibold transition-colors duration-200;
+    @apply bg-coral hover:bg-coral/90 text-white font-semibold transition-colors duration-200;
   }
 
   .text-coral {

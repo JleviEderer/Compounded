@@ -11,6 +11,8 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'light';
+    
     // Check localStorage first, then system preference
     const saved = localStorage.getItem('compounded-theme') as Theme;
     if (saved) return saved;
@@ -19,6 +21,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const root = document.documentElement;
     
     if (theme === 'dark') {
@@ -34,11 +38,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  const value = { theme, toggleTheme };
+
+  return React.createElement(ThemeContext.Provider, { value }, children);
 }
 
 export function useTheme() {
