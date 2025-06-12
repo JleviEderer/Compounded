@@ -170,7 +170,9 @@ export default function MomentumChart({
           className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
           whileHover={{ scale: 1.02 }}
         >
-          <div className="text-2xl font-bold text-emerald-600">
+          <div className={`text-2xl font-bold ${
+            (todayRate || 0) >= 0 ? 'text-emerald-600' : 'text-red-600'
+          }`}>
             {((todayRate || 0) * 100).toFixed(2)}%
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400">Today's Rate</div>
