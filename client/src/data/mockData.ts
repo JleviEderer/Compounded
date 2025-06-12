@@ -39,6 +39,11 @@ export const mockLogs: HabitLog[] = (() => {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
 
+  console.log('Mock data generation:');
+  console.log('Start date:', startDate.toISOString().split('T')[0]);
+  console.log('Today:', today.toISOString().split('T')[0]);
+  console.log('Yesterday (end date):', yesterday.toISOString().split('T')[0]);
+
   // Success rates for each habit (realistic patterns)
   const habitPatterns = {
     '1': { good: 0.60, bad: 0.15, unlogged: 0.25 }, // Reading
@@ -78,5 +83,9 @@ export const mockLogs: HabitLog[] = (() => {
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
+  console.log(`Generated ${logs.length} mock habit logs`);
+  console.log('Sample dates:', logs.slice(0, 5).map(l => l.date));
+  console.log('Last few dates:', logs.slice(-5).map(l => l.date));
+  
   return logs;
 })();
