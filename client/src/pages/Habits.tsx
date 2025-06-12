@@ -191,8 +191,13 @@ export default function Habits() {
                         <GripVertical className="w-5 h-5" />
                       </motion.div>
                       <div>
-                        <div className="font-semibold text-gray-800 dark:text-white">
-                          {habit.goodHabit} → Replace {habit.badHabit}
+                        <div className="space-y-1">
+                          <div className="font-semibold text-gray-800 dark:text-white">
+                            {habit.goodHabit}
+                          </div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">
+                            <span className="text-xs text-gray-500">instead of</span> {habit.badHabit}
+                          </div>
                         </div>
                         <div className="text-sm text-gray-600 dark:text-gray-400">
                           {WEIGHT_LABELS[habit.weight]}
