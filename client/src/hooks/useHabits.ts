@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
 import { HabitPair, HabitLog, HabitWeight, HabitLogState } from '../types';
-import { mockHabits, mockLogs } from '../data/mockData';
+import { dataService } from '../services/dataService';
 
 const STORAGE_KEY = 'compounded-data';
 
 export function useHabits() {
   const [data, setData] = useState<AppData>(() => {
+    console.log('🏠 useHabits: Initializing data...');
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
+        console.log('🏠 useHabits: Loaded from localStorage:', parsed.habits?.length, 'habits,', parsed.logs?.length, 'logs');
         return {
-          habits: parsed.habits || mockHabits,
-          logs: parsed.logs || mockLogs,
+          habits: parsed.habits || dataService.getHabits(),
+          logs: parsed.logs || dataService.getLogs(),
           settings: {
             theme: 'light',
             nerdMode: false,
@@ -21,18 +23,20 @@ export function useHabits() {
         };
       } catch {
         // If parsing fails, use mock data
+        console.log('🏠 useHabits: localStorage parse failed, using mock data');
         return {
-          habits: mockHabits,
-          logs: mockLogs,
+          habits: dataService.getHabits(),
+          logs: dataService.getLogs(),
           settings: { theme: 'light', nerdMode: false }
         };
       }
     }
 
     // First time - use mock data
+    console.log('🏠 useHabits: First time load, using mock data');
     return {
-      habits: mockHabits,
-      logs: mockLogs,
+      habits: dataService.getHabits(),
+      logs: dataService.getLogs(),
       settings: { theme: 'light', nerdMode: false }
     };
   });
