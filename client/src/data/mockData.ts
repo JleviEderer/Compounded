@@ -6,36 +6,38 @@ export const mockHabits: HabitPair[] = [
     goodHabit: 'Read articles',
     badHabit: 'Endless scrolling',
     weight: HabitWeight.MEDIUM,
-    createdAt: new Date('2024-08-15')
+    createdAt: new Date('2024-06-01')
   },
   {
     id: '2', 
     goodHabit: '10-minute walk',
     badHabit: 'Staying seated all day',
     weight: HabitWeight.LOW,
-    createdAt: new Date('2024-08-16')
+    createdAt: new Date('2024-06-01')
   },
   {
     id: '3',
     goodHabit: 'Drink water',
     badHabit: 'Sugary drinks', 
     weight: HabitWeight.SMALL,
-    createdAt: new Date('2024-08-17')
+    createdAt: new Date('2024-06-01')
   },
   {
     id: '4',
     goodHabit: 'Meditate 5 minutes',
     badHabit: 'Rushing into the day',
     weight: HabitWeight.HIGH,
-    createdAt: new Date('2024-08-18')
+    createdAt: new Date('2024-06-01')
   }
 ];
 
-// Generate 90 days of realistic habit logs
+// Generate dynamic mock data from 6/1/2024 to yesterday (Today - 1)
 export const mockLogs: HabitLog[] = (() => {
   const logs: HabitLog[] = [];
-  const startDate = new Date('2024-08-15');
+  const startDate = new Date('2024-06-01');
   const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
 
   // Success rates for each habit (realistic patterns)
   const habitPatterns = {
@@ -46,7 +48,7 @@ export const mockLogs: HabitLog[] = (() => {
   };
 
   const currentDate = new Date(startDate);
-  while (currentDate <= today) {
+  while (currentDate <= yesterday) {
     const dateStr = currentDate.toISOString().split('T')[0];
 
     mockHabits.forEach(habit => {
