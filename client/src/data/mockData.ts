@@ -36,7 +36,7 @@ export const mockLogs: HabitLog[] = (() => {
   const logs: HabitLog[] = [];
   const startDate = new Date('2024-08-15');
   const today = new Date();
-  
+
   // Success rates for each habit (realistic patterns)
   const habitPatterns = {
     '1': { good: 0.60, bad: 0.15, unlogged: 0.25 }, // Reading
@@ -44,15 +44,15 @@ export const mockLogs: HabitLog[] = (() => {
     '3': { good: 0.70, bad: 0.10, unlogged: 0.20 }, // Water
     '4': { good: 0.55, bad: 0.15, unlogged: 0.30 }  // Meditation
   };
-  
+
   const currentDate = new Date(startDate);
   while (currentDate <= today) {
     const dateStr = currentDate.toISOString().split('T')[0];
-    
+
     mockHabits.forEach(habit => {
       const pattern = habitPatterns[habit.id as keyof typeof habitPatterns];
       const rand = Math.random();
-      
+
       let state: HabitLogState;
       if (rand < pattern.good) {
         state = HabitLogState.GOOD;
@@ -61,7 +61,7 @@ export const mockLogs: HabitLog[] = (() => {
       } else {
         state = HabitLogState.UNLOGGED;
       }
-      
+
       // Only create log entries for good and bad states
       if (state !== HabitLogState.UNLOGGED) {
         logs.push({
@@ -72,46 +72,9 @@ export const mockLogs: HabitLog[] = (() => {
         });
       }
     });
-    
+
     currentDate.setDate(currentDate.getDate() + 1);
   }
-  
-  return logs;
-})();
 
-  for (let i = 0; i < 90; i++) {
-    const date = new Date(startDate);
-    date.setDate(date.getDate() + i);
-    
-    if (date <= today) {
-      mockHabits.forEach(habit => {
-        // Add some streaks and realistic patterns
-        const baseRate = successRates[habit.id as keyof typeof successRates];
-        let adjustedRate = baseRate;
-        
-        // Weekend effect (slightly lower success)
-        if (date.getDay() === 0 || date.getDay() === 6) {
-          adjustedRate *= 0.85;
-        }
-        
-        // Weekly rhythm (Monday motivation, Friday fatigue)
-        if (date.getDay() === 1) adjustedRate *= 1.1; // Monday boost
-        if (date.getDay() === 5) adjustedRate *= 0.9;  // Friday drop
-        
-        // Recent trend (slightly improving over time)
-        const daysFromStart = i;
-        const trendBoost = Math.min(0.15, daysFromStart * 0.002);
-        adjustedRate += trendBoost;
-        
-        logs.push({
-          id: `${habit.id}-${date.toISOString().split('T')[0]}`,
-          habitId: habit.id,
-          date: date.toISOString().split('T')[0],
-          completed: Math.random() < adjustedRate
-        });
-      });
-    }
-  }
-  
   return logs;
 })();
