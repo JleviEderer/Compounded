@@ -1,0 +1,103 @@
+
+ DEV  v3.2.3 /home/runner/workspace
+
+ ❯ tests/compound.test.ts (9 tests | 5 failed) 52ms
+   × Compound Growth Calculations > should validate the compound formula: 1.001^365 ≈ 1.440194 16ms
+     → expected false to be true // Object.is equality
+   ✓ Compound Growth Calculations > should calculate daily rate correctly 1ms
+   × Compound Growth Calculations > should calculate momentum index with compound growth 2ms
+     → expected 1 to be close to 1.005523, received difference is 0.005522999999999945, but expected 5e-7
+   ✓ Compound Growth Calculations > should clamp momentum index to >= 0 0ms
+   ✓ Compound Growth Calculations > should generate momentum history 5ms
+   × Compound Growth Calculations > should generate 30-day projection 20ms
+     → expected 1 to be greater than 1
+   × Compound Growth Calculations > should calculate success rate 1ms
+     → expected +0 to be 75 // Object.is equality
+   ✓ Compound Growth Calculations > should handle edge cases 2ms
+   × Compound Growth Calculations > should maintain precision in compound calculations 2ms
+     → expected 1 to be close to 1.0512, received difference is 0.05119999999999991, but expected 0.0005
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/compound.test.ts > Compound Growth Calculations > should validate the compound formula: 1.001^365 ≈ 1.440194
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/compound.test.ts:38:39
+     36| 
+     37|   it('should validate the compound formula: 1.001^365 ≈ 1.440194', () => {
+     38|     expect(validateCompoundFormula()).toBe(true);
+       |                                       ^
+     39|     
+     40|     // Direct calculation check
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/compound.test.ts > Compound Growth Calculations > should calculate momentum index with compound growth
+AssertionError: expected 1 to be close to 1.005523, received difference is 0.005522999999999945, but expected 5e-7
+ ❯ tests/compound.test.ts:66:22
+     64|     
+     65|     // Expected: 1.0 * (1 + 0.0015) * (1 + 0.0035) = 1.005523
+     66|     expect(momentum).toBeCloseTo(1.005523, 6);
+       |                      ^
+     67|   });
+     68| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/compound.test.ts > Compound Growth Calculations > should generate 30-day projection
+AssertionError: expected 1 to be greater than 1
+ ❯ tests/compound.test.ts:97:34
+     95|     
+     96|     // Projection should show growth based on trailing average
+     97|     expect(projection[29].value).toBeGreaterThan(projection[0].value);
+       |                                  ^
+     98|   });
+     99| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/compound.test.ts > Compound Growth Calculations > should calculate success rate
+AssertionError: expected +0 to be 75 // Object.is equality
+
+- Expected
++ Received
+
+- 75
++ 0
+
+ ❯ tests/compound.test.ts:103:25
+    101|     // 3 good out of 4 total logged entries = 75%
+    102|     const successRate = calculateSuccessRate(mockHabits, mockLogs, 2);
+    103|     expect(successRate).toBe(75);
+       |                         ^
+    104|     
+    105|     // No logs should give 0%
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/compound.test.ts > Compound Growth Calculations > should maintain precision in compound calculations
+AssertionError: expected 1 to be close to 1.0512, received difference is 0.05119999999999991, but expected 0.0005
+ ❯ tests/compound.test.ts:147:22
+    145|     
+    146|     // Should be approximately (1.0005)^100 ≈ 1.0512
+    147|     expect(momentum).toBeCloseTo(1.0512, 3);
+       |                      ^
+    148|   });
+    149| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 4 passed (9)
+   Start at  16:48:36
+   Duration  2.90s (transform 209ms, setup 324ms, collect 138ms, tests 52ms, environment 1.28s, prepare 506ms)
+
+ FAIL  Tests failed. Watching for file changes...
+       press h to show help, press q to quit
