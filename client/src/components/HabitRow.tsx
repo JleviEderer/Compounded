@@ -127,13 +127,21 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false }: H
         
         <div className="flex items-center space-x-4">
           <div className="text-right">
-            <div className={`text-sm font-medium ${
-              todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' :
-              todayLog?.state === HabitLogState.BAD ? 'text-red-600' : 'text-coral'
-            }`}>
-              {todayLog?.state === HabitLogState.BAD ? '-' : '+'}
-              {(habit.weight * 100).toFixed(2)}%
-            </div>
+            {todayLog?.state === HabitLogState.GOOD && (
+              <div className="text-sm font-medium text-emerald-600">
+                +{(habit.weight * 100).toFixed(2)}%
+              </div>
+            )}
+            {todayLog?.state === HabitLogState.BAD && (
+              <div className="text-sm font-medium text-red-600">
+                -{(habit.weight * 100).toFixed(2)}%
+              </div>
+            )}
+            {todayLog?.state === HabitLogState.UNLOGGED && (
+              <div className="text-sm font-medium text-gray-400">
+                ±{(habit.weight * 100).toFixed(2)}%
+              </div>
+            )}
             <div className="text-xs text-gray-500">
               {WEIGHT_LABELS[habit.weight].split(' ')[0]} impact
             </div>

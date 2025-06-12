@@ -36,21 +36,21 @@ export default function Insights() {
     const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
     const daysInMonth = lastDay.getDate();
     const startingDayOfWeek = firstDay.getDay();
-    
+
     const days = [];
-    
+
     // Add empty cells for days before the first day of the month
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.push(null);
     }
-    
+
     // Add all days of the month
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(today.getFullYear(), today.getMonth(), day);
       const dateStr = date.toISOString().split('T')[0];
       const dayLogs = logs.filter(log => log.date === dateStr && log.completed);
       const intensity = dayLogs.length / habits.length;
-      
+
       days.push({
         day,
         date: dateStr,
@@ -58,7 +58,7 @@ export default function Insights() {
         isToday: day === today.getDate()
       });
     }
-    
+
     return days;
   };
 
@@ -162,7 +162,7 @@ export default function Insights() {
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
                 </motion.div>
-                
+
                 <motion.div 
                   className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl text-center"
                   whileHover={{ scale: 1.02 }}
@@ -170,7 +170,7 @@ export default function Insights() {
                   <div className="text-xl font-bold text-coral">12</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Current Streak</div>
                 </motion.div>
-                
+
                 <motion.div 
                   className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl text-center"
                   whileHover={{ scale: 1.02 }}
@@ -180,7 +180,7 @@ export default function Insights() {
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Avg Daily Rate</div>
                 </motion.div>
-                
+
                 <motion.div 
                   className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl text-center"
                   whileHover={{ scale: 1.02 }}
@@ -273,14 +273,14 @@ export default function Insights() {
                 </Button>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-7 gap-2">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
                 <div key={day} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-2">
                   {day}
                 </div>
               ))}
-              
+
               {getCalendarDays().map((day, index) => (
                 <motion.div
                   key={index}
@@ -295,7 +295,7 @@ export default function Insights() {
                 </motion.div>
               ))}
             </div>
-            
+
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 Less activity

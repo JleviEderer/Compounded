@@ -28,14 +28,14 @@ export function calculateDailyRate(
   
   habits.forEach(habit => {
     const log = logs.find(l => l.habitId === habit.id && l.date === date);
-    if (log) {
+    if (log && log.state !== 'unlogged') {
       if (log.state === 'good') {
         totalWeight += habit.weight; // Positive weight for good habit
       } else if (log.state === 'bad') {
         totalWeight -= habit.weight; // Negative weight for bad habit
       }
-      // No change for 'unlogged' state - neutral
     }
+    // No contribution for unlogged habits or missing logs
   });
   
   return totalWeight;

@@ -90,7 +90,7 @@ export default function MomentumChart({
           <div className="text-sm text-gray-500 dark:text-gray-400">Current Index</div>
         </div>
       </div>
-      
+
       <div className="h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={combinedData}>
@@ -118,7 +118,7 @@ export default function MomentumChart({
               domain={['dataMin - 0.01', 'dataMax + 0.01']}
             />
             <Tooltip content={<CustomTooltip />} />
-            
+
             {/* Historical data */}
             <Area
               type="monotone"
@@ -129,7 +129,7 @@ export default function MomentumChart({
               dot={false}
               connectNulls={false}
             />
-            
+
             {/* Projection line */}
             {showProjection && (
               <Area
@@ -143,7 +143,7 @@ export default function MomentumChart({
                 connectNulls={true}
               />
             )}
-            
+
             {/* Current day reference line */}
             <ReferenceLine 
               x={new Date().toISOString().split('T')[0]} 
@@ -154,7 +154,7 @@ export default function MomentumChart({
           </AreaChart>
         </ResponsiveContainer>
       </div>
-      
+
       <div className="mt-6 grid grid-cols-3 gap-4">
         <motion.div 
           className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
@@ -165,17 +165,17 @@ export default function MomentumChart({
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400">Total Growth</div>
         </motion.div>
-        
+
         <motion.div 
           className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
           whileHover={{ scale: 1.02 }}
         >
-          <div className="text-xl font-bold text-emerald-600">
-            +{(todayRate * 100).toFixed(1)}%
+          <div className="text-2xl font-bold text-emerald-600">
+            {((todayRate || 0) * 100).toFixed(2)}%
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400">Today's Rate</div>
         </motion.div>
-        
+
         <motion.div 
           className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
           whileHover={{ scale: 1.02 }}
