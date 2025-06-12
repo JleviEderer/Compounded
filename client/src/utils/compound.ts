@@ -32,8 +32,14 @@ export function calculateDailyRate(
 ): number {
   let totalWeight = 0;
   
+  // Debug: Log what we're looking for
+  console.log(`Calculating daily rate for ${date}`);
+  console.log(`Available habits:`, habits.map(h => ({ id: h.id, weight: h.weight })));
+  
   habits.forEach(habit => {
     const log = logs.find(l => l.habitId === habit.id && l.date === date);
+    console.log(`Habit ${habit.id} on ${date}:`, log ? `${log.state} (weight: ${habit.weight})` : 'no log found');
+    
     if (log && log.state !== 'unlogged') {
       if (log.state === 'good') {
         totalWeight += habit.weight; // Positive weight for good habit
@@ -44,6 +50,7 @@ export function calculateDailyRate(
     // No contribution for unlogged habits or missing logs
   });
   
+  console.log(`Total weight for ${date}: ${totalWeight}`);
   return totalWeight;
 }
 
@@ -55,6 +62,10 @@ export function generateMomentumHistory(
   const data: MomentumData[] = [];
   const endDate = new Date();
   
+  // Debug: Log available dates in logs
+  const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
+  console.log('Available log dates:', logDates);
+  
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date(endDate);
     date.setDate(date.getDate() - i);
@@ -62,6 +73,9 @@ export function generateMomentumHistory(
     
     const momentum = calculateMomentumIndex(habits, logs, date);
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
+    
+    // Debug: Log what we're calculating
+    console.log(`Date: ${dateStr}, Daily Rate: ${dailyRate}, Momentum: ${momentum}`);
     
     data.push({
       date: dateStr,
