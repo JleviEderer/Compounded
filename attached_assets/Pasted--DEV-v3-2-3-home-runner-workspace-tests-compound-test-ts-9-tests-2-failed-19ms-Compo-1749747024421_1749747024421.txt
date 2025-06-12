@@ -1,0 +1,50 @@
+
+ DEV  v3.2.3 /home/runner/workspace
+
+ ❯ tests/compound.test.ts (9 tests | 2 failed) 19ms
+   × Compound Growth Calculations > should validate the compound formula: 1.001^365 ≈ 1.440194 7ms
+     → expected 1.4402513134295205 to be close to 1.440194, received difference is 0.00005731342952053353, but expected 0.0000049999999999999996
+   ✓ Compound Growth Calculations > should calculate daily rate correctly 1ms
+   × Compound Growth Calculations > should calculate momentum index with compound growth 1ms
+     → expected 1.0050052500000002 to be close to 1.005523, received difference is 0.0005177499999997615, but expected 5e-7
+   ✓ Compound Growth Calculations > should clamp momentum index to >= 0 0ms
+   ✓ Compound Growth Calculations > should generate momentum history 5ms
+   ✓ Compound Growth Calculations > should generate 30-day projection 2ms
+   ✓ Compound Growth Calculations > should calculate success rate 0ms
+   ✓ Compound Growth Calculations > should handle edge cases 1ms
+   ✓ Compound Growth Calculations > should maintain precision in compound calculations 1ms
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/compound.test.ts > Compound Growth Calculations > should validate the compound formula: 1.001^365 ≈ 1.440194
+AssertionError: expected 1.4402513134295205 to be close to 1.440194, received difference is 0.00005731342952053353, but expected 0.0000049999999999999996
+ ❯ tests/compound.test.ts:42:20
+     40|     // Direct calculation check
+     41|     const result = Math.pow(1.001, 365);
+     42|     expect(result).toBeCloseTo(1.440194, 5);
+       |                    ^
+     43|   });
+     44| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/compound.test.ts > Compound Growth Calculations > should calculate momentum index with compound growth
+AssertionError: expected 1.0050052500000002 to be close to 1.005523, received difference is 0.0005177499999997615, but expected 5e-7
+ ❯ tests/compound.test.ts:66:22
+     64|     
+     65|     // Expected: 1.0 * (1 + 0.0015) * (1 + 0.0035) = 1.005523
+     66|     expect(momentum).toBeCloseTo(1.005523, 6);
+       |                      ^
+     67|   });
+     68| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 7 passed (9)
+   Start at  16:49:56
+   Duration  2.24s (transform 114ms, setup 242ms, collect 80ms, tests 19ms, environment 1.03s, prepare 478ms)
+
+ FAIL  Tests failed. Watching for file changes...
+       press h to show help, press q to quit
