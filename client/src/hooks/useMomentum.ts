@@ -35,10 +35,11 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[]) {
   }, [habits, logs]);
 
   const totalGrowth = useMemo(() => {
-    if (momentumData.length === 0) return 0;
-    const initial = momentumData[0].value;
-    return ((currentMomentum - initial) / initial) * 100;
-  }, [momentumData, currentMomentum]);
+    if (momentumData.length < 2) return 0;
+    const initialValue = momentumData[0].value;
+    const finalValue = momentumData[momentumData.length - 1].value;
+    return ((finalValue - initialValue) / initialValue) * 100;
+  }, [momentumData]);
 
   const averageDailyRate = useMemo(() => {
     if (momentumData.length === 0) return 0;
