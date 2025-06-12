@@ -82,79 +82,44 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false }: H
             <motion.button
               onClick={handleGoodHabit}
               whileTap={{ scale: 0.9 }}
-              className={`group relative w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${
+              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all ${
                 todayLog?.state === HabitLogState.GOOD
-                  ? 'bg-emerald-500 border-emerald-500 shadow-lg'
+                  ? 'bg-emerald-500 border-emerald-500'
                   : 'border-emerald-300 hover:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
               }`}
-              title="I did the good habit"
             >
               <Check className={`w-5 h-5 ${
                 todayLog?.state === HabitLogState.GOOD ? 'text-white' : 'text-emerald-500'
               }`} />
-              
-              {/* Hover tooltip */}
-              <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                Did it!
-              </div>
             </motion.button>
 
             {/* Bad Habit Button */}
             <motion.button
               onClick={handleBadHabit}
               whileTap={{ scale: 0.9 }}
-              className={`group relative w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${
+              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all ${
                 todayLog?.state === HabitLogState.BAD
-                  ? 'bg-red-500 border-red-500 shadow-lg'
+                  ? 'bg-red-500 border-red-500'
                   : 'border-red-300 hover:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/20'
               }`}
-              title="I did the old habit instead"
             >
               <X className={`w-5 h-5 ${
                 todayLog?.state === HabitLogState.BAD ? 'text-white' : 'text-red-500'
               }`} />
-              
-              {/* Hover tooltip */}
-              <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                Old habit
-              </div>
             </motion.button>
 
-            <div className="flex-1">
-              <div className={`font-semibold text-gray-800 dark:text-white transition-all ${
+            <div>
+              <div className={`font-semibold text-gray-800 dark:text-white ${
                 todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' : 
-                todayLog?.state === HabitLogState.BAD ? 'text-red-600 line-through opacity-60' : ''
+                todayLog?.state === HabitLogState.BAD ? 'text-red-600 line-through' : ''
               }`}>
                 {habit.goodHabit}
               </div>
-              <div className={`text-sm flex items-center gap-2 mt-1 ${
+              <div className={`text-sm text-gray-500 ${
                 todayLog?.state === HabitLogState.BAD ? 'text-red-500 font-medium' : 
-                todayLog?.state === HabitLogState.GOOD ? 'line-through opacity-60' : 'text-gray-500'
+                todayLog?.state === HabitLogState.GOOD ? 'line-through' : ''
               }`}>
-                <span className="text-xs text-gray-400">instead of</span>
-                <span>{habit.badHabit}</span>
-              </div>
-              
-              {/* Status indicator */}
-              <div className="mt-2">
-                {todayLog?.state === HabitLogState.GOOD && (
-                  <div className="text-xs text-emerald-600 font-medium flex items-center gap-1">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                    Replaced successfully!
-                  </div>
-                )}
-                {todayLog?.state === HabitLogState.BAD && (
-                  <div className="text-xs text-red-600 font-medium flex items-center gap-1">
-                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                    Did the old habit instead
-                  </div>
-                )}
-                {todayLog?.state === HabitLogState.UNLOGGED && (
-                  <div className="text-xs text-gray-500 flex items-center gap-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                    No action logged yet
-                  </div>
-                )}
+                {habit.badHabit}
               </div>
             </div>
           </div>
@@ -166,7 +131,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false }: H
               +{(habit.weight * 100).toFixed(2)}%
             </div>
             <div className="text-xs text-gray-500">
-              per success
+              {WEIGHT_LABELS[habit.weight].split(' ')[0]} impact
             </div>
           </div>
           <motion.button
