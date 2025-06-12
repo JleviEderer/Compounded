@@ -34,7 +34,7 @@ export default function MomentumChart({
     : data;
 
   const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr + 'T12:00:00'); // Add time to avoid timezone issues
+    const date = new Date(dateStr);
     return `${date.getMonth() + 1}/${date.getDate()}`;
   };
 
@@ -150,7 +150,6 @@ export default function MomentumChart({
               stroke="hsl(8, 100%, 74%)" 
               strokeDasharray="2,2" 
               opacity={0.6}
-              label={{ value: "Today", position: "insideTopRight" }}
             />
           </AreaChart>
         </ResponsiveContainer>

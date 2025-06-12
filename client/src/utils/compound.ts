@@ -5,14 +5,7 @@ export function calculateMomentumIndex(
   logs: HabitLog[],
   targetDate: Date
 ): number {
-  if (habits.length === 0) return 1.0;
-  
-  // Start from the earliest habit creation date
-  const earliestHabit = habits.reduce((earliest, habit) => 
-    habit.createdAt < earliest.createdAt ? habit : earliest
-  );
-  const startDate = new Date(earliestHabit.createdAt);
-  
+  const startDate = new Date('2024-08-15'); // First habit creation date
   let momentum = 1.0;
   
   const currentDate = new Date(startDate);
@@ -54,11 +47,10 @@ export function generateMomentumHistory(
   days: number = 30
 ): MomentumData[] {
   const data: MomentumData[] = [];
-  const today = new Date();
+  const endDate = new Date();
   
-  // Ensure we include "today" in the chart
   for (let i = days - 1; i >= 0; i--) {
-    const date = new Date(today);
+    const date = new Date(endDate);
     date.setDate(date.getDate() - i);
     const dateStr = date.toISOString().split('T')[0];
     
