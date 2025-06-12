@@ -162,13 +162,11 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false }: H
         
         <div className="flex items-center space-x-4">
           <div className="text-right">
-            <div className="text-xs text-gray-500 mb-1">
-              <div className="text-emerald-600 font-medium">
-                +{(habit.weight * 100).toFixed(2)}% per good habit
-              </div>
-              <div className="text-red-600 font-medium">
-                -{(habit.weight * 100).toFixed(2)}% per bad habit
-              </div>
+            <div className="text-sm font-medium text-coral">
+              +{(habit.weight * 100).toFixed(2)}%
+            </div>
+            <div className="text-xs text-gray-500">
+              per success
             </div>
           </div>
           <motion.button
