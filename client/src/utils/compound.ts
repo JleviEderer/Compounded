@@ -6,14 +6,14 @@ export function calculateMomentumIndex(
   targetDate: Date
 ): number {
   if (habits.length === 0) return 1.0;
-  
+
   // Find the earliest habit creation date or use a default
   const startDate = habits.length > 0 
     ? new Date(Math.min(...habits.map(h => new Date(h.createdAt).getTime())))
     : new Date('2024-01-01');
-  
+
   let momentum = 1.0;
-  
+
   const currentDate = new Date(startDate);
   while (currentDate <= targetDate) {
     const dateStr = currentDate.toISOString().split('T')[0];
@@ -21,7 +21,7 @@ export function calculateMomentumIndex(
     momentum *= (1 + dailyRate);
     currentDate.setDate(currentDate.getDate() + 1);
   }
-  
+
   return Math.max(0, momentum); // Clamp to >= 0
 }
 
@@ -30,26 +30,37 @@ export function calculateDailyRate(
   logs: HabitLog[],
   date: string
 ): number {
-  let totalWeight = 0;
-  
-  // Debug: Log what we're looking for
   console.log(`Calculating daily rate for ${date}`);
-  console.log(`Available habits:`, habits.map(h => ({ id: h.id, weight: h.weight })));
-  
-  habits.forEach(habit => {
+  console.log('Available habits:', habits.map(h => ({ id: h.id, weight: h.weight })));
+  console.log(`Total logs passed to calculateDailyRate: ${logs.length}`);
+
+  // Debug: Show sample of logs being passed in
+  const logsForDate = logs.filter(l => l.date === date);
+  console.log(`Logs found for ${date}:`, logsForDate);
+
+  // Debug: Show sample of all log dates
+  const allLogDates = Array.from(new Set(logs.map(l => l.date))).sort();
+  console.log(`All log dates available:`, allLogDates.slice(0, 10)); // Show first 10 dates
+
+  let totalWeight = 0;
+
+  for (const habit of habits) {
     const log = logs.find(l => l.habitId === habit.id && l.date === date);
-    console.log(`Habit ${habit.id} on ${date}:`, log ? `${log.state} (weight: ${habit.weight})` : 'no log found');
-    
-    if (log && log.state !== 'unlogged') {
-      if (log.state === 'good') {
-        totalWeight += habit.weight; // Positive weight for good habit
-      } else if (log.state === 'bad') {
-        totalWeight -= habit.weight; // Negative weight for bad habit
+    const weight = habit.weight; //getHabitWeight(habit.weight);
+
+    if (log) {
+      if (log.state === 'good') { //HabitLogState.GOOD
+        console.log(`Habit ${habit.id} on ${date}: good (weight: ${weight})`);
+        totalWeight += weight;
+      } else if (log.state === 'bad') { //HabitLogState.BAD
+        console.log(`Habit ${habit.id} on ${date}: bad (weight: ${weight})`);
+        totalWeight -= weight;
       }
+    } else {
+      console.log(`Habit ${habit.id} on ${date}: no log found`);
     }
-    // No contribution for unlogged habits or missing logs
-  });
-  
+  }
+
   console.log(`Total weight for ${date}: ${totalWeight}`);
   return totalWeight;
 }
@@ -61,29 +72,29 @@ export function generateMomentumHistory(
 ): MomentumData[] {
   const data: MomentumData[] = [];
   const endDate = new Date();
-  
+
   // Debug: Log available dates in logs
   const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
   console.log('Available log dates:', logDates);
-  
+
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date(endDate);
     date.setDate(date.getDate() - i);
     const dateStr = date.toISOString().split('T')[0];
-    
+
     const momentum = calculateMomentumIndex(habits, logs, date);
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
-    
+
     // Debug: Log what we're calculating
     console.log(`Date: ${dateStr}, Daily Rate: ${dailyRate}, Momentum: ${momentum}`);
-    
+
     data.push({
       date: dateStr,
       value: momentum,
       dailyRate
     });
   }
-  
+
   return data;
 }
 
@@ -94,7 +105,7 @@ export function generate30DayProjection(
   // Calculate trailing 7-day average rate from available log data
   const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
   const last7Dates = logDates.slice(-7);
-  
+
   let avgRate = 0;
   if (last7Dates.length > 0) {
     const totalRate = last7Dates.reduce((sum, date) => {
@@ -102,29 +113,29 @@ export function generate30DayProjection(
     }, 0);
     avgRate = totalRate / last7Dates.length;
   }
-  
+
   // If no historical data, use a small positive rate for testing
   if (avgRate === 0 && logs.length > 0) {
     avgRate = 0.001; // Small positive rate for projection
   }
-  
+
   const projectionData: MomentumData[] = [];
   const startDate = new Date();
   const currentMomentum = calculateMomentumIndex(habits, logs, startDate);
-  
+
   for (let i = 1; i <= 30; i++) {
     const date = new Date(startDate);
     date.setDate(date.getDate() + i);
-    
+
     const projectedMomentum = currentMomentum * Math.pow(1 + avgRate, i);
-    
+
     projectionData.push({
       date: date.toISOString().split('T')[0],
       value: projectedMomentum,
       dailyRate: avgRate
     });
   }
-  
+
   return projectionData;
 }
 
@@ -135,13 +146,13 @@ export function calculateSuccessRate(
 ): number {
   let totalLogged = 0;
   let totalGood = 0;
-  
+
   // Get all unique dates from logs to work with actual data
   const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
-  
+
   // Take the last 'days' number of dates, or all available dates if fewer
   const relevantDates = logDates.slice(-days);
-  
+
   relevantDates.forEach(dateStr => {
     habits.forEach(habit => {
       const log = logs.find(l => l.habitId === habit.id && l.date === dateStr);
@@ -153,7 +164,7 @@ export function calculateSuccessRate(
       }
     });
   });
-  
+
   return totalLogged > 0 ? Math.round((totalGood / totalLogged) * 100) : 0;
 }
 
@@ -164,11 +175,11 @@ export function calculateCurrentStreak(
   const today = new Date();
   let streak = 0;
   let currentDate = new Date(today);
-  
+
   while (true) {
     const dateStr = currentDate.toISOString().split('T')[0];
     const log = logs.find(l => l.habitId === habitId && l.date === dateStr);
-    
+
     if (log?.state === 'good') {
       streak++;
       currentDate.setDate(currentDate.getDate() - 1);
@@ -176,7 +187,7 @@ export function calculateCurrentStreak(
       break;
     }
   }
-  
+
   return streak;
 }
 
@@ -185,6 +196,6 @@ export function validateCompoundFormula(): boolean {
   const result = Math.pow(1.001, 365);
   const expected = 1.440194;
   const tolerance = 0.001; // More reasonable tolerance for floating point
-  
+
   return Math.abs(result - expected) < tolerance;
 }
