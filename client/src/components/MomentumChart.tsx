@@ -173,7 +173,7 @@ export default function MomentumChart({
           <div className={`text-2xl font-bold ${
             (todayRate || 0) >= 0 ? 'text-emerald-600' : 'text-red-600'
           }`}>
-            {((todayRate || 0) * 100).toFixed(2)}%
+            {(todayRate || 0) >= 0 ? '+' : ''}{((todayRate || 0) * 100).toFixed(2)}%
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400">Today's Rate</div>
         </motion.div>
