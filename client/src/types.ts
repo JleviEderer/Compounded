@@ -13,11 +13,17 @@ export enum HabitWeight {
   HIGH = 0.004       // 0.40%
 }
 
+export enum HabitLogState {
+  GOOD = 'good',     // Did the good habit
+  BAD = 'bad',       // Did the bad habit  
+  UNLOGGED = 'unlogged' // No entry for this day
+}
+
 export interface HabitLog {
   id: string;
   habitId: string;
   date: string; // YYYY-MM-DD format
-  completed: boolean;
+  state: HabitLogState;
 }
 
 export interface MomentumData {

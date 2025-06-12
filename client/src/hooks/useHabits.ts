@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { HabitPair, HabitLog, AppData, HabitWeight } from '../types';
+import { HabitPair, HabitLog, HabitWeight, HabitLogState } from '../types';
 import { mockHabits, mockLogs } from '../data/mockData';
 
 const STORAGE_KEY = 'compounded-data';
@@ -28,7 +28,7 @@ export function useHabits() {
         };
       }
     }
-    
+
     // First time - use mock data
     return {
       habits: mockHabits,
@@ -49,7 +49,7 @@ export function useHabits() {
       weight,
       createdAt: new Date()
     };
-    
+
     setData(prev => ({
       ...prev,
       habits: [...prev.habits, newHabit]
@@ -73,30 +73,20 @@ export function useHabits() {
     }));
   };
 
-  const toggleHabitLog = (habitId: string, date: string) => {
-    const logId = `${habitId}-${date}`;
-    const existingLog = data.logs.find(log => log.id === logId);
-    
-    if (existingLog) {
-      setData(prev => ({
-        ...prev,
-        logs: prev.logs.map(log => 
-          log.id === logId ? { ...log, completed: !log.completed } : log
-        )
-      }));
-    } else {
-      const newLog: HabitLog = {
-        id: logId,
-        habitId,
-        date,
-        completed: true
-      };
-      
-      setData(prev => ({
-        ...prev,
-        logs: [...prev.logs, newLog]
-      }));
-    }
+  const logHabit = (habitId: string, date: string, state: HabitLogState) => {
+    setData(prev => ({
+      ...prev,
+      logs: prev.logs.filter(log => !(log.habitId === habitId && log.date === date)).concat(
+        state === HabitLogState.UNLOGGED
+          ? []
+          : {
+              id: `${habitId}-${date}`,
+              habitId,
+              date,
+              state
+            }
+      )
+    }));
   };
 
   const getHabitLog = (habitId: string, date: string): HabitLog | undefined => {
@@ -116,7 +106,7 @@ export function useHabits() {
       exportDate: new Date().toISOString(),
       version: '1.0.0'
     };
-    
+
     const dataStr = JSON.stringify(exportData, null, 2);
     const dataBlob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(dataBlob);
@@ -131,12 +121,12 @@ export function useHabits() {
     try {
       const text = await file.text();
       const importedData = JSON.parse(text);
-      
+
       // Validate structure
       if (!importedData.habits || !Array.isArray(importedData.habits)) {
         throw new Error('Invalid data structure');
       }
-      
+
       setData({
         habits: importedData.habits,
         logs: importedData.logs || [],
@@ -146,7 +136,7 @@ export function useHabits() {
           ...importedData.settings
         }
       });
-      
+
       return true;
     } catch {
       return false;
@@ -168,8 +158,7 @@ export function useHabits() {
     addHabit,
     updateHabit,
     deleteHabit,
-    toggleHabitLog,
-    getHabitLog,
+    logHabit,
     updateSettings,
     exportData,
     importData,

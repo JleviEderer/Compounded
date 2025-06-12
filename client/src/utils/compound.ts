@@ -28,8 +28,13 @@ export function calculateDailyRate(
   
   habits.forEach(habit => {
     const log = logs.find(l => l.habitId === habit.id && l.date === date);
-    if (log?.completed) {
-      totalWeight += habit.weight;
+    if (log) {
+      if (log.state === 'good') {
+        totalWeight += habit.weight; // Positive weight for good habit
+      } else if (log.state === 'bad') {
+        totalWeight -= habit.weight; // Negative weight for bad habit
+      }
+      // No change for 'unlogged' state - neutral
     }
   });
   
@@ -96,8 +101,8 @@ export function calculateSuccessRate(
   days: number = 30
 ): number {
   const endDate = new Date();
-  let totalPossible = 0;
-  let totalCompleted = 0;
+  let totalLogged = 0;
+  let totalGood = 0;
   
   for (let i = 0; i < days; i++) {
     const date = new Date(endDate);
@@ -106,14 +111,16 @@ export function calculateSuccessRate(
     
     habits.forEach(habit => {
       const log = logs.find(l => l.habitId === habit.id && l.date === dateStr);
-      totalPossible++;
-      if (log?.completed) {
-        totalCompleted++;
+      if (log && log.state !== 'unlogged') {
+        totalLogged++;
+        if (log.state === 'good') {
+          totalGood++;
+        }
       }
     });
   }
   
-  return totalPossible > 0 ? (totalCompleted / totalPossible) * 100 : 0;
+  return totalLogged > 0 ? (totalGood / totalLogged) * 100 : 0;
 }
 
 export function calculateCurrentStreak(
@@ -128,7 +135,7 @@ export function calculateCurrentStreak(
     const dateStr = currentDate.toISOString().split('T')[0];
     const log = logs.find(l => l.habitId === habitId && l.date === dateStr);
     
-    if (log?.completed) {
+    if (log?.state === 'good') {
       streak++;
       currentDate.setDate(currentDate.getDate() - 1);
     } else {

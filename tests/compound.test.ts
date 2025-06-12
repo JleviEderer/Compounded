@@ -7,7 +7,7 @@ import {
   calculateSuccessRate,
   validateCompoundFormula
 } from '../client/src/utils/compound';
-import { HabitPair, HabitLog, HabitWeight } from '../client/src/types';
+import { HabitPair, HabitLog, HabitWeight, HabitLogState } from '../client/src/types';
 
 describe('Compound Growth Calculations', () => {
   const mockHabits: HabitPair[] = [
@@ -28,10 +28,10 @@ describe('Compound Growth Calculations', () => {
   ];
 
   const mockLogs: HabitLog[] = [
-    { id: '1-2024-01-01', habitId: '1', date: '2024-01-01', completed: true },
-    { id: '1-2024-01-02', habitId: '1', date: '2024-01-02', completed: true },
-    { id: '2-2024-01-01', habitId: '2', date: '2024-01-01', completed: false },
-    { id: '2-2024-01-02', habitId: '2', date: '2024-01-02', completed: true },
+    { id: '1-2024-01-01', habitId: '1', date: '2024-01-01', state: HabitLogState.GOOD },
+    { id: '1-2024-01-02', habitId: '1', date: '2024-01-02', state: HabitLogState.GOOD },
+    { id: '2-2024-01-01', habitId: '2', date: '2024-01-01', state: HabitLogState.BAD },
+    { id: '2-2024-01-02', habitId: '2', date: '2024-01-02', state: HabitLogState.GOOD },
   ];
 
   it('should validate the compound formula: 1.001^365 ≈ 1.440194', () => {
@@ -43,11 +43,11 @@ describe('Compound Growth Calculations', () => {
   });
 
   it('should calculate daily rate correctly', () => {
-    // Day 1: only habit 1 completed (weight 0.0025)
+    // Day 1: habit 1 good (+0.0025), habit 2 bad (-0.001) = 0.0015
     const rate1 = calculateDailyRate(mockHabits, mockLogs, '2024-01-01');
-    expect(rate1).toBe(0.0025);
+    expect(rate1).toBe(0.0015);
 
-    // Day 2: both habits completed (0.0025 + 0.001 = 0.0035)
+    // Day 2: both habits good (0.0025 + 0.001 = 0.0035)
     const rate2 = calculateDailyRate(mockHabits, mockLogs, '2024-01-02');
     expect(rate2).toBe(0.0035);
 
@@ -62,8 +62,8 @@ describe('Compound Growth Calculations', () => {
     
     const momentum = calculateMomentumIndex(mockHabits, mockLogs, endDate);
     
-    // Expected: 1.0 * (1 + 0.0025) * (1 + 0.0035) = 1.006508
-    expect(momentum).toBeCloseTo(1.006508, 6);
+    // Expected: 1.0 * (1 + 0.0015) * (1 + 0.0035) = 1.005523
+    expect(momentum).toBeCloseTo(1.005523, 6);
   });
 
   it('should clamp momentum index to >= 0', () => {
@@ -98,7 +98,7 @@ describe('Compound Growth Calculations', () => {
   });
 
   it('should calculate success rate', () => {
-    // 3 out of 4 total possible completions = 75%
+    // 3 good out of 4 total logged entries = 75%
     const successRate = calculateSuccessRate(mockHabits, mockLogs, 2);
     expect(successRate).toBe(75);
     
@@ -136,7 +136,7 @@ describe('Compound Growth Calculations', () => {
         id: `small-${date.toISOString().split('T')[0]}`,
         habitId: 'small',
         date: date.toISOString().split('T')[0],
-        completed: true
+        state: HabitLogState.GOOD
       });
     }
     

@@ -7,7 +7,7 @@ import HabitRow from '../components/HabitRow';
 import { Button } from '@/components/ui/button';
 
 export default function Home() {
-  const { habits, logs, toggleHabitLog } = useHabits();
+  const { habits, logs, logHabit } = useHabits();
   const momentum = useMomentum(habits, logs);
   
   const today = new Date().toISOString().split('T')[0];
@@ -107,7 +107,7 @@ export default function Home() {
                 <HabitRow
                   habit={habit}
                   logs={logs}
-                  onToggle={toggleHabitLog}
+                  onLogHabit={logHabit}
                   isToday={true}
                 />
               </motion.div>

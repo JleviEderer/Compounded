@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Check, X, Minus } from 'lucide-react';
-import { HabitPair, HabitLog, WEIGHT_LABELS } from '../types';
-import { Checkbox } from '@/components/ui/checkbox';
+import { HabitPair, HabitLog, HabitLogState, WEIGHT_LABELS } from '../types';
 
 interface HabitRowProps {
   habit: HabitPair;
   logs: HabitLog[];
-  onToggle: (habitId: string, date: string) => void;
+  onLogHabit: (habitId: string, date: string, state: HabitLogState) => void;
   isToday?: boolean;
 }
 
-export default function HabitRow({ habit, logs, onToggle, isToday = false }: HabitRowProps) {
+export default function HabitRow({ habit, logs, onLogHabit, isToday = false }: HabitRowProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   
   const today = new Date().toISOString().split('T')[0];
@@ -29,26 +28,43 @@ export default function HabitRow({ habit, logs, onToggle, isToday = false }: Hab
       days.push({
         date: dateStr,
         label: i === 0 ? 'Today' : date.toLocaleDateString('en', { weekday: 'short' }),
-        completed: log?.completed || false,
+        state: log?.state || HabitLogState.UNLOGGED,
         isToday: i === 0
       });
     }
     return days;
   };
 
-  const handleToggle = () => {
-    onToggle(habit.id, today);
+  const handleGoodHabit = () => {
+    const newState = todayLog?.state === HabitLogState.GOOD ? HabitLogState.UNLOGGED : HabitLogState.GOOD;
+    onLogHabit(habit.id, today, newState);
   };
 
-  const getDayIcon = (completed: boolean) => {
-    if (completed) return <Check className="w-4 h-4 text-white" />;
-    return <Minus className="w-4 h-4 text-gray-500" />;
+  const handleBadHabit = () => {
+    const newState = todayLog?.state === HabitLogState.BAD ? HabitLogState.UNLOGGED : HabitLogState.BAD;
+    onLogHabit(habit.id, today, newState);
   };
 
-  const getDayColor = (completed: boolean) => {
-    return completed 
-      ? 'bg-emerald-500' 
-      : 'bg-gray-300 dark:bg-gray-600';
+  const getDayIcon = (state: HabitLogState) => {
+    switch (state) {
+      case HabitLogState.GOOD:
+        return <Check className="w-4 h-4 text-white" />;
+      case HabitLogState.BAD:
+        return <X className="w-4 h-4 text-white" />;
+      default:
+        return <Minus className="w-4 h-4 text-gray-500" />;
+    }
+  };
+
+  const getDayColor = (state: HabitLogState) => {
+    switch (state) {
+      case HabitLogState.GOOD:
+        return 'bg-emerald-500';
+      case HabitLogState.BAD:
+        return 'bg-red-500';
+      default:
+        return 'bg-gray-300 dark:bg-gray-600';
+    }
   };
 
   return (
@@ -61,24 +77,47 @@ export default function HabitRow({ habit, logs, onToggle, isToday = false }: Hab
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-3">
-            <motion.div
+          <div className="flex items-center space-x-4">
+            {/* Good Habit Button */}
+            <motion.button
+              onClick={handleGoodHabit}
               whileTap={{ scale: 0.9 }}
+              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all ${
+                todayLog?.state === HabitLogState.GOOD
+                  ? 'bg-emerald-500 border-emerald-500'
+                  : 'border-emerald-300 hover:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
+              }`}
             >
-              <Checkbox
-                checked={todayLog?.completed || false}
-                onCheckedChange={handleToggle}
-                className="w-5 h-5 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500"
-              />
-            </motion.div>
+              <Check className={`w-5 h-5 ${
+                todayLog?.state === HabitLogState.GOOD ? 'text-white' : 'text-emerald-500'
+              }`} />
+            </motion.button>
+
+            {/* Bad Habit Button */}
+            <motion.button
+              onClick={handleBadHabit}
+              whileTap={{ scale: 0.9 }}
+              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all ${
+                todayLog?.state === HabitLogState.BAD
+                  ? 'bg-red-500 border-red-500'
+                  : 'border-red-300 hover:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/20'
+              }`}
+            >
+              <X className={`w-5 h-5 ${
+                todayLog?.state === HabitLogState.BAD ? 'text-white' : 'text-red-500'
+              }`} />
+            </motion.button>
+
             <div>
               <div className={`font-semibold text-gray-800 dark:text-white ${
-                todayLog?.completed ? '' : ''
+                todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' : 
+                todayLog?.state === HabitLogState.BAD ? 'text-red-600 line-through' : ''
               }`}>
-                {habit.goodHabit} instead of
+                {habit.goodHabit}
               </div>
               <div className={`text-sm text-gray-500 ${
-                todayLog?.completed ? 'line-through' : ''
+                todayLog?.state === HabitLogState.BAD ? 'text-red-500 font-medium' : 
+                todayLog?.state === HabitLogState.GOOD ? 'line-through' : ''
               }`}>
                 {habit.badHabit}
               </div>
@@ -130,14 +169,14 @@ export default function HabitRow({ habit, logs, onToggle, isToday = false }: Hab
                     </div>
                     <motion.div
                       className={`w-8 h-8 rounded-lg flex items-center justify-center mx-auto ${
-                        getDayColor(day.completed)
-                      } ${day.isToday && day.completed ? 'ring-2 ring-coral ring-offset-2' : ''}`}
+                        getDayColor(day.state)
+                      } ${day.isToday && day.state !== HabitLogState.UNLOGGED ? 'ring-2 ring-coral ring-offset-2' : ''}`}
                       whileHover={{ scale: 1.1 }}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: index * 0.05 }}
                     >
-                      {getDayIcon(day.completed)}
+                      {getDayIcon(day.state)}
                     </motion.div>
                   </div>
                 ))}
