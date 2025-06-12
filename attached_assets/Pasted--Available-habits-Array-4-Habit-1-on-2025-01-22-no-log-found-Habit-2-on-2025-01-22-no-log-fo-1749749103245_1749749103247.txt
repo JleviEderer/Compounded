@@ -1,0 +1,1000 @@
+ Available habits: Array(4)
+ Habit 1 on 2025-01-22: no log found
+ Habit 2 on 2025-01-22: no log found
+ Habit 3 on 2025-01-22: no log found
+ Habit 4 on 2025-01-22: no log found
+ Total weight for 2025-01-22: 0
+ Calculating daily rate for 2025-01-23
+ Available habits: Array(4)
+ Habit 1 on 2025-01-23: no log found
+ Habit 2 on 2025-01-23: no log found
+ Habit 3 on 2025-01-23: no log found
+ Habit 4 on 2025-01-23: no log found
+ Total weight for 2025-01-23: 0
+ Calculating daily rate for 2025-01-24
+ Available habits: Array(4)
+ Habit 1 on 2025-01-24: no log found
+ Habit 2 on 2025-01-24: no log found
+ Habit 3 on 2025-01-24: no log found
+ Habit 4 on 2025-01-24: no log found
+ Total weight for 2025-01-24: 0
+ Calculating daily rate for 2025-01-25
+ Available habits: Array(4)
+ Habit 1 on 2025-01-25: no log found
+ Habit 2 on 2025-01-25: no log found
+ Habit 3 on 2025-01-25: no log found
+ Habit 4 on 2025-01-25: no log found
+ Total weight for 2025-01-25: 0
+ Calculating daily rate for 2025-01-26
+ Available habits: Array(4)
+ Habit 1 on 2025-01-26: no log found
+ Habit 2 on 2025-01-26: no log found
+ Habit 3 on 2025-01-26: no log found
+ Habit 4 on 2025-01-26: no log found
+ Total weight for 2025-01-26: 0
+ Calculating daily rate for 2025-01-27
+ Available habits: Array(4)
+ Habit 1 on 2025-01-27: no log found
+ Habit 2 on 2025-01-27: no log found
+ Habit 3 on 2025-01-27: no log found
+ Habit 4 on 2025-01-27: no log found
+ Total weight for 2025-01-27: 0
+ Calculating daily rate for 2025-01-28
+ Available habits: Array(4)
+ Habit 1 on 2025-01-28: no log found
+ Habit 2 on 2025-01-28: no log found
+ Habit 3 on 2025-01-28: no log found
+ Habit 4 on 2025-01-28: no log found
+ Total weight for 2025-01-28: 0
+ Calculating daily rate for 2025-01-29
+ Available habits: Array(4)
+ Habit 1 on 2025-01-29: no log found
+ Habit 2 on 2025-01-29: no log found
+ Habit 3 on 2025-01-29: no log found
+ Habit 4 on 2025-01-29: no log found
+ Total weight for 2025-01-29: 0
+ Calculating daily rate for 2025-01-30
+ Available habits: Array(4)
+ Habit 1 on 2025-01-30: no log found
+ Habit 2 on 2025-01-30: no log found
+ Habit 3 on 2025-01-30: no log found
+ Habit 4 on 2025-01-30: no log found
+ Total weight for 2025-01-30: 0
+ Calculating daily rate for 2025-01-31
+ Available habits: Array(4)
+ Habit 1 on 2025-01-31: no log found
+ Habit 2 on 2025-01-31: no log found
+ Habit 3 on 2025-01-31: no log found
+ Habit 4 on 2025-01-31: no log found
+ Total weight for 2025-01-31: 0
+ Calculating daily rate for 2025-02-01
+ Available habits: Array(4)
+ Habit 1 on 2025-02-01: no log found
+ Habit 2 on 2025-02-01: no log found
+ Habit 3 on 2025-02-01: no log found
+ Habit 4 on 2025-02-01: no log found
+ Total weight for 2025-02-01: 0
+ Calculating daily rate for 2025-02-02
+ Available habits: Array(4)
+ Habit 1 on 2025-02-02: no log found
+ Habit 2 on 2025-02-02: no log found
+ Habit 3 on 2025-02-02: no log found
+ Habit 4 on 2025-02-02: no log found
+ Total weight for 2025-02-02: 0
+ Calculating daily rate for 2025-02-03
+ Available habits: Array(4)
+ Habit 1 on 2025-02-03: no log found
+ Habit 2 on 2025-02-03: no log found
+ Habit 3 on 2025-02-03: no log found
+ Habit 4 on 2025-02-03: no log found
+ Total weight for 2025-02-03: 0
+ Calculating daily rate for 2025-02-04
+ Available habits: Array(4)
+ Habit 1 on 2025-02-04: no log found
+ Habit 2 on 2025-02-04: no log found
+ Habit 3 on 2025-02-04: no log found
+ Habit 4 on 2025-02-04: no log found
+ Total weight for 2025-02-04: 0
+ Calculating daily rate for 2025-02-05
+ Available habits: Array(4)
+ Habit 1 on 2025-02-05: no log found
+ Habit 2 on 2025-02-05: no log found
+ Habit 3 on 2025-02-05: no log found
+ Habit 4 on 2025-02-05: no log found
+ Total weight for 2025-02-05: 0
+ Calculating daily rate for 2025-02-06
+ Available habits: Array(4)
+ Habit 1 on 2025-02-06: no log found
+ Habit 2 on 2025-02-06: no log found
+ Habit 3 on 2025-02-06: no log found
+ Habit 4 on 2025-02-06: no log found
+ Total weight for 2025-02-06: 0
+ Calculating daily rate for 2025-02-07
+ Available habits: Array(4)
+ Habit 1 on 2025-02-07: no log found
+ Habit 2 on 2025-02-07: no log found
+ Habit 3 on 2025-02-07: no log found
+ Habit 4 on 2025-02-07: no log found
+ Total weight for 2025-02-07: 0
+ Calculating daily rate for 2025-02-08
+ Available habits: Array(4)
+ Habit 1 on 2025-02-08: no log found
+ Habit 2 on 2025-02-08: no log found
+ Habit 3 on 2025-02-08: no log found
+ Habit 4 on 2025-02-08: no log found
+ Total weight for 2025-02-08: 0
+ Calculating daily rate for 2025-02-09
+ Available habits: Array(4)
+ Habit 1 on 2025-02-09: no log found
+ Habit 2 on 2025-02-09: no log found
+ Habit 3 on 2025-02-09: no log found
+ Habit 4 on 2025-02-09: no log found
+ Total weight for 2025-02-09: 0
+ Calculating daily rate for 2025-02-10
+ Available habits: Array(4)
+ Habit 1 on 2025-02-10: no log found
+ Habit 2 on 2025-02-10: no log found
+ Habit 3 on 2025-02-10: no log found
+ Habit 4 on 2025-02-10: no log found
+ Total weight for 2025-02-10: 0
+ Calculating daily rate for 2025-02-11
+ Available habits: Array(4)
+ Habit 1 on 2025-02-11: no log found
+ Habit 2 on 2025-02-11: no log found
+ Habit 3 on 2025-02-11: no log found
+ Habit 4 on 2025-02-11: no log found
+ Total weight for 2025-02-11: 0
+ Calculating daily rate for 2025-02-12
+ Available habits: Array(4)
+ Habit 1 on 2025-02-12: no log found
+ Habit 2 on 2025-02-12: no log found
+ Habit 3 on 2025-02-12: no log found
+ Habit 4 on 2025-02-12: no log found
+ Total weight for 2025-02-12: 0
+ Calculating daily rate for 2025-02-13
+ Available habits: Array(4)
+ Habit 1 on 2025-02-13: no log found
+ Habit 2 on 2025-02-13: no log found
+ Habit 3 on 2025-02-13: no log found
+ Habit 4 on 2025-02-13: no log found
+ Total weight for 2025-02-13: 0
+ Calculating daily rate for 2025-02-14
+ Available habits: Array(4)
+ Habit 1 on 2025-02-14: no log found
+ Habit 2 on 2025-02-14: no log found
+ Habit 3 on 2025-02-14: no log found
+ Habit 4 on 2025-02-14: no log found
+ Total weight for 2025-02-14: 0
+ Calculating daily rate for 2025-02-15
+ Available habits: Array(4)
+ Habit 1 on 2025-02-15: no log found
+ Habit 2 on 2025-02-15: no log found
+ Habit 3 on 2025-02-15: no log found
+ Habit 4 on 2025-02-15: no log found
+ Total weight for 2025-02-15: 0
+ Calculating daily rate for 2025-02-16
+ Available habits: Array(4)
+ Habit 1 on 2025-02-16: no log found
+ Habit 2 on 2025-02-16: no log found
+ Habit 3 on 2025-02-16: no log found
+ Habit 4 on 2025-02-16: no log found
+ Total weight for 2025-02-16: 0
+ Calculating daily rate for 2025-02-17
+ Available habits: Array(4)
+ Habit 1 on 2025-02-17: no log found
+ Habit 2 on 2025-02-17: no log found
+ Habit 3 on 2025-02-17: no log found
+ Habit 4 on 2025-02-17: no log found
+ Total weight for 2025-02-17: 0
+ Calculating daily rate for 2025-02-18
+ Available habits: Array(4)
+ Habit 1 on 2025-02-18: no log found
+ Habit 2 on 2025-02-18: no log found
+ Habit 3 on 2025-02-18: no log found
+ Habit 4 on 2025-02-18: no log found
+ Total weight for 2025-02-18: 0
+ Calculating daily rate for 2025-02-19
+ Available habits: Array(4)
+ Habit 1 on 2025-02-19: no log found
+ Habit 2 on 2025-02-19: no log found
+ Habit 3 on 2025-02-19: no log found
+ Habit 4 on 2025-02-19: no log found
+ Total weight for 2025-02-19: 0
+ Calculating daily rate for 2025-02-20
+ Available habits: Array(4)
+ Habit 1 on 2025-02-20: no log found
+ Habit 2 on 2025-02-20: no log found
+ Habit 3 on 2025-02-20: no log found
+ Habit 4 on 2025-02-20: no log found
+ Total weight for 2025-02-20: 0
+ Calculating daily rate for 2025-02-21
+ Available habits: Array(4)
+ Habit 1 on 2025-02-21: no log found
+ Habit 2 on 2025-02-21: no log found
+ Habit 3 on 2025-02-21: no log found
+ Habit 4 on 2025-02-21: no log found
+ Total weight for 2025-02-21: 0
+ Calculating daily rate for 2025-02-22
+ Available habits: Array(4)
+ Habit 1 on 2025-02-22: no log found
+ Habit 2 on 2025-02-22: no log found
+ Habit 3 on 2025-02-22: no log found
+ Habit 4 on 2025-02-22: no log found
+ Total weight for 2025-02-22: 0
+ Calculating daily rate for 2025-02-23
+ Available habits: Array(4)
+ Habit 1 on 2025-02-23: no log found
+ Habit 2 on 2025-02-23: no log found
+ Habit 3 on 2025-02-23: no log found
+ Habit 4 on 2025-02-23: no log found
+ Total weight for 2025-02-23: 0
+ Calculating daily rate for 2025-02-24
+ Available habits: Array(4)
+ Habit 1 on 2025-02-24: no log found
+ Habit 2 on 2025-02-24: no log found
+ Habit 3 on 2025-02-24: no log found
+ Habit 4 on 2025-02-24: no log found
+ Total weight for 2025-02-24: 0
+ Calculating daily rate for 2025-02-25
+ Available habits: Array(4)
+ Habit 1 on 2025-02-25: no log found
+ Habit 2 on 2025-02-25: no log found
+ Habit 3 on 2025-02-25: no log found
+ Habit 4 on 2025-02-25: no log found
+ Total weight for 2025-02-25: 0
+ Calculating daily rate for 2025-02-26
+ Available habits: Array(4)
+ Habit 1 on 2025-02-26: no log found
+ Habit 2 on 2025-02-26: no log found
+ Habit 3 on 2025-02-26: no log found
+ Habit 4 on 2025-02-26: no log found
+ Total weight for 2025-02-26: 0
+ Calculating daily rate for 2025-02-27
+ Available habits: Array(4)
+ Habit 1 on 2025-02-27: no log found
+ Habit 2 on 2025-02-27: no log found
+ Habit 3 on 2025-02-27: no log found
+ Habit 4 on 2025-02-27: no log found
+ Total weight for 2025-02-27: 0
+ Calculating daily rate for 2025-02-28
+ Available habits: Array(4)
+ Habit 1 on 2025-02-28: no log found
+ Habit 2 on 2025-02-28: no log found
+ Habit 3 on 2025-02-28: no log found
+ Habit 4 on 2025-02-28: no log found
+ Total weight for 2025-02-28: 0
+ Calculating daily rate for 2025-03-01
+ Available habits: Array(4)
+ Habit 1 on 2025-03-01: no log found
+ Habit 2 on 2025-03-01: no log found
+ Habit 3 on 2025-03-01: no log found
+ Habit 4 on 2025-03-01: no log found
+ Total weight for 2025-03-01: 0
+ Calculating daily rate for 2025-03-02
+ Available habits: Array(4)
+ Habit 1 on 2025-03-02: no log found
+ Habit 2 on 2025-03-02: no log found
+ Habit 3 on 2025-03-02: no log found
+ Habit 4 on 2025-03-02: no log found
+ Total weight for 2025-03-02: 0
+ Calculating daily rate for 2025-03-03
+ Available habits: Array(4)
+ Habit 1 on 2025-03-03: no log found
+ Habit 2 on 2025-03-03: no log found
+ Habit 3 on 2025-03-03: no log found
+ Habit 4 on 2025-03-03: no log found
+ Total weight for 2025-03-03: 0
+ Calculating daily rate for 2025-03-04
+ Available habits: Array(4)
+ Habit 1 on 2025-03-04: no log found
+ Habit 2 on 2025-03-04: no log found
+ Habit 3 on 2025-03-04: no log found
+ Habit 4 on 2025-03-04: no log found
+ Total weight for 2025-03-04: 0
+ Calculating daily rate for 2025-03-05
+ Available habits: Array(4)
+ Habit 1 on 2025-03-05: no log found
+ Habit 2 on 2025-03-05: no log found
+ Habit 3 on 2025-03-05: no log found
+ Habit 4 on 2025-03-05: no log found
+ Total weight for 2025-03-05: 0
+ Calculating daily rate for 2025-03-06
+ Available habits: Array(4)
+ Habit 1 on 2025-03-06: no log found
+ Habit 2 on 2025-03-06: no log found
+ Habit 3 on 2025-03-06: no log found
+ Habit 4 on 2025-03-06: no log found
+ Total weight for 2025-03-06: 0
+ Calculating daily rate for 2025-03-07
+ Available habits: Array(4)
+ Habit 1 on 2025-03-07: no log found
+ Habit 2 on 2025-03-07: no log found
+ Habit 3 on 2025-03-07: no log found
+ Habit 4 on 2025-03-07: no log found
+ Total weight for 2025-03-07: 0
+ Calculating daily rate for 2025-03-08
+ Available habits: Array(4)
+ Habit 1 on 2025-03-08: no log found
+ Habit 2 on 2025-03-08: no log found
+ Habit 3 on 2025-03-08: no log found
+ Habit 4 on 2025-03-08: no log found
+ Total weight for 2025-03-08: 0
+ Calculating daily rate for 2025-03-09
+ Available habits: Array(4)
+ Habit 1 on 2025-03-09: no log found
+ Habit 2 on 2025-03-09: no log found
+ Habit 3 on 2025-03-09: no log found
+ Habit 4 on 2025-03-09: no log found
+ Total weight for 2025-03-09: 0
+ Calculating daily rate for 2025-03-10
+ Available habits: Array(4)
+ Habit 1 on 2025-03-10: no log found
+ Habit 2 on 2025-03-10: no log found
+ Habit 3 on 2025-03-10: no log found
+ Habit 4 on 2025-03-10: no log found
+ Total weight for 2025-03-10: 0
+ Calculating daily rate for 2025-03-11
+ Available habits: Array(4)
+ Habit 1 on 2025-03-11: no log found
+ Habit 2 on 2025-03-11: no log found
+ Habit 3 on 2025-03-11: no log found
+ Habit 4 on 2025-03-11: no log found
+ Total weight for 2025-03-11: 0
+ Calculating daily rate for 2025-03-12
+ Available habits: Array(4)
+ Habit 1 on 2025-03-12: no log found
+ Habit 2 on 2025-03-12: no log found
+ Habit 3 on 2025-03-12: no log found
+ Habit 4 on 2025-03-12: no log found
+ Total weight for 2025-03-12: 0
+ Calculating daily rate for 2025-03-13
+ Available habits: Array(4)
+ Habit 1 on 2025-03-13: no log found
+ Habit 2 on 2025-03-13: no log found
+ Habit 3 on 2025-03-13: no log found
+ Habit 4 on 2025-03-13: no log found
+ Total weight for 2025-03-13: 0
+ Calculating daily rate for 2025-03-14
+ Available habits: Array(4)
+ Habit 1 on 2025-03-14: no log found
+ Habit 2 on 2025-03-14: no log found
+ Habit 3 on 2025-03-14: no log found
+ Habit 4 on 2025-03-14: no log found
+ Total weight for 2025-03-14: 0
+ Calculating daily rate for 2025-03-15
+ Available habits: Array(4)
+ Habit 1 on 2025-03-15: no log found
+ Habit 2 on 2025-03-15: no log found
+ Habit 3 on 2025-03-15: no log found
+ Habit 4 on 2025-03-15: no log found
+ Total weight for 2025-03-15: 0
+ Calculating daily rate for 2025-03-16
+ Available habits: Array(4)
+ Habit 1 on 2025-03-16: no log found
+ Habit 2 on 2025-03-16: no log found
+ Habit 3 on 2025-03-16: no log found
+ Habit 4 on 2025-03-16: no log found
+ Total weight for 2025-03-16: 0
+ Calculating daily rate for 2025-03-17
+ Available habits: Array(4)
+ Habit 1 on 2025-03-17: no log found
+ Habit 2 on 2025-03-17: no log found
+ Habit 3 on 2025-03-17: no log found
+ Habit 4 on 2025-03-17: no log found
+ Total weight for 2025-03-17: 0
+ Calculating daily rate for 2025-03-18
+ Available habits: Array(4)
+ Habit 1 on 2025-03-18: no log found
+ Habit 2 on 2025-03-18: no log found
+ Habit 3 on 2025-03-18: no log found
+ Habit 4 on 2025-03-18: no log found
+ Total weight for 2025-03-18: 0
+ Calculating daily rate for 2025-03-19
+ Available habits: Array(4)
+ Habit 1 on 2025-03-19: no log found
+ Habit 2 on 2025-03-19: no log found
+ Habit 3 on 2025-03-19: no log found
+ Habit 4 on 2025-03-19: no log found
+ Total weight for 2025-03-19: 0
+ Calculating daily rate for 2025-03-20
+ Available habits: Array(4)
+ Habit 1 on 2025-03-20: no log found
+ Habit 2 on 2025-03-20: no log found
+ Habit 3 on 2025-03-20: no log found
+ Habit 4 on 2025-03-20: no log found
+ Total weight for 2025-03-20: 0
+ Calculating daily rate for 2025-03-21
+ Available habits: Array(4)
+ Habit 1 on 2025-03-21: no log found
+ Habit 2 on 2025-03-21: no log found
+ Habit 3 on 2025-03-21: no log found
+ Habit 4 on 2025-03-21: no log found
+ Total weight for 2025-03-21: 0
+ Calculating daily rate for 2025-03-22
+ Available habits: Array(4)
+ Habit 1 on 2025-03-22: no log found
+ Habit 2 on 2025-03-22: no log found
+ Habit 3 on 2025-03-22: no log found
+ Habit 4 on 2025-03-22: no log found
+ Total weight for 2025-03-22: 0
+ Calculating daily rate for 2025-03-23
+ Available habits: Array(4)
+ Habit 1 on 2025-03-23: no log found
+ Habit 2 on 2025-03-23: no log found
+ Habit 3 on 2025-03-23: no log found
+ Habit 4 on 2025-03-23: no log found
+ Total weight for 2025-03-23: 0
+ Calculating daily rate for 2025-03-24
+ Available habits: Array(4)
+ Habit 1 on 2025-03-24: no log found
+ Habit 2 on 2025-03-24: no log found
+ Habit 3 on 2025-03-24: no log found
+ Habit 4 on 2025-03-24: no log found
+ Total weight for 2025-03-24: 0
+ Calculating daily rate for 2025-03-25
+ Available habits: Array(4)
+ Habit 1 on 2025-03-25: no log found
+ Habit 2 on 2025-03-25: no log found
+ Habit 3 on 2025-03-25: no log found
+ Habit 4 on 2025-03-25: no log found
+ Total weight for 2025-03-25: 0
+ Calculating daily rate for 2025-03-26
+ Available habits: Array(4)
+ Habit 1 on 2025-03-26: no log found
+ Habit 2 on 2025-03-26: no log found
+ Habit 3 on 2025-03-26: no log found
+ Habit 4 on 2025-03-26: no log found
+ Total weight for 2025-03-26: 0
+ Calculating daily rate for 2025-03-27
+ Available habits: Array(4)
+ Habit 1 on 2025-03-27: no log found
+ Habit 2 on 2025-03-27: no log found
+ Habit 3 on 2025-03-27: no log found
+ Habit 4 on 2025-03-27: no log found
+ Total weight for 2025-03-27: 0
+ Calculating daily rate for 2025-03-28
+ Available habits: Array(4)
+ Habit 1 on 2025-03-28: no log found
+ Habit 2 on 2025-03-28: no log found
+ Habit 3 on 2025-03-28: no log found
+ Habit 4 on 2025-03-28: no log found
+ Total weight for 2025-03-28: 0
+ Calculating daily rate for 2025-03-29
+ Available habits: Array(4)
+ Habit 1 on 2025-03-29: no log found
+ Habit 2 on 2025-03-29: no log found
+ Habit 3 on 2025-03-29: no log found
+ Habit 4 on 2025-03-29: no log found
+ Total weight for 2025-03-29: 0
+ Calculating daily rate for 2025-03-30
+ Available habits: Array(4)
+ Habit 1 on 2025-03-30: no log found
+ Habit 2 on 2025-03-30: no log found
+ Habit 3 on 2025-03-30: no log found
+ Habit 4 on 2025-03-30: no log found
+ Total weight for 2025-03-30: 0
+ Calculating daily rate for 2025-03-31
+ Available habits: Array(4)
+ Habit 1 on 2025-03-31: no log found
+ Habit 2 on 2025-03-31: no log found
+ Habit 3 on 2025-03-31: no log found
+ Habit 4 on 2025-03-31: no log found
+ Total weight for 2025-03-31: 0
+ Calculating daily rate for 2025-04-01
+ Available habits: Array(4)
+ Habit 1 on 2025-04-01: no log found
+ Habit 2 on 2025-04-01: no log found
+ Habit 3 on 2025-04-01: no log found
+ Habit 4 on 2025-04-01: no log found
+ Total weight for 2025-04-01: 0
+ Calculating daily rate for 2025-04-02
+ Available habits: Array(4)
+ Habit 1 on 2025-04-02: no log found
+ Habit 2 on 2025-04-02: no log found
+ Habit 3 on 2025-04-02: no log found
+ Habit 4 on 2025-04-02: no log found
+ Total weight for 2025-04-02: 0
+ Calculating daily rate for 2025-04-03
+ Available habits: Array(4)
+ Habit 1 on 2025-04-03: no log found
+ Habit 2 on 2025-04-03: no log found
+ Habit 3 on 2025-04-03: no log found
+ Habit 4 on 2025-04-03: no log found
+ Total weight for 2025-04-03: 0
+ Calculating daily rate for 2025-04-04
+ Available habits: Array(4)
+ Habit 1 on 2025-04-04: no log found
+ Habit 2 on 2025-04-04: no log found
+ Habit 3 on 2025-04-04: no log found
+ Habit 4 on 2025-04-04: no log found
+ Total weight for 2025-04-04: 0
+ Calculating daily rate for 2025-04-05
+ Available habits: Array(4)
+ Habit 1 on 2025-04-05: no log found
+ Habit 2 on 2025-04-05: no log found
+ Habit 3 on 2025-04-05: no log found
+ Habit 4 on 2025-04-05: no log found
+ Total weight for 2025-04-05: 0
+ Calculating daily rate for 2025-04-06
+ Available habits: Array(4)
+ Habit 1 on 2025-04-06: no log found
+ Habit 2 on 2025-04-06: no log found
+ Habit 3 on 2025-04-06: no log found
+ Habit 4 on 2025-04-06: no log found
+ Total weight for 2025-04-06: 0
+ Calculating daily rate for 2025-04-07
+ Available habits: Array(4)
+ Habit 1 on 2025-04-07: no log found
+ Habit 2 on 2025-04-07: no log found
+ Habit 3 on 2025-04-07: no log found
+ Habit 4 on 2025-04-07: no log found
+ Total weight for 2025-04-07: 0
+ Calculating daily rate for 2025-04-08
+ Available habits: Array(4)
+ Habit 1 on 2025-04-08: no log found
+ Habit 2 on 2025-04-08: no log found
+ Habit 3 on 2025-04-08: no log found
+ Habit 4 on 2025-04-08: no log found
+ Total weight for 2025-04-08: 0
+ Calculating daily rate for 2025-04-09
+ Available habits: Array(4)
+ Habit 1 on 2025-04-09: no log found
+ Habit 2 on 2025-04-09: no log found
+ Habit 3 on 2025-04-09: no log found
+ Habit 4 on 2025-04-09: no log found
+ Total weight for 2025-04-09: 0
+ Calculating daily rate for 2025-04-10
+ Available habits: Array(4)
+ Habit 1 on 2025-04-10: no log found
+ Habit 2 on 2025-04-10: no log found
+ Habit 3 on 2025-04-10: no log found
+ Habit 4 on 2025-04-10: no log found
+ Total weight for 2025-04-10: 0
+ Calculating daily rate for 2025-04-11
+ Available habits: Array(4)
+ Habit 1 on 2025-04-11: no log found
+ Habit 2 on 2025-04-11: no log found
+ Habit 3 on 2025-04-11: no log found
+ Habit 4 on 2025-04-11: no log found
+ Total weight for 2025-04-11: 0
+ Calculating daily rate for 2025-04-12
+ Available habits: Array(4)
+ Habit 1 on 2025-04-12: no log found
+ Habit 2 on 2025-04-12: no log found
+ Habit 3 on 2025-04-12: no log found
+ Habit 4 on 2025-04-12: no log found
+ Total weight for 2025-04-12: 0
+ Calculating daily rate for 2025-04-13
+ Available habits: Array(4)
+ Habit 1 on 2025-04-13: no log found
+ Habit 2 on 2025-04-13: no log found
+ Habit 3 on 2025-04-13: no log found
+ Habit 4 on 2025-04-13: no log found
+ Total weight for 2025-04-13: 0
+ Calculating daily rate for 2025-04-14
+ Available habits: Array(4)
+ Habit 1 on 2025-04-14: no log found
+ Habit 2 on 2025-04-14: no log found
+ Habit 3 on 2025-04-14: no log found
+ Habit 4 on 2025-04-14: no log found
+ Total weight for 2025-04-14: 0
+ Calculating daily rate for 2025-04-15
+ Available habits: Array(4)
+ Habit 1 on 2025-04-15: no log found
+ Habit 2 on 2025-04-15: no log found
+ Habit 3 on 2025-04-15: no log found
+ Habit 4 on 2025-04-15: no log found
+ Total weight for 2025-04-15: 0
+ Calculating daily rate for 2025-04-16
+ Available habits: Array(4)
+ Habit 1 on 2025-04-16: no log found
+ Habit 2 on 2025-04-16: no log found
+ Habit 3 on 2025-04-16: no log found
+ Habit 4 on 2025-04-16: no log found
+ Total weight for 2025-04-16: 0
+ Calculating daily rate for 2025-04-17
+ Available habits: Array(4)
+ Habit 1 on 2025-04-17: no log found
+ Habit 2 on 2025-04-17: no log found
+ Habit 3 on 2025-04-17: no log found
+ Habit 4 on 2025-04-17: no log found
+ Total weight for 2025-04-17: 0
+ Calculating daily rate for 2025-04-18
+ Available habits: Array(4)
+ Habit 1 on 2025-04-18: no log found
+ Habit 2 on 2025-04-18: no log found
+ Habit 3 on 2025-04-18: no log found
+ Habit 4 on 2025-04-18: no log found
+ Total weight for 2025-04-18: 0
+ Calculating daily rate for 2025-04-19
+ Available habits: Array(4)
+ Habit 1 on 2025-04-19: no log found
+ Habit 2 on 2025-04-19: no log found
+ Habit 3 on 2025-04-19: no log found
+ Habit 4 on 2025-04-19: no log found
+ Total weight for 2025-04-19: 0
+ Calculating daily rate for 2025-04-20
+ Available habits: Array(4)
+ Habit 1 on 2025-04-20: no log found
+ Habit 2 on 2025-04-20: no log found
+ Habit 3 on 2025-04-20: no log found
+ Habit 4 on 2025-04-20: no log found
+ Total weight for 2025-04-20: 0
+ Calculating daily rate for 2025-04-21
+ Available habits: Array(4)
+ Habit 1 on 2025-04-21: no log found
+ Habit 2 on 2025-04-21: no log found
+ Habit 3 on 2025-04-21: no log found
+ Habit 4 on 2025-04-21: no log found
+ Total weight for 2025-04-21: 0
+ Calculating daily rate for 2025-04-22
+ Available habits: Array(4)
+ Habit 1 on 2025-04-22: no log found
+ Habit 2 on 2025-04-22: no log found
+ Habit 3 on 2025-04-22: no log found
+ Habit 4 on 2025-04-22: no log found
+ Total weight for 2025-04-22: 0
+ Calculating daily rate for 2025-04-23
+ Available habits: Array(4)
+ Habit 1 on 2025-04-23: no log found
+ Habit 2 on 2025-04-23: no log found
+ Habit 3 on 2025-04-23: no log found
+ Habit 4 on 2025-04-23: no log found
+ Total weight for 2025-04-23: 0
+ Calculating daily rate for 2025-04-24
+ Available habits: Array(4)
+ Habit 1 on 2025-04-24: no log found
+ Habit 2 on 2025-04-24: no log found
+ Habit 3 on 2025-04-24: no log found
+ Habit 4 on 2025-04-24: no log found
+ Total weight for 2025-04-24: 0
+ Calculating daily rate for 2025-04-25
+ Available habits: Array(4)
+ Habit 1 on 2025-04-25: no log found
+ Habit 2 on 2025-04-25: no log found
+ Habit 3 on 2025-04-25: no log found
+ Habit 4 on 2025-04-25: no log found
+ Total weight for 2025-04-25: 0
+ Calculating daily rate for 2025-04-26
+ Available habits: Array(4)
+ Habit 1 on 2025-04-26: no log found
+ Habit 2 on 2025-04-26: no log found
+ Habit 3 on 2025-04-26: no log found
+ Habit 4 on 2025-04-26: no log found
+ Total weight for 2025-04-26: 0
+ Calculating daily rate for 2025-04-27
+ Available habits: Array(4)
+ Habit 1 on 2025-04-27: no log found
+ Habit 2 on 2025-04-27: no log found
+ Habit 3 on 2025-04-27: no log found
+ Habit 4 on 2025-04-27: no log found
+ Total weight for 2025-04-27: 0
+ Calculating daily rate for 2025-04-28
+ Available habits: Array(4)
+ Habit 1 on 2025-04-28: no log found
+ Habit 2 on 2025-04-28: no log found
+ Habit 3 on 2025-04-28: no log found
+ Habit 4 on 2025-04-28: no log found
+ Total weight for 2025-04-28: 0
+ Calculating daily rate for 2025-04-29
+ Available habits: Array(4)
+ Habit 1 on 2025-04-29: no log found
+ Habit 2 on 2025-04-29: no log found
+ Habit 3 on 2025-04-29: no log found
+ Habit 4 on 2025-04-29: no log found
+ Total weight for 2025-04-29: 0
+ Calculating daily rate for 2025-04-30
+ Available habits: Array(4)
+ Habit 1 on 2025-04-30: no log found
+ Habit 2 on 2025-04-30: no log found
+ Habit 3 on 2025-04-30: no log found
+ Habit 4 on 2025-04-30: no log found
+ Total weight for 2025-04-30: 0
+ Calculating daily rate for 2025-05-01
+ Available habits: Array(4)
+ Habit 1 on 2025-05-01: no log found
+ Habit 2 on 2025-05-01: no log found
+ Habit 3 on 2025-05-01: no log found
+ Habit 4 on 2025-05-01: no log found
+ Total weight for 2025-05-01: 0
+ Calculating daily rate for 2025-05-02
+ Available habits: Array(4)
+ Habit 1 on 2025-05-02: no log found
+ Habit 2 on 2025-05-02: no log found
+ Habit 3 on 2025-05-02: no log found
+ Habit 4 on 2025-05-02: no log found
+ Total weight for 2025-05-02: 0
+ Calculating daily rate for 2025-05-03
+ Available habits: Array(4)
+ Habit 1 on 2025-05-03: no log found
+ Habit 2 on 2025-05-03: no log found
+ Habit 3 on 2025-05-03: no log found
+ Habit 4 on 2025-05-03: no log found
+ Total weight for 2025-05-03: 0
+ Calculating daily rate for 2025-05-04
+ Available habits: Array(4)
+ Habit 1 on 2025-05-04: no log found
+ Habit 2 on 2025-05-04: no log found
+ Habit 3 on 2025-05-04: no log found
+ Habit 4 on 2025-05-04: no log found
+ Total weight for 2025-05-04: 0
+ Calculating daily rate for 2025-05-05
+ Available habits: Array(4)
+ Habit 1 on 2025-05-05: no log found
+ Habit 2 on 2025-05-05: no log found
+ Habit 3 on 2025-05-05: no log found
+ Habit 4 on 2025-05-05: no log found
+ Total weight for 2025-05-05: 0
+ Calculating daily rate for 2025-05-06
+ Available habits: Array(4)
+ Habit 1 on 2025-05-06: no log found
+ Habit 2 on 2025-05-06: no log found
+ Habit 3 on 2025-05-06: no log found
+ Habit 4 on 2025-05-06: no log found
+ Total weight for 2025-05-06: 0
+ Calculating daily rate for 2025-05-07
+ Available habits: Array(4)
+ Habit 1 on 2025-05-07: no log found
+ Habit 2 on 2025-05-07: no log found
+ Habit 3 on 2025-05-07: no log found
+ Habit 4 on 2025-05-07: no log found
+ Total weight for 2025-05-07: 0
+ Calculating daily rate for 2025-05-08
+ Available habits: Array(4)
+ Habit 1 on 2025-05-08: no log found
+ Habit 2 on 2025-05-08: no log found
+ Habit 3 on 2025-05-08: no log found
+ Habit 4 on 2025-05-08: no log found
+ Total weight for 2025-05-08: 0
+ Calculating daily rate for 2025-05-09
+ Available habits: Array(4)
+ Habit 1 on 2025-05-09: no log found
+ Habit 2 on 2025-05-09: no log found
+ Habit 3 on 2025-05-09: no log found
+ Habit 4 on 2025-05-09: no log found
+ Total weight for 2025-05-09: 0
+ Calculating daily rate for 2025-05-10
+ Available habits: Array(4)
+ Habit 1 on 2025-05-10: no log found
+ Habit 2 on 2025-05-10: no log found
+ Habit 3 on 2025-05-10: no log found
+ Habit 4 on 2025-05-10: no log found
+ Total weight for 2025-05-10: 0
+ Calculating daily rate for 2025-05-11
+ Available habits: Array(4)
+ Habit 1 on 2025-05-11: no log found
+ Habit 2 on 2025-05-11: no log found
+ Habit 3 on 2025-05-11: no log found
+ Habit 4 on 2025-05-11: no log found
+ Total weight for 2025-05-11: 0
+ Calculating daily rate for 2025-05-12
+ Available habits: Array(4)
+ Habit 1 on 2025-05-12: no log found
+ Habit 2 on 2025-05-12: no log found
+ Habit 3 on 2025-05-12: no log found
+ Habit 4 on 2025-05-12: no log found
+ Total weight for 2025-05-12: 0
+ Calculating daily rate for 2025-05-13
+ Available habits: Array(4)
+ Habit 1 on 2025-05-13: no log found
+ Habit 2 on 2025-05-13: no log found
+ Habit 3 on 2025-05-13: no log found
+ Habit 4 on 2025-05-13: no log found
+ Total weight for 2025-05-13: 0
+ Calculating daily rate for 2025-05-14
+ Available habits: Array(4)
+ Habit 1 on 2025-05-14: no log found
+ Habit 2 on 2025-05-14: no log found
+ Habit 3 on 2025-05-14: no log found
+ Habit 4 on 2025-05-14: no log found
+ Total weight for 2025-05-14: 0
+ Calculating daily rate for 2025-05-15
+ Available habits: Array(4)
+ Habit 1 on 2025-05-15: no log found
+ Habit 2 on 2025-05-15: no log found
+ Habit 3 on 2025-05-15: no log found
+ Habit 4 on 2025-05-15: no log found
+ Total weight for 2025-05-15: 0
+ Calculating daily rate for 2025-05-16
+ Available habits: Array(4)
+ Habit 1 on 2025-05-16: no log found
+ Habit 2 on 2025-05-16: no log found
+ Habit 3 on 2025-05-16: no log found
+ Habit 4 on 2025-05-16: no log found
+ Total weight for 2025-05-16: 0
+ Calculating daily rate for 2025-05-17
+ Available habits: Array(4)
+ Habit 1 on 2025-05-17: no log found
+ Habit 2 on 2025-05-17: no log found
+ Habit 3 on 2025-05-17: no log found
+ Habit 4 on 2025-05-17: no log found
+ Total weight for 2025-05-17: 0
+ Calculating daily rate for 2025-05-18
+ Available habits: Array(4)
+ Habit 1 on 2025-05-18: no log found
+ Habit 2 on 2025-05-18: no log found
+ Habit 3 on 2025-05-18: no log found
+ Habit 4 on 2025-05-18: no log found
+ Total weight for 2025-05-18: 0
+ Calculating daily rate for 2025-05-19
+ Available habits: Array(4)
+ Habit 1 on 2025-05-19: no log found
+ Habit 2 on 2025-05-19: no log found
+ Habit 3 on 2025-05-19: no log found
+ Habit 4 on 2025-05-19: no log found
+ Total weight for 2025-05-19: 0
+ Calculating daily rate for 2025-05-20
+ Available habits: Array(4)
+ Habit 1 on 2025-05-20: no log found
+ Habit 2 on 2025-05-20: no log found
+ Habit 3 on 2025-05-20: no log found
+ Habit 4 on 2025-05-20: no log found
+ Total weight for 2025-05-20: 0
+ Calculating daily rate for 2025-05-21
+ Available habits: Array(4)
+ Habit 1 on 2025-05-21: no log found
+ Habit 2 on 2025-05-21: no log found
+ Habit 3 on 2025-05-21: no log found
+ Habit 4 on 2025-05-21: no log found
+ Total weight for 2025-05-21: 0
+ Calculating daily rate for 2025-05-22
+ Available habits: Array(4)
+ Habit 1 on 2025-05-22: no log found
+ Habit 2 on 2025-05-22: no log found
+ Habit 3 on 2025-05-22: no log found
+ Habit 4 on 2025-05-22: no log found
+ Total weight for 2025-05-22: 0
+ Calculating daily rate for 2025-05-23
+ Available habits: Array(4)
+ Habit 1 on 2025-05-23: no log found
+ Habit 2 on 2025-05-23: no log found
+ Habit 3 on 2025-05-23: no log found
+ Habit 4 on 2025-05-23: no log found
+ Total weight for 2025-05-23: 0
+ Calculating daily rate for 2025-05-24
+ Available habits: Array(4)
+ Habit 1 on 2025-05-24: no log found
+ Habit 2 on 2025-05-24: no log found
+ Habit 3 on 2025-05-24: no log found
+ Habit 4 on 2025-05-24: no log found
+ Total weight for 2025-05-24: 0
+ Calculating daily rate for 2025-05-25
+ Available habits: Array(4)
+ Habit 1 on 2025-05-25: no log found
+ Habit 2 on 2025-05-25: no log found
+ Habit 3 on 2025-05-25: no log found
+ Habit 4 on 2025-05-25: no log found
+ Total weight for 2025-05-25: 0
+ Calculating daily rate for 2025-05-26
+ Available habits: Array(4)
+ Habit 1 on 2025-05-26: no log found
+ Habit 2 on 2025-05-26: no log found
+ Habit 3 on 2025-05-26: no log found
+compound.ts:41 Habit 4 on 2025-05-26: no log found
+compound.ts:53 Total weight for 2025-05-26: 0
+compound.ts:36 Calculating daily rate for 2025-05-27
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-05-27: no log found
+compound.ts:41 Habit 2 on 2025-05-27: no log found
+compound.ts:41 Habit 3 on 2025-05-27: no log found
+compound.ts:41 Habit 4 on 2025-05-27: no log found
+compound.ts:53 Total weight for 2025-05-27: 0
+compound.ts:36 Calculating daily rate for 2025-05-28
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-05-28: no log found
+compound.ts:41 Habit 2 on 2025-05-28: no log found
+compound.ts:41 Habit 3 on 2025-05-28: no log found
+compound.ts:41 Habit 4 on 2025-05-28: no log found
+compound.ts:53 Total weight for 2025-05-28: 0
+compound.ts:36 Calculating daily rate for 2025-05-29
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-05-29: no log found
+compound.ts:41 Habit 2 on 2025-05-29: no log found
+compound.ts:41 Habit 3 on 2025-05-29: no log found
+compound.ts:41 Habit 4 on 2025-05-29: no log found
+compound.ts:53 Total weight for 2025-05-29: 0
+compound.ts:36 Calculating daily rate for 2025-05-30
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-05-30: no log found
+compound.ts:41 Habit 2 on 2025-05-30: no log found
+compound.ts:41 Habit 3 on 2025-05-30: no log found
+compound.ts:41 Habit 4 on 2025-05-30: no log found
+compound.ts:53 Total weight for 2025-05-30: 0
+compound.ts:36 Calculating daily rate for 2025-05-31
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-05-31: no log found
+compound.ts:41 Habit 2 on 2025-05-31: no log found
+compound.ts:41 Habit 3 on 2025-05-31: no log found
+compound.ts:41 Habit 4 on 2025-05-31: no log found
+compound.ts:53 Total weight for 2025-05-31: 0
+compound.ts:36 Calculating daily rate for 2025-06-01
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-01: no log found
+compound.ts:41 Habit 2 on 2025-06-01: no log found
+compound.ts:41 Habit 3 on 2025-06-01: no log found
+compound.ts:41 Habit 4 on 2025-06-01: no log found
+compound.ts:53 Total weight for 2025-06-01: 0
+compound.ts:36 Calculating daily rate for 2025-06-02
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-02: no log found
+compound.ts:41 Habit 2 on 2025-06-02: no log found
+compound.ts:41 Habit 3 on 2025-06-02: no log found
+compound.ts:41 Habit 4 on 2025-06-02: no log found
+compound.ts:53 Total weight for 2025-06-02: 0
+compound.ts:36 Calculating daily rate for 2025-06-03
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-03: no log found
+compound.ts:41 Habit 2 on 2025-06-03: no log found
+compound.ts:41 Habit 3 on 2025-06-03: no log found
+compound.ts:41 Habit 4 on 2025-06-03: no log found
+compound.ts:53 Total weight for 2025-06-03: 0
+compound.ts:36 Calculating daily rate for 2025-06-04
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-04: no log found
+compound.ts:41 Habit 2 on 2025-06-04: no log found
+compound.ts:41 Habit 3 on 2025-06-04: no log found
+compound.ts:41 Habit 4 on 2025-06-04: no log found
+compound.ts:53 Total weight for 2025-06-04: 0
+compound.ts:36 Calculating daily rate for 2025-06-05
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-05: no log found
+compound.ts:41 Habit 2 on 2025-06-05: no log found
+compound.ts:41 Habit 3 on 2025-06-05: no log found
+compound.ts:41 Habit 4 on 2025-06-05: no log found
+compound.ts:53 Total weight for 2025-06-05: 0
+compound.ts:36 Calculating daily rate for 2025-06-06
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-06: no log found
+compound.ts:41 Habit 2 on 2025-06-06: no log found
+compound.ts:41 Habit 3 on 2025-06-06: no log found
+compound.ts:41 Habit 4 on 2025-06-06: no log found
+compound.ts:53 Total weight for 2025-06-06: 0
+compound.ts:36 Calculating daily rate for 2025-06-07
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-07: no log found
+compound.ts:41 Habit 2 on 2025-06-07: no log found
+compound.ts:41 Habit 3 on 2025-06-07: no log found
+compound.ts:41 Habit 4 on 2025-06-07: no log found
+compound.ts:53 Total weight for 2025-06-07: 0
+compound.ts:36 Calculating daily rate for 2025-06-08
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-08: no log found
+compound.ts:41 Habit 2 on 2025-06-08: no log found
+compound.ts:41 Habit 3 on 2025-06-08: no log found
+compound.ts:41 Habit 4 on 2025-06-08: no log found
+compound.ts:53 Total weight for 2025-06-08: 0
+compound.ts:36 Calculating daily rate for 2025-06-09
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-09: no log found
+compound.ts:41 Habit 2 on 2025-06-09: no log found
+compound.ts:41 Habit 3 on 2025-06-09: no log found
+compound.ts:41 Habit 4 on 2025-06-09: no log found
+compound.ts:53 Total weight for 2025-06-09: 0
+compound.ts:36 Calculating daily rate for 2025-06-10
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-10: no log found
+compound.ts:41 Habit 2 on 2025-06-10: no log found
+compound.ts:41 Habit 3 on 2025-06-10: no log found
+compound.ts:41 Habit 4 on 2025-06-10: no log found
+compound.ts:53 Total weight for 2025-06-10: 0
+compound.ts:36 Calculating daily rate for 2025-06-11
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-11: undefined (weight: 0.001)
+compound.ts:41 Habit 2 on 2025-06-11: undefined (weight: 0.0005)
+compound.ts:41 Habit 3 on 2025-06-11: undefined (weight: 0.0005)
+compound.ts:41 Habit 4 on 2025-06-11: undefined (weight: 0.0005)
+compound.ts:53 Total weight for 2025-06-11: 0
+compound.ts:36 Calculating daily rate for 2025-06-12
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-12: undefined (weight: 0.001)
+compound.ts:41 Habit 2 on 2025-06-12: undefined (weight: 0.0005)
+compound.ts:41 Habit 3 on 2025-06-12: undefined (weight: 0.0005)
+compound.ts:41 Habit 4 on 2025-06-12: no log found
+compound.ts:53 Total weight for 2025-06-12: 0
+compound.ts:36 Calculating daily rate for 2025-06-12
+compound.ts:37 Available habits: Array(4)
+compound.ts:41 Habit 1 on 2025-06-12: undefined (weight: 0.001)
+compound.ts:41 Habit 2 on 2025-06-12: undefined (weight: 0.0005)
+compound.ts:41 Habit 3 on 2025-06-12: undefined (weight: 0.0005)
+compound.ts:41 Habit 4 on 2025-06-12: no log found
+compound.ts:53 Total weight for 2025-06-12: 0
