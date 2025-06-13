@@ -118,7 +118,7 @@ export default function MomentumChart({
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
-              domain={[1.00, 'dataMax + 0.01']}
+              domain={['dataMin - 0.01', 'dataMax + 0.01']}
               tickFormatter={(value) => value.toFixed(2)}
               tickCount={5}
             />
