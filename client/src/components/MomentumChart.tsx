@@ -244,18 +244,18 @@ export default function MomentumChart({
           </div>
 
           <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-coral">
-              {currentMomentum.toFixed(2)}
+            <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+              {data.length >= 7 ? ((data.slice(-7).reduce((sum, d) => sum + d.dailyRate, 0) / 7) * 100).toFixed(2) : '0.00'}%
             </div>
             <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-              Current Index
+              7-Day Avg Rate
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
                     <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
                   </TooltipTrigger>
                   <TooltipContent className="max-w-xs">
-                    <p>Your current momentum index calculated by compounding daily rates from start date. Formula: momentum = 1.0 × ∏(1 + daily_rate) for each day</p>
+                    <p>Average daily momentum rate over the last 7 days. Shows your recent velocity and trend direction.</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
