@@ -53,11 +53,12 @@ export default function Home() {
       {/* Momentum Chart */}
       <MomentumChart
         data={momentum.momentumData}
-        projectionData={momentum.projectionData}
         currentMomentum={momentum.currentMomentum}
         totalGrowth={momentum.totalGrowth}
         todayRate={momentum.todayRate}
         projectedTarget={momentum.projectedTarget}
+        habits={habits}
+        logs={logs}
       />
 
       {/* Today's Habits */}

@@ -19,6 +19,8 @@ interface MomentumChartProps {
   totalGrowth: number;
   todayRate: number;
   projectedTarget: number;
+  habits?: any[];
+  logs?: any[];
 }
 
 export default function MomentumChart({
@@ -26,9 +28,19 @@ export default function MomentumChart({
   currentMomentum,
   totalGrowth,
   todayRate,
-  projectedTarget
+  projectedTarget,
+  habits = [],
+  logs = []
 }: MomentumChartProps) {
   const combinedData = data;
+
+  // Calculate the actual start date of habit tracking
+  const getActualStartDate = () => {
+    const habitDates = habits.map(h => new Date(h.createdAt).toISOString().split('T')[0]);
+    const logDates = logs.map(l => l.date);
+    const allDates = [...habitDates, ...logDates].sort();
+    return allDates.length > 0 ? allDates[0] : (data.length > 0 ? data[0].date : 'start');
+  };
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -95,7 +107,7 @@ export default function MomentumChart({
           </TooltipProvider>
           <div className="text-sm text-gray-500 dark:text-gray-400">Current Index</div>
           <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-            Growth since {data.length > 0 ? formatDate(data[0].date) : 'start'}
+            Growth since {formatDate(getActualStartDate())}
           </div>
         </div>
       </div>
