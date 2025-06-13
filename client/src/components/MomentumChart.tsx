@@ -39,7 +39,7 @@ export default function MomentumChart({
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600">
+        <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600">
           <p className="text-sm font-medium text-gray-800 dark:text-white">
             {formatDate(label)}
           </p>
