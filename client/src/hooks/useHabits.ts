@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { HabitPair, HabitLog, HabitWeight, HabitLogState } from '../types';
 import { dataService } from '../services/dataService';
+import { dataSourceConfig } from '../services/dataSourceConfig';
 
 const STORAGE_KEY = 'compounded-data';
 
 export function useHabits() {
   const [data, setData] = useState<AppData>(() => {
     console.log('🏠 useHabits: Initializing data...');
-    
+
     // TEMPORARILY DISABLE LOCALSTORAGE TO FORCE FRESH MOCK DATA
     console.log('🏠 useHabits: FORCING fresh mock data (localStorage disabled)');
     const freshData = {
@@ -17,7 +18,7 @@ export function useHabits() {
     };
     console.log('🏠 useHabits: Fresh data loaded:', freshData.habits?.length, 'habits,', freshData.logs?.length, 'logs');
     return freshData;
-    
+
     /* ORIGINAL LOCALSTORAGE CODE - COMMENTED OUT
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
