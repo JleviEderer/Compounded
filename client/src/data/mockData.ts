@@ -29,12 +29,37 @@ if (rawJsonData?.logs) {
   console.error('❌ RAW JSON - No logs property found!');
 }
 
-// Convert the JSON data to proper types
-export const mockHabits: HabitPair[] = rawJsonData.habits?.map((habit: any) => ({
-  ...habit,
-  weight: habit.weight as HabitWeight,
-  createdAt: new Date(habit.createdAt)
-})) || [];
+// Convert the JSON data to proper types with weight mapping
+export const mockHabits: HabitPair[] = rawJsonData.habits?.map((habit: any) => {
+  // Map JSON weight values to proper HabitWeight enum values
+  let mappedWeight: HabitWeight;
+  switch (habit.weight) {
+    case 0.00025:
+      mappedWeight = HabitWeight.SMALL; // 0.0005
+      break;
+    case 0.0005:
+      mappedWeight = HabitWeight.SMALL; // 0.0005
+      break;
+    case 0.001:
+      mappedWeight = HabitWeight.LOW; // 0.001
+      break;
+    case 0.0025:
+      mappedWeight = HabitWeight.MEDIUM; // 0.0025
+      break;
+    case 0.004:
+      mappedWeight = HabitWeight.HIGH; // 0.004
+      break;
+    default:
+      console.warn(`Unknown weight value ${habit.weight}, defaulting to MEDIUM`);
+      mappedWeight = HabitWeight.MEDIUM;
+  }
+  
+  return {
+    ...habit,
+    weight: mappedWeight,
+    createdAt: new Date(habit.createdAt)
+  };
+}) || [];
 
 export const mockLogs: HabitLog[] = rawJsonData.logs?.map((log: any) => ({
   ...log,
