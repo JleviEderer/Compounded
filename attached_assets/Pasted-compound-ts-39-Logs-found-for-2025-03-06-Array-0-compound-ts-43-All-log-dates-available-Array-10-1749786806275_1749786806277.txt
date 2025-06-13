@@ -1,0 +1,1000 @@
+compound.ts:39 Logs found for 2025-03-06: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-06: no log found
+compound.ts:60 Habit 2 on 2025-03-06: no log found
+compound.ts:60 Habit 3 on 2025-03-06: no log found
+compound.ts:60 Habit 4 on 2025-03-06: no log found
+compound.ts:64 Total weight for 2025-03-06: 0
+compound.ts:33 Calculating daily rate for 2025-03-07
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-07: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-07: no log found
+compound.ts:60 Habit 2 on 2025-03-07: no log found
+compound.ts:60 Habit 3 on 2025-03-07: no log found
+compound.ts:60 Habit 4 on 2025-03-07: no log found
+compound.ts:64 Total weight for 2025-03-07: 0
+compound.ts:33 Calculating daily rate for 2025-03-08
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-08: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-08: no log found
+compound.ts:60 Habit 2 on 2025-03-08: no log found
+compound.ts:60 Habit 3 on 2025-03-08: no log found
+compound.ts:60 Habit 4 on 2025-03-08: no log found
+compound.ts:64 Total weight for 2025-03-08: 0
+compound.ts:33 Calculating daily rate for 2025-03-09
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-09: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-09: no log found
+compound.ts:60 Habit 2 on 2025-03-09: no log found
+compound.ts:60 Habit 3 on 2025-03-09: no log found
+compound.ts:60 Habit 4 on 2025-03-09: no log found
+compound.ts:64 Total weight for 2025-03-09: 0
+compound.ts:33 Calculating daily rate for 2025-03-10
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-10: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-10: no log found
+compound.ts:60 Habit 2 on 2025-03-10: no log found
+compound.ts:60 Habit 3 on 2025-03-10: no log found
+compound.ts:60 Habit 4 on 2025-03-10: no log found
+compound.ts:64 Total weight for 2025-03-10: 0
+compound.ts:33 Calculating daily rate for 2025-03-11
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-11: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-11: no log found
+compound.ts:60 Habit 2 on 2025-03-11: no log found
+compound.ts:60 Habit 3 on 2025-03-11: no log found
+compound.ts:60 Habit 4 on 2025-03-11: no log found
+compound.ts:64 Total weight for 2025-03-11: 0
+compound.ts:33 Calculating daily rate for 2025-03-12
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-12: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-12: no log found
+compound.ts:60 Habit 2 on 2025-03-12: no log found
+compound.ts:60 Habit 3 on 2025-03-12: no log found
+compound.ts:60 Habit 4 on 2025-03-12: no log found
+compound.ts:64 Total weight for 2025-03-12: 0
+compound.ts:33 Calculating daily rate for 2025-03-13
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-13: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-13: no log found
+compound.ts:60 Habit 2 on 2025-03-13: no log found
+compound.ts:60 Habit 3 on 2025-03-13: no log found
+compound.ts:60 Habit 4 on 2025-03-13: no log found
+compound.ts:64 Total weight for 2025-03-13: 0
+compound.ts:33 Calculating daily rate for 2025-03-14
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-14: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-14: no log found
+compound.ts:60 Habit 2 on 2025-03-14: no log found
+compound.ts:60 Habit 3 on 2025-03-14: no log found
+compound.ts:60 Habit 4 on 2025-03-14: no log found
+compound.ts:64 Total weight for 2025-03-14: 0
+compound.ts:33 Calculating daily rate for 2025-03-15
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-15: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-15: no log found
+compound.ts:60 Habit 2 on 2025-03-15: no log found
+compound.ts:60 Habit 3 on 2025-03-15: no log found
+compound.ts:60 Habit 4 on 2025-03-15: no log found
+compound.ts:64 Total weight for 2025-03-15: 0
+compound.ts:33 Calculating daily rate for 2025-03-16
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-16: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-16: no log found
+compound.ts:60 Habit 2 on 2025-03-16: no log found
+compound.ts:60 Habit 3 on 2025-03-16: no log found
+compound.ts:60 Habit 4 on 2025-03-16: no log found
+compound.ts:64 Total weight for 2025-03-16: 0
+compound.ts:33 Calculating daily rate for 2025-03-17
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-17: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-17: no log found
+compound.ts:60 Habit 2 on 2025-03-17: no log found
+compound.ts:60 Habit 3 on 2025-03-17: no log found
+compound.ts:60 Habit 4 on 2025-03-17: no log found
+compound.ts:64 Total weight for 2025-03-17: 0
+compound.ts:33 Calculating daily rate for 2025-03-18
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-18: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-18: no log found
+compound.ts:60 Habit 2 on 2025-03-18: no log found
+compound.ts:60 Habit 3 on 2025-03-18: no log found
+compound.ts:60 Habit 4 on 2025-03-18: no log found
+compound.ts:64 Total weight for 2025-03-18: 0
+compound.ts:33 Calculating daily rate for 2025-03-19
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-19: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-19: no log found
+compound.ts:60 Habit 2 on 2025-03-19: no log found
+compound.ts:60 Habit 3 on 2025-03-19: no log found
+compound.ts:60 Habit 4 on 2025-03-19: no log found
+compound.ts:64 Total weight for 2025-03-19: 0
+compound.ts:33 Calculating daily rate for 2025-03-20
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-20: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-20: no log found
+compound.ts:60 Habit 2 on 2025-03-20: no log found
+compound.ts:60 Habit 3 on 2025-03-20: no log found
+compound.ts:60 Habit 4 on 2025-03-20: no log found
+compound.ts:64 Total weight for 2025-03-20: 0
+compound.ts:33 Calculating daily rate for 2025-03-21
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-21: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-21: no log found
+compound.ts:60 Habit 2 on 2025-03-21: no log found
+compound.ts:60 Habit 3 on 2025-03-21: no log found
+compound.ts:60 Habit 4 on 2025-03-21: no log found
+compound.ts:64 Total weight for 2025-03-21: 0
+compound.ts:33 Calculating daily rate for 2025-03-22
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-22: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-22: no log found
+compound.ts:60 Habit 2 on 2025-03-22: no log found
+compound.ts:60 Habit 3 on 2025-03-22: no log found
+compound.ts:60 Habit 4 on 2025-03-22: no log found
+compound.ts:64 Total weight for 2025-03-22: 0
+compound.ts:33 Calculating daily rate for 2025-03-23
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-23: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-23: no log found
+compound.ts:60 Habit 2 on 2025-03-23: no log found
+compound.ts:60 Habit 3 on 2025-03-23: no log found
+compound.ts:60 Habit 4 on 2025-03-23: no log found
+compound.ts:64 Total weight for 2025-03-23: 0
+compound.ts:33 Calculating daily rate for 2025-03-24
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-24: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-24: no log found
+compound.ts:60 Habit 2 on 2025-03-24: no log found
+compound.ts:60 Habit 3 on 2025-03-24: no log found
+compound.ts:60 Habit 4 on 2025-03-24: no log found
+compound.ts:64 Total weight for 2025-03-24: 0
+compound.ts:33 Calculating daily rate for 2025-03-25
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-25: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-25: no log found
+compound.ts:60 Habit 2 on 2025-03-25: no log found
+compound.ts:60 Habit 3 on 2025-03-25: no log found
+compound.ts:60 Habit 4 on 2025-03-25: no log found
+compound.ts:64 Total weight for 2025-03-25: 0
+compound.ts:33 Calculating daily rate for 2025-03-26
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-26: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-26: no log found
+compound.ts:60 Habit 2 on 2025-03-26: no log found
+compound.ts:60 Habit 3 on 2025-03-26: no log found
+compound.ts:60 Habit 4 on 2025-03-26: no log found
+compound.ts:64 Total weight for 2025-03-26: 0
+compound.ts:33 Calculating daily rate for 2025-03-27
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-27: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-27: no log found
+compound.ts:60 Habit 2 on 2025-03-27: no log found
+compound.ts:60 Habit 3 on 2025-03-27: no log found
+compound.ts:60 Habit 4 on 2025-03-27: no log found
+compound.ts:64 Total weight for 2025-03-27: 0
+compound.ts:33 Calculating daily rate for 2025-03-28
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-28: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-28: no log found
+compound.ts:60 Habit 2 on 2025-03-28: no log found
+compound.ts:60 Habit 3 on 2025-03-28: no log found
+compound.ts:60 Habit 4 on 2025-03-28: no log found
+compound.ts:64 Total weight for 2025-03-28: 0
+compound.ts:33 Calculating daily rate for 2025-03-29
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-29: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-29: no log found
+compound.ts:60 Habit 2 on 2025-03-29: no log found
+compound.ts:60 Habit 3 on 2025-03-29: no log found
+compound.ts:60 Habit 4 on 2025-03-29: no log found
+compound.ts:64 Total weight for 2025-03-29: 0
+compound.ts:33 Calculating daily rate for 2025-03-30
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-30: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-30: no log found
+compound.ts:60 Habit 2 on 2025-03-30: no log found
+compound.ts:60 Habit 3 on 2025-03-30: no log found
+compound.ts:60 Habit 4 on 2025-03-30: no log found
+compound.ts:64 Total weight for 2025-03-30: 0
+compound.ts:33 Calculating daily rate for 2025-03-31
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-03-31: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-03-31: no log found
+compound.ts:60 Habit 2 on 2025-03-31: no log found
+compound.ts:60 Habit 3 on 2025-03-31: no log found
+compound.ts:60 Habit 4 on 2025-03-31: no log found
+compound.ts:64 Total weight for 2025-03-31: 0
+compound.ts:33 Calculating daily rate for 2025-04-01
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-01: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-01: no log found
+compound.ts:60 Habit 2 on 2025-04-01: no log found
+compound.ts:60 Habit 3 on 2025-04-01: no log found
+compound.ts:60 Habit 4 on 2025-04-01: no log found
+compound.ts:64 Total weight for 2025-04-01: 0
+compound.ts:33 Calculating daily rate for 2025-04-02
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-02: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-02: no log found
+compound.ts:60 Habit 2 on 2025-04-02: no log found
+compound.ts:60 Habit 3 on 2025-04-02: no log found
+compound.ts:60 Habit 4 on 2025-04-02: no log found
+compound.ts:64 Total weight for 2025-04-02: 0
+compound.ts:33 Calculating daily rate for 2025-04-03
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-03: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-03: no log found
+compound.ts:60 Habit 2 on 2025-04-03: no log found
+compound.ts:60 Habit 3 on 2025-04-03: no log found
+compound.ts:60 Habit 4 on 2025-04-03: no log found
+compound.ts:64 Total weight for 2025-04-03: 0
+compound.ts:33 Calculating daily rate for 2025-04-04
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-04: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-04: no log found
+compound.ts:60 Habit 2 on 2025-04-04: no log found
+compound.ts:60 Habit 3 on 2025-04-04: no log found
+compound.ts:60 Habit 4 on 2025-04-04: no log found
+compound.ts:64 Total weight for 2025-04-04: 0
+compound.ts:33 Calculating daily rate for 2025-04-05
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-05: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-05: no log found
+compound.ts:60 Habit 2 on 2025-04-05: no log found
+compound.ts:60 Habit 3 on 2025-04-05: no log found
+compound.ts:60 Habit 4 on 2025-04-05: no log found
+compound.ts:64 Total weight for 2025-04-05: 0
+compound.ts:33 Calculating daily rate for 2025-04-06
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-06: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-06: no log found
+compound.ts:60 Habit 2 on 2025-04-06: no log found
+compound.ts:60 Habit 3 on 2025-04-06: no log found
+compound.ts:60 Habit 4 on 2025-04-06: no log found
+compound.ts:64 Total weight for 2025-04-06: 0
+compound.ts:33 Calculating daily rate for 2025-04-07
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-07: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-07: no log found
+compound.ts:60 Habit 2 on 2025-04-07: no log found
+compound.ts:60 Habit 3 on 2025-04-07: no log found
+compound.ts:60 Habit 4 on 2025-04-07: no log found
+compound.ts:64 Total weight for 2025-04-07: 0
+compound.ts:33 Calculating daily rate for 2025-04-08
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-08: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-08: no log found
+compound.ts:60 Habit 2 on 2025-04-08: no log found
+compound.ts:60 Habit 3 on 2025-04-08: no log found
+compound.ts:60 Habit 4 on 2025-04-08: no log found
+compound.ts:64 Total weight for 2025-04-08: 0
+compound.ts:33 Calculating daily rate for 2025-04-09
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-09: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-09: no log found
+compound.ts:60 Habit 2 on 2025-04-09: no log found
+compound.ts:60 Habit 3 on 2025-04-09: no log found
+compound.ts:60 Habit 4 on 2025-04-09: no log found
+compound.ts:64 Total weight for 2025-04-09: 0
+compound.ts:33 Calculating daily rate for 2025-04-10
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-10: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-10: no log found
+compound.ts:60 Habit 2 on 2025-04-10: no log found
+compound.ts:60 Habit 3 on 2025-04-10: no log found
+compound.ts:60 Habit 4 on 2025-04-10: no log found
+compound.ts:64 Total weight for 2025-04-10: 0
+compound.ts:33 Calculating daily rate for 2025-04-11
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-11: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-11: no log found
+compound.ts:60 Habit 2 on 2025-04-11: no log found
+compound.ts:60 Habit 3 on 2025-04-11: no log found
+compound.ts:60 Habit 4 on 2025-04-11: no log found
+compound.ts:64 Total weight for 2025-04-11: 0
+compound.ts:33 Calculating daily rate for 2025-04-12
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-12: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-12: no log found
+compound.ts:60 Habit 2 on 2025-04-12: no log found
+compound.ts:60 Habit 3 on 2025-04-12: no log found
+compound.ts:60 Habit 4 on 2025-04-12: no log found
+compound.ts:64 Total weight for 2025-04-12: 0
+compound.ts:33 Calculating daily rate for 2025-04-13
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-13: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-13: no log found
+compound.ts:60 Habit 2 on 2025-04-13: no log found
+compound.ts:60 Habit 3 on 2025-04-13: no log found
+compound.ts:60 Habit 4 on 2025-04-13: no log found
+compound.ts:64 Total weight for 2025-04-13: 0
+compound.ts:33 Calculating daily rate for 2025-04-14
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-14: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-14: no log found
+compound.ts:60 Habit 2 on 2025-04-14: no log found
+compound.ts:60 Habit 3 on 2025-04-14: no log found
+compound.ts:60 Habit 4 on 2025-04-14: no log found
+compound.ts:64 Total weight for 2025-04-14: 0
+compound.ts:33 Calculating daily rate for 2025-04-15
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-15: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-15: no log found
+compound.ts:60 Habit 2 on 2025-04-15: no log found
+compound.ts:60 Habit 3 on 2025-04-15: no log found
+compound.ts:60 Habit 4 on 2025-04-15: no log found
+compound.ts:64 Total weight for 2025-04-15: 0
+compound.ts:33 Calculating daily rate for 2025-04-16
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-16: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-16: no log found
+compound.ts:60 Habit 2 on 2025-04-16: no log found
+compound.ts:60 Habit 3 on 2025-04-16: no log found
+compound.ts:60 Habit 4 on 2025-04-16: no log found
+compound.ts:64 Total weight for 2025-04-16: 0
+compound.ts:33 Calculating daily rate for 2025-04-17
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-17: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-17: no log found
+compound.ts:60 Habit 2 on 2025-04-17: no log found
+compound.ts:60 Habit 3 on 2025-04-17: no log found
+compound.ts:60 Habit 4 on 2025-04-17: no log found
+compound.ts:64 Total weight for 2025-04-17: 0
+compound.ts:33 Calculating daily rate for 2025-04-18
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-18: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-18: no log found
+compound.ts:60 Habit 2 on 2025-04-18: no log found
+compound.ts:60 Habit 3 on 2025-04-18: no log found
+compound.ts:60 Habit 4 on 2025-04-18: no log found
+compound.ts:64 Total weight for 2025-04-18: 0
+compound.ts:33 Calculating daily rate for 2025-04-19
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-19: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-19: no log found
+compound.ts:60 Habit 2 on 2025-04-19: no log found
+compound.ts:60 Habit 3 on 2025-04-19: no log found
+compound.ts:60 Habit 4 on 2025-04-19: no log found
+compound.ts:64 Total weight for 2025-04-19: 0
+compound.ts:33 Calculating daily rate for 2025-04-20
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-20: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-20: no log found
+compound.ts:60 Habit 2 on 2025-04-20: no log found
+compound.ts:60 Habit 3 on 2025-04-20: no log found
+compound.ts:60 Habit 4 on 2025-04-20: no log found
+compound.ts:64 Total weight for 2025-04-20: 0
+compound.ts:33 Calculating daily rate for 2025-04-21
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-21: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-21: no log found
+compound.ts:60 Habit 2 on 2025-04-21: no log found
+compound.ts:60 Habit 3 on 2025-04-21: no log found
+compound.ts:60 Habit 4 on 2025-04-21: no log found
+compound.ts:64 Total weight for 2025-04-21: 0
+compound.ts:33 Calculating daily rate for 2025-04-22
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-22: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-22: no log found
+compound.ts:60 Habit 2 on 2025-04-22: no log found
+compound.ts:60 Habit 3 on 2025-04-22: no log found
+compound.ts:60 Habit 4 on 2025-04-22: no log found
+compound.ts:64 Total weight for 2025-04-22: 0
+compound.ts:33 Calculating daily rate for 2025-04-23
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-23: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-23: no log found
+compound.ts:60 Habit 2 on 2025-04-23: no log found
+compound.ts:60 Habit 3 on 2025-04-23: no log found
+compound.ts:60 Habit 4 on 2025-04-23: no log found
+compound.ts:64 Total weight for 2025-04-23: 0
+compound.ts:33 Calculating daily rate for 2025-04-24
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-24: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-24: no log found
+compound.ts:60 Habit 2 on 2025-04-24: no log found
+compound.ts:60 Habit 3 on 2025-04-24: no log found
+compound.ts:60 Habit 4 on 2025-04-24: no log found
+compound.ts:64 Total weight for 2025-04-24: 0
+compound.ts:33 Calculating daily rate for 2025-04-25
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-25: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-25: no log found
+compound.ts:60 Habit 2 on 2025-04-25: no log found
+compound.ts:60 Habit 3 on 2025-04-25: no log found
+compound.ts:60 Habit 4 on 2025-04-25: no log found
+compound.ts:64 Total weight for 2025-04-25: 0
+compound.ts:33 Calculating daily rate for 2025-04-26
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-26: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-26: no log found
+compound.ts:60 Habit 2 on 2025-04-26: no log found
+compound.ts:60 Habit 3 on 2025-04-26: no log found
+compound.ts:60 Habit 4 on 2025-04-26: no log found
+compound.ts:64 Total weight for 2025-04-26: 0
+compound.ts:33 Calculating daily rate for 2025-04-27
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-27: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-27: no log found
+compound.ts:60 Habit 2 on 2025-04-27: no log found
+compound.ts:60 Habit 3 on 2025-04-27: no log found
+compound.ts:60 Habit 4 on 2025-04-27: no log found
+compound.ts:64 Total weight for 2025-04-27: 0
+compound.ts:33 Calculating daily rate for 2025-04-28
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-28: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-28: no log found
+compound.ts:60 Habit 2 on 2025-04-28: no log found
+compound.ts:60 Habit 3 on 2025-04-28: no log found
+compound.ts:60 Habit 4 on 2025-04-28: no log found
+compound.ts:64 Total weight for 2025-04-28: 0
+compound.ts:33 Calculating daily rate for 2025-04-29
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-29: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-29: no log found
+compound.ts:60 Habit 2 on 2025-04-29: no log found
+compound.ts:60 Habit 3 on 2025-04-29: no log found
+compound.ts:60 Habit 4 on 2025-04-29: no log found
+compound.ts:64 Total weight for 2025-04-29: 0
+compound.ts:33 Calculating daily rate for 2025-04-30
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-04-30: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-04-30: no log found
+compound.ts:60 Habit 2 on 2025-04-30: no log found
+compound.ts:60 Habit 3 on 2025-04-30: no log found
+compound.ts:60 Habit 4 on 2025-04-30: no log found
+compound.ts:64 Total weight for 2025-04-30: 0
+compound.ts:33 Calculating daily rate for 2025-05-01
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-01: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-01: no log found
+compound.ts:60 Habit 2 on 2025-05-01: no log found
+compound.ts:60 Habit 3 on 2025-05-01: no log found
+compound.ts:60 Habit 4 on 2025-05-01: no log found
+compound.ts:64 Total weight for 2025-05-01: 0
+compound.ts:33 Calculating daily rate for 2025-05-02
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-02: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-02: no log found
+compound.ts:60 Habit 2 on 2025-05-02: no log found
+compound.ts:60 Habit 3 on 2025-05-02: no log found
+compound.ts:60 Habit 4 on 2025-05-02: no log found
+compound.ts:64 Total weight for 2025-05-02: 0
+compound.ts:33 Calculating daily rate for 2025-05-03
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-03: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-03: no log found
+compound.ts:60 Habit 2 on 2025-05-03: no log found
+compound.ts:60 Habit 3 on 2025-05-03: no log found
+compound.ts:60 Habit 4 on 2025-05-03: no log found
+compound.ts:64 Total weight for 2025-05-03: 0
+compound.ts:33 Calculating daily rate for 2025-05-04
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-04: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-04: no log found
+compound.ts:60 Habit 2 on 2025-05-04: no log found
+compound.ts:60 Habit 3 on 2025-05-04: no log found
+compound.ts:60 Habit 4 on 2025-05-04: no log found
+compound.ts:64 Total weight for 2025-05-04: 0
+compound.ts:33 Calculating daily rate for 2025-05-05
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-05: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-05: no log found
+compound.ts:60 Habit 2 on 2025-05-05: no log found
+compound.ts:60 Habit 3 on 2025-05-05: no log found
+compound.ts:60 Habit 4 on 2025-05-05: no log found
+compound.ts:64 Total weight for 2025-05-05: 0
+compound.ts:33 Calculating daily rate for 2025-05-06
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-06: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-06: no log found
+compound.ts:60 Habit 2 on 2025-05-06: no log found
+compound.ts:60 Habit 3 on 2025-05-06: no log found
+compound.ts:60 Habit 4 on 2025-05-06: no log found
+compound.ts:64 Total weight for 2025-05-06: 0
+compound.ts:33 Calculating daily rate for 2025-05-07
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-07: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-07: no log found
+compound.ts:60 Habit 2 on 2025-05-07: no log found
+compound.ts:60 Habit 3 on 2025-05-07: no log found
+compound.ts:60 Habit 4 on 2025-05-07: no log found
+compound.ts:64 Total weight for 2025-05-07: 0
+compound.ts:33 Calculating daily rate for 2025-05-08
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-08: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-08: no log found
+compound.ts:60 Habit 2 on 2025-05-08: no log found
+compound.ts:60 Habit 3 on 2025-05-08: no log found
+compound.ts:60 Habit 4 on 2025-05-08: no log found
+compound.ts:64 Total weight for 2025-05-08: 0
+compound.ts:33 Calculating daily rate for 2025-05-09
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-09: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-09: no log found
+compound.ts:60 Habit 2 on 2025-05-09: no log found
+compound.ts:60 Habit 3 on 2025-05-09: no log found
+compound.ts:60 Habit 4 on 2025-05-09: no log found
+compound.ts:64 Total weight for 2025-05-09: 0
+compound.ts:33 Calculating daily rate for 2025-05-10
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-10: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-10: no log found
+compound.ts:60 Habit 2 on 2025-05-10: no log found
+compound.ts:60 Habit 3 on 2025-05-10: no log found
+compound.ts:60 Habit 4 on 2025-05-10: no log found
+compound.ts:64 Total weight for 2025-05-10: 0
+compound.ts:33 Calculating daily rate for 2025-05-11
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-11: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-11: no log found
+compound.ts:60 Habit 2 on 2025-05-11: no log found
+compound.ts:60 Habit 3 on 2025-05-11: no log found
+compound.ts:60 Habit 4 on 2025-05-11: no log found
+compound.ts:64 Total weight for 2025-05-11: 0
+compound.ts:33 Calculating daily rate for 2025-05-12
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-12: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-12: no log found
+compound.ts:60 Habit 2 on 2025-05-12: no log found
+compound.ts:60 Habit 3 on 2025-05-12: no log found
+compound.ts:60 Habit 4 on 2025-05-12: no log found
+compound.ts:64 Total weight for 2025-05-12: 0
+compound.ts:33 Calculating daily rate for 2025-05-13
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-13: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-13: no log found
+compound.ts:60 Habit 2 on 2025-05-13: no log found
+compound.ts:60 Habit 3 on 2025-05-13: no log found
+compound.ts:60 Habit 4 on 2025-05-13: no log found
+compound.ts:64 Total weight for 2025-05-13: 0
+compound.ts:33 Calculating daily rate for 2025-05-14
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-14: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-14: no log found
+compound.ts:60 Habit 2 on 2025-05-14: no log found
+compound.ts:60 Habit 3 on 2025-05-14: no log found
+compound.ts:60 Habit 4 on 2025-05-14: no log found
+compound.ts:64 Total weight for 2025-05-14: 0
+compound.ts:33 Calculating daily rate for 2025-05-15
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-15: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-15: no log found
+compound.ts:60 Habit 2 on 2025-05-15: no log found
+compound.ts:60 Habit 3 on 2025-05-15: no log found
+compound.ts:60 Habit 4 on 2025-05-15: no log found
+compound.ts:64 Total weight for 2025-05-15: 0
+compound.ts:33 Calculating daily rate for 2025-05-16
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-16: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-16: no log found
+compound.ts:60 Habit 2 on 2025-05-16: no log found
+compound.ts:60 Habit 3 on 2025-05-16: no log found
+compound.ts:60 Habit 4 on 2025-05-16: no log found
+compound.ts:64 Total weight for 2025-05-16: 0
+compound.ts:33 Calculating daily rate for 2025-05-17
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-17: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-17: no log found
+compound.ts:60 Habit 2 on 2025-05-17: no log found
+compound.ts:60 Habit 3 on 2025-05-17: no log found
+compound.ts:60 Habit 4 on 2025-05-17: no log found
+compound.ts:64 Total weight for 2025-05-17: 0
+compound.ts:33 Calculating daily rate for 2025-05-18
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-18: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-18: no log found
+compound.ts:60 Habit 2 on 2025-05-18: no log found
+compound.ts:60 Habit 3 on 2025-05-18: no log found
+compound.ts:60 Habit 4 on 2025-05-18: no log found
+compound.ts:64 Total weight for 2025-05-18: 0
+compound.ts:33 Calculating daily rate for 2025-05-19
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-19: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-19: no log found
+compound.ts:60 Habit 2 on 2025-05-19: no log found
+compound.ts:60 Habit 3 on 2025-05-19: no log found
+compound.ts:60 Habit 4 on 2025-05-19: no log found
+compound.ts:64 Total weight for 2025-05-19: 0
+compound.ts:33 Calculating daily rate for 2025-05-20
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-20: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-20: no log found
+compound.ts:60 Habit 2 on 2025-05-20: no log found
+compound.ts:60 Habit 3 on 2025-05-20: no log found
+compound.ts:60 Habit 4 on 2025-05-20: no log found
+compound.ts:64 Total weight for 2025-05-20: 0
+compound.ts:33 Calculating daily rate for 2025-05-21
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-21: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-21: no log found
+compound.ts:60 Habit 2 on 2025-05-21: no log found
+compound.ts:60 Habit 3 on 2025-05-21: no log found
+compound.ts:60 Habit 4 on 2025-05-21: no log found
+compound.ts:64 Total weight for 2025-05-21: 0
+compound.ts:33 Calculating daily rate for 2025-05-22
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-22: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-22: no log found
+compound.ts:60 Habit 2 on 2025-05-22: no log found
+compound.ts:60 Habit 3 on 2025-05-22: no log found
+compound.ts:60 Habit 4 on 2025-05-22: no log found
+compound.ts:64 Total weight for 2025-05-22: 0
+compound.ts:33 Calculating daily rate for 2025-05-23
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-23: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-23: no log found
+compound.ts:60 Habit 2 on 2025-05-23: no log found
+compound.ts:60 Habit 3 on 2025-05-23: no log found
+compound.ts:60 Habit 4 on 2025-05-23: no log found
+compound.ts:64 Total weight for 2025-05-23: 0
+compound.ts:33 Calculating daily rate for 2025-05-24
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-24: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-24: no log found
+compound.ts:60 Habit 2 on 2025-05-24: no log found
+compound.ts:60 Habit 3 on 2025-05-24: no log found
+compound.ts:60 Habit 4 on 2025-05-24: no log found
+compound.ts:64 Total weight for 2025-05-24: 0
+compound.ts:33 Calculating daily rate for 2025-05-25
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-25: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-25: no log found
+compound.ts:60 Habit 2 on 2025-05-25: no log found
+compound.ts:60 Habit 3 on 2025-05-25: no log found
+compound.ts:60 Habit 4 on 2025-05-25: no log found
+compound.ts:64 Total weight for 2025-05-25: 0
+compound.ts:33 Calculating daily rate for 2025-05-26
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-26: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-26: no log found
+compound.ts:60 Habit 2 on 2025-05-26: no log found
+compound.ts:60 Habit 3 on 2025-05-26: no log found
+compound.ts:60 Habit 4 on 2025-05-26: no log found
+compound.ts:64 Total weight for 2025-05-26: 0
+compound.ts:33 Calculating daily rate for 2025-05-27
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-27: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-27: no log found
+compound.ts:60 Habit 2 on 2025-05-27: no log found
+compound.ts:60 Habit 3 on 2025-05-27: no log found
+compound.ts:60 Habit 4 on 2025-05-27: no log found
+compound.ts:64 Total weight for 2025-05-27: 0
+compound.ts:33 Calculating daily rate for 2025-05-28
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-28: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-28: no log found
+compound.ts:60 Habit 2 on 2025-05-28: no log found
+compound.ts:60 Habit 3 on 2025-05-28: no log found
+compound.ts:60 Habit 4 on 2025-05-28: no log found
+compound.ts:64 Total weight for 2025-05-28: 0
+compound.ts:33 Calculating daily rate for 2025-05-29
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-29: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-29: no log found
+compound.ts:60 Habit 2 on 2025-05-29: no log found
+compound.ts:60 Habit 3 on 2025-05-29: no log found
+compound.ts:60 Habit 4 on 2025-05-29: no log found
+compound.ts:64 Total weight for 2025-05-29: 0
+compound.ts:33 Calculating daily rate for 2025-05-30
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-30: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-30: no log found
+compound.ts:60 Habit 2 on 2025-05-30: no log found
+compound.ts:60 Habit 3 on 2025-05-30: no log found
+compound.ts:60 Habit 4 on 2025-05-30: no log found
+compound.ts:64 Total weight for 2025-05-30: 0
+compound.ts:33 Calculating daily rate for 2025-05-31
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-05-31: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-05-31: no log found
+compound.ts:60 Habit 2 on 2025-05-31: no log found
+compound.ts:60 Habit 3 on 2025-05-31: no log found
+compound.ts:60 Habit 4 on 2025-05-31: no log found
+compound.ts:64 Total weight for 2025-05-31: 0
+compound.ts:33 Calculating daily rate for 2025-06-01
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-01: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-01: no log found
+compound.ts:60 Habit 2 on 2025-06-01: no log found
+compound.ts:60 Habit 3 on 2025-06-01: no log found
+compound.ts:60 Habit 4 on 2025-06-01: no log found
+compound.ts:64 Total weight for 2025-06-01: 0
+compound.ts:33 Calculating daily rate for 2025-06-02
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-02: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-02: no log found
+compound.ts:60 Habit 2 on 2025-06-02: no log found
+compound.ts:60 Habit 3 on 2025-06-02: no log found
+compound.ts:60 Habit 4 on 2025-06-02: no log found
+compound.ts:64 Total weight for 2025-06-02: 0
+compound.ts:33 Calculating daily rate for 2025-06-03
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-03: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-03: no log found
+compound.ts:60 Habit 2 on 2025-06-03: no log found
+compound.ts:60 Habit 3 on 2025-06-03: no log found
+compound.ts:60 Habit 4 on 2025-06-03: no log found
+compound.ts:64 Total weight for 2025-06-03: 0
+compound.ts:33 Calculating daily rate for 2025-06-04
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-04: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-04: no log found
+compound.ts:60 Habit 2 on 2025-06-04: no log found
+compound.ts:60 Habit 3 on 2025-06-04: no log found
+compound.ts:60 Habit 4 on 2025-06-04: no log found
+compound.ts:64 Total weight for 2025-06-04: 0
+compound.ts:33 Calculating daily rate for 2025-06-05
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-05: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-05: no log found
+compound.ts:60 Habit 2 on 2025-06-05: no log found
+compound.ts:60 Habit 3 on 2025-06-05: no log found
+compound.ts:60 Habit 4 on 2025-06-05: no log found
+compound.ts:64 Total weight for 2025-06-05: 0
+compound.ts:33 Calculating daily rate for 2025-06-06
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-06: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-06: no log found
+compound.ts:60 Habit 2 on 2025-06-06: no log found
+compound.ts:60 Habit 3 on 2025-06-06: no log found
+compound.ts:60 Habit 4 on 2025-06-06: no log found
+compound.ts:64 Total weight for 2025-06-06: 0
+compound.ts:33 Calculating daily rate for 2025-06-07
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-07: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-07: no log found
+compound.ts:60 Habit 2 on 2025-06-07: no log found
+compound.ts:60 Habit 3 on 2025-06-07: no log found
+compound.ts:60 Habit 4 on 2025-06-07: no log found
+compound.ts:64 Total weight for 2025-06-07: 0
+compound.ts:33 Calculating daily rate for 2025-06-08
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-08: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-08: no log found
+compound.ts:60 Habit 2 on 2025-06-08: no log found
+compound.ts:60 Habit 3 on 2025-06-08: no log found
+compound.ts:60 Habit 4 on 2025-06-08: no log found
+compound.ts:64 Total weight for 2025-06-08: 0
+compound.ts:33 Calculating daily rate for 2025-06-09
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-09: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-09: no log found
+compound.ts:60 Habit 2 on 2025-06-09: no log found
+compound.ts:60 Habit 3 on 2025-06-09: no log found
+compound.ts:60 Habit 4 on 2025-06-09: no log found
+compound.ts:64 Total weight for 2025-06-09: 0
+compound.ts:33 Calculating daily rate for 2025-06-10
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-10: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-10: no log found
+compound.ts:60 Habit 2 on 2025-06-10: no log found
+compound.ts:60 Habit 3 on 2025-06-10: no log found
+compound.ts:60 Habit 4 on 2025-06-10: no log found
+compound.ts:64 Total weight for 2025-06-10: 0
+compound.ts:33 Calculating daily rate for 2025-06-11
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-11: Array(4)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:64 Total weight for 2025-06-11: 0
+compound.ts:33 Calculating daily rate for 2025-06-12
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-12: Array(3)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 4 on 2025-06-12: no log found
+compound.ts:64 Total weight for 2025-06-12: 0
+compound.ts:33 Calculating daily rate for 2025-06-13
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-13: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-13: no log found
+compound.ts:60 Habit 2 on 2025-06-13: no log found
+compound.ts:60 Habit 3 on 2025-06-13: no log found
+compound.ts:60 Habit 4 on 2025-06-13: no log found
+compound.ts:64 Total weight for 2025-06-13: 0
+compound.ts:33 Calculating daily rate for 2025-06-13
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 367
+compound.ts:39 Logs found for 2025-06-13: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-13: no log found
+compound.ts:60 Habit 2 on 2025-06-13: no log found
+compound.ts:60 Habit 3 on 2025-06-13: no log found
+compound.ts:60 Habit 4 on 2025-06-13: no log found
+compound.ts:64 Total weight for 2025-06-13: 0
