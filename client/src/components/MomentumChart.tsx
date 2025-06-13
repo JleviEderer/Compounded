@@ -101,7 +101,7 @@ export default function MomentumChart({
                 </motion.div>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs">
-                <p>Total growth since {formatDate(getActualStartDate())}: {((currentMomentum - 1.0) * 100).toFixed(1)}%</p>
+                <p>Total Growth Since Started Habit Tracking: {((currentMomentum - 1.0) * 100).toFixed(1)}%</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
