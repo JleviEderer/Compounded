@@ -117,6 +117,7 @@ export default function MomentumChart({
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
               domain={['dataMin - 0.01', 'dataMax + 0.01']}
+              tickFormatter={(value) => value.toFixed(2)}
             />
             <RechartsTooltip content={<CustomTooltip />} />
 
