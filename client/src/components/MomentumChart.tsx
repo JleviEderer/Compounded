@@ -5,7 +5,7 @@ import {
   XAxis, 
   YAxis, 
   ResponsiveContainer, 
-  Tooltip,
+  Tooltip as RechartsTooltip,
   ReferenceLine 
 } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
@@ -120,7 +120,7 @@ export default function MomentumChart({
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
               domain={['dataMin - 0.01', 'dataMax + 0.01']}
             />
-            <Tooltip content={<CustomTooltip />} />
+            <RechartsTooltip content={<CustomTooltip />} />
 
             {/* Historical data */}
             <Area
