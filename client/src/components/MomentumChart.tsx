@@ -8,6 +8,9 @@ import {
   Tooltip,
   ReferenceLine 
 } from 'recharts';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { HelpCircle } from 'lucide-react';
 import { MomentumData } from '../types';
 
 interface MomentumChartProps {
@@ -155,39 +158,84 @@ export default function MomentumChart({
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-6 grid grid-cols-3 gap-4">
-        <motion.div 
-          className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
-          whileHover={{ scale: 1.02 }}
-        >
-          <div className="text-xl font-bold text-gray-800 dark:text-white">
-            {totalGrowth.toFixed(0)}%
+      {/* Quick Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+              {totalGrowth >= 0 ? '+' : ''}{totalGrowth.toFixed(1)}%
+            </div>
+            <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+              Total Growth
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>Percentage change from your starting momentum index to current momentum. Shows overall compound progress over time.</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Total Growth</div>
-        </motion.div>
 
-        <motion.div 
-          className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
-          whileHover={{ scale: 1.02 }}
-        >
-          <div className={`text-2xl font-bold ${
-            (todayRate || 0) >= 0 ? 'text-emerald-600' : 'text-red-600'
-          }`}>
-            {(todayRate || 0) >= 0 ? '+' : ''}{((todayRate || 0) * 100).toFixed(2)}%
+          <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+              {todayRate >= 0 ? '+' : ''}{(todayRate * 100).toFixed(2)}%
+            </div>
+            <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+              Today's Rate
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>Daily momentum rate based on today's habit completions. Positive weights for good habits, negative for bad habits. Formula: sum of (habit_weight × completion_state)</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Today's Rate</div>
-        </motion.div>
 
-        <motion.div 
-          className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
-          whileHover={{ scale: 1.02 }}
-        >
-          <div className="text-xl font-bold text-coral">
-            {projectedTarget.toFixed(2)}
+          <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+              {projectedTarget.toFixed(2)}
+            </div>
+            <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+              30-Day Target
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>Projected momentum index in 30 days based on your recent 7-day average performance. Uses compound growth formula: current_momentum × (1 + avg_rate)^30</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">30-Day Target</div>
-        </motion.div>
-      </div>
+
+          <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-coral">
+              {currentMomentum.toFixed(2)}
+            </div>
+            <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+              Current Index
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>Your current momentum index calculated by compounding daily rates from start date. Formula: momentum = 1.0 × ∏(1 + daily_rate) for each day</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          </div>
+        </div>
     </motion.div>
   );
 }
