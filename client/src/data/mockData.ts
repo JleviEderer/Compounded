@@ -9,6 +9,26 @@ console.log('📋 Raw JSON data loaded:', {
   logsCount: rawJsonData?.logs?.length || 0
 });
 
+// DEBUG: Check the actual raw data
+if (rawJsonData?.logs) {
+  const allRawDates = rawJsonData.logs.map((log: any) => log.date).sort();
+  const uniqueRawDates = [...new Set(allRawDates)];
+  console.log('🔍 RAW JSON - Total logs:', rawJsonData.logs.length);
+  console.log('🔍 RAW JSON - Date range:', `${allRawDates[0]} → ${allRawDates[allRawDates.length-1]}`);
+  console.log('🔍 RAW JSON - Unique dates:', uniqueRawDates.length);
+  console.log('🔍 RAW JSON - First 5 dates:', uniqueRawDates.slice(0, 5));
+  console.log('🔍 RAW JSON - Last 5 dates:', uniqueRawDates.slice(-5));
+  
+  // Check for 2025 data specifically
+  const raw2025Logs = rawJsonData.logs.filter((log: any) => log.date.startsWith('2025'));
+  console.log('🔍 RAW JSON - 2025 logs found:', raw2025Logs.length);
+  if (raw2025Logs.length > 0) {
+    console.log('🔍 RAW JSON - Sample 2025 logs:', raw2025Logs.slice(0, 3));
+  }
+} else {
+  console.error('❌ RAW JSON - No logs property found!');
+}
+
 // Convert the JSON data to proper types
 export const mockHabits: HabitPair[] = rawJsonData.habits?.map((habit: any) => ({
   ...habit,
