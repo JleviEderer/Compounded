@@ -1,0 +1,26 @@
+
+{
+  "habits": [
+    {
+      "id": "1",
+      "goodHabit": "Read articles",
+      "badHabit": "Endless scrolling", 
+      "weight": 0.0025,
+      "createdAt": "2024-06-01T00:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "goodHabit": "10-minute walk",
+      "badHabit": "Staying seated all day",
+      "weight": 0.001,
+      "createdAt": "2024-06-01T00:00:00.000Z"
+    }
+  ],
+  "logs": [
+    { "id": "1-2025-06-01", "habitId": "1", "date": "2025-06-01", "state": "good" },
+    { "id": "1-2025-06-02", "habitId": "1", "date": "2025-06-02", "state": "good" },
+    { "id": "1-2025-06-03", "habitId": "1", "date": "2025-06-03", "state": "bad" },
+    { "id": "2-2025-06-01", "habitId": "2", "date": "2025-06-01", "state": "good" },
+    { "id": "2-2025-06-02", "habitId": "2", "date": "2025-06-02", "state": "bad" }
+  ]
+}
