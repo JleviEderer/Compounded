@@ -134,7 +134,8 @@ export default function MomentumChart({
               stroke="#FF8C7A"
               strokeWidth={2}
               strokeDasharray="6,6"
-              fill="none"
+              fill="#FF8C7A"
+              fillOpacity={0.05}
               dot={false}
               connectNulls={true}
             />
