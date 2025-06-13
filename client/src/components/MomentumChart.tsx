@@ -88,7 +88,11 @@ export default function MomentumChart({
         </div>
       </div>
 
-      <div className="h-80 w-full">
+      <motion.div 
+        className="h-80 w-full"
+        layout
+        transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
+      >
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={combinedData}>
             <defs>
@@ -150,7 +154,7 @@ export default function MomentumChart({
             />
           </AreaChart>
         </ResponsiveContainer>
-      </div>
+      </motion.div>
 
       {/* Quick Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
