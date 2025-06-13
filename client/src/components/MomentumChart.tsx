@@ -111,6 +111,8 @@ export default function MomentumChart({
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
+              interval="preserveStartEnd"
+              tickCount={6}
             />
             <YAxis 
               axisLine={false}
@@ -118,6 +120,7 @@ export default function MomentumChart({
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
               domain={['dataMin - 0.01', 'dataMax + 0.01']}
               tickFormatter={(value) => value.toFixed(2)}
+              tickCount={5}
             />
             <RechartsTooltip content={<CustomTooltip />} />
 
