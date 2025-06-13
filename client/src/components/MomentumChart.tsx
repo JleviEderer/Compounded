@@ -131,10 +131,10 @@ export default function MomentumChart({
             <Area
               type="monotone"
               dataKey={(entry: any) => entry.isProjection ? entry.value : null}
-              stroke="#FF8C7A"
+              stroke="hsl(8, 100%, 74%)"
               strokeWidth={2}
               strokeDasharray="6,6"
-              fill="none"
+              fill="url(#projectionGradient)"
               dot={false}
               connectNulls={true}
             />
