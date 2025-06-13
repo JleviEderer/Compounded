@@ -75,16 +75,28 @@ export default function MomentumChart({
           </p>
         </div>
         <div className="text-right">
-          <motion.div 
-            className="text-4xl font-bold text-coral"
-            key={currentMomentum}
-            initial={{ scale: 1.2 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            {currentMomentum.toFixed(2)}
-          </motion.div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <motion.div 
+                  className="text-4xl font-bold text-coral cursor-help"
+                  key={currentMomentum}
+                  initial={{ scale: 1.2 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {currentMomentum.toFixed(2)}
+                </motion.div>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs">
+                <p>Total growth: {totalGrowth >= 0 ? '+' : ''}{totalGrowth.toFixed(1)}%</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <div className="text-sm text-gray-500 dark:text-gray-400">Current Index</div>
+          <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+            Growth since {data.length > 0 ? formatDate(data[0].date) : 'start'}
+          </div>
         </div>
       </div>
 
