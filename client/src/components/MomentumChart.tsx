@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { 
   AreaChart, 
   Area, 
@@ -32,7 +33,28 @@ export default function MomentumChart({
   habits = [],
   logs = []
 }: MomentumChartProps) {
-  const combinedData = data;
+  const [selectedRange, setSelectedRange] = useState('30 D');
+  
+  const timeRanges = [
+    { label: '30 D', days: 30 },
+    { label: '6 M', days: 180 },
+    { label: '1 Y', days: 365 },
+    { label: 'All', days: null }
+  ];
+
+  // Filter data based on selected time range
+  const getFilteredData = () => {
+    const range = timeRanges.find(r => r.label === selectedRange);
+    if (!range || range.days === null) return data;
+    
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - range.days);
+    const cutoffString = cutoffDate.toISOString().split('T')[0];
+    
+    return data.filter(d => d.date >= cutoffString);
+  };
+
+  const combinedData = getFilteredData();
 
   // Calculate the actual start date of habit tracking
   const getActualStartDate = () => {
@@ -110,6 +132,37 @@ export default function MomentumChart({
             Growth since {formatDate(getActualStartDate())}
           </div>
         </div>
+      </div>
+
+      {/* Time Range Selector */}
+      <div className="flex gap-2 mb-4">
+        {timeRanges.map((range) => (
+          <motion.button
+            key={range.label}
+            onClick={() => setSelectedRange(range.label)}
+            className={`relative flex px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+              selectedRange === range.label
+                ? 'text-white dark:text-white'
+                : 'text-teal-700 dark:text-teal-300 hover:text-teal-600 dark:hover:text-teal-200'
+            }`}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {selectedRange === range.label && (
+              <motion.div
+                layoutId="range"
+                className="absolute inset-0 bg-teal-600 dark:bg-teal-400 rounded-full"
+                initial={false}
+                transition={{
+                  type: "spring",
+                  stiffness: 350,
+                  damping: 30
+                }}
+              />
+            )}
+            <span className="relative z-10">{range.label}</span>
+          </motion.button>
+        ))}
       </div>
 
       <motion.div 
