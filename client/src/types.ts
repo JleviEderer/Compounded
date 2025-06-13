@@ -30,6 +30,7 @@ export interface MomentumData {
   date: string;
   value: number;
   dailyRate: number;
+  isProjection?: boolean;
 }
 
 export interface AppData {

@@ -15,26 +15,20 @@ import { MomentumData } from '../types';
 
 interface MomentumChartProps {
   data: MomentumData[];
-  projectionData?: MomentumData[];
   currentMomentum: number;
   totalGrowth: number;
   todayRate: number;
   projectedTarget: number;
-  showProjection?: boolean;
 }
 
 export default function MomentumChart({
   data,
-  projectionData = [],
   currentMomentum,
   totalGrowth,
   todayRate,
-  projectedTarget,
-  showProjection = false
+  projectedTarget
 }: MomentumChartProps) {
-  const combinedData = showProjection 
-    ? [...data, ...projectionData.map(d => ({ ...d, isProjection: true }))]
-    : data;
+  const combinedData = data;
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -122,10 +116,10 @@ export default function MomentumChart({
             />
             <RechartsTooltip content={<CustomTooltip />} />
 
-            {/* Historical data */}
+            {/* Historical data (before and including today) */}
             <Area
               type="monotone"
-              dataKey="value"
+              dataKey={(entry: any) => !entry.isProjection ? entry.value : null}
               stroke="hsl(174, 58%, 46%)"
               strokeWidth={3}
               fill="url(#areaGradient)"
@@ -133,26 +127,26 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Projection line */}
-            {showProjection && (
-              <Area
-                type="monotone"
-                dataKey={(entry: any) => entry.isProjection ? entry.value : null}
-                stroke="hsl(8, 100%, 74%)"
-                strokeWidth={2}
-                strokeDasharray="6,6"
-                fill="url(#projectionGradient)"
-                dot={false}
-                connectNulls={true}
-              />
-            )}
+            {/* Projection line (dotted, from today forward) */}
+            <Area
+              type="monotone"
+              dataKey={(entry: any) => entry.isProjection ? entry.value : null}
+              stroke="hsl(8, 100%, 74%)"
+              strokeWidth={2}
+              strokeDasharray="6,6"
+              fill="url(#projectionGradient)"
+              dot={false}
+              connectNulls={true}
+            />
 
-            {/* Current day reference line */}
+            {/* Today's reference line */}
             <ReferenceLine 
               x={new Date().toISOString().split('T')[0]} 
               stroke="hsl(8, 100%, 74%)" 
-              strokeDasharray="2,2" 
-              opacity={0.6}
+              strokeWidth={2}
+              strokeDasharray="3,3" 
+              opacity={0.8}
+              label={{ value: "Today", position: "topLeft", offset: 10 }}
             />
           </AreaChart>
         </ResponsiveContainer>

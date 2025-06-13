@@ -71,27 +71,60 @@ export function generateMomentumHistory(
   days: number = 30
 ): MomentumData[] {
   const data: MomentumData[] = [];
-  const endDate = new Date();
+  let momentum = 1.0;
 
-  // Debug: Log available dates in logs
-  const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
-  console.log('Available log dates:', logDates);
+  // Center today's date: show half the days before today, half after
+  const daysBack = Math.floor(days / 2);
+  const daysForward = days - daysBack - 1; // -1 for today
 
-  for (let i = days - 1; i >= 0; i--) {
-    const date = new Date(endDate);
+  // Generate historical data (before today)
+  for (let i = daysBack; i >= 1; i--) {
+    const date = new Date();
     date.setDate(date.getDate() - i);
     const dateStr = date.toISOString().split('T')[0];
 
-    const momentum = calculateMomentumIndex(habits, logs, date);
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
-
-    // Debug: Log what we're calculating
-    console.log(`Date: ${dateStr}, Daily Rate: ${dailyRate}, Momentum: ${momentum}`);
+    momentum *= (1 + dailyRate);
+    momentum = Math.max(0, momentum);
 
     data.push({
       date: dateStr,
       value: momentum,
       dailyRate
+    });
+  }
+
+  // Add today
+  const today = new Date().toISOString().split('T')[0];
+  const todayRate = calculateDailyRate(habits, logs, today);
+  momentum *= (1 + todayRate);
+  momentum = Math.max(0, momentum);
+
+  data.push({
+    date: today,
+    value: momentum,
+    dailyRate: todayRate
+  });
+
+  // Generate future projection based on 7-day average
+  const last7Days = data.slice(-7);
+  const avgRate = last7Days.length > 0 
+    ? last7Days.reduce((sum, d) => sum + d.dailyRate, 0) / last7Days.length
+    : 0.001;
+
+  for (let i = 1; i <= daysForward; i++) {
+    const date = new Date();
+    date.setDate(date.getDate() + i);
+    const dateStr = date.toISOString().split('T')[0];
+
+    momentum *= (1 + avgRate);
+    momentum = Math.max(0, momentum);
+
+    data.push({
+      date: dateStr,
+      value: momentum,
+      dailyRate: avgRate,
+      isProjection: true
     });
   }
 

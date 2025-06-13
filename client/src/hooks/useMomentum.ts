@@ -14,10 +14,8 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[]) {
     [habits, logs]
   );
 
-  const projectionData = useMemo(() => 
-    generate30DayProjection(habits, logs),
-    [habits, logs]
-  );
+  // Projection data is now included in momentumData
+  const projectionData: MomentumData[] = [];
 
   const currentMomentum = useMemo(() => 
     calculateMomentumIndex(habits, logs, new Date()),
