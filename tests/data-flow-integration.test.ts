@@ -1,4 +1,8 @@
 
+/**
+ * data-flow-integration.test.ts: Comprehensively tests the entire data pipeline from JSON → TypeScript → DataService → React Hook, ensuring data integrity at each step.
+ */
+
 import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useHabits } from '../client/src/hooks/useHabits';

@@ -1,4 +1,8 @@
 
+/**
+ * momentum-calculation-flow.test.ts: Specifically validates the momentum calculations using your real data, testing the exact scenarios we see in your console logs.
+ */
+
 import { describe, it, expect } from 'vitest';
 import { calculateDailyRate, calculateMomentumIndex } from '../client/src/utils/compound';
 import { mockHabits, mockLogs } from '../client/src/data/mockData';
