@@ -32,7 +32,7 @@ export default function MomentumChart({
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
-    return `${date.getMonth() + 1}/${date.getDate()}`;
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear().toString().slice(-2)}`;
   };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
