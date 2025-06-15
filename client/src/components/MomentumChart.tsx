@@ -227,7 +227,7 @@ export default function MomentumChart({
               dataKey={(entry: any) => entry.isProjection ? entry.value : null}
               stroke="hsl(351, 83%, 60%)"
               strokeWidth={3}
-              strokeDasharray="4,4"
+              strokeDasharray="12,6"
               fill="url(#projectionGradient)"
               dot={false}
               connectNulls={false}
