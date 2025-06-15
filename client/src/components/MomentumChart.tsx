@@ -53,21 +53,10 @@ export default function MomentumChart({
     return totalGrowth;
   };
 
-  // Get start date based on time filter
+  // Get start date based on actual filtered data
   const getTimeFilterStartDate = () => {
-    const range = timeRanges.find(r => r.label === selectedRange);
-    if (!range || range.days === null) {
-      // For "All", get actual start date
-      const habitDates = habits.map(h => new Date(h.createdAt).toISOString().split('T')[0]);
-      const logDates = logs.map(l => l.date);
-      const allDates = [...habitDates, ...logDates].sort();
-      return allDates.length > 0 ? allDates[0] : (data.length > 0 ? data[0].date : 'start');
-    } else {
-      // For specific ranges, calculate from current date
-      const cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - range.days);
-      return cutoffDate.toISOString().split('T')[0];
-    }
+    if (combinedData.length === 0) return 'start';
+    return combinedData[0].date;
   };
 
   const dynamicCurrentIndex = getDynamicCurrentIndex();
@@ -197,15 +186,19 @@ export default function MomentumChart({
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
-              interval="preserveStartEnd"
-              tickCount={6}
+              domain={['dataMin', 'dataMax']}
+              type="category"
+              interval={Math.max(1, Math.floor(combinedData.length / 6))}
             />
             <YAxis 
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
-              domain={['dataMin - 0.01', 'dataMax + 0.01']}
-              tickFormatter={(value) => value < 1.00 ? '' : value.toFixed(2)}
+              domain={[
+                (dataMin: number) => Math.max(0.98, dataMin - 0.02),
+                (dataMax: number) => dataMax + 0.02
+              ]}
+              tickFormatter={(value) => value.toFixed(3)}
               tickCount={5}
             />
             <RechartsTooltip content={<CustomTooltip />} />
