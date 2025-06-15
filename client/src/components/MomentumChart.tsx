@@ -307,7 +307,7 @@ export default function MomentumChart({
                   <p>
                     {selectedRange === 'All Time' 
                       ? 'Current momentum index (no forecast for All Time view)'
-                      : `Projected momentum index based on ${selectedRange === '30 D' ? '7-day' : selectedRange === '4 M' ? '1-month' : '4-month'} average performance using compound growth formula.`
+                      : `Pro forma target based on your ${selectedRange === '30 D' ? '7-day' : selectedRange === '4 M' ? '30-day' : '4-month'} average run rate. This projects where you'll be if you maintain your recent ${selectedRange === '30 D' ? '7-day' : selectedRange === '4 M' ? '30-day' : '4-month'} performance.`
                     }
                   </p>
                 </TooltipContent>
