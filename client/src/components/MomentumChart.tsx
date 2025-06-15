@@ -40,12 +40,18 @@ export default function MomentumChart({
   timeRanges
 }: MomentumChartProps) {
 
-  // Separate historical and forecast data for clean rendering
+  // Separate historical and forecast data 
   const historicalData = data.filter(d => !d.isProjection);
   const forecastData = data.filter(d => d.isProjection);
   
-  // Create a connecting point between historical and forecast
+  // Find today's date for the divider
+  const today = new Date().toISOString().split('T')[0];
+  
+  // Create connection point to eliminate gap
   const todayPoint = historicalData.length > 0 ? historicalData[historicalData.length - 1] : null;
+  
+  // Ensure both datasets share the connection point for seamless rendering
+  const historicalWithConnection = historicalData;
   const forecastWithConnection = todayPoint && forecastData.length > 0 
     ? [{ ...todayPoint, isProjection: true }, ...forecastData]
     : forecastData;
@@ -226,38 +232,46 @@ export default function MomentumChart({
             />
             <RechartsTooltip content={<CustomTooltip />} />
 
-            {/* Historical data area - only show non-projection points */}
+            {/* Historical data area - solid line with original styling */}
             <Area
               type="monotone"
-              dataKey={(entry: any) => !entry.isProjection ? entry.value : null}
+              data={historicalWithConnection}
+              dataKey="value"
               stroke="hsl(174, 58%, 46%)"
               strokeWidth={3}
               fill="url(#areaGradient)"
               dot={false}
-              connectNulls={false}
             />
 
-            {/* Forecast area - only show projection points */}
+            {/* Forecast area - dashed line connecting seamlessly */}
             <Area
               type="monotone"
-              dataKey={(entry: any) => entry.isProjection ? entry.value : null}
+              data={forecastWithConnection}
+              dataKey="value"
               stroke={forecastStrokeColor}
               strokeWidth={1.5}
               strokeDasharray="8,4"
               fill={`url(#${forecastGradientId})`}
               dot={false}
-              connectNulls={false}
             />
 
-            {/* Today's reference line - positioned at 3/4 of the chart when forecast is present */}
-            {selectedRange !== 'All Time' && (
+            {/* Today divider line - marks the transition between historical and forecast */}
+            {todayPoint && forecastData.length > 0 && (
               <ReferenceLine 
-                x={new Date().toISOString().split('T')[0]} 
-                stroke="hsl(351, 83%, 87%)" 
-                strokeWidth={1.5}
-                strokeDasharray="2,2" 
-                opacity={0.6}
-                label={{ value: "Today", position: "topLeft", offset: 10 }}
+                x={todayPoint.date} 
+                stroke="#6B7280" 
+                strokeWidth={2}
+                opacity={0.7}
+                label={{ 
+                  value: "Today", 
+                  position: "top", 
+                  offset: 15,
+                  style: { 
+                    fill: '#6B7280', 
+                    fontSize: '12px', 
+                    fontWeight: '500' 
+                  }
+                }}
               />
             )}
           </AreaChart>
