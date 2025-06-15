@@ -40,25 +40,15 @@ export default function MomentumChart({
   timeRanges
 }: MomentumChartProps) {
 
-  // Separate historical and forecast data 
+  // Separate historical and forecast data for clean rendering
   const historicalData = data.filter(d => !d.isProjection);
   const forecastData = data.filter(d => d.isProjection);
-
-  // Find today's date for the divider
-  const today = new Date().toISOString().split('T')[0];
-
-  // Create connection point to eliminate gap - but use actual today's date for divider position
+  
+  // Create a connecting point between historical and forecast
   const todayPoint = historicalData.length > 0 ? historicalData[historicalData.length - 1] : null;
-
-  // Create seamless connected dataset
-  const connectedData = [...data];
-  if (todayPoint && forecastData.length > 0) {
-    // Ensure the last historical point connects to the first forecast point
-    const firstForecastIndex = connectedData.findIndex(d => d.isProjection);
-    if (firstForecastIndex > 0) {
-      connectedData[firstForecastIndex] = { ...todayPoint, isProjection: true, date: forecastData[0].date };
-    }
-  }
+  const forecastWithConnection = todayPoint && forecastData.length > 0 
+    ? [{ ...todayPoint, isProjection: true }, ...forecastData]
+    : forecastData;
 
   // Determine forecast trend direction
   const isForecastTrendingUp = () => {
@@ -236,7 +226,7 @@ export default function MomentumChart({
             />
             <RechartsTooltip content={<CustomTooltip />} />
 
-            {/* Historical data area - solid line with original styling */}
+            {/* Historical data area - only show non-projection points */}
             <Area
               type="monotone"
               dataKey={(entry: any) => !entry.isProjection ? entry.value : null}
@@ -247,7 +237,7 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Forecast area - dashed line connecting seamlessly */}
+            {/* Forecast area - only show projection points */}
             <Area
               type="monotone"
               dataKey={(entry: any) => entry.isProjection ? entry.value : null}
@@ -256,26 +246,20 @@ export default function MomentumChart({
               strokeDasharray="8,4"
               fill={`url(#${forecastGradientId})`}
               dot={false}
-              connectNulls={true}
+              connectNulls={false}
             />
 
-            {/* Today divider line - marks the current date */}
-            <ReferenceLine 
-              x={today} 
-              stroke="#6B7280" 
-              strokeWidth={1}
-              opacity={0.5}
-              label={{ 
-                value: "Today", 
-                position: "top", 
-                offset: 15,
-                style: { 
-                  fill: '#6B7280', 
-                  fontSize: '12px', 
-                  fontWeight: '500' 
-                }
-              }}
-            />
+            {/* Today's reference line - positioned at 3/4 of the chart when forecast is present */}
+            {selectedRange !== 'All Time' && (
+              <ReferenceLine 
+                x={new Date().toISOString().split('T')[0]} 
+                stroke="hsl(351, 83%, 87%)" 
+                strokeWidth={1.5}
+                strokeDasharray="2,2" 
+                opacity={0.6}
+                label={{ value: "Today", position: "topLeft", offset: 10 }}
+              />
+            )}
           </AreaChart>
         </ResponsiveContainer>
       </motion.div>
