@@ -50,9 +50,6 @@ export default function MomentumChart({
     ? [{ ...todayPoint, isProjection: true }, ...forecastData]
     : forecastData;
 
-  // Find the transition point for the "Today" divider
-  const todayDividerDate = todayPoint ? todayPoint.date : new Date().toISOString().split('T')[0];
-
   // Determine forecast trend direction
   const isForecastTrendingUp = () => {
     if (forecastData.length < 2 || !todayPoint) return true; // Default to up if no data
@@ -237,40 +234,30 @@ export default function MomentumChart({
               strokeWidth={3}
               fill="url(#areaGradient)"
               dot={false}
-              connectNulls={true}
+              connectNulls={false}
             />
 
-            {/* Forecast area - connect seamlessly with historical data */}
+            {/* Forecast area - only show projection points */}
             <Area
               type="monotone"
-              data={forecastWithConnection}
-              dataKey="value"
+              dataKey={(entry: any) => entry.isProjection ? entry.value : null}
               stroke={forecastStrokeColor}
               strokeWidth={1.5}
               strokeDasharray="8,4"
               fill={`url(#${forecastGradientId})`}
               dot={false}
-              connectNulls={true}
+              connectNulls={false}
             />
 
-            {/* Today divider - overlays at the transition point */}
-            {forecastData.length > 0 && (
+            {/* Today's reference line - positioned at 3/4 of the chart when forecast is present */}
+            {selectedRange !== 'All Time' && (
               <ReferenceLine 
-                x={todayDividerDate}
-                stroke="hsl(351, 83%, 60%)" 
-                strokeWidth={2}
-                opacity={0.8}
-                label={{ 
-                  value: "Today", 
-                  position: "top", 
-                  offset: 10,
-                  style: { 
-                    fill: 'hsl(351, 83%, 60%)', 
-                    fontSize: '12px', 
-                    fontWeight: 'bold',
-                    textAnchor: 'middle'
-                  }
-                }}
+                x={new Date().toISOString().split('T')[0]} 
+                stroke="hsl(351, 83%, 87%)" 
+                strokeWidth={1.5}
+                strokeDasharray="2,2" 
+                opacity={0.6}
+                label={{ value: "Today", position: "topLeft", offset: 10 }}
               />
             )}
           </AreaChart>
