@@ -1,5 +1,5 @@
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { useMomentum } from '../client/src/hooks/useMomentum';
 import { mockHabits, mockLogs } from '../client/src/data/mockData';
 import { renderHook } from '@testing-library/react';
@@ -66,7 +66,7 @@ describe('Time Filter Integration', () => {
 
     // All momentum data should be within the time range
     result.current.momentumData.forEach(dataPoint => {
-      expect(dataPoint.date).toBeGreaterThanOrEqual(cutoffString);
+      expect(new Date(dataPoint.date).getTime()).toBeGreaterThanOrEqual(new Date(cutoffString).getTime());
     });
   });
 

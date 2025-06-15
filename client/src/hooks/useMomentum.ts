@@ -32,9 +32,10 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     console.log(`Time Filter: ${timeFilter.label} (${timeFilter.days} days)`);
     console.log(`Cutoff date: ${cutoffString}`);
     console.log(`Original logs: ${logs.length}, Filtered logs: ${filteredLogs.length}`);
-    console.log(`Filtered date range: ${filteredLogs.length > 0 ? 
-      `${Math.min(...filteredLogs.map(l => l.date))} to ${Math.max(...filteredLogs.map(l => l.date))}` : 
-      'No logs in range'}`);
+    const dateRange = filteredLogs.length > 0 ? 
+      `${filteredLogs.map(l => l.date).sort()[0]} to ${filteredLogs.map(l => l.date).sort().pop()}` : 
+      'No logs in range';
+    console.log(`Filtered date range: ${dateRange}`);
     
     return { habits, logs: filteredLogs };
   }, [habits, logs, timeFilter]);
