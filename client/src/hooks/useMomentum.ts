@@ -17,6 +17,8 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
   // Filter data based on selected time range
   const filteredData = useMemo(() => {
     if (!timeFilter || timeFilter.days === null) {
+      console.log('Time Filter: All Time selected, using all data');
+      console.log(`Total logs available: ${logs.length}`);
       return { habits, logs };
     }
     
@@ -26,6 +28,13 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     
     // Filter logs to only include data within the time range
     const filteredLogs = logs.filter(log => log.date >= cutoffString);
+    
+    console.log(`Time Filter: ${timeFilter.label} (${timeFilter.days} days)`);
+    console.log(`Cutoff date: ${cutoffString}`);
+    console.log(`Original logs: ${logs.length}, Filtered logs: ${filteredLogs.length}`);
+    console.log(`Filtered date range: ${filteredLogs.length > 0 ? 
+      `${Math.min(...filteredLogs.map(l => l.date))} to ${Math.max(...filteredLogs.map(l => l.date))}` : 
+      'No logs in range'}`);
     
     return { habits, logs: filteredLogs };
   }, [habits, logs, timeFilter]);
