@@ -209,7 +209,13 @@ export default function MomentumChart({
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
-              domain={['dataMin', 'dataMax']}
+              domain={[
+                'dataMin', 
+                (dataMax: string) => {
+                  const today = new Date().toISOString().split('T')[0];
+                  return dataMax > today ? dataMax : today;
+                }
+              ]}
               type="category"
               interval={Math.max(1, Math.floor(data.length / 6))}
             />
