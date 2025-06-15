@@ -47,7 +47,7 @@ export default function MomentumChart({
   // Find today's date for the divider
   const today = new Date().toISOString().split('T')[0];
   
-  // Create connection point to eliminate gap
+  // Create connection point to eliminate gap - but use actual today's date for divider position
   const todayPoint = historicalData.length > 0 ? historicalData[historicalData.length - 1] : null;
   
   // Create seamless connected dataset
@@ -260,9 +260,9 @@ export default function MomentumChart({
             />
 
             {/* Today divider line - marks the transition between historical and forecast */}
-            {todayPoint && forecastData.length > 0 && (
+            {forecastData.length > 0 && (
               <ReferenceLine 
-                x={todayPoint.date} 
+                x={today} 
                 stroke="#6B7280" 
                 strokeWidth={2}
                 opacity={0.7}
