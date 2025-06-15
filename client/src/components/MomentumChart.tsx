@@ -40,8 +40,15 @@ export default function MomentumChart({
   timeRanges
 }: MomentumChartProps) {
 
-  // Data is already filtered by the parent component
-  const combinedData = data;
+  // Separate historical and forecast data for clean rendering
+  const historicalData = data.filter(d => !d.isProjection);
+  const forecastData = data.filter(d => d.isProjection);
+  
+  // Create a connecting point between historical and forecast
+  const todayPoint = historicalData.length > 0 ? historicalData[historicalData.length - 1] : null;
+  const forecastWithConnection = todayPoint && forecastData.length > 0 
+    ? [{ ...todayPoint, isProjection: true }, ...forecastData]
+    : forecastData;
 
   // Use the pre-calculated current momentum from filtered data
   const getDynamicCurrentIndex = () => {
@@ -55,8 +62,8 @@ export default function MomentumChart({
 
   // Get start date based on actual filtered data
   const getTimeFilterStartDate = () => {
-    if (combinedData.length === 0) return 'start';
-    return combinedData[0].date;
+    if (data.length === 0) return 'start';
+    return data[0].date;
   };
 
   const dynamicCurrentIndex = getDynamicCurrentIndex();
@@ -169,7 +176,7 @@ export default function MomentumChart({
         transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
       >
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={combinedData}>
+          <AreaChart data={data}>
             <defs>
               <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="hsl(174, 58%, 46%)" stopOpacity={0.8}/>
@@ -188,7 +195,7 @@ export default function MomentumChart({
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
               domain={['dataMin', 'dataMax']}
               type="category"
-              interval={Math.max(1, Math.floor(combinedData.length / 6))}
+              interval={Math.max(1, Math.floor(data.length / 6))}
             />
             <YAxis 
               axisLine={false}
@@ -203,10 +210,10 @@ export default function MomentumChart({
             />
             <RechartsTooltip content={<CustomTooltip />} />
 
-            {/* Historical data area */}
+            {/* Historical data area - only show non-projection points */}
             <Area
               type="monotone"
-              dataKey="value"
+              dataKey={(entry: any) => !entry.isProjection ? entry.value : null}
               stroke="hsl(174, 58%, 46%)"
               strokeWidth={3}
               fill="url(#areaGradient)"
@@ -214,7 +221,7 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Forecast area (overlaid with different styling) */}
+            {/* Forecast area - only show projection points */}
             <Area
               type="monotone"
               dataKey={(entry: any) => entry.isProjection ? entry.value : null}
@@ -288,8 +295,8 @@ export default function MomentumChart({
 
         <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
           <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-            {combinedData.length >= 7 ? ((combinedData.slice(-7).reduce((sum, d) => sum + d.dailyRate, 0) / 7) * 100).toFixed(2) : 
-             combinedData.length > 0 ? ((combinedData.reduce((sum, d) => sum + d.dailyRate, 0) / combinedData.length) * 100).toFixed(2) : '0.00'}%
+            {data.length >= 7 ? ((data.slice(-7).reduce((sum, d) => sum + d.dailyRate, 0) / 7) * 100).toFixed(2) : 
+             data.length > 0 ? ((data.reduce((sum, d) => sum + d.dailyRate, 0) / data.length) * 100).toFixed(2) : '0.00'}%
           </div>
           <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
             7-Day Avg Rate
