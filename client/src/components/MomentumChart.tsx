@@ -249,17 +249,23 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Today's reference line - positioned at 3/4 of the chart when forecast is present */}
-            {selectedRange !== 'All Time' && (
-              <ReferenceLine 
-                x={new Date().toISOString().split('T')[0]} 
-                stroke="hsl(351, 83%, 87%)" 
-                strokeWidth={1.5}
-                strokeDasharray="2,2" 
-                opacity={0.6}
-                label={{ value: "Today", position: "topLeft", offset: 10 }}
-              />
-            )}
+            {/* Today reference line - marks current date */}
+            <ReferenceLine 
+              x={new Date().toISOString().split('T')[0]} 
+              stroke="#6B7280" 
+              strokeWidth={1}
+              opacity={0.5}
+              label={{ 
+                value: "Today", 
+                position: "top", 
+                offset: 15,
+                style: { 
+                  fill: '#6B7280', 
+                  fontSize: '12px', 
+                  fontWeight: '500' 
+                }
+              }}
+            />
           </AreaChart>
         </ResponsiveContainer>
       </motion.div>
