@@ -43,13 +43,13 @@ export default function MomentumChart({
   // Separate historical and forecast data 
   const historicalData = data.filter(d => !d.isProjection);
   const forecastData = data.filter(d => d.isProjection);
-  
+
   // Find today's date for the divider
   const today = new Date().toISOString().split('T')[0];
-  
+
   // Create connection point to eliminate gap - but use actual today's date for divider position
   const todayPoint = historicalData.length > 0 ? historicalData[historicalData.length - 1] : null;
-  
+
   // Create seamless connected dataset
   const connectedData = [...data];
   if (todayPoint && forecastData.length > 0) {
@@ -259,25 +259,23 @@ export default function MomentumChart({
               connectNulls={true}
             />
 
-            {/* Today divider line - marks the transition between historical and forecast */}
-            {forecastData.length > 0 && (
-              <ReferenceLine 
-                x={today} 
-                stroke="#6B7280" 
-                strokeWidth={2}
-                opacity={0.7}
-                label={{ 
-                  value: "Today", 
-                  position: "top", 
-                  offset: 15,
-                  style: { 
-                    fill: '#6B7280', 
-                    fontSize: '12px', 
-                    fontWeight: '500' 
-                  }
-                }}
-              />
-            )}
+            {/* Today divider line - marks the current date */}
+            <ReferenceLine 
+              x={today} 
+              stroke="#6B7280" 
+              strokeWidth={1}
+              opacity={0.5}
+              label={{ 
+                value: "Today", 
+                position: "top", 
+                offset: 15,
+                style: { 
+                  fill: '#6B7280', 
+                  fontSize: '12px', 
+                  fontWeight: '500' 
+                }
+              }}
+            />
           </AreaChart>
         </ResponsiveContainer>
       </motion.div>
