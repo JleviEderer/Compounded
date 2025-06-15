@@ -7,7 +7,6 @@ import { renderHook } from '@testing-library/react';
 describe('Time Filter Integration', () => {
   const timeFilters = [
     { label: 'All Time', days: null },
-    { label: '7 D', days: 7 },
     { label: '30 D', days: 30 },
     { label: '4 M', days: 120 },
     { label: '1 Y', days: 365 }
@@ -29,11 +28,11 @@ describe('Time Filter Integration', () => {
   });
 
   it('should filter logs based on time range', () => {
-    const sevenDayFilter = { label: '7 D', days: 7 };
+    const thirtyDayFilter = { label: '30 D', days: 30 };
     const allTimeFilter = { label: 'All Time', days: null };
 
-    const { result: sevenDayResult } = renderHook(() => 
-      useMomentum(mockHabits, mockLogs, sevenDayFilter)
+    const { result: thirtyDayResult } = renderHook(() => 
+      useMomentum(mockHabits, mockLogs, thirtyDayFilter)
     );
 
     const { result: allTimeResult } = renderHook(() => 
@@ -42,14 +41,14 @@ describe('Time Filter Integration', () => {
 
     // All time should have more or equal data points
     expect(allTimeResult.current.momentumData.length)
-      .toBeGreaterThanOrEqual(sevenDayResult.current.momentumData.length);
+      .toBeGreaterThanOrEqual(thirtyDayResult.current.momentumData.length);
 
     // Different filters should potentially give different results
-    // (unless all data is within 7 days)
+    // (unless all data is within 30 days)
     const uniqueLogDates = [...new Set(mockLogs.map(log => log.date))];
-    if (uniqueLogDates.length > 7) {
+    if (uniqueLogDates.length > 30) {
       expect(allTimeResult.current.currentMomentum)
-        .not.toBe(sevenDayResult.current.currentMomentum);
+        .not.toBe(thirtyDayResult.current.currentMomentum);
     }
   });
 
@@ -72,7 +71,7 @@ describe('Time Filter Integration', () => {
   });
 
   it('should recalculate when time filter changes', () => {
-    let timeFilter = { label: '7 D', days: 7 };
+    let timeFilter = { label: '30 D', days: 30 };
     
     const { result, rerender } = renderHook(() => 
       useMomentum(mockHabits, mockLogs, timeFilter)
@@ -81,7 +80,7 @@ describe('Time Filter Integration', () => {
     const initialMomentum = result.current.currentMomentum;
 
     // Change filter
-    timeFilter = { label: '30 D', days: 30 };
+    timeFilter = { label: '4 M', days: 120 };
     rerender();
 
     const newMomentum = result.current.currentMomentum;
@@ -108,9 +107,9 @@ describe('Time Filter Integration', () => {
   it('should debug log filtering logic', () => {
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     
-    const sevenDayFilter = { label: '7 D', days: 7 };
+    const thirtyDayFilter = { label: '30 D', days: 30 };
     
-    renderHook(() => useMomentum(mockHabits, mockLogs, sevenDayFilter));
+    renderHook(() => useMomentum(mockHabits, mockLogs, thirtyDayFilter));
 
     // Check that filtering debug logs are present
     expect(consoleSpy).toHaveBeenCalled();

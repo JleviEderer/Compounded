@@ -11,7 +11,6 @@ export default function Home() {
   const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('30 D');
   
   const timeRanges = [
-    { label: '7 D', days: 7 },
     { label: '30 D', days: 30 },
     { label: '4 M', days: 120 },
     { label: '1 Y', days: 365 },
