@@ -7,9 +7,10 @@ import { renderHook } from '@testing-library/react';
 describe('Time Filter Integration', () => {
   const timeFilters = [
     { label: 'All Time', days: null },
-    { label: 'Last 7 Days', days: 7 },
-    { label: 'Last 30 Days', days: 30 },
-    { label: 'Last 90 Days', days: 90 }
+    { label: '7 D', days: 7 },
+    { label: '30 D', days: 30 },
+    { label: '4 M', days: 120 },
+    { label: '1 Y', days: 365 }
   ];
 
   it.each(timeFilters)('should filter data correctly for $label', ({ label, days }) => {
@@ -28,7 +29,7 @@ describe('Time Filter Integration', () => {
   });
 
   it('should filter logs based on time range', () => {
-    const sevenDayFilter = { label: 'Last 7 Days', days: 7 };
+    const sevenDayFilter = { label: '7 D', days: 7 };
     const allTimeFilter = { label: 'All Time', days: null };
 
     const { result: sevenDayResult } = renderHook(() => 
@@ -53,7 +54,7 @@ describe('Time Filter Integration', () => {
   });
 
   it('should handle date filtering correctly in useMomentum hook', () => {
-    const thirtyDayFilter = { label: 'Last 30 Days', days: 30 };
+    const thirtyDayFilter = { label: '30 D', days: 30 };
     
     // Create test data with known dates
     const cutoffDate = new Date();
@@ -71,7 +72,7 @@ describe('Time Filter Integration', () => {
   });
 
   it('should recalculate when time filter changes', () => {
-    let timeFilter = { label: 'Last 7 Days', days: 7 };
+    let timeFilter = { label: '7 D', days: 7 };
     
     const { result, rerender } = renderHook(() => 
       useMomentum(mockHabits, mockLogs, timeFilter)
@@ -80,7 +81,7 @@ describe('Time Filter Integration', () => {
     const initialMomentum = result.current.currentMomentum;
 
     // Change filter
-    timeFilter = { label: 'Last 30 Days', days: 30 };
+    timeFilter = { label: '30 D', days: 30 };
     rerender();
 
     const newMomentum = result.current.currentMomentum;
@@ -107,7 +108,7 @@ describe('Time Filter Integration', () => {
   it('should debug log filtering logic', () => {
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     
-    const sevenDayFilter = { label: 'Last 7 Days', days: 7 };
+    const sevenDayFilter = { label: '7 D', days: 7 };
     
     renderHook(() => useMomentum(mockHabits, mockLogs, sevenDayFilter));
 

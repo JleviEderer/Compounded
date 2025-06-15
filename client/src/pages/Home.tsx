@@ -8,12 +8,13 @@ import HabitRow from '../components/HabitRow';
 import { Button } from '@/components/ui/button';
 
 export default function Home() {
-  const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('Last 30 Days');
+  const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('30 D');
   
   const timeRanges = [
-    { label: 'Last 7 Days', days: 7 },
-    { label: 'Last 30 Days', days: 30 },
-    { label: 'Last 90 Days', days: 90 },
+    { label: '7 D', days: 7 },
+    { label: '30 D', days: 30 },
+    { label: '4 M', days: 120 },
+    { label: '1 Y', days: 365 },
     { label: 'All Time', days: null }
   ];
 
