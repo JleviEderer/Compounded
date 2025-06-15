@@ -93,7 +93,7 @@ export default function MomentumChart({
   const todayEpoch = getTodayEpoch();
   
   // Compute the last historical epoch for custom ticks
-  const lastHist = data.findLast(d => !d.isProjection)?.epoch;
+  const lastHist = [...data].reverse().find(d => !d.isProjection)?.epoch;
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
