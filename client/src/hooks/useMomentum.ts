@@ -29,13 +29,7 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     // Filter logs to only include data within the time range
     const filteredLogs = logs.filter(log => log.date >= cutoffString);
     
-    console.log(`Time Filter: ${timeFilter.label} (${timeFilter.days} days)`);
-    console.log(`Cutoff date: ${cutoffString}`);
-    console.log(`Original logs: ${logs.length}, Filtered logs: ${filteredLogs.length}`);
-    const dateRange = filteredLogs.length > 0 ? 
-      `${filteredLogs.map(l => l.date).sort()[0]} to ${filteredLogs.map(l => l.date).sort().pop()}` : 
-      'No logs in range';
-    console.log(`Filtered date range: ${dateRange}`);
+    // Time filtering: ${timeFilter.label} → ${filteredLogs.length}/${logs.length} logs
     
     return { habits, logs: filteredLogs };
   }, [habits, logs, timeFilter]);

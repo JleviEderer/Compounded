@@ -30,38 +30,19 @@ export function calculateDailyRate(
   logs: HabitLog[],
   date: string
 ): number {
-  console.log(`Calculating daily rate for ${date}`);
-  console.log('Available habits:', habits.map(h => ({ id: h.id, weight: h.weight })));
-  console.log(`Total logs passed to calculateDailyRate: ${logs.length}`);
-
-  // Debug: Show sample of logs being passed in
-  const logsForDate = logs.filter(l => l.date === date);
-  console.log(`Logs found for ${date}:`, logsForDate);
-
-  // Debug: Show sample of all log dates
-  const allLogDates = Array.from(new Set(logs.map(l => l.date))).sort();
-  console.log(`All log dates available:`, allLogDates.slice(0, 10)); // Show first 10 dates
+  const dayLogs = logs.filter(log => log.date === date);
 
   let totalWeight = 0;
 
   for (const habit of habits) {
-    const log = logs.find(l => l.habitId === habit.id && l.date === date);
-    const weight = habit.weight; //getHabitWeight(habit.weight);
-
+    const log = dayLogs.find(l => l.habitId === habit.id);
     if (log) {
-      if (log.state === 'good') { //HabitLogState.GOOD
-        console.log(`Habit ${habit.id} on ${date}: good (weight: ${weight})`);
-        totalWeight += weight;
-      } else if (log.state === 'bad') { //HabitLogState.BAD
-        console.log(`Habit ${habit.id} on ${date}: bad (weight: ${weight})`);
-        totalWeight -= weight;
-      }
-    } else {
-      console.log(`Habit ${habit.id} on ${date}: no log found`);
+      const multiplier = log.state === 'good' ? 1 : -1;
+      const weightContribution = habit.weight * multiplier;
+      totalWeight += weightContribution;
     }
   }
 
-  console.log(`Total weight for ${date}: ${totalWeight}`);
   return totalWeight;
 }
 
