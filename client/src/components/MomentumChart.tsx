@@ -64,10 +64,25 @@ export default function MomentumChart({
 
   // Calculate growth percentage over selected time filter
   const getTimeFilterGrowth = () => {
-    if (combinedData.length < 2) return 0;
-    const startValue = combinedData[0].value;
-    const endValue = combinedData[combinedData.length - 1].value;
-    return ((endValue - startValue) / startValue) * 100;
+    const range = timeRanges.find(r => r.label === selectedRange);
+    
+    if (!range || range.days === null) {
+      // For "All", use total growth from first data point to current
+      if (data.length < 2) return 0;
+      const startValue = data[0].value;
+      return ((currentMomentum - startValue) / startValue) * 100;
+    } else {
+      // For specific ranges, calculate momentum at start of range
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - range.days);
+      const cutoffString = cutoffDate.toISOString().split('T')[0];
+      
+      // Find the closest data point to the cutoff date
+      const startPoint = data.find(d => d.date >= cutoffString);
+      if (!startPoint) return 0;
+      
+      return ((currentMomentum - startPoint.value) / startPoint.value) * 100;
+    }
   };
 
   // Get start date based on time filter
