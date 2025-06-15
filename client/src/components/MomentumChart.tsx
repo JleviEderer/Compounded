@@ -56,13 +56,39 @@ export default function MomentumChart({
 
   const combinedData = getFilteredData();
 
-  // Calculate the actual start date of habit tracking
-  const getActualStartDate = () => {
-    const habitDates = habits.map(h => new Date(h.createdAt).toISOString().split('T')[0]);
-    const logDates = logs.map(l => l.date);
-    const allDates = [...habitDates, ...logDates].sort();
-    return allDates.length > 0 ? allDates[0] : (data.length > 0 ? data[0].date : 'start');
+  // Calculate dynamic Current Index based on time filter
+  const getDynamicCurrentIndex = () => {
+    if (combinedData.length === 0) return currentMomentum;
+    return combinedData[combinedData.length - 1].value;
   };
+
+  // Calculate growth percentage over selected time filter
+  const getTimeFilterGrowth = () => {
+    if (combinedData.length < 2) return 0;
+    const startValue = combinedData[0].value;
+    const endValue = combinedData[combinedData.length - 1].value;
+    return ((endValue - startValue) / startValue) * 100;
+  };
+
+  // Get start date based on time filter
+  const getTimeFilterStartDate = () => {
+    const range = timeRanges.find(r => r.label === selectedRange);
+    if (!range || range.days === null) {
+      // For "All", get actual start date
+      const habitDates = habits.map(h => new Date(h.createdAt).toISOString().split('T')[0]);
+      const logDates = logs.map(l => l.date);
+      const allDates = [...habitDates, ...logDates].sort();
+      return allDates.length > 0 ? allDates[0] : (data.length > 0 ? data[0].date : 'start');
+    } else {
+      // For specific ranges, calculate from current date
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - range.days);
+      return cutoffDate.toISOString().split('T')[0];
+    }
+  };
+
+  const dynamicCurrentIndex = getDynamicCurrentIndex();
+  const timeFilterGrowth = getTimeFilterGrowth();
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -114,22 +140,22 @@ export default function MomentumChart({
               <TooltipTrigger asChild>
                 <motion.div 
                   className="text-4xl font-bold text-coral cursor-help"
-                  key={currentMomentum}
+                  key={dynamicCurrentIndex}
                   initial={{ scale: 1.2 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  {currentMomentum.toFixed(2)}
+                  {dynamicCurrentIndex.toFixed(2)}
                 </motion.div>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs">
-                <p>Total Growth Since Started Habit Tracking: {((currentMomentum - 1.0) * 100).toFixed(1)}%</p>
+                <p>Total Growth since {selectedRange}: {timeFilterGrowth >= 0 ? '+' : ''}{timeFilterGrowth.toFixed(1)}%</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
           <div className="text-sm text-gray-500 dark:text-gray-400">Current Index</div>
           <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-            Growth since {formatDate(getActualStartDate())}
+            Growth since {formatDate(getTimeFilterStartDate())}
           </div>
         </div>
       </div>
@@ -238,26 +264,7 @@ export default function MomentumChart({
       </motion.div>
 
       {/* Quick Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-              {totalGrowth >= 0 ? '+' : ''}{totalGrowth.toFixed(1)}%
-            </div>
-            <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-              Total Growth
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-xs">
-                    <p>Percentage change from your starting momentum index to current momentum. Shows overall compound progress over time.</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-          </div>
-
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
               {todayRate >= 0 ? '+' : ''}{(todayRate * 100).toFixed(2)}%
