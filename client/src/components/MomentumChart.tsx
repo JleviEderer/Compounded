@@ -251,7 +251,7 @@ export default function MomentumChart({
 
             {/* Today marker */}
             <ReferenceLine
-              x={new Date().toLocaleDateString('en-CA')}
+              x={new Date().toISOString().split('T')[0]}
               stroke="#6B7280"
               strokeWidth={1}
               opacity={0.5}
