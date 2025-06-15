@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Plus, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
 import { useHabits } from '../hooks/useHabits';
 import { useMomentum } from '../hooks/useMomentum';
 import MomentumChart from '../components/MomentumChart';
@@ -7,8 +8,19 @@ import HabitRow from '../components/HabitRow';
 import { Button } from '@/components/ui/button';
 
 export default function Home() {
+  const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('30 D');
+  
+  const timeRanges = [
+    { label: '30 D', days: 30 },
+    { label: '6 M', days: 180 },
+    { label: '1 Y', days: 365 },
+    { label: 'All', days: null }
+  ];
+
+  const currentTimeFilter = timeRanges.find(range => range.label === selectedTimeFilter);
+  
   const { habits, logs, logHabit } = useHabits();
-  const momentum = useMomentum(habits, logs);
+  const momentum = useMomentum(habits, logs, currentTimeFilter);
   
   const today = new Date().toISOString().split('T')[0];
   const todayLogs = logs.filter(log => log.date === today && log.completed);
@@ -59,6 +71,9 @@ export default function Home() {
         projectedTarget={momentum.projectedTarget}
         habits={habits}
         logs={logs}
+        selectedRange={selectedTimeFilter}
+        onRangeChange={setSelectedTimeFilter}
+        timeRanges={timeRanges}
       />
 
       {/* Today's Habits */}

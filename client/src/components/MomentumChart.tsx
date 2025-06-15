@@ -22,6 +22,9 @@ interface MomentumChartProps {
   projectedTarget: number;
   habits?: any[];
   logs?: any[];
+  selectedRange: string;
+  onRangeChange: (range: string) => void;
+  timeRanges: { label: string; days: number | null }[];
 }
 
 export default function MomentumChart({
@@ -31,43 +34,23 @@ export default function MomentumChart({
   todayRate,
   projectedTarget,
   habits = [],
-  logs = []
+  logs = [],
+  selectedRange,
+  onRangeChange,
+  timeRanges
 }: MomentumChartProps) {
-  const [selectedRange, setSelectedRange] = useState('30 D');
-  
-  const timeRanges = [
-    { label: '30 D', days: 30 },
-    { label: '6 M', days: 180 },
-    { label: '1 Y', days: 365 },
-    { label: 'All', days: null }
-  ];
 
-  // Filter data based on selected time range
-  const getFilteredData = () => {
-    const range = timeRanges.find(r => r.label === selectedRange);
-    if (!range || range.days === null) return data;
-    
-    const cutoffDate = new Date();
-    cutoffDate.setDate(cutoffDate.getDate() - range.days);
-    const cutoffString = cutoffDate.toISOString().split('T')[0];
-    
-    return data.filter(d => d.date >= cutoffString);
-  };
+  // Data is already filtered by the parent component
+  const combinedData = data;
 
-  const combinedData = getFilteredData();
-
-  // Calculate dynamic Current Index based on time filter
+  // Use the pre-calculated current momentum from filtered data
   const getDynamicCurrentIndex = () => {
-    if (combinedData.length === 0) return currentMomentum;
-    return combinedData[combinedData.length - 1].value;
+    return currentMomentum;
   };
 
-  // Calculate growth percentage over selected time filter
+  // Use the pre-calculated total growth from filtered data
   const getTimeFilterGrowth = () => {
-    if (combinedData.length < 2) return 0;
-    const startValue = combinedData[0].value;
-    const endValue = combinedData[combinedData.length - 1].value;
-    return ((endValue - startValue) / startValue) * 100;
+    return totalGrowth;
   };
 
   // Get start date based on time filter
@@ -165,7 +148,7 @@ export default function MomentumChart({
         {timeRanges.map((range) => (
           <motion.button
             key={range.label}
-            onClick={() => setSelectedRange(range.label)}
+            onClick={() => onRangeChange(range.label)}
             className={`relative flex px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
               selectedRange === range.label
                 ? 'text-white dark:text-white'
@@ -270,14 +253,14 @@ export default function MomentumChart({
               {todayRate >= 0 ? '+' : ''}{(todayRate * 100).toFixed(2)}%
             </div>
             <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-              Today's Rate
+              Latest Rate</div>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
                     <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
                   </TooltipTrigger>
                   <TooltipContent className="max-w-xs">
-                    <p>Daily momentum rate based on today's habit completions. Positive weights for good habits, negative for bad habits. Formula: sum of (habit_weight × completion_state)</p>
+                    <p>Daily momentum rate based on the latest day's habit completions in the selected time period. Positive weights for good habits, negative for bad habits.</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -305,7 +288,8 @@ export default function MomentumChart({
 
           <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
             <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-              {data.length >= 7 ? ((data.slice(-7).reduce((sum, d) => sum + d.dailyRate, 0) / 7) * 100).toFixed(2) : '0.00'}%
+              {combinedData.length >= 7 ? ((combinedData.slice(-7).reduce((sum, d) => sum + d.dailyRate, 0) / 7) * 100).toFixed(2) : 
+               combinedData.length > 0 ? ((combinedData.reduce((sum, d) => sum + d.dailyRate, 0) / combinedData.length) * 100).toFixed(2) : '0.00'}%
             </div>
             <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
               7-Day Avg Rate

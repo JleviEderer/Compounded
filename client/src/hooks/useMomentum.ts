@@ -8,29 +8,51 @@ import {
   calculateDailyRate
 } from '../utils/compound';
 
-export function useMomentum(habits: HabitPair[], logs: HabitLog[]) {
+interface TimeFilter {
+  label: string;
+  days: number | null;
+}
+
+export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: TimeFilter) {
+  // Filter data based on selected time range
+  const filteredData = useMemo(() => {
+    if (!timeFilter || timeFilter.days === null) {
+      return { habits, logs };
+    }
+    
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - timeFilter.days);
+    const cutoffString = cutoffDate.toISOString().split('T')[0];
+    
+    // Filter logs to only include data within the time range
+    const filteredLogs = logs.filter(log => log.date >= cutoffString);
+    
+    return { habits, logs: filteredLogs };
+  }, [habits, logs, timeFilter]);
   const momentumData = useMemo(() => 
-    generateMomentumHistory(habits, logs, 30), 
-    [habits, logs]
+    generateMomentumHistory(filteredData.habits, filteredData.logs, 30), 
+    [filteredData.habits, filteredData.logs]
   );
 
   // Projection data is now included in momentumData
   const projectionData: MomentumData[] = [];
 
-  const currentMomentum = useMemo(() => 
-    calculateMomentumIndex(habits, logs, new Date()),
-    [habits, logs]
-  );
+  const currentMomentum = useMemo(() => {
+    if (momentumData.length === 0) return 1.0;
+    return momentumData[momentumData.length - 1].value;
+  }, [momentumData]);
 
   const successRate = useMemo(() => 
-    calculateSuccessRate(habits, logs, 30),
-    [habits, logs]
+    calculateSuccessRate(filteredData.habits, filteredData.logs, 30),
+    [filteredData.habits, filteredData.logs]
   );
 
   const todayRate = useMemo(() => {
-    const today = new Date().toISOString().split('T')[0];
-    return calculateDailyRate(habits, logs, today);
-  }, [habits, logs]);
+    if (filteredData.logs.length === 0) return 0;
+    const latestDate = Math.max(...filteredData.logs.map(log => new Date(log.date).getTime()));
+    const latestDateString = new Date(latestDate).toISOString().split('T')[0];
+    return calculateDailyRate(filteredData.habits, filteredData.logs, latestDateString);
+  }, [filteredData.habits, filteredData.logs]);
 
   const totalGrowth = useMemo(() => {
     if (momentumData.length < 2) return 0;
