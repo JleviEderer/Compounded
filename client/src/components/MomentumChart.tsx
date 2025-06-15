@@ -209,7 +209,7 @@ export default function MomentumChart({
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
-              domain={['dataMin', 'dataMax']}
+              domain={['dataMin', new Date().toISOString().split('T')[0]]}
               type="category"
               interval={Math.max(1, Math.floor(data.length / 6))}
             />
@@ -249,7 +249,7 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Today marker */}
+            {/* Today marker - using real world current date */}
             <ReferenceLine
               x={new Date().toISOString().split('T')[0]}
               stroke="#6B7280"

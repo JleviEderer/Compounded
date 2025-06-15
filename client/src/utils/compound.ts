@@ -61,9 +61,9 @@ export function generateMomentumHistory(
   const startDate = new Date(logDates[0]);
   const endDate = new Date(logDates[logDates.length - 1]);
 
-  // Ensure we don't go beyond the filtered data range
+  // Use real current date to extend to today
   const today = new Date();
-  const actualEndDate = endDate > today ? today : endDate;
+  const actualEndDate = new Date(Math.max(endDate.getTime(), today.getTime()));
 
   // Calculate actual days between start and end dates
   const timeDiff = actualEndDate.getTime() - startDate.getTime();
