@@ -1,0 +1,218 @@
+ Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+ 🚀 STARTING mockData.ts with direct import...
+ 📋 Raw JSON data loaded: Object
+ 🔍 RAW JSON - Total logs: 1113
+ 🔍 RAW JSON - Date range: 2024-06-01 → 2025-06-11
+ 🔍 RAW JSON - Unique dates: 374
+ 🔍 RAW JSON - First 5 dates: Array(5)
+ 🔍 RAW JSON - Last 5 dates: Array(5)
+ 🔍 RAW JSON - 2025 logs found: 487
+ 🔍 RAW JSON - Sample 2025 logs: Array(3)
+ 📊 EXPORT VERIFICATION:
+ 📊 Habits exported: 4
+ 📊 Logs exported: 1113
+ 📊 Full date range: 2024-06-01 → 2025-06-11
+ 📊 2025 logs found: 487
+ 📊 2025 date range: 2025-01-02 → 2025-06-11
+ ✅ SUCCESS: 2025 data loaded successfully!
+ 📊 Sample June 2025 logs: Array(5)
+ 📊 All unique dates count: 374
+ 📊 First 10 dates: Array(10)
+ 📊 Last 10 dates: Array(10)
+ Warning: validateDOMNesting(...): <a> cannot appear as a descendant of <a>.
+    at a
+    at MotionComponent (https://93614889-8262-46fa-9612-08bcb08847c4-00-1os3s07izdbac.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=e6e7a254:6536:40)
+    at a
+    at https://93614889-8262-46fa-9612-08bcb08847c4-00-1os3s07izdbac.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=e6e7a254:337:18
+    at nav
+    at div
+    at MotionComponent (https://93614889-8262-46fa-9612-08bcb08847c4-00-1os3s07izdbac.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=e6e7a254:6536:40)
+    at div
+    at Layout (https://93614889-8262-46fa-9612-08bcb08847c4-00-1os3s07izdbac.worf.replit.dev/src/components/Layout.tsx:35:34)
+    at Router
+    at Provider (https://93614889-8262-46fa-9612-08bcb08847c4-00-1os3s07izdbac.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-SG7MREQ6.js?v=e6e7a254:38:15)
+    at TooltipProvider (https://93614889-8262-46fa-9612-08bcb08847c4-00-1os3s07izdbac.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=e6e7a254:2214:5)
+    at ThemeProvider (https://93614889-8262-46fa-9612-08bcb08847c4-00-1os3s07izdbac.worf.replit.dev/src/hooks/useTheme.tsx:20:33)
+    at QueryClientProvider (https://93614889-8262-46fa-9612-08bcb08847c4-00-1os3s07izdbac.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=e6e7a254:2805:3)
+    at App
+printWarning @ chunk-WERSD76P.js:521
+ 🏠 useHabits: Initializing data...
+ 🏠 useHabits: FORCING fresh mock data (localStorage disabled)
+ 🔍 DataService.getHabits() called (MOCK DATA), returning: 4 habits
+ 🔍 DataService.getLogs() called (MOCK DATA), returning: 1113 logs
+ 🔍 Log date range: 2024-06-01 to 2025-06-11
+ 🏠 useHabits: Fresh data loaded: 4 habits, 1113 logs
+ Time Filter: 30 D (30 days)
+ Cutoff date: 2025-05-16
+ Original logs: 1113, Filtered logs: 82
+ Filtered date range: NaN to NaN
+ Calculating daily rate for 2025-05-31
+ Available habits: Array(4)
+ Total logs passed to calculateDailyRate: 82
+ Logs found for 2025-05-31: Array(4)
+ All log dates available: Array(10)
+ Habit 1 on 2025-05-31: good (weight: 0.001)
+ Habit 2 on 2025-05-31: good (weight: 0.0005)
+ Habit 3 on 2025-05-31: good (weight: 0.0005)
+ Habit 4 on 2025-05-31: bad (weight: 0.0025)
+ Total weight for 2025-05-31: -0.0005
+ Calculating daily rate for 2025-06-01
+ Available habits: Array(4)
+ Total logs passed to calculateDailyRate: 82
+ Logs found for 2025-06-01: Array(3)
+ All log dates available: Array(10)
+ Habit 1 on 2025-06-01: no log found
+ Habit 2 on 2025-06-01: good (weight: 0.0005)
+ Habit 3 on 2025-06-01: good (weight: 0.0005)
+ Habit 4 on 2025-06-01: good (weight: 0.0025)
+ Total weight for 2025-06-01: 0.0035
+ Calculating daily rate for 2025-06-02
+ Available habits: Array(4)
+ Total logs passed to calculateDailyRate: 82
+ Logs found for 2025-06-02: Array(3)
+ All log dates available: Array(10)
+ Habit 1 on 2025-06-02: good (weight: 0.001)
+ Habit 2 on 2025-06-02: good (weight: 0.0005)
+ Habit 3 on 2025-06-02: no log found
+ Habit 4 on 2025-06-02: good (weight: 0.0025)
+ Total weight for 2025-06-02: 0.004
+ Calculating daily rate for 2025-06-03
+ Available habits: Array(4)
+ Total logs passed to calculateDailyRate: 82
+ Logs found for 2025-06-03: Array(3)
+ All log dates available: Array(10)
+ Habit 1 on 2025-06-03: no log found
+ Habit 2 on 2025-06-03: good (weight: 0.0005)
+ Habit 3 on 2025-06-03: good (weight: 0.0005)
+ Habit 4 on 2025-06-03: good (weight: 0.0025)
+ Total weight for 2025-06-03: 0.0035
+ Calculating daily rate for 2025-06-04
+ Available habits: Array(4)
+ Total logs passed to calculateDailyRate: 82
+ Logs found for 2025-06-04: Array(2)
+ All log dates available: Array(10)
+ Habit 1 on 2025-06-04: good (weight: 0.001)
+ Habit 2 on 2025-06-04: good (weight: 0.0005)
+ Habit 3 on 2025-06-04: no log found
+ Habit 4 on 2025-06-04: no log found
+ Total weight for 2025-06-04: 0.0015
+ Calculating daily rate for 2025-06-05
+ Available habits: Array(4)
+ Total logs passed to calculateDailyRate: 82
+ Logs found for 2025-06-05: Array(4)
+ All log dates available: Array(10)
+ Habit 1 on 2025-06-05: good (weight: 0.001)
+ Habit 2 on 2025-06-05: good (weight: 0.0005)
+ Habit 3 on 2025-06-05: good (weight: 0.0005)
+ Habit 4 on 2025-06-05: good (weight: 0.0025)
+ Total weight for 2025-06-05: 0.0045000000000000005
+ Calculating daily rate for 2025-06-06
+ Available habits: Array(4)
+ Total logs passed to calculateDailyRate: 82
+ Logs found for 2025-06-06: Array(3)
+ All log dates available: Array(10)
+ Habit 1 on 2025-06-06: bad (weight: 0.001)
+ Habit 2 on 2025-06-06: bad (weight: 0.0005)
+ Habit 3 on 2025-06-06: good (weight: 0.0005)
+ Habit 4 on 2025-06-06: no log found
+ Total weight for 2025-06-06: -0.001
+ Calculating daily rate for 2025-06-07
+ Available habits: Array(4)
+ Total logs passed to calculateDailyRate: 82
+ Logs found for 2025-06-07: Array(4)
+ All log dates available: Array(10)
+ Habit 1 on 2025-06-07: bad (weight: 0.001)
+ Habit 2 on 2025-06-07: good (weight: 0.0005)
+ Habit 3 on 2025-06-07: good (weight: 0.0005)
+ Habit 4 on 2025-06-07: bad (weight: 0.0025)
+ Total weight for 2025-06-07: -0.0025
+ Calculating daily rate for 2025-06-08
+ Available habits: Array(4)
+ Total logs passed to calculateDailyRate: 82
+ Logs found for 2025-06-08: Array(4)
+ All log dates available: Array(10)
+ Habit 1 on 2025-06-08: good (weight: 0.001)
+ Habit 2 on 2025-06-08: bad (weight: 0.0005)
+compound.ts:53 Habit 3 on 2025-06-08: good (weight: 0.0005)
+compound.ts:56 Habit 4 on 2025-06-08: bad (weight: 0.0025)
+compound.ts:64 Total weight for 2025-06-08: -0.0015
+compound.ts:33 Calculating daily rate for 2025-06-09
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 82
+compound.ts:39 Logs found for 2025-06-09: Array(2)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:56 Habit 1 on 2025-06-09: bad (weight: 0.001)
+compound.ts:60 Habit 2 on 2025-06-09: no log found
+compound.ts:60 Habit 3 on 2025-06-09: no log found
+compound.ts:56 Habit 4 on 2025-06-09: bad (weight: 0.0025)
+compound.ts:64 Total weight for 2025-06-09: -0.0035
+compound.ts:33 Calculating daily rate for 2025-06-10
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 82
+compound.ts:39 Logs found for 2025-06-10: Array(2)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-10: no log found
+compound.ts:60 Habit 2 on 2025-06-10: no log found
+compound.ts:53 Habit 3 on 2025-06-10: good (weight: 0.0005)
+compound.ts:56 Habit 4 on 2025-06-10: bad (weight: 0.0025)
+compound.ts:64 Total weight for 2025-06-10: -0.002
+compound.ts:33 Calculating daily rate for 2025-06-11
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 82
+compound.ts:39 Logs found for 2025-06-11: Array(3)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-11: no log found
+compound.ts:53 Habit 2 on 2025-06-11: good (weight: 0.0005)
+compound.ts:53 Habit 3 on 2025-06-11: good (weight: 0.0005)
+compound.ts:53 Habit 4 on 2025-06-11: good (weight: 0.0025)
+compound.ts:64 Total weight for 2025-06-11: 0.0035
+compound.ts:33 Calculating daily rate for 2025-06-12
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 82
+compound.ts:39 Logs found for 2025-06-12: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-12: no log found
+compound.ts:60 Habit 2 on 2025-06-12: no log found
+compound.ts:60 Habit 3 on 2025-06-12: no log found
+compound.ts:60 Habit 4 on 2025-06-12: no log found
+compound.ts:64 Total weight for 2025-06-12: 0
+compound.ts:33 Calculating daily rate for 2025-06-13
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 82
+compound.ts:39 Logs found for 2025-06-13: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-13: no log found
+compound.ts:60 Habit 2 on 2025-06-13: no log found
+compound.ts:60 Habit 3 on 2025-06-13: no log found
+compound.ts:60 Habit 4 on 2025-06-13: no log found
+compound.ts:64 Total weight for 2025-06-13: 0
+compound.ts:33 Calculating daily rate for 2025-06-14
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 82
+compound.ts:39 Logs found for 2025-06-14: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-14: no log found
+compound.ts:60 Habit 2 on 2025-06-14: no log found
+compound.ts:60 Habit 3 on 2025-06-14: no log found
+compound.ts:60 Habit 4 on 2025-06-14: no log found
+compound.ts:64 Total weight for 2025-06-14: 0
+compound.ts:33 Calculating daily rate for 2025-06-15
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 82
+compound.ts:39 Logs found for 2025-06-15: Array(0)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-15: no log found
+compound.ts:60 Habit 2 on 2025-06-15: no log found
+compound.ts:60 Habit 3 on 2025-06-15: no log found
+compound.ts:60 Habit 4 on 2025-06-15: no log found
+compound.ts:64 Total weight for 2025-06-15: 0
+compound.ts:33 Calculating daily rate for 2025-06-11
+compound.ts:34 Available habits: Array(4)
+compound.ts:35 Total logs passed to calculateDailyRate: 82
+compound.ts:39 Logs found for 2025-06-11: Array(3)
+compound.ts:43 All log dates available: Array(10)
+compound.ts:60 Habit 1 on 2025-06-11: no log found
+compound.ts:53 Habit 2 on 2025-06-11: good (weight: 0.0005)
+compound.ts:53 Habit 3 on 2025-06-11: good (weight: 0.0005)
+compound.ts:53 Habit 4 on 2025-06-11: good (weight: 0.0025)
+compound.ts:64 Total weight for 2025-06-11: 0.0035

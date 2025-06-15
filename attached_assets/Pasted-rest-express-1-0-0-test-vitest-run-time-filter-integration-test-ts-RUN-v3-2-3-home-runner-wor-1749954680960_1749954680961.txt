@@ -1,0 +1,5093 @@
+rest-express@1.0.0 test
+> vitest run time-filter-integration.test.ts
+
+
+ RUN  v3.2.3 /home/runner/workspace
+stdout | tests/time-filter-integration.test.ts
+🚀 STARTING mockData.ts with direct import...
+📋 Raw JSON data loaded: { habitsCount: 4, logsCount: 1113 }
+🔍 RAW JSON - Total logs: 1113
+🔍 RAW JSON - Date range: 2024-06-01 → 2025-06-11
+🔍 RAW JSON - Unique dates: 374
+🔍 RAW JSON - First 5 dates: [
+  '2024-06-01',
+  '2024-06-02',
+  '2024-06-03',
+  '2024-06-04',
+  '2024-06-05'
+]
+🔍 RAW JSON - Last 5 dates: [
+  '2025-06-07',
+  '2025-06-08',
+  '2025-06-09',
+  '2025-06-10',
+  '2025-06-11'
+]
+🔍 RAW JSON - 2025 logs found: 487
+🔍 RAW JSON - Sample 2025 logs: [
+  {
+    id: '1-2025-01-02',
+    habitId: '1',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '2-2025-01-02',
+    habitId: '2',
+    date: '2025-01-02',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-01-02',
+    habitId: '3',
+    date: '2025-01-02',
+    state: 'bad'
+  }
+]
+📊 EXPORT VERIFICATION:
+📊 Habits exported: 4
+📊 Logs exported: 1113
+📊 Full date range: 2024-06-01 → 2025-06-11
+📊 2025 logs found: 487
+📊 2025 date range: 2025-01-02 → 2025-06-11
+✅ SUCCESS: 2025 data loaded successfully!
+📊 Sample June 2025 logs: [
+  '2025-06-01: habit 2 = good',
+  '2025-06-01: habit 3 = good',
+  '2025-06-01: habit 4 = good',
+  '2025-06-02: habit 1 = good',
+  '2025-06-02: habit 2 = good'
+]
+📊 All unique dates count: 374
+📊 First 10 dates: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+📊 Last 10 dates: [
+  '2025-06-02', '2025-06-03',
+  '2025-06-04', '2025-06-05',
+  '2025-06-06', '2025-06-07',
+  '2025-06-08', '2025-06-09',
+  '2025-06-10', '2025-06-11'
+]
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should filter data correctly for 'All Time'
+Time Filter: All Time selected, using all data
+Total logs available: 1113
+Calculating daily rate for 2025-05-31
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-05-31: [
+  {
+    id: '1-2025-05-31',
+    habitId: '1',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '2-2025-05-31',
+    habitId: '2',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '3-2025-05-31',
+    habitId: '3',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '4-2025-05-31',
+    habitId: '4',
+    date: '2025-05-31',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-05-31: good (weight: 0.001)
+Habit 2 on 2025-05-31: good (weight: 0.0005)
+Habit 3 on 2025-05-31: good (weight: 0.0005)
+Habit 4 on 2025-05-31: bad (weight: 0.0025)
+Total weight for 2025-05-31: -0.0005
+Calculating daily rate for 2025-06-01
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-01: [
+  {
+    id: '2-2025-06-01',
+    habitId: '2',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-01',
+    habitId: '3',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-01',
+    habitId: '4',
+    date: '2025-06-01',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-01: no log found
+Habit 2 on 2025-06-01: good (weight: 0.0005)
+Habit 3 on 2025-06-01: good (weight: 0.0005)
+Habit 4 on 2025-06-01: good (weight: 0.0025)
+Total weight for 2025-06-01: 0.0035
+Calculating daily rate for 2025-06-02
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-02: [
+  {
+    id: '1-2025-06-02',
+    habitId: '1',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-02',
+    habitId: '2',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-02',
+    habitId: '4',
+    date: '2025-06-02',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-02: good (weight: 0.001)
+Habit 2 on 2025-06-02: good (weight: 0.0005)
+Habit 3 on 2025-06-02: no log found
+Habit 4 on 2025-06-02: good (weight: 0.0025)
+Total weight for 2025-06-02: 0.004
+Calculating daily rate for 2025-06-03
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-03: [
+  {
+    id: '2-2025-06-03',
+    habitId: '2',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-03',
+    habitId: '3',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-03',
+    habitId: '4',
+    date: '2025-06-03',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-03: no log found
+Habit 2 on 2025-06-03: good (weight: 0.0005)
+Habit 3 on 2025-06-03: good (weight: 0.0005)
+Habit 4 on 2025-06-03: good (weight: 0.0025)
+Total weight for 2025-06-03: 0.0035
+Calculating daily rate for 2025-06-04
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-04: [
+  {
+    id: '1-2025-06-04',
+    habitId: '1',
+    date: '2025-06-04',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-04',
+    habitId: '2',
+    date: '2025-06-04',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-04: good (weight: 0.001)
+Habit 2 on 2025-06-04: good (weight: 0.0005)
+Habit 3 on 2025-06-04: no log found
+Habit 4 on 2025-06-04: no log found
+Total weight for 2025-06-04: 0.0015
+Calculating daily rate for 2025-06-05
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-05: [
+  {
+    id: '1-2025-06-05',
+    habitId: '1',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-05',
+    habitId: '2',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-05',
+    habitId: '3',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-05',
+    habitId: '4',
+    date: '2025-06-05',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-05: good (weight: 0.001)
+Habit 2 on 2025-06-05: good (weight: 0.0005)
+Habit 3 on 2025-06-05: good (weight: 0.0005)
+Habit 4 on 2025-06-05: good (weight: 0.0025)
+Total weight for 2025-06-05: 0.0045000000000000005
+Calculating daily rate for 2025-06-06
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-06: [
+  {
+    id: '1-2025-06-06',
+    habitId: '1',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-06',
+    habitId: '2',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-06',
+    habitId: '3',
+    date: '2025-06-06',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-06: bad (weight: 0.001)
+Habit 2 on 2025-06-06: bad (weight: 0.0005)
+Habit 3 on 2025-06-06: good (weight: 0.0005)
+Habit 4 on 2025-06-06: no log found
+Total weight for 2025-06-06: -0.001
+Calculating daily rate for 2025-06-07
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-07: [
+  {
+    id: '1-2025-06-07',
+    habitId: '1',
+    date: '2025-06-07',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-07',
+    habitId: '2',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-07',
+    habitId: '3',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-07',
+    habitId: '4',
+    date: '2025-06-07',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-07: bad (weight: 0.001)
+Habit 2 on 2025-06-07: good (weight: 0.0005)
+Habit 3 on 2025-06-07: good (weight: 0.0005)
+Habit 4 on 2025-06-07: bad (weight: 0.0025)
+Total weight for 2025-06-07: -0.0025
+Calculating daily rate for 2025-06-08
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-08: [
+  {
+    id: '1-2025-06-08',
+    habitId: '1',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-08',
+    habitId: '2',
+    date: '2025-06-08',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-08',
+    habitId: '3',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-08',
+    habitId: '4',
+    date: '2025-06-08',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-08: good (weight: 0.001)
+Habit 2 on 2025-06-08: bad (weight: 0.0005)
+Habit 3 on 2025-06-08: good (weight: 0.0005)
+Habit 4 on 2025-06-08: bad (weight: 0.0025)
+Total weight for 2025-06-08: -0.0015
+Calculating daily rate for 2025-06-09
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-09: [
+  {
+    id: '1-2025-06-09',
+    habitId: '1',
+    date: '2025-06-09',
+    state: 'bad'
+  },
+  {
+    id: '4-2025-06-09',
+    habitId: '4',
+    date: '2025-06-09',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-09: bad (weight: 0.001)
+Habit 2 on 2025-06-09: no log found
+Habit 3 on 2025-06-09: no log found
+Habit 4 on 2025-06-09: bad (weight: 0.0025)
+Total weight for 2025-06-09: -0.0035
+Calculating daily rate for 2025-06-10
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-10: [
+  {
+    id: '3-2025-06-10',
+    habitId: '3',
+    date: '2025-06-10',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-10',
+    habitId: '4',
+    date: '2025-06-10',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-10: no log found
+Habit 2 on 2025-06-10: no log found
+Habit 3 on 2025-06-10: good (weight: 0.0005)
+Habit 4 on 2025-06-10: bad (weight: 0.0025)
+Total weight for 2025-06-10: -0.002
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Calculating daily rate for 2025-06-12
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-12: []
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-12: no log found
+Habit 2 on 2025-06-12: no log found
+Habit 3 on 2025-06-12: no log found
+Habit 4 on 2025-06-12: no log found
+Total weight for 2025-06-12: 0
+Calculating daily rate for 2025-06-13
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-13: []
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-13: no log found
+Habit 2 on 2025-06-13: no log found
+Habit 3 on 2025-06-13: no log found
+Habit 4 on 2025-06-13: no log found
+Total weight for 2025-06-13: 0
+Calculating daily rate for 2025-06-14
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-14: []
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-14: no log found
+Habit 2 on 2025-06-14: no log found
+Habit 3 on 2025-06-14: no log found
+Habit 4 on 2025-06-14: no log found
+Total weight for 2025-06-14: 0
+Calculating daily rate for 2025-06-15
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-15: []
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-15: no log found
+Habit 2 on 2025-06-15: no log found
+Habit 3 on 2025-06-15: no log found
+Habit 4 on 2025-06-15: no log found
+Total weight for 2025-06-15: 0
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should filter data correctly for 'Last 7 Days'
+Time Filter: Last 7 Days (7 days)
+Cutoff date: 2025-06-08
+Original logs: 1113, Filtered logs: 11
+Filtered date range: NaN to NaN
+Calculating daily rate for 2025-05-31
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-05-31: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-05-31: no log found
+Habit 2 on 2025-05-31: no log found
+Habit 3 on 2025-05-31: no log found
+Habit 4 on 2025-05-31: no log found
+Total weight for 2025-05-31: 0
+Calculating daily rate for 2025-06-01
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-01: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-01: no log found
+Habit 2 on 2025-06-01: no log found
+Habit 3 on 2025-06-01: no log found
+Habit 4 on 2025-06-01: no log found
+Total weight for 2025-06-01: 0
+Calculating daily rate for 2025-06-02
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-02: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-02: no log found
+Habit 2 on 2025-06-02: no log found
+Habit 3 on 2025-06-02: no log found
+Habit 4 on 2025-06-02: no log found
+Total weight for 2025-06-02: 0
+Calculating daily rate for 2025-06-03
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-03: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-03: no log found
+Habit 2 on 2025-06-03: no log found
+Habit 3 on 2025-06-03: no log found
+Habit 4 on 2025-06-03: no log found
+Total weight for 2025-06-03: 0
+Calculating daily rate for 2025-06-04
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-04: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-04: no log found
+Habit 2 on 2025-06-04: no log found
+Habit 3 on 2025-06-04: no log found
+Habit 4 on 2025-06-04: no log found
+Total weight for 2025-06-04: 0
+Calculating daily rate for 2025-06-05
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-05: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-05: no log found
+Habit 2 on 2025-06-05: no log found
+Habit 3 on 2025-06-05: no log found
+Habit 4 on 2025-06-05: no log found
+Total weight for 2025-06-05: 0
+Calculating daily rate for 2025-06-06
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-06: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-06: no log found
+Habit 2 on 2025-06-06: no log found
+Habit 3 on 2025-06-06: no log found
+Habit 4 on 2025-06-06: no log found
+Total weight for 2025-06-06: 0
+Calculating daily rate for 2025-06-07
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-07: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-07: no log found
+Habit 2 on 2025-06-07: no log found
+Habit 3 on 2025-06-07: no log found
+Habit 4 on 2025-06-07: no log found
+Total weight for 2025-06-07: 0
+Calculating daily rate for 2025-06-08
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-08: [
+  {
+    id: '1-2025-06-08',
+    habitId: '1',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-08',
+    habitId: '2',
+    date: '2025-06-08',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-08',
+    habitId: '3',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-08',
+    habitId: '4',
+    date: '2025-06-08',
+    state: 'bad'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-08: good (weight: 0.001)
+Habit 2 on 2025-06-08: bad (weight: 0.0005)
+Habit 3 on 2025-06-08: good (weight: 0.0005)
+Habit 4 on 2025-06-08: bad (weight: 0.0025)
+Total weight for 2025-06-08: -0.0015
+Calculating daily rate for 2025-06-09
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-09: [
+  {
+    id: '1-2025-06-09',
+    habitId: '1',
+    date: '2025-06-09',
+    state: 'bad'
+  },
+  {
+    id: '4-2025-06-09',
+    habitId: '4',
+    date: '2025-06-09',
+    state: 'bad'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-09: bad (weight: 0.001)
+Habit 2 on 2025-06-09: no log found
+Habit 3 on 2025-06-09: no log found
+Habit 4 on 2025-06-09: bad (weight: 0.0025)
+Total weight for 2025-06-09: -0.0035
+Calculating daily rate for 2025-06-10
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-10: [
+  {
+    id: '3-2025-06-10',
+    habitId: '3',
+    date: '2025-06-10',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-10',
+    habitId: '4',
+    date: '2025-06-10',
+    state: 'bad'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-10: no log found
+Habit 2 on 2025-06-10: no log found
+Habit 3 on 2025-06-10: good (weight: 0.0005)
+Habit 4 on 2025-06-10: bad (weight: 0.0025)
+Total weight for 2025-06-10: -0.002
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Calculating daily rate for 2025-06-12
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-12: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-12: no log found
+Habit 2 on 2025-06-12: no log found
+Habit 3 on 2025-06-12: no log found
+Habit 4 on 2025-06-12: no log found
+Total weight for 2025-06-12: 0
+Calculating daily rate for 2025-06-13
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-13: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-13: no log found
+Habit 2 on 2025-06-13: no log found
+Habit 3 on 2025-06-13: no log found
+Habit 4 on 2025-06-13: no log found
+Total weight for 2025-06-13: 0
+Calculating daily rate for 2025-06-14
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-14: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-14: no log found
+Habit 2 on 2025-06-14: no log found
+Habit 3 on 2025-06-14: no log found
+Habit 4 on 2025-06-14: no log found
+Total weight for 2025-06-14: 0
+Calculating daily rate for 2025-06-15
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-15: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-15: no log found
+Habit 2 on 2025-06-15: no log found
+Habit 3 on 2025-06-15: no log found
+Habit 4 on 2025-06-15: no log found
+Total weight for 2025-06-15: 0
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should filter data correctly for 'Last 30 Days'
+Time Filter: Last 30 Days (30 days)
+Cutoff date: 2025-05-16
+Original logs: 1113, Filtered logs: 82
+Filtered date range: NaN to NaN
+Calculating daily rate for 2025-05-31
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-05-31: [
+  {
+    id: '1-2025-05-31',
+    habitId: '1',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '2-2025-05-31',
+    habitId: '2',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '3-2025-05-31',
+    habitId: '3',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '4-2025-05-31',
+    habitId: '4',
+    date: '2025-05-31',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-05-31: good (weight: 0.001)
+Habit 2 on 2025-05-31: good (weight: 0.0005)
+Habit 3 on 2025-05-31: good (weight: 0.0005)
+Habit 4 on 2025-05-31: bad (weight: 0.0025)
+Total weight for 2025-05-31: -0.0005
+Calculating daily rate for 2025-06-01
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-01: [
+  {
+    id: '2-2025-06-01',
+    habitId: '2',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-01',
+    habitId: '3',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-01',
+    habitId: '4',
+    date: '2025-06-01',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-01: no log found
+Habit 2 on 2025-06-01: good (weight: 0.0005)
+Habit 3 on 2025-06-01: good (weight: 0.0005)
+Habit 4 on 2025-06-01: good (weight: 0.0025)
+Total weight for 2025-06-01: 0.0035
+Calculating daily rate for 2025-06-02
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-02: [
+  {
+    id: '1-2025-06-02',
+    habitId: '1',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-02',
+    habitId: '2',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-02',
+    habitId: '4',
+    date: '2025-06-02',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-02: good (weight: 0.001)
+Habit 2 on 2025-06-02: good (weight: 0.0005)
+Habit 3 on 2025-06-02: no log found
+Habit 4 on 2025-06-02: good (weight: 0.0025)
+Total weight for 2025-06-02: 0.004
+Calculating daily rate for 2025-06-03
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-03: [
+  {
+    id: '2-2025-06-03',
+    habitId: '2',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-03',
+    habitId: '3',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-03',
+    habitId: '4',
+    date: '2025-06-03',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-03: no log found
+Habit 2 on 2025-06-03: good (weight: 0.0005)
+Habit 3 on 2025-06-03: good (weight: 0.0005)
+Habit 4 on 2025-06-03: good (weight: 0.0025)
+Total weight for 2025-06-03: 0.0035
+Calculating daily rate for 2025-06-04
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-04: [
+  {
+    id: '1-2025-06-04',
+    habitId: '1',
+    date: '2025-06-04',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-04',
+    habitId: '2',
+    date: '2025-06-04',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-04: good (weight: 0.001)
+Habit 2 on 2025-06-04: good (weight: 0.0005)
+Habit 3 on 2025-06-04: no log found
+Habit 4 on 2025-06-04: no log found
+Total weight for 2025-06-04: 0.0015
+Calculating daily rate for 2025-06-05
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-05: [
+  {
+    id: '1-2025-06-05',
+    habitId: '1',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-05',
+    habitId: '2',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-05',
+    habitId: '3',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-05',
+    habitId: '4',
+    date: '2025-06-05',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-05: good (weight: 0.001)
+Habit 2 on 2025-06-05: good (weight: 0.0005)
+Habit 3 on 2025-06-05: good (weight: 0.0005)
+Habit 4 on 2025-06-05: good (weight: 0.0025)
+Total weight for 2025-06-05: 0.0045000000000000005
+Calculating daily rate for 2025-06-06
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-06: [
+  {
+    id: '1-2025-06-06',
+    habitId: '1',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-06',
+    habitId: '2',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-06',
+    habitId: '3',
+    date: '2025-06-06',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-06: bad (weight: 0.001)
+Habit 2 on 2025-06-06: bad (weight: 0.0005)
+Habit 3 on 2025-06-06: good (weight: 0.0005)
+Habit 4 on 2025-06-06: no log found
+Total weight for 2025-06-06: -0.001
+Calculating daily rate for 2025-06-07
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-07: [
+  {
+    id: '1-2025-06-07',
+    habitId: '1',
+    date: '2025-06-07',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-07',
+    habitId: '2',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-07',
+    habitId: '3',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-07',
+    habitId: '4',
+    date: '2025-06-07',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-07: bad (weight: 0.001)
+Habit 2 on 2025-06-07: good (weight: 0.0005)
+Habit 3 on 2025-06-07: good (weight: 0.0005)
+Habit 4 on 2025-06-07: bad (weight: 0.0025)
+Total weight for 2025-06-07: -0.0025
+Calculating daily rate for 2025-06-08
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-08: [
+  {
+    id: '1-2025-06-08',
+    habitId: '1',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-08',
+    habitId: '2',
+    date: '2025-06-08',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-08',
+    habitId: '3',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-08',
+    habitId: '4',
+    date: '2025-06-08',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-08: good (weight: 0.001)
+Habit 2 on 2025-06-08: bad (weight: 0.0005)
+Habit 3 on 2025-06-08: good (weight: 0.0005)
+Habit 4 on 2025-06-08: bad (weight: 0.0025)
+Total weight for 2025-06-08: -0.0015
+Calculating daily rate for 2025-06-09
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-09: [
+  {
+    id: '1-2025-06-09',
+    habitId: '1',
+    date: '2025-06-09',
+    state: 'bad'
+  },
+  {
+    id: '4-2025-06-09',
+    habitId: '4',
+    date: '2025-06-09',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-09: bad (weight: 0.001)
+Habit 2 on 2025-06-09: no log found
+Habit 3 on 2025-06-09: no log found
+Habit 4 on 2025-06-09: bad (weight: 0.0025)
+Total weight for 2025-06-09: -0.0035
+Calculating daily rate for 2025-06-10
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-10: [
+  {
+    id: '3-2025-06-10',
+    habitId: '3',
+    date: '2025-06-10',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-10',
+    habitId: '4',
+    date: '2025-06-10',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-10: no log found
+Habit 2 on 2025-06-10: no log found
+Habit 3 on 2025-06-10: good (weight: 0.0005)
+Habit 4 on 2025-06-10: bad (weight: 0.0025)
+Total weight for 2025-06-10: -0.002
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Calculating daily rate for 2025-06-12
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-12: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-12: no log found
+Habit 2 on 2025-06-12: no log found
+Habit 3 on 2025-06-12: no log found
+Habit 4 on 2025-06-12: no log found
+Total weight for 2025-06-12: 0
+Calculating daily rate for 2025-06-13
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-13: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-13: no log found
+Habit 2 on 2025-06-13: no log found
+Habit 3 on 2025-06-13: no log found
+Habit 4 on 2025-06-13: no log found
+Total weight for 2025-06-13: 0
+Calculating daily rate for 2025-06-14
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-14: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-14: no log found
+Habit 2 on 2025-06-14: no log found
+Habit 3 on 2025-06-14: no log found
+Habit 4 on 2025-06-14: no log found
+Total weight for 2025-06-14: 0
+Calculating daily rate for 2025-06-15
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-15: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-15: no log found
+Habit 2 on 2025-06-15: no log found
+Habit 3 on 2025-06-15: no log found
+Habit 4 on 2025-06-15: no log found
+Total weight for 2025-06-15: 0
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should filter data correctly for 'Last 90 Days'
+Time Filter: Last 90 Days (90 days)
+Cutoff date: 2025-03-17
+Original logs: 1113, Filtered logs: 259
+Filtered date range: NaN to NaN
+Calculating daily rate for 2025-05-31
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-05-31: [
+  {
+    id: '1-2025-05-31',
+    habitId: '1',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '2-2025-05-31',
+    habitId: '2',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '3-2025-05-31',
+    habitId: '3',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '4-2025-05-31',
+    habitId: '4',
+    date: '2025-05-31',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-05-31: good (weight: 0.001)
+Habit 2 on 2025-05-31: good (weight: 0.0005)
+Habit 3 on 2025-05-31: good (weight: 0.0005)
+Habit 4 on 2025-05-31: bad (weight: 0.0025)
+Total weight for 2025-05-31: -0.0005
+Calculating daily rate for 2025-06-01
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-01: [
+  {
+    id: '2-2025-06-01',
+    habitId: '2',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-01',
+    habitId: '3',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-01',
+    habitId: '4',
+    date: '2025-06-01',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-01: no log found
+Habit 2 on 2025-06-01: good (weight: 0.0005)
+Habit 3 on 2025-06-01: good (weight: 0.0005)
+Habit 4 on 2025-06-01: good (weight: 0.0025)
+Total weight for 2025-06-01: 0.0035
+Calculating daily rate for 2025-06-02
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-02: [
+  {
+    id: '1-2025-06-02',
+    habitId: '1',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-02',
+    habitId: '2',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-02',
+    habitId: '4',
+    date: '2025-06-02',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-02: good (weight: 0.001)
+Habit 2 on 2025-06-02: good (weight: 0.0005)
+Habit 3 on 2025-06-02: no log found
+Habit 4 on 2025-06-02: good (weight: 0.0025)
+Total weight for 2025-06-02: 0.004
+Calculating daily rate for 2025-06-03
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-03: [
+  {
+    id: '2-2025-06-03',
+    habitId: '2',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-03',
+    habitId: '3',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-03',
+    habitId: '4',
+    date: '2025-06-03',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-03: no log found
+Habit 2 on 2025-06-03: good (weight: 0.0005)
+Habit 3 on 2025-06-03: good (weight: 0.0005)
+Habit 4 on 2025-06-03: good (weight: 0.0025)
+Total weight for 2025-06-03: 0.0035
+Calculating daily rate for 2025-06-04
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-04: [
+  {
+    id: '1-2025-06-04',
+    habitId: '1',
+    date: '2025-06-04',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-04',
+    habitId: '2',
+    date: '2025-06-04',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-04: good (weight: 0.001)
+Habit 2 on 2025-06-04: good (weight: 0.0005)
+Habit 3 on 2025-06-04: no log found
+Habit 4 on 2025-06-04: no log found
+Total weight for 2025-06-04: 0.0015
+Calculating daily rate for 2025-06-05
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-05: [
+  {
+    id: '1-2025-06-05',
+    habitId: '1',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-05',
+    habitId: '2',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-05',
+    habitId: '3',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-05',
+    habitId: '4',
+    date: '2025-06-05',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-05: good (weight: 0.001)
+Habit 2 on 2025-06-05: good (weight: 0.0005)
+Habit 3 on 2025-06-05: good (weight: 0.0005)
+Habit 4 on 2025-06-05: good (weight: 0.0025)
+Total weight for 2025-06-05: 0.0045000000000000005
+Calculating daily rate for 2025-06-06
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-06: [
+  {
+    id: '1-2025-06-06',
+    habitId: '1',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-06',
+    habitId: '2',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-06',
+    habitId: '3',
+    date: '2025-06-06',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-06: bad (weight: 0.001)
+Habit 2 on 2025-06-06: bad (weight: 0.0005)
+Habit 3 on 2025-06-06: good (weight: 0.0005)
+Habit 4 on 2025-06-06: no log found
+Total weight for 2025-06-06: -0.001
+Calculating daily rate for 2025-06-07
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-07: [
+  {
+    id: '1-2025-06-07',
+    habitId: '1',
+    date: '2025-06-07',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-07',
+    habitId: '2',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-07',
+    habitId: '3',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-07',
+    habitId: '4',
+    date: '2025-06-07',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-07: bad (weight: 0.001)
+Habit 2 on 2025-06-07: good (weight: 0.0005)
+Habit 3 on 2025-06-07: good (weight: 0.0005)
+Habit 4 on 2025-06-07: bad (weight: 0.0025)
+Total weight for 2025-06-07: -0.0025
+Calculating daily rate for 2025-06-08
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-08: [
+  {
+    id: '1-2025-06-08',
+    habitId: '1',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-08',
+    habitId: '2',
+    date: '2025-06-08',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-08',
+    habitId: '3',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-08',
+    habitId: '4',
+    date: '2025-06-08',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-08: good (weight: 0.001)
+Habit 2 on 2025-06-08: bad (weight: 0.0005)
+Habit 3 on 2025-06-08: good (weight: 0.0005)
+Habit 4 on 2025-06-08: bad (weight: 0.0025)
+Total weight for 2025-06-08: -0.0015
+Calculating daily rate for 2025-06-09
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-09: [
+  {
+    id: '1-2025-06-09',
+    habitId: '1',
+    date: '2025-06-09',
+    state: 'bad'
+  },
+  {
+    id: '4-2025-06-09',
+    habitId: '4',
+    date: '2025-06-09',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-09: bad (weight: 0.001)
+Habit 2 on 2025-06-09: no log found
+Habit 3 on 2025-06-09: no log found
+Habit 4 on 2025-06-09: bad (weight: 0.0025)
+Total weight for 2025-06-09: -0.0035
+Calculating daily rate for 2025-06-10
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-10: [
+  {
+    id: '3-2025-06-10',
+    habitId: '3',
+    date: '2025-06-10',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-10',
+    habitId: '4',
+    date: '2025-06-10',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-10: no log found
+Habit 2 on 2025-06-10: no log found
+Habit 3 on 2025-06-10: good (weight: 0.0005)
+Habit 4 on 2025-06-10: bad (weight: 0.0025)
+Total weight for 2025-06-10: -0.002
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Calculating daily rate for 2025-06-12
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-12: []
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-12: no log found
+Habit 2 on 2025-06-12: no log found
+Habit 3 on 2025-06-12: no log found
+Habit 4 on 2025-06-12: no log found
+Total weight for 2025-06-12: 0
+Calculating daily rate for 2025-06-13
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-13: []
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-13: no log found
+Habit 2 on 2025-06-13: no log found
+Habit 3 on 2025-06-13: no log found
+Habit 4 on 2025-06-13: no log found
+Total weight for 2025-06-13: 0
+Calculating daily rate for 2025-06-14
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-14: []
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-14: no log found
+Habit 2 on 2025-06-14: no log found
+Habit 3 on 2025-06-14: no log found
+Habit 4 on 2025-06-14: no log found
+Total weight for 2025-06-14: 0
+Calculating daily rate for 2025-06-15
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-15: []
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-15: no log found
+Habit 2 on 2025-06-15: no log found
+Habit 3 on 2025-06-15: no log found
+Habit 4 on 2025-06-15: no log found
+Total weight for 2025-06-15: 0
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 259
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-03-17', '2025-03-18',
+  '2025-03-19', '2025-03-20',
+  '2025-03-21', '2025-03-22',
+  '2025-03-23', '2025-03-24',
+  '2025-03-25', '2025-03-26'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should filter logs based on time range
+Time Filter: Last 7 Days (7 days)
+Cutoff date: 2025-06-08
+Original logs: 1113, Filtered logs: 11
+Filtered date range: NaN to NaN
+Calculating daily rate for 2025-05-31
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-05-31: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-05-31: no log found
+Habit 2 on 2025-05-31: no log found
+Habit 3 on 2025-05-31: no log found
+Habit 4 on 2025-05-31: no log found
+Total weight for 2025-05-31: 0
+Calculating daily rate for 2025-06-01
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-01: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-01: no log found
+Habit 2 on 2025-06-01: no log found
+Habit 3 on 2025-06-01: no log found
+Habit 4 on 2025-06-01: no log found
+Total weight for 2025-06-01: 0
+Calculating daily rate for 2025-06-02
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-02: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-02: no log found
+Habit 2 on 2025-06-02: no log found
+Habit 3 on 2025-06-02: no log found
+Habit 4 on 2025-06-02: no log found
+Total weight for 2025-06-02: 0
+Calculating daily rate for 2025-06-03
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-03: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-03: no log found
+Habit 2 on 2025-06-03: no log found
+Habit 3 on 2025-06-03: no log found
+Habit 4 on 2025-06-03: no log found
+Total weight for 2025-06-03: 0
+Calculating daily rate for 2025-06-04
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-04: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-04: no log found
+Habit 2 on 2025-06-04: no log found
+Habit 3 on 2025-06-04: no log found
+Habit 4 on 2025-06-04: no log found
+Total weight for 2025-06-04: 0
+Calculating daily rate for 2025-06-05
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-05: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-05: no log found
+Habit 2 on 2025-06-05: no log found
+Habit 3 on 2025-06-05: no log found
+Habit 4 on 2025-06-05: no log found
+Total weight for 2025-06-05: 0
+Calculating daily rate for 2025-06-06
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-06: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-06: no log found
+Habit 2 on 2025-06-06: no log found
+Habit 3 on 2025-06-06: no log found
+Habit 4 on 2025-06-06: no log found
+Total weight for 2025-06-06: 0
+Calculating daily rate for 2025-06-07
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-07: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-07: no log found
+Habit 2 on 2025-06-07: no log found
+Habit 3 on 2025-06-07: no log found
+Habit 4 on 2025-06-07: no log found
+Total weight for 2025-06-07: 0
+Calculating daily rate for 2025-06-08
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-08: [
+  {
+    id: '1-2025-06-08',
+    habitId: '1',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-08',
+    habitId: '2',
+    date: '2025-06-08',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-08',
+    habitId: '3',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-08',
+    habitId: '4',
+    date: '2025-06-08',
+    state: 'bad'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-08: good (weight: 0.001)
+Habit 2 on 2025-06-08: bad (weight: 0.0005)
+Habit 3 on 2025-06-08: good (weight: 0.0005)
+Habit 4 on 2025-06-08: bad (weight: 0.0025)
+Total weight for 2025-06-08: -0.0015
+Calculating daily rate for 2025-06-09
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-09: [
+  {
+    id: '1-2025-06-09',
+    habitId: '1',
+    date: '2025-06-09',
+    state: 'bad'
+  },
+  {
+    id: '4-2025-06-09',
+    habitId: '4',
+    date: '2025-06-09',
+    state: 'bad'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-09: bad (weight: 0.001)
+Habit 2 on 2025-06-09: no log found
+Habit 3 on 2025-06-09: no log found
+Habit 4 on 2025-06-09: bad (weight: 0.0025)
+Total weight for 2025-06-09: -0.0035
+Calculating daily rate for 2025-06-10
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-10: [
+  {
+    id: '3-2025-06-10',
+    habitId: '3',
+    date: '2025-06-10',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-10',
+    habitId: '4',
+    date: '2025-06-10',
+    state: 'bad'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-10: no log found
+Habit 2 on 2025-06-10: no log found
+Habit 3 on 2025-06-10: good (weight: 0.0005)
+Habit 4 on 2025-06-10: bad (weight: 0.0025)
+Total weight for 2025-06-10: -0.002
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Calculating daily rate for 2025-06-12
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-12: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-12: no log found
+Habit 2 on 2025-06-12: no log found
+Habit 3 on 2025-06-12: no log found
+Habit 4 on 2025-06-12: no log found
+Total weight for 2025-06-12: 0
+Calculating daily rate for 2025-06-13
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-13: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-13: no log found
+Habit 2 on 2025-06-13: no log found
+Habit 3 on 2025-06-13: no log found
+Habit 4 on 2025-06-13: no log found
+Total weight for 2025-06-13: 0
+Calculating daily rate for 2025-06-14
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-14: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-14: no log found
+Habit 2 on 2025-06-14: no log found
+Habit 3 on 2025-06-14: no log found
+Habit 4 on 2025-06-14: no log found
+Total weight for 2025-06-14: 0
+Calculating daily rate for 2025-06-15
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-15: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-15: no log found
+Habit 2 on 2025-06-15: no log found
+Habit 3 on 2025-06-15: no log found
+Habit 4 on 2025-06-15: no log found
+Total weight for 2025-06-15: 0
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Time Filter: All Time selected, using all data
+Total logs available: 1113
+Calculating daily rate for 2025-05-31
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-05-31: [
+  {
+    id: '1-2025-05-31',
+    habitId: '1',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '2-2025-05-31',
+    habitId: '2',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '3-2025-05-31',
+    habitId: '3',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '4-2025-05-31',
+    habitId: '4',
+    date: '2025-05-31',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-05-31: good (weight: 0.001)
+Habit 2 on 2025-05-31: good (weight: 0.0005)
+Habit 3 on 2025-05-31: good (weight: 0.0005)
+Habit 4 on 2025-05-31: bad (weight: 0.0025)
+Total weight for 2025-05-31: -0.0005
+Calculating daily rate for 2025-06-01
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-01: [
+  {
+    id: '2-2025-06-01',
+    habitId: '2',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-01',
+    habitId: '3',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-01',
+    habitId: '4',
+    date: '2025-06-01',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-01: no log found
+Habit 2 on 2025-06-01: good (weight: 0.0005)
+Habit 3 on 2025-06-01: good (weight: 0.0005)
+Habit 4 on 2025-06-01: good (weight: 0.0025)
+Total weight for 2025-06-01: 0.0035
+Calculating daily rate for 2025-06-02
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-02: [
+  {
+    id: '1-2025-06-02',
+    habitId: '1',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-02',
+    habitId: '2',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-02',
+    habitId: '4',
+    date: '2025-06-02',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-02: good (weight: 0.001)
+Habit 2 on 2025-06-02: good (weight: 0.0005)
+Habit 3 on 2025-06-02: no log found
+Habit 4 on 2025-06-02: good (weight: 0.0025)
+Total weight for 2025-06-02: 0.004
+Calculating daily rate for 2025-06-03
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-03: [
+  {
+    id: '2-2025-06-03',
+    habitId: '2',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-03',
+    habitId: '3',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-03',
+    habitId: '4',
+    date: '2025-06-03',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-03: no log found
+Habit 2 on 2025-06-03: good (weight: 0.0005)
+Habit 3 on 2025-06-03: good (weight: 0.0005)
+Habit 4 on 2025-06-03: good (weight: 0.0025)
+Total weight for 2025-06-03: 0.0035
+Calculating daily rate for 2025-06-04
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-04: [
+  {
+    id: '1-2025-06-04',
+    habitId: '1',
+    date: '2025-06-04',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-04',
+    habitId: '2',
+    date: '2025-06-04',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-04: good (weight: 0.001)
+Habit 2 on 2025-06-04: good (weight: 0.0005)
+Habit 3 on 2025-06-04: no log found
+Habit 4 on 2025-06-04: no log found
+Total weight for 2025-06-04: 0.0015
+Calculating daily rate for 2025-06-05
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-05: [
+  {
+    id: '1-2025-06-05',
+    habitId: '1',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-05',
+    habitId: '2',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-05',
+    habitId: '3',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-05',
+    habitId: '4',
+    date: '2025-06-05',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-05: good (weight: 0.001)
+Habit 2 on 2025-06-05: good (weight: 0.0005)
+Habit 3 on 2025-06-05: good (weight: 0.0005)
+Habit 4 on 2025-06-05: good (weight: 0.0025)
+Total weight for 2025-06-05: 0.0045000000000000005
+Calculating daily rate for 2025-06-06
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-06: [
+  {
+    id: '1-2025-06-06',
+    habitId: '1',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-06',
+    habitId: '2',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-06',
+    habitId: '3',
+    date: '2025-06-06',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-06: bad (weight: 0.001)
+Habit 2 on 2025-06-06: bad (weight: 0.0005)
+Habit 3 on 2025-06-06: good (weight: 0.0005)
+Habit 4 on 2025-06-06: no log found
+Total weight for 2025-06-06: -0.001
+Calculating daily rate for 2025-06-07
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-07: [
+  {
+    id: '1-2025-06-07',
+    habitId: '1',
+    date: '2025-06-07',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-07',
+    habitId: '2',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-07',
+    habitId: '3',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-07',
+    habitId: '4',
+    date: '2025-06-07',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-07: bad (weight: 0.001)
+Habit 2 on 2025-06-07: good (weight: 0.0005)
+Habit 3 on 2025-06-07: good (weight: 0.0005)
+Habit 4 on 2025-06-07: bad (weight: 0.0025)
+Total weight for 2025-06-07: -0.0025
+Calculating daily rate for 2025-06-08
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-08: [
+  {
+    id: '1-2025-06-08',
+    habitId: '1',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-08',
+    habitId: '2',
+    date: '2025-06-08',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-08',
+    habitId: '3',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-08',
+    habitId: '4',
+    date: '2025-06-08',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-08: good (weight: 0.001)
+Habit 2 on 2025-06-08: bad (weight: 0.0005)
+Habit 3 on 2025-06-08: good (weight: 0.0005)
+Habit 4 on 2025-06-08: bad (weight: 0.0025)
+Total weight for 2025-06-08: -0.0015
+Calculating daily rate for 2025-06-09
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-09: [
+  {
+    id: '1-2025-06-09',
+    habitId: '1',
+    date: '2025-06-09',
+    state: 'bad'
+  },
+  {
+    id: '4-2025-06-09',
+    habitId: '4',
+    date: '2025-06-09',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-09: bad (weight: 0.001)
+Habit 2 on 2025-06-09: no log found
+Habit 3 on 2025-06-09: no log found
+Habit 4 on 2025-06-09: bad (weight: 0.0025)
+Total weight for 2025-06-09: -0.0035
+Calculating daily rate for 2025-06-10
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-10: [
+  {
+    id: '3-2025-06-10',
+    habitId: '3',
+    date: '2025-06-10',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-10',
+    habitId: '4',
+    date: '2025-06-10',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-10: no log found
+Habit 2 on 2025-06-10: no log found
+Habit 3 on 2025-06-10: good (weight: 0.0005)
+Habit 4 on 2025-06-10: bad (weight: 0.0025)
+Total weight for 2025-06-10: -0.002
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Calculating daily rate for 2025-06-12
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-12: []
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-12: no log found
+Habit 2 on 2025-06-12: no log found
+Habit 3 on 2025-06-12: no log found
+Habit 4 on 2025-06-12: no log found
+Total weight for 2025-06-12: 0
+Calculating daily rate for 2025-06-13
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-13: []
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-13: no log found
+Habit 2 on 2025-06-13: no log found
+Habit 3 on 2025-06-13: no log found
+Habit 4 on 2025-06-13: no log found
+Total weight for 2025-06-13: 0
+Calculating daily rate for 2025-06-14
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-14: []
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-14: no log found
+Habit 2 on 2025-06-14: no log found
+Habit 3 on 2025-06-14: no log found
+Habit 4 on 2025-06-14: no log found
+Total weight for 2025-06-14: 0
+Calculating daily rate for 2025-06-15
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-15: []
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-15: no log found
+Habit 2 on 2025-06-15: no log found
+Habit 3 on 2025-06-15: no log found
+Habit 4 on 2025-06-15: no log found
+Total weight for 2025-06-15: 0
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 1113
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should handle date filtering correctly in useMomentum hook
+Time Filter: Last 30 Days (30 days)
+Cutoff date: 2025-05-16
+Original logs: 1113, Filtered logs: 82
+Filtered date range: NaN to NaN
+Calculating daily rate for 2025-05-31
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-05-31: [
+  {
+    id: '1-2025-05-31',
+    habitId: '1',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '2-2025-05-31',
+    habitId: '2',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '3-2025-05-31',
+    habitId: '3',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '4-2025-05-31',
+    habitId: '4',
+    date: '2025-05-31',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-05-31: good (weight: 0.001)
+Habit 2 on 2025-05-31: good (weight: 0.0005)
+Habit 3 on 2025-05-31: good (weight: 0.0005)
+Habit 4 on 2025-05-31: bad (weight: 0.0025)
+Total weight for 2025-05-31: -0.0005
+Calculating daily rate for 2025-06-01
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-01: [
+  {
+    id: '2-2025-06-01',
+    habitId: '2',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-01',
+    habitId: '3',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-01',
+    habitId: '4',
+    date: '2025-06-01',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-01: no log found
+Habit 2 on 2025-06-01: good (weight: 0.0005)
+Habit 3 on 2025-06-01: good (weight: 0.0005)
+Habit 4 on 2025-06-01: good (weight: 0.0025)
+Total weight for 2025-06-01: 0.0035
+Calculating daily rate for 2025-06-02
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-02: [
+  {
+    id: '1-2025-06-02',
+    habitId: '1',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-02',
+    habitId: '2',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-02',
+    habitId: '4',
+    date: '2025-06-02',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-02: good (weight: 0.001)
+Habit 2 on 2025-06-02: good (weight: 0.0005)
+Habit 3 on 2025-06-02: no log found
+Habit 4 on 2025-06-02: good (weight: 0.0025)
+Total weight for 2025-06-02: 0.004
+Calculating daily rate for 2025-06-03
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-03: [
+  {
+    id: '2-2025-06-03',
+    habitId: '2',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-03',
+    habitId: '3',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-03',
+    habitId: '4',
+    date: '2025-06-03',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-03: no log found
+Habit 2 on 2025-06-03: good (weight: 0.0005)
+Habit 3 on 2025-06-03: good (weight: 0.0005)
+Habit 4 on 2025-06-03: good (weight: 0.0025)
+Total weight for 2025-06-03: 0.0035
+Calculating daily rate for 2025-06-04
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-04: [
+  {
+    id: '1-2025-06-04',
+    habitId: '1',
+    date: '2025-06-04',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-04',
+    habitId: '2',
+    date: '2025-06-04',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-04: good (weight: 0.001)
+Habit 2 on 2025-06-04: good (weight: 0.0005)
+Habit 3 on 2025-06-04: no log found
+Habit 4 on 2025-06-04: no log found
+Total weight for 2025-06-04: 0.0015
+Calculating daily rate for 2025-06-05
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-05: [
+  {
+    id: '1-2025-06-05',
+    habitId: '1',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-05',
+    habitId: '2',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-05',
+    habitId: '3',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-05',
+    habitId: '4',
+    date: '2025-06-05',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-05: good (weight: 0.001)
+Habit 2 on 2025-06-05: good (weight: 0.0005)
+Habit 3 on 2025-06-05: good (weight: 0.0005)
+Habit 4 on 2025-06-05: good (weight: 0.0025)
+Total weight for 2025-06-05: 0.0045000000000000005
+Calculating daily rate for 2025-06-06
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-06: [
+  {
+    id: '1-2025-06-06',
+    habitId: '1',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-06',
+    habitId: '2',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-06',
+    habitId: '3',
+    date: '2025-06-06',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-06: bad (weight: 0.001)
+Habit 2 on 2025-06-06: bad (weight: 0.0005)
+Habit 3 on 2025-06-06: good (weight: 0.0005)
+Habit 4 on 2025-06-06: no log found
+Total weight for 2025-06-06: -0.001
+Calculating daily rate for 2025-06-07
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-07: [
+  {
+    id: '1-2025-06-07',
+    habitId: '1',
+    date: '2025-06-07',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-07',
+    habitId: '2',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-07',
+    habitId: '3',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-07',
+    habitId: '4',
+    date: '2025-06-07',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-07: bad (weight: 0.001)
+Habit 2 on 2025-06-07: good (weight: 0.0005)
+Habit 3 on 2025-06-07: good (weight: 0.0005)
+Habit 4 on 2025-06-07: bad (weight: 0.0025)
+Total weight for 2025-06-07: -0.0025
+Calculating daily rate for 2025-06-08
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-08: [
+  {
+    id: '1-2025-06-08',
+    habitId: '1',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-08',
+    habitId: '2',
+    date: '2025-06-08',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-08',
+    habitId: '3',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-08',
+    habitId: '4',
+    date: '2025-06-08',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-08: good (weight: 0.001)
+Habit 2 on 2025-06-08: bad (weight: 0.0005)
+Habit 3 on 2025-06-08: good (weight: 0.0005)
+Habit 4 on 2025-06-08: bad (weight: 0.0025)
+Total weight for 2025-06-08: -0.0015
+Calculating daily rate for 2025-06-09
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-09: [
+  {
+    id: '1-2025-06-09',
+    habitId: '1',
+    date: '2025-06-09',
+    state: 'bad'
+  },
+  {
+    id: '4-2025-06-09',
+    habitId: '4',
+    date: '2025-06-09',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-09: bad (weight: 0.001)
+Habit 2 on 2025-06-09: no log found
+Habit 3 on 2025-06-09: no log found
+Habit 4 on 2025-06-09: bad (weight: 0.0025)
+Total weight for 2025-06-09: -0.0035
+Calculating daily rate for 2025-06-10
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-10: [
+  {
+    id: '3-2025-06-10',
+    habitId: '3',
+    date: '2025-06-10',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-10',
+    habitId: '4',
+    date: '2025-06-10',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-10: no log found
+Habit 2 on 2025-06-10: no log found
+Habit 3 on 2025-06-10: good (weight: 0.0005)
+Habit 4 on 2025-06-10: bad (weight: 0.0025)
+Total weight for 2025-06-10: -0.002
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Calculating daily rate for 2025-06-12
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-12: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-12: no log found
+Habit 2 on 2025-06-12: no log found
+Habit 3 on 2025-06-12: no log found
+Habit 4 on 2025-06-12: no log found
+Total weight for 2025-06-12: 0
+Calculating daily rate for 2025-06-13
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-13: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-13: no log found
+Habit 2 on 2025-06-13: no log found
+Habit 3 on 2025-06-13: no log found
+Habit 4 on 2025-06-13: no log found
+Total weight for 2025-06-13: 0
+Calculating daily rate for 2025-06-14
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-14: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-14: no log found
+Habit 2 on 2025-06-14: no log found
+Habit 3 on 2025-06-14: no log found
+Habit 4 on 2025-06-14: no log found
+Total weight for 2025-06-14: 0
+Calculating daily rate for 2025-06-15
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-15: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-15: no log found
+Habit 2 on 2025-06-15: no log found
+Habit 3 on 2025-06-15: no log found
+Habit 4 on 2025-06-15: no log found
+Total weight for 2025-06-15: 0
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should recalculate when time filter changes
+Time Filter: Last 7 Days (7 days)
+Cutoff date: 2025-06-08
+Original logs: 1113, Filtered logs: 11
+Filtered date range: NaN to NaN
+Calculating daily rate for 2025-05-31
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-05-31: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-05-31: no log found
+Habit 2 on 2025-05-31: no log found
+Habit 3 on 2025-05-31: no log found
+Habit 4 on 2025-05-31: no log found
+Total weight for 2025-05-31: 0
+Calculating daily rate for 2025-06-01
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-01: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-01: no log found
+Habit 2 on 2025-06-01: no log found
+Habit 3 on 2025-06-01: no log found
+Habit 4 on 2025-06-01: no log found
+Total weight for 2025-06-01: 0
+Calculating daily rate for 2025-06-02
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-02: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-02: no log found
+Habit 2 on 2025-06-02: no log found
+Habit 3 on 2025-06-02: no log found
+Habit 4 on 2025-06-02: no log found
+Total weight for 2025-06-02: 0
+Calculating daily rate for 2025-06-03
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-03: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-03: no log found
+Habit 2 on 2025-06-03: no log found
+Habit 3 on 2025-06-03: no log found
+Habit 4 on 2025-06-03: no log found
+Total weight for 2025-06-03: 0
+Calculating daily rate for 2025-06-04
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-04: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-04: no log found
+Habit 2 on 2025-06-04: no log found
+Habit 3 on 2025-06-04: no log found
+Habit 4 on 2025-06-04: no log found
+Total weight for 2025-06-04: 0
+Calculating daily rate for 2025-06-05
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-05: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-05: no log found
+Habit 2 on 2025-06-05: no log found
+Habit 3 on 2025-06-05: no log found
+Habit 4 on 2025-06-05: no log found
+Total weight for 2025-06-05: 0
+Calculating daily rate for 2025-06-06
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-06: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-06: no log found
+Habit 2 on 2025-06-06: no log found
+Habit 3 on 2025-06-06: no log found
+Habit 4 on 2025-06-06: no log found
+Total weight for 2025-06-06: 0
+Calculating daily rate for 2025-06-07
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-07: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-07: no log found
+Habit 2 on 2025-06-07: no log found
+Habit 3 on 2025-06-07: no log found
+Habit 4 on 2025-06-07: no log found
+Total weight for 2025-06-07: 0
+Calculating daily rate for 2025-06-08
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-08: [
+  {
+    id: '1-2025-06-08',
+    habitId: '1',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-08',
+    habitId: '2',
+    date: '2025-06-08',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-08',
+    habitId: '3',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-08',
+    habitId: '4',
+    date: '2025-06-08',
+    state: 'bad'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-08: good (weight: 0.001)
+Habit 2 on 2025-06-08: bad (weight: 0.0005)
+Habit 3 on 2025-06-08: good (weight: 0.0005)
+Habit 4 on 2025-06-08: bad (weight: 0.0025)
+Total weight for 2025-06-08: -0.0015
+Calculating daily rate for 2025-06-09
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-09: [
+  {
+    id: '1-2025-06-09',
+    habitId: '1',
+    date: '2025-06-09',
+    state: 'bad'
+  },
+  {
+    id: '4-2025-06-09',
+    habitId: '4',
+    date: '2025-06-09',
+    state: 'bad'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-09: bad (weight: 0.001)
+Habit 2 on 2025-06-09: no log found
+Habit 3 on 2025-06-09: no log found
+Habit 4 on 2025-06-09: bad (weight: 0.0025)
+Total weight for 2025-06-09: -0.0035
+Calculating daily rate for 2025-06-10
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-10: [
+  {
+    id: '3-2025-06-10',
+    habitId: '3',
+    date: '2025-06-10',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-10',
+    habitId: '4',
+    date: '2025-06-10',
+    state: 'bad'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-10: no log found
+Habit 2 on 2025-06-10: no log found
+Habit 3 on 2025-06-10: good (weight: 0.0005)
+Habit 4 on 2025-06-10: bad (weight: 0.0025)
+Total weight for 2025-06-10: -0.002
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Calculating daily rate for 2025-06-12
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-12: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-12: no log found
+Habit 2 on 2025-06-12: no log found
+Habit 3 on 2025-06-12: no log found
+Habit 4 on 2025-06-12: no log found
+Total weight for 2025-06-12: 0
+Calculating daily rate for 2025-06-13
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-13: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-13: no log found
+Habit 2 on 2025-06-13: no log found
+Habit 3 on 2025-06-13: no log found
+Habit 4 on 2025-06-13: no log found
+Total weight for 2025-06-13: 0
+Calculating daily rate for 2025-06-14
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-14: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-14: no log found
+Habit 2 on 2025-06-14: no log found
+Habit 3 on 2025-06-14: no log found
+Habit 4 on 2025-06-14: no log found
+Total weight for 2025-06-14: 0
+Calculating daily rate for 2025-06-15
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-15: []
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-15: no log found
+Habit 2 on 2025-06-15: no log found
+Habit 3 on 2025-06-15: no log found
+Habit 4 on 2025-06-15: no log found
+Total weight for 2025-06-15: 0
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 11
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [ '2025-06-08', '2025-06-09', '2025-06-10', '2025-06-11' ]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Time Filter: Last 30 Days (30 days)
+Cutoff date: 2025-05-16
+Original logs: 1113, Filtered logs: 82
+Filtered date range: NaN to NaN
+Calculating daily rate for 2025-05-31
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-05-31: [
+  {
+    id: '1-2025-05-31',
+    habitId: '1',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '2-2025-05-31',
+    habitId: '2',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '3-2025-05-31',
+    habitId: '3',
+    date: '2025-05-31',
+    state: 'good'
+  },
+  {
+    id: '4-2025-05-31',
+    habitId: '4',
+    date: '2025-05-31',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-05-31: good (weight: 0.001)
+Habit 2 on 2025-05-31: good (weight: 0.0005)
+Habit 3 on 2025-05-31: good (weight: 0.0005)
+Habit 4 on 2025-05-31: bad (weight: 0.0025)
+Total weight for 2025-05-31: -0.0005
+Calculating daily rate for 2025-06-01
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-01: [
+  {
+    id: '2-2025-06-01',
+    habitId: '2',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-01',
+    habitId: '3',
+    date: '2025-06-01',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-01',
+    habitId: '4',
+    date: '2025-06-01',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-01: no log found
+Habit 2 on 2025-06-01: good (weight: 0.0005)
+Habit 3 on 2025-06-01: good (weight: 0.0005)
+Habit 4 on 2025-06-01: good (weight: 0.0025)
+Total weight for 2025-06-01: 0.0035
+Calculating daily rate for 2025-06-02
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-02: [
+  {
+    id: '1-2025-06-02',
+    habitId: '1',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-02',
+    habitId: '2',
+    date: '2025-06-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-02',
+    habitId: '4',
+    date: '2025-06-02',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-02: good (weight: 0.001)
+Habit 2 on 2025-06-02: good (weight: 0.0005)
+Habit 3 on 2025-06-02: no log found
+Habit 4 on 2025-06-02: good (weight: 0.0025)
+Total weight for 2025-06-02: 0.004
+Calculating daily rate for 2025-06-03
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-03: [
+  {
+    id: '2-2025-06-03',
+    habitId: '2',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-03',
+    habitId: '3',
+    date: '2025-06-03',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-03',
+    habitId: '4',
+    date: '2025-06-03',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-03: no log found
+Habit 2 on 2025-06-03: good (weight: 0.0005)
+Habit 3 on 2025-06-03: good (weight: 0.0005)
+Habit 4 on 2025-06-03: good (weight: 0.0025)
+Total weight for 2025-06-03: 0.0035
+Calculating daily rate for 2025-06-04
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-04: [
+  {
+    id: '1-2025-06-04',
+    habitId: '1',
+    date: '2025-06-04',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-04',
+    habitId: '2',
+    date: '2025-06-04',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-04: good (weight: 0.001)
+Habit 2 on 2025-06-04: good (weight: 0.0005)
+Habit 3 on 2025-06-04: no log found
+Habit 4 on 2025-06-04: no log found
+Total weight for 2025-06-04: 0.0015
+Calculating daily rate for 2025-06-05
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-05: [
+  {
+    id: '1-2025-06-05',
+    habitId: '1',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-05',
+    habitId: '2',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-05',
+    habitId: '3',
+    date: '2025-06-05',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-05',
+    habitId: '4',
+    date: '2025-06-05',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-05: good (weight: 0.001)
+Habit 2 on 2025-06-05: good (weight: 0.0005)
+Habit 3 on 2025-06-05: good (weight: 0.0005)
+Habit 4 on 2025-06-05: good (weight: 0.0025)
+Total weight for 2025-06-05: 0.0045000000000000005
+Calculating daily rate for 2025-06-06
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-06: [
+  {
+    id: '1-2025-06-06',
+    habitId: '1',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-06',
+    habitId: '2',
+    date: '2025-06-06',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-06',
+    habitId: '3',
+    date: '2025-06-06',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-06: bad (weight: 0.001)
+Habit 2 on 2025-06-06: bad (weight: 0.0005)
+Habit 3 on 2025-06-06: good (weight: 0.0005)
+Habit 4 on 2025-06-06: no log found
+Total weight for 2025-06-06: -0.001
+Calculating daily rate for 2025-06-07
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-07: [
+  {
+    id: '1-2025-06-07',
+    habitId: '1',
+    date: '2025-06-07',
+    state: 'bad'
+  },
+  {
+    id: '2-2025-06-07',
+    habitId: '2',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-07',
+    habitId: '3',
+    date: '2025-06-07',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-07',
+    habitId: '4',
+    date: '2025-06-07',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-07: bad (weight: 0.001)
+Habit 2 on 2025-06-07: good (weight: 0.0005)
+Habit 3 on 2025-06-07: good (weight: 0.0005)
+Habit 4 on 2025-06-07: bad (weight: 0.0025)
+Total weight for 2025-06-07: -0.0025
+Calculating daily rate for 2025-06-08
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-08: [
+  {
+    id: '1-2025-06-08',
+    habitId: '1',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '2-2025-06-08',
+    habitId: '2',
+    date: '2025-06-08',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-06-08',
+    habitId: '3',
+    date: '2025-06-08',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-08',
+    habitId: '4',
+    date: '2025-06-08',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-08: good (weight: 0.001)
+Habit 2 on 2025-06-08: bad (weight: 0.0005)
+Habit 3 on 2025-06-08: good (weight: 0.0005)
+Habit 4 on 2025-06-08: bad (weight: 0.0025)
+Total weight for 2025-06-08: -0.0015
+Calculating daily rate for 2025-06-09
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-09: [
+  {
+    id: '1-2025-06-09',
+    habitId: '1',
+    date: '2025-06-09',
+    state: 'bad'
+  },
+  {
+    id: '4-2025-06-09',
+    habitId: '4',
+    date: '2025-06-09',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-09: bad (weight: 0.001)
+Habit 2 on 2025-06-09: no log found
+Habit 3 on 2025-06-09: no log found
+Habit 4 on 2025-06-09: bad (weight: 0.0025)
+Total weight for 2025-06-09: -0.0035
+Calculating daily rate for 2025-06-10
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-10: [
+  {
+    id: '3-2025-06-10',
+    habitId: '3',
+    date: '2025-06-10',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-10',
+    habitId: '4',
+    date: '2025-06-10',
+    state: 'bad'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-10: no log found
+Habit 2 on 2025-06-10: no log found
+Habit 3 on 2025-06-10: good (weight: 0.0005)
+Habit 4 on 2025-06-10: bad (weight: 0.0025)
+Total weight for 2025-06-10: -0.002
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+Calculating daily rate for 2025-06-12
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-12: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-12: no log found
+Habit 2 on 2025-06-12: no log found
+Habit 3 on 2025-06-12: no log found
+Habit 4 on 2025-06-12: no log found
+Total weight for 2025-06-12: 0
+Calculating daily rate for 2025-06-13
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-13: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-13: no log found
+Habit 2 on 2025-06-13: no log found
+Habit 3 on 2025-06-13: no log found
+Habit 4 on 2025-06-13: no log found
+Total weight for 2025-06-13: 0
+Calculating daily rate for 2025-06-14
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-14: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-14: no log found
+Habit 2 on 2025-06-14: no log found
+Habit 3 on 2025-06-14: no log found
+Habit 4 on 2025-06-14: no log found
+Total weight for 2025-06-14: 0
+Calculating daily rate for 2025-06-15
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-15: []
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-15: no log found
+Habit 2 on 2025-06-15: no log found
+Habit 3 on 2025-06-15: no log found
+Habit 4 on 2025-06-15: no log found
+Total weight for 2025-06-15: 0
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 82
+Logs found for 2025-06-11: [
+  {
+    id: '2-2025-06-11',
+    habitId: '2',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '3-2025-06-11',
+    habitId: '3',
+    date: '2025-06-11',
+    state: 'good'
+  },
+  {
+    id: '4-2025-06-11',
+    habitId: '4',
+    date: '2025-06-11',
+    state: 'good'
+  }
+]
+All log dates available: [
+  '2025-05-16', '2025-05-17',
+  '2025-05-18', '2025-05-19',
+  '2025-05-20', '2025-05-21',
+  '2025-05-22', '2025-05-23',
+  '2025-05-24', '2025-05-25'
+]
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: good (weight: 0.0005)
+Habit 3 on 2025-06-11: good (weight: 0.0005)
+Habit 4 on 2025-06-11: good (weight: 0.0025)
+Total weight for 2025-06-11: 0.0035
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should handle edge case of no logs in time range
+Time Filter: Future 7 Days (-7 days)
+Cutoff date: 2025-06-22
+Original logs: 1113, Filtered logs: 0
+Filtered date range: No logs in range
+Calculating daily rate for 2025-05-31
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-05-31: []
+All log dates available: []
+Habit 1 on 2025-05-31: no log found
+Habit 2 on 2025-05-31: no log found
+Habit 3 on 2025-05-31: no log found
+Habit 4 on 2025-05-31: no log found
+Total weight for 2025-05-31: 0
+Calculating daily rate for 2025-06-01
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-01: []
+All log dates available: []
+Habit 1 on 2025-06-01: no log found
+Habit 2 on 2025-06-01: no log found
+Habit 3 on 2025-06-01: no log found
+Habit 4 on 2025-06-01: no log found
+Total weight for 2025-06-01: 0
+Calculating daily rate for 2025-06-02
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-02: []
+All log dates available: []
+Habit 1 on 2025-06-02: no log found
+Habit 2 on 2025-06-02: no log found
+Habit 3 on 2025-06-02: no log found
+Habit 4 on 2025-06-02: no log found
+Total weight for 2025-06-02: 0
+Calculating daily rate for 2025-06-03
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-03: []
+All log dates available: []
+Habit 1 on 2025-06-03: no log found
+Habit 2 on 2025-06-03: no log found
+Habit 3 on 2025-06-03: no log found
+Habit 4 on 2025-06-03: no log found
+Total weight for 2025-06-03: 0
+Calculating daily rate for 2025-06-04
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-04: []
+All log dates available: []
+Habit 1 on 2025-06-04: no log found
+Habit 2 on 2025-06-04: no log found
+Habit 3 on 2025-06-04: no log found
+Habit 4 on 2025-06-04: no log found
+Total weight for 2025-06-04: 0
+Calculating daily rate for 2025-06-05
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-05: []
+All log dates available: []
+Habit 1 on 2025-06-05: no log found
+Habit 2 on 2025-06-05: no log found
+Habit 3 on 2025-06-05: no log found
+Habit 4 on 2025-06-05: no log found
+Total weight for 2025-06-05: 0
+Calculating daily rate for 2025-06-06
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-06: []
+All log dates available: []
+Habit 1 on 2025-06-06: no log found
+Habit 2 on 2025-06-06: no log found
+Habit 3 on 2025-06-06: no log found
+Habit 4 on 2025-06-06: no log found
+Total weight for 2025-06-06: 0
+Calculating daily rate for 2025-06-07
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-07: []
+All log dates available: []
+Habit 1 on 2025-06-07: no log found
+Habit 2 on 2025-06-07: no log found
+Habit 3 on 2025-06-07: no log found
+Habit 4 on 2025-06-07: no log found
+Total weight for 2025-06-07: 0
+Calculating daily rate for 2025-06-08
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-08: []
+All log dates available: []
+Habit 1 on 2025-06-08: no log found
+Habit 2 on 2025-06-08: no log found
+Habit 3 on 2025-06-08: no log found
+Habit 4 on 2025-06-08: no log found
+Total weight for 2025-06-08: 0
+Calculating daily rate for 2025-06-09
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-09: []
+All log dates available: []
+Habit 1 on 2025-06-09: no log found
+Habit 2 on 2025-06-09: no log found
+Habit 3 on 2025-06-09: no log found
+Habit 4 on 2025-06-09: no log found
+Total weight for 2025-06-09: 0
+Calculating daily rate for 2025-06-10
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-10: []
+All log dates available: []
+Habit 1 on 2025-06-10: no log found
+Habit 2 on 2025-06-10: no log found
+Habit 3 on 2025-06-10: no log found
+Habit 4 on 2025-06-10: no log found
+Total weight for 2025-06-10: 0
+Calculating daily rate for 2025-06-11
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-11: []
+All log dates available: []
+Habit 1 on 2025-06-11: no log found
+Habit 2 on 2025-06-11: no log found
+Habit 3 on 2025-06-11: no log found
+Habit 4 on 2025-06-11: no log found
+Total weight for 2025-06-11: 0
+Calculating daily rate for 2025-06-12
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-12: []
+All log dates available: []
+Habit 1 on 2025-06-12: no log found
+Habit 2 on 2025-06-12: no log found
+Habit 3 on 2025-06-12: no log found
+Habit 4 on 2025-06-12: no log found
+Total weight for 2025-06-12: 0
+Calculating daily rate for 2025-06-13
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-13: []
+All log dates available: []
+Habit 1 on 2025-06-13: no log found
+Habit 2 on 2025-06-13: no log found
+Habit 3 on 2025-06-13: no log found
+Habit 4 on 2025-06-13: no log found
+Total weight for 2025-06-13: 0
+Calculating daily rate for 2025-06-14
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-14: []
+All log dates available: []
+Habit 1 on 2025-06-14: no log found
+Habit 2 on 2025-06-14: no log found
+Habit 3 on 2025-06-14: no log found
+Habit 4 on 2025-06-14: no log found
+Total weight for 2025-06-14: 0
+Calculating daily rate for 2025-06-15
+Available habits: [
+  { id: '1', weight: 0.001 },
+  { id: '2', weight: 0.0005 },
+  { id: '3', weight: 0.0005 },
+  { id: '4', weight: 0.0025 }
+]
+Total logs passed to calculateDailyRate: 0
+Logs found for 2025-06-15: []
+All log dates available: []
+Habit 1 on 2025-06-15: no log found
+Habit 2 on 2025-06-15: no log found
+Habit 3 on 2025-06-15: no log found
+Habit 4 on 2025-06-15: no log found
+Total weight for 2025-06-15: 0
+
+ ❯ tests/time-filter-integration.test.ts (9 tests | 1 failed) 112ms
+   ✓ Time Filter Integration > should filter data correctly for 'All Time' 28ms
+   ✓ Time Filter Integration > should filter data correctly for 'Last 7 Days' 6ms
+   ✓ Time Filter Integration > should filter data correctly for 'Last 30 Days' 8ms
+   ✓ Time Filter Integration > should filter data correctly for 'Last 90 Days' 13ms
+   ✓ Time Filter Integration > should filter logs based on time range 16ms
+   × Time Filter Integration > should handle date filtering correctly in useMomentum hook 15ms
+     → actual value must be number or bigint, received "string"
+   ✓ Time Filter Integration > should recalculate when time filter changes 11ms
+   ✓ Time Filter Integration > should handle edge case of no logs in time range 9ms
+   ✓ Time Filter Integration > should debug log filtering logic 5ms
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/time-filter-integration.test.ts > Time Filter Integration > should handle date filtering correctly in useMomentum hook
+TypeError: actual value must be number or bigint, received "string"
+ ❯ tests/time-filter-integration.test.ts:69:30
+     67|     // All momentum data should be within the time range
+     68|     result.current.momentumData.forEach(dataPoint => {
+     69|       expect(dataPoint.date).toBeGreaterThanOrEqual(cutoffString);
+       |                              ^
+     70|     });
+     71|   });
+ ❯ tests/time-filter-integration.test.ts:68:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  02:29:35
+   Duration  2.92s (transform 198ms, setup 237ms, collect 420ms, tests 112ms, environment 1.20s, prepare 370ms)
+
