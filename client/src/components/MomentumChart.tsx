@@ -13,6 +13,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { HelpCircle } from 'lucide-react';
 import { MomentumData } from '../types';
+import { toLocalMidnight } from '../utils/compound';
 
 interface MomentumChartProps {
   data: MomentumData[];
@@ -81,10 +82,14 @@ export default function MomentumChart({
   const dynamicCurrentIndex = getDynamicCurrentIndex();
   const timeFilterGrowth = getTimeFilterGrowth();
 
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
+  const formatDate = (epochOrDateStr: number | string) => {
+    const date = typeof epochOrDateStr === 'number' ? new Date(epochOrDateStr) : new Date(epochOrDateStr);
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear().toString().slice(-2)}`;
   };
+
+  // Create today's epoch for reference line
+  const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local timezone
+  const todayEpoch = toLocalMidnight(todayStr);
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -92,7 +97,7 @@ export default function MomentumChart({
       return (
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600">
           <p className="text-sm font-medium text-gray-800 dark:text-white">
-            {formatDate(label)}
+            {formatDate(data.date)}
           </p>
           <p className="text-sm text-coral">
             Momentum: {data.value.toFixed(3)}
@@ -204,14 +209,15 @@ export default function MomentumChart({
               </linearGradient>
             </defs>
             <XAxis 
-              dataKey="date" 
+              dataKey="epoch"
+              type="number"
+              scale="time"
+              domain={['dataMin', todayEpoch]}
               tickFormatter={formatDate}
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
-              domain={['dataMin', 'dataMax']}
-              type="category"
-              interval={Math.max(1, Math.floor(data.length / 6))}
+              tickCount={6}
             />
             <YAxis 
               axisLine={false}
@@ -251,7 +257,7 @@ export default function MomentumChart({
 
             {/* Today marker */}
             <ReferenceLine
-              x={new Date().toLocaleDateString('en-CA')}
+              x={todayEpoch}
               stroke="#6B7280"
               strokeWidth={1}
               opacity={0.5}

@@ -1,11 +1,20 @@
 import { HabitPair, HabitLog, MomentumData } from '../types';
 
+// Helper to parse date strings as local midnight instead of UTC
+export function toLocalMidnight(dateStr: string): number {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return new Date(y, m - 1, d, 0, 0, 0, 0).getTime(); // local TZ
+}
+
 export function calculateMomentumIndex(
   habits: HabitPair[],
   logs: HabitLog[],
-  targetDate: Date
+  targetDate: Date | number
 ): number {
   if (habits.length === 0) return 1.0;
+
+  // Convert targetDate to epoch if it's a Date
+  const targetEpoch = typeof targetDate === 'number' ? targetDate : targetDate.getTime();
 
   // Find the earliest habit creation date or use a default
   const startDate = habits.length > 0 
@@ -15,7 +24,7 @@ export function calculateMomentumIndex(
   let momentum = 1.0;
 
   const currentDate = new Date(startDate);
-  while (currentDate <= targetDate) {
+  while (currentDate.getTime() <= targetEpoch) {
     const dateStr = currentDate.toISOString().split('T')[0];
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
     momentum *= (1 + dailyRate);
@@ -85,12 +94,14 @@ export function generateMomentumHistory(
     if (dateStr < logDates[0]) continue;
 
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
-    const momentum = calculateMomentumIndex(habits, logs, date);
+    const momentum = calculateMomentumIndex(habits, logs, toLocalMidnight(dateStr));
+    const epoch = toLocalMidnight(dateStr);
 
     result.push({
       date: dateStr,
       value: momentum,
       dailyRate,
+      epoch,
       isProjection: false
     });
   }
@@ -142,13 +153,15 @@ export function generateTimeFilterProjection(
   for (let i = 1; i <= config.forecastDays; i++) {
     const date = new Date(today);
     date.setDate(date.getDate() + i);
+    const dateStr = date.toISOString().split('T')[0];
 
     const projectedMomentum = currentMomentum * Math.pow(1 + avgRate, i);
 
     projectionData.push({
-      date: date.toISOString().split('T')[0],
+      date: dateStr,
       value: projectedMomentum,
       dailyRate: avgRate,
+      epoch: toLocalMidnight(dateStr),
       isProjection: true
     });
   }
