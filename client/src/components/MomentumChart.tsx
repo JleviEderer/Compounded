@@ -43,12 +43,12 @@ export default function MomentumChart({
   // Separate historical and forecast data for clean rendering
   const historicalData = data.filter(d => !d.isProjection);
   const forecastData = data.filter(d => d.isProjection);
-
-  // Create a connecting point between historical and forecast to eliminate gaps
+  
+  // Create a connecting point between historical and forecast
   const todayPoint = historicalData.length > 0 ? historicalData[historicalData.length - 1] : null;
-
-  // Find the exact transition point for the "Today" divider
-  const todayDividerDate = todayPoint ? todayPoint.date : new Date().toISOString().split('T')[0];
+  const forecastWithConnection = todayPoint && forecastData.length > 0 
+    ? [{ ...todayPoint, isProjection: true }, ...forecastData]
+    : forecastData;
 
   // Determine forecast trend direction
   const isForecastTrendingUp = () => {
@@ -226,7 +226,7 @@ export default function MomentumChart({
             />
             <RechartsTooltip content={<CustomTooltip />} />
 
-            {/* Historical data area - solid line with original styling */}
+            {/* Historical data area - only show non-projection points */}
             <Area
               type="monotone"
               dataKey={(entry: any) => !entry.isProjection ? entry.value : null}
@@ -237,7 +237,7 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Forecast data area - dashed line connecting seamlessly */}
+            {/* Forecast area - only show projection points */}
             <Area
               type="monotone"
               dataKey={(entry: any) => entry.isProjection ? entry.value : null}
@@ -249,25 +249,15 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Today divider - vertical line at transition point */}
-            {forecastData.length > 0 && todayPoint && (
+            {/* Today's reference line - positioned at 3/4 of the chart when forecast is present */}
+            {selectedRange !== 'All Time' && (
               <ReferenceLine 
-                x={todayDividerDate}
-                stroke="hsl(0, 0%, 40%)" 
-                strokeWidth={2}
-                opacity={0.7}
-                strokeDasharray="none"
-                label={{ 
-                  value: "Today", 
-                  position: "top", 
-                  offset: 15,
-                  style: { 
-                    fill: 'hsl(0, 0%, 40%)', 
-                    fontSize: '11px', 
-                    fontWeight: '600',
-                    textAnchor: 'middle'
-                  }
-                }}
+                x={new Date().toISOString().split('T')[0]} 
+                stroke="hsl(351, 83%, 87%)" 
+                strokeWidth={1.5}
+                strokeDasharray="2,2" 
+                opacity={0.6}
+                label={{ value: "Today", position: "topLeft", offset: 10 }}
               />
             )}
           </AreaChart>
