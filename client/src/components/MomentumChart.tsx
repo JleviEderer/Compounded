@@ -50,6 +50,9 @@ export default function MomentumChart({
     ? [{ ...todayPoint, isProjection: true }, ...forecastData]
     : forecastData;
 
+  // Find projection start date for divider
+  const projectionStartDate = forecastData.length > 0 ? forecastData[0].date : null;
+
   // Determine forecast trend direction
   const isForecastTrendingUp = () => {
     if (forecastData.length < 2 || !todayPoint) return true; // Default to up if no data
@@ -101,7 +104,7 @@ export default function MomentumChart({
             Daily Rate: {(data.dailyRate * 100).toFixed(2)}%
           </p>
           {data.isProjection && (
-            <p className="text-xs text-gray-500 italic">Projected</p>
+            <p className="text-xs text-gray-500 italic">(projected)</p>
           )}
         </div>
       );
@@ -237,17 +240,30 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Forecast area - only show projection points */}
+            {/* Forecast area - use connected data to eliminate gaps */}
             <Area
               type="monotone"
-              dataKey={(entry: any) => entry.isProjection ? entry.value : null}
+              data={forecastWithConnection}
+              dataKey="value"
               stroke={forecastStrokeColor}
               strokeWidth={1.5}
               strokeDasharray="8,4"
               fill={`url(#${forecastGradientId})`}
               dot={false}
-              connectNulls={false}
+              connectNulls={true}
             />
+
+            {/* Projection divider line */}
+            {projectionStartDate && (
+              <ReferenceLine 
+                x={projectionStartDate}
+                stroke={forecastStrokeColor}
+                strokeWidth={2}
+                opacity={0.4}
+                aria-hidden="true"
+                data-testid="projection-divider"
+              />
+            )}
 
             {/* Today's reference line - positioned at 3/4 of the chart when forecast is present */}
             {selectedRange !== 'All Time' && (
