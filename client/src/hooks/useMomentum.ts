@@ -105,9 +105,9 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     return ((endValue - startValue) / startValue) * 100;
   }, [momentumData, currentMomentum]);
 
-  // Calculate today's rate using real current date
+  // Calculate today's rate from filtered data
   const todayRate = useMemo(() => {
-    const today = new Date().toISOString().split('T')[0]; // This gets real current date: 2025-06-15
+    const today = new Date().toISOString().split('T')[0];
     return calculateDailyRate(filteredData.habits, filteredData.logs, today);
   }, [filteredData.habits, filteredData.logs]);
 
