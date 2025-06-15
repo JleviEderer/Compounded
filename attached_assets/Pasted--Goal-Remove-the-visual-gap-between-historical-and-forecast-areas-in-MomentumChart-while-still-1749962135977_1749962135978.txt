@@ -1,0 +1,39 @@
+### Goal
+Remove the visual gap between historical and forecast areas in `MomentumChart` while still making the boundary obvious.  
+Instead of white space, render a 2 px vertical divider at the exact x-value where projection starts.
+
+### Files that will change
+- `src/components/MomentumChart.tsx`  (main Recharts component)
+- `src/components/MomentumChart.test.tsx` (add a snapshot / DOM test)
+
+### Detailed requirements
+1. **Eliminate the gap**
+   - The historical `<Area>` and the forecast `<Area>` should share the same x-axis scale with no empty pixels between them.
+   - Tip: Right now we hard-code a `paddingRight` on the history area to create the gap—remove that.
+
+2. **Add divider**
+   - Draw an SVG `<Line>` (or Recharts `<ReferenceLine>` if easier) at `projectionStartDate`.
+   - Style: `strokeWidth={2}`, `opacity={0.4}`, `stroke={forecastColor}` (use the existing teal/green for positive, coral for negative).
+   - No dashes—solid line so it’s clearly not part of the dataset.
+
+3. **Keep interactions continuous**
+   - Tooltip scrubber should glide straight across the divider; no domain “jump.”
+   - When hovering forecast points, keep the “(projected)” suffix we already append.
+
+4. **A11y & semantics**
+   - Give the divider `aria-hidden="true"`.
+   - Ensure chart still has `role="img"` with `aria-label` describing both historical and projected data.
+
+5. **Tests**
+   - Add a React Testing Library test that renders the 30-day view, queries for the divider by `data-testid="projection-divider"`, and asserts it exists.
+   - Snapshot test to ensure the two `<Area>` paths butt up without a gap (no white rectangle SVG in between).
+
+### Acceptance checklist
+- [ ] 0 px horizontal gap between areas in all time-range tabs (30 D, 4 M, 1 Y, All Time).
+- [ ] Divider color switches correctly when forecast switches from positive to negative momentum.
+- [ ] Divider present in DOM with test id and is `aria-hidden`.
+- [ ] CI tests pass.
+
+### Context
+Recharts 2.x, TypeScript, Tailwind for colors (`var(--tw-forecastPos)` / `var(--tw-forecastNeg)`). The component already receives `projectionStartDate` as a `Date`.
+
