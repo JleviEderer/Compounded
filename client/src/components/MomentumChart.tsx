@@ -91,6 +91,9 @@ export default function MomentumChart({
 
   // Create today's epoch for reference line
   const todayEpoch = getTodayEpoch();
+  
+  // Compute the last historical epoch for custom ticks
+  const lastHist = data.findLast(d => !d.isProjection)?.epoch;
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -114,31 +117,6 @@ export default function MomentumChart({
     }
     return null;
   };
-
-  useEffect(() => {
-    // last record whose isProjection (or forecast) flag is false
-    const lastHistorical = data.findLast(d => !d.isProjection);  // adjust if the flag name differs
-    if (lastHistorical) {
-      console.log(
-        'LAST-HISTORICAL →',
-        lastHistorical,
-        'epoch→', new Date(lastHistorical.epoch).toString(),
-        'raw-date→', lastHistorical.date
-      );
-    }
-  }, [data]);
-
-  useEffect(() => {
-    const last = data[data.length - 1];
-    if (last) {
-      console.log(
-        'LAST-POINT ⟶',
-        last,                             // full object
-        'epoch→', new Date(last.epoch).toString(),
-        'raw-date→', last.date
-      );
-    }
-  }, [data]);
 
   return (
     <motion.div 
@@ -239,11 +217,11 @@ export default function MomentumChart({
               type="number"
               scale="time"
               domain={['dataMin', todayEpoch]}
-              tickFormatter={formatDate}
+              ticks={[data[0]?.epoch, lastHist, todayEpoch].filter(Boolean)}
+              tickFormatter={(t) => format(t, 'M/d')}
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
-              tickCount={6}
             />
             <YAxis 
               axisLine={false}
