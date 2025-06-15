@@ -50,11 +50,15 @@ export default function MomentumChart({
   // Create connection point to eliminate gap
   const todayPoint = historicalData.length > 0 ? historicalData[historicalData.length - 1] : null;
   
-  // Ensure both datasets share the connection point for seamless rendering
-  const historicalWithConnection = historicalData;
-  const forecastWithConnection = todayPoint && forecastData.length > 0 
-    ? [{ ...todayPoint, isProjection: true }, ...forecastData]
-    : forecastData;
+  // Create seamless connected dataset
+  const connectedData = [...data];
+  if (todayPoint && forecastData.length > 0) {
+    // Ensure the last historical point connects to the first forecast point
+    const firstForecastIndex = connectedData.findIndex(d => d.isProjection);
+    if (firstForecastIndex > 0) {
+      connectedData[firstForecastIndex] = { ...todayPoint, isProjection: true, date: forecastData[0].date };
+    }
+  }
 
   // Determine forecast trend direction
   const isForecastTrendingUp = () => {
@@ -235,24 +239,24 @@ export default function MomentumChart({
             {/* Historical data area - solid line with original styling */}
             <Area
               type="monotone"
-              data={historicalWithConnection}
-              dataKey="value"
+              dataKey={(entry: any) => !entry.isProjection ? entry.value : null}
               stroke="hsl(174, 58%, 46%)"
               strokeWidth={3}
               fill="url(#areaGradient)"
               dot={false}
+              connectNulls={false}
             />
 
             {/* Forecast area - dashed line connecting seamlessly */}
             <Area
               type="monotone"
-              data={forecastWithConnection}
-              dataKey="value"
+              dataKey={(entry: any) => entry.isProjection ? entry.value : null}
               stroke={forecastStrokeColor}
               strokeWidth={1.5}
               strokeDasharray="8,4"
               fill={`url(#${forecastGradientId})`}
               dot={false}
+              connectNulls={true}
             />
 
             {/* Today divider line - marks the transition between historical and forecast */}
