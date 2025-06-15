@@ -251,10 +251,10 @@ export default function MomentumChart({
 
             {/* Today reference line - marks current date */}
             <ReferenceLine 
-              x={new Date().toISOString().split('T')[0]} 
+              x="2025-06-14"
               stroke="#6B7280" 
-              strokeWidth={1}
-              opacity={0.5}
+              strokeWidth={2}
+              opacity={0.8}
               label={{ 
                 value: "Today", 
                 position: "top", 
@@ -262,7 +262,7 @@ export default function MomentumChart({
                 style: { 
                   fill: '#6B7280', 
                   fontSize: '12px', 
-                  fontWeight: '500' 
+                  fontWeight: '600' 
                 }
               }}
             />
