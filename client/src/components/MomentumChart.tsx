@@ -260,12 +260,12 @@ export default function MomentumChart({
             />
 
             {/* Today divider line - marks the transition between historical and forecast */}
-            {todayPoint && forecastData.length > 0 && (
+            {forecastData.length > 0 && (
               <ReferenceLine 
-                x={todayPoint.date} 
+                x={today} 
                 stroke="#6B7280" 
-                strokeWidth={1}
-                opacity={0.5}
+                strokeWidth={2}
+                opacity={0.7}
                 label={{ 
                   value: "Today", 
                   position: "top", 
