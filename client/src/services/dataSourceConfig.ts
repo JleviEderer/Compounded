@@ -7,8 +7,8 @@ export interface DataSourceConfig {
 }
 
 export const dataSourceConfig: DataSourceConfig = {
-  source: 'user', // Change this to 'user' to switch
-  enableLocalStorage: true // Change to true for user data persistence
+  source: 'mock', // Change this to 'user' to switch
+  enableLocalStorage: false // Change to true for user data persistence
 };
 
 export function setDataSource(source: DataSource) {
