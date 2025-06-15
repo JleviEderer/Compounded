@@ -116,6 +116,19 @@ export default function MomentumChart({
   };
 
   useEffect(() => {
+    // last record whose isProjection (or forecast) flag is false
+    const lastHistorical = data.findLast(d => !d.isProjection);  // adjust if the flag name differs
+    if (lastHistorical) {
+      console.log(
+        'LAST-HISTORICAL →',
+        lastHistorical,
+        'epoch→', new Date(lastHistorical.epoch).toString(),
+        'raw-date→', lastHistorical.date
+      );
+    }
+  }, [data]);
+
+  useEffect(() => {
     const last = data[data.length - 1];
     if (last) {
       console.log(
