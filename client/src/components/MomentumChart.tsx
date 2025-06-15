@@ -14,6 +14,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { HelpCircle } from 'lucide-react';
 import { MomentumData } from '../types';
 import { toLocalMidnight } from '../utils/compound';
+import { getTodayEpoch } from '../utils/date';
 
 interface MomentumChartProps {
   data: MomentumData[];
@@ -88,8 +89,7 @@ export default function MomentumChart({
   };
 
   // Create today's epoch for reference line
-  const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local timezone
-  const todayEpoch = toLocalMidnight(todayStr);
+  const todayEpoch = getTodayEpoch();
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {

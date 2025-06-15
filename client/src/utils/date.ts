@@ -1,0 +1,18 @@
+
+export function getTodayEpoch(): number {
+  const d = new Date(); // local now
+  d.setHours(0, 0, 0, 0); // clamp to local midnight
+  return d.getTime(); // epoch ms
+}
+
+export function getTodayString(): string {
+  const d = new Date(); // local now
+  d.setHours(0, 0, 0, 0); // clamp to local midnight
+  return d.toISOString().split('T')[0]; // YYYY-MM-DD in local timezone
+}
+
+// Optional: Console check helper for debugging
+export function debugToday(): void {
+  const todayEpoch = getTodayEpoch();
+  console.log('todayEpoch', todayEpoch, new Date(todayEpoch).toString());
+}

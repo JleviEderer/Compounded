@@ -1,4 +1,5 @@
 import { HabitPair, HabitLog, MomentumData } from '../types';
+import { getTodayString } from './date';
 
 // Helper to parse date strings as local midnight instead of UTC
 export function toLocalMidnight(dateStr: string): number {
@@ -81,7 +82,7 @@ export function generateMomentumHistory(
   console.log(`Momentum history: ${actualDays} days from ${startDate.toISOString().split('T')[0]} to ${actualEndDate.toISOString().split('T')[0]}`);
 
   // Use local timezone for "today" and optimize lookup with Set
-  const todayStr = new Date().toLocaleDateString('en-CA'); // 'en-CA' gives YYYY-MM-DD format in local timezone
+  const todayStr = getTodayString();
   const logDateSet = new Set(logDates); // O(1) lookup instead of O(n)
   const shouldIncludeToday = !logDateSet.has(todayStr);
 
