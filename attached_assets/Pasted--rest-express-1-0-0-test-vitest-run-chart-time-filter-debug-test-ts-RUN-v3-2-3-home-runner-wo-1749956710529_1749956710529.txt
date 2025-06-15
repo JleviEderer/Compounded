@@ -1,0 +1,119 @@
+
+> rest-express@1.0.0 test
+> vitest run chart-time-filter-debug.test.ts
+ RUN  v3.2.3 /home/runner/workspace
+
+stdout | tests/chart-time-filter-debug.test.ts
+🚀 STARTING mockData.ts with direct import...
+📋 Raw JSON data loaded: { habitsCount: 4, logsCount: 1113 }
+🔍 RAW JSON - Total logs: 1113
+🔍 RAW JSON - Date range: 2024-06-01 → 2025-06-11
+🔍 RAW JSON - Unique dates: 374
+🔍 RAW JSON - First 5 dates: [
+  '2024-06-01',
+  '2024-06-02',
+  '2024-06-03',
+  '2024-06-04',
+  '2024-06-05'
+]
+🔍 RAW JSON - Last 5 dates: [
+  '2025-06-07',
+  '2025-06-08',
+  '2025-06-09',
+  '2025-06-10',
+  '2025-06-11'
+]
+🔍 RAW JSON - 2025 logs found: 487
+🔍 RAW JSON - Sample 2025 logs: [
+  {
+    id: '1-2025-01-02',
+    habitId: '1',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '2-2025-01-02',
+    habitId: '2',
+    date: '2025-01-02',
+    state: 'bad'
+  },
+  {
+    id: '3-2025-01-02',
+    habitId: '3',
+    date: '2025-01-02',
+    state: 'bad'
+  }
+]
+📊 EXPORT VERIFICATION:
+📊 Habits exported: 4
+📊 Logs exported: 1113
+📊 Full date range: 2024-06-01 → 2025-06-11
+📊 2025 logs found: 487
+📊 2025 date range: 2025-01-02 → 2025-06-11
+✅ SUCCESS: 2025 data loaded successfully!
+📊 Sample June 2025 logs: [
+  '2025-06-01: habit 2 = good',
+  '2025-06-01: habit 3 = good',
+  '2025-06-01: habit 4 = good',
+  '2025-06-02: habit 1 = good',
+  '2025-06-02: habit 2 = good'
+]
+📊 All unique dates count: 374
+📊 First 10 dates: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+📊 Last 10 dates: [
+  '2025-06-02', '2025-06-03',
+  '2025-06-04', '2025-06-05',
+  '2025-06-06', '2025-06-07',
+  '2025-06-08', '2025-06-09',
+  '2025-06-10', '2025-06-11'
+]
+
+stdout | tests/chart-time-filter-debug.test.ts > Chart Time Filter Data Flow Debug > should verify complete data flow from time filter to chart
+Time Filter: All Time selected, using all data
+Total logs available: 1113
+=== DATA FLOW DEBUG ===
+All Time momentum data length: 30
+30 Day momentum data length: 30
+All Time date range: { start: '2025-05-31', end: '2025-06-29' }
+30 Day date range: { start: '2025-05-31', end: '2025-06-29' }
+All Time current momentum: 1.005463747292
+30 Day current momentum: 1.005463747292
+
+stdout | tests/chart-time-filter-debug.test.ts > Chart Time Filter Data Flow Debug > should verify chart receives correct filtered data props
+=== CHART PROPS DEBUG ===
+Chart will receive data points: 30
+Chart data date range: { start: '2025-05-31', end: '2025-06-29' }
+Chart current momentum: 1.005463747292
+Chart total growth: 0.5966730657328663
+
+ ❯ tests/chart-time-filter-debug.test.ts (2 tests | 1 failed) 60ms
+   × Chart Time Filter Data Flow Debug > should verify complete data flow from time filter to chart 52ms
+     → expected 30 not to be 30 // Object.is equality
+   ✓ Chart Time Filter Data Flow Debug > should verify chart receives correct filtered data props 5ms
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/chart-time-filter-debug.test.ts > Chart Time Filter Data Flow Debug > should verify complete data flow from time filter to chart
+AssertionError: expected 30 not to be 30 // Object.is equality
+ ❯ tests/chart-time-filter-debug.test.ts:37:59
+     35| 
+     36|     // Verify different filters produce different data
+     37|     expect(allTimeResult.current.momentumData.length).not.toBe(th…
+       |                                                           ^
+     38|     expect(allTimeResult.current.currentMomentum).not.toBe(thirty…
+     39|     
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  03:02:30
+   Duration  3.52s (transform 342ms, setup 298ms, collect 514ms, tests 60ms, environment 929ms, prepare 614ms)
+
