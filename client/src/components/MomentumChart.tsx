@@ -50,6 +50,18 @@ export default function MomentumChart({
     ? [{ ...todayPoint, isProjection: true }, ...forecastData]
     : forecastData;
 
+  // Determine forecast trend direction
+  const isForecastTrendingUp = () => {
+    if (forecastData.length < 2 || !todayPoint) return true; // Default to up if no data
+    const lastForecastValue = forecastData[forecastData.length - 1].value;
+    const todayValue = todayPoint.value;
+    return lastForecastValue > todayValue;
+  };
+
+  const forecastTrendUp = isForecastTrendingUp();
+  const forecastStrokeColor = forecastTrendUp ? "#009B72" : "#D84C3E";
+  const forecastGradientId = forecastTrendUp ? "projectionGradientUp" : "projectionGradientDown";
+
   // Use the pre-calculated current momentum from filtered data
   const getDynamicCurrentIndex = () => {
     return currentMomentum;
@@ -182,9 +194,13 @@ export default function MomentumChart({
                 <stop offset="5%" stopColor="hsl(174, 58%, 46%)" stopOpacity={0.8}/>
                 <stop offset="95%" stopColor="hsl(261, 84%, 82%)" stopOpacity={0.1}/>
               </linearGradient>
-              <linearGradient id="projectionGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="hsl(351, 83%, 60%)" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="hsl(351, 83%, 85%)" stopOpacity={0.1}/>
+              <linearGradient id="projectionGradientUp" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#009B72" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="#009B72" stopOpacity={0.1}/>
+              </linearGradient>
+              <linearGradient id="projectionGradientDown" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#D84C3E" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="#D84C3E" stopOpacity={0.1}/>
               </linearGradient>
             </defs>
             <XAxis 
@@ -225,10 +241,10 @@ export default function MomentumChart({
             <Area
               type="monotone"
               dataKey={(entry: any) => entry.isProjection ? entry.value : null}
-              stroke="hsl(351, 83%, 60%)"
+              stroke={forecastStrokeColor}
               strokeWidth={1.5}
               strokeDasharray="8,4"
-              fill="url(#projectionGradient)"
+              fill={`url(#${forecastGradientId})`}
               dot={false}
               connectNulls={false}
             />
