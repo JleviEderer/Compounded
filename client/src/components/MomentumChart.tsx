@@ -183,8 +183,8 @@ export default function MomentumChart({
                 <stop offset="95%" stopColor="hsl(261, 84%, 82%)" stopOpacity={0.1}/>
               </linearGradient>
               <linearGradient id="projectionGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="hsl(351, 83%, 87%)" stopOpacity={0.4}/>
-                <stop offset="100%" stopColor="hsl(351, 83%, 95%)" stopOpacity={0.1}/>
+                <stop offset="5%" stopColor="hsl(351, 83%, 60%)" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="hsl(351, 83%, 85%)" stopOpacity={0.1}/>
               </linearGradient>
             </defs>
             <XAxis 
@@ -225,8 +225,8 @@ export default function MomentumChart({
             <Area
               type="monotone"
               dataKey={(entry: any) => entry.isProjection ? entry.value : null}
-              stroke="hsl(351, 83%, 87%)"
-              strokeWidth={1.5}
+              stroke="hsl(351, 83%, 60%)"
+              strokeWidth={3}
               strokeDasharray="4,4"
               fill="url(#projectionGradient)"
               dot={false}
