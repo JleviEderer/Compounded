@@ -9,17 +9,6 @@ export function useHabits() {
   const [data, setData] = useState<AppData>(() => {
     console.log('🏠 useHabits: Initializing data...');
 
-    // TEMPORARILY DISABLE LOCALSTORAGE TO FORCE FRESH MOCK DATA
-    console.log('🏠 useHabits: FORCING fresh mock data (localStorage disabled)');
-    const freshData = {
-      habits: dataService.getHabits(),
-      logs: dataService.getLogs(),
-      settings: { theme: 'light', nerdMode: false }
-    };
-    console.log('🏠 useHabits: Fresh data loaded:', freshData.habits?.length, 'habits,', freshData.logs?.length, 'logs');
-    return freshData;
-
-    /* ORIGINAL LOCALSTORAGE CODE - COMMENTED OUT
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
@@ -52,6 +41,16 @@ export function useHabits() {
       logs: dataService.getLogs(),
       settings: { theme: 'light', nerdMode: false }
     };
+
+    /* MOCK DATA OVERRIDE FOR DEBUGGING - COMMENTED OUT
+    console.log('🏠 useHabits: FORCING fresh mock data (localStorage disabled)');
+    const freshData = {
+      habits: dataService.getHabits(),
+      logs: dataService.getLogs(),
+      settings: { theme: 'light', nerdMode: false }
+    };
+    console.log('🏠 useHabits: Fresh data loaded:', freshData.habits?.length, 'habits,', freshData.logs?.length, 'logs');
+    return freshData;
     */
   });
 
