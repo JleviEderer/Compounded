@@ -29,14 +29,16 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     // Filter logs to only include data within the time range
     const filteredLogs = logs.filter(log => log.date >= cutoffString);
     
-    // Time filtering: ${timeFilter.label} → ${filteredLogs.length}/${logs.length} logs
+    console.log(`Time filtering: ${timeFilter.label} → ${filteredLogs.length}/${logs.length} logs`);
     
     return { habits, logs: filteredLogs };
   }, [habits, logs, timeFilter]);
-  const momentumData = useMemo(() => 
-    generateMomentumHistory(filteredData.habits, filteredData.logs, 30), 
-    [filteredData.habits, filteredData.logs]
-  );
+  const momentumData = useMemo(() => {
+    // Calculate days based on filtered data or use time filter
+    const days = timeFilter?.days || 365; // Default to 1 year for 'All Time'
+    console.log(`Generating momentum history for ${timeFilter?.label}: ${days} days`);
+    return generateMomentumHistory(filteredData.habits, filteredData.logs, days);
+  }, [filteredData.habits, filteredData.logs, timeFilter]);
 
   // Projection data is now included in momentumData
   const projectionData: MomentumData[] = [];

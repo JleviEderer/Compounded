@@ -47,69 +47,50 @@ export function calculateDailyRate(
 }
 
 export function generateMomentumHistory(
-  habits: HabitPair[],
-  logs: HabitLog[],
+  habits: HabitPair[], 
+  logs: HabitLog[], 
   days: number = 30
 ): MomentumData[] {
-  const data: MomentumData[] = [];
-  let momentum = 1.0;
+  const result: MomentumData[] = [];
 
-  // Center today's date: show half the days before today, half after
-  const daysBack = Math.floor(days / 2);
-  const daysForward = days - daysBack - 1; // -1 for today
+  // If no logs, return empty array
+  if (logs.length === 0) return result;
 
-  // Generate historical data (before today)
-  for (let i = daysBack; i >= 1; i--) {
-    const date = new Date();
+  // Get actual date range from filtered logs
+  const logDates = logs.map(log => log.date).sort();
+  const startDate = new Date(logDates[0]);
+  const endDate = new Date(logDates[logDates.length - 1]);
+
+  // Ensure we don't go beyond the filtered data range
+  const today = new Date();
+  const actualEndDate = endDate > today ? today : endDate;
+
+  // Calculate actual days between start and end dates
+  const timeDiff = actualEndDate.getTime() - startDate.getTime();
+  const actualDays = Math.min(days, Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1);
+
+  console.log(`Momentum history: ${actualDays} days from ${startDate.toISOString().split('T')[0]} to ${actualEndDate.toISOString().split('T')[0]}`);
+
+  for (let i = actualDays - 1; i >= 0; i--) {
+    const date = new Date(actualEndDate);
     date.setDate(date.getDate() - i);
     const dateStr = date.toISOString().split('T')[0];
 
+    // Skip dates before our filtered start date
+    if (dateStr < logDates[0]) continue;
+
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
-    momentum *= (1 + dailyRate);
-    momentum = Math.max(0, momentum);
+    const momentum = calculateMomentumIndex(habits, logs, date);
 
-    data.push({
+    result.push({
       date: dateStr,
       value: momentum,
-      dailyRate
+      dailyRate,
+      isProjection: false
     });
   }
 
-  // Add today
-  const today = new Date().toISOString().split('T')[0];
-  const todayRate = calculateDailyRate(habits, logs, today);
-  momentum *= (1 + todayRate);
-  momentum = Math.max(0, momentum);
-
-  data.push({
-    date: today,
-    value: momentum,
-    dailyRate: todayRate
-  });
-
-  // Generate future projection based on 7-day average
-  const last7Days = data.slice(-7);
-  const avgRate = last7Days.length > 0 
-    ? last7Days.reduce((sum, d) => sum + d.dailyRate, 0) / last7Days.length
-    : 0.001;
-
-  for (let i = 1; i <= daysForward; i++) {
-    const date = new Date();
-    date.setDate(date.getDate() + i);
-    const dateStr = date.toISOString().split('T')[0];
-
-    momentum *= (1 + avgRate);
-    momentum = Math.max(0, momentum);
-
-    data.push({
-      date: dateStr,
-      value: momentum,
-      dailyRate: avgRate,
-      isProjection: true
-    });
-  }
-
-  return data;
+  return result;
 }
 
 export function generate30DayProjection(
