@@ -65,10 +65,8 @@ export default function MomentumChart({
   // Calculate growth percentage over selected time filter
   const getTimeFilterGrowth = () => {
     if (combinedData.length < 2) return 0;
-    
     const startValue = combinedData[0].value;
     const endValue = combinedData[combinedData.length - 1].value;
-    
     return ((endValue - startValue) / startValue) * 100;
   };
 
