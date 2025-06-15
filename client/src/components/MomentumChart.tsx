@@ -94,14 +94,21 @@ export default function MomentumChart({
   
   // Compute the last historical epoch for custom ticks
   const lastHist = [...data].reverse().find(d => !d.isProjection)?.epoch;
+  
+  // Build ticks array to handle case where lastHist === todayEpoch
+  const ticksArr = [data[0]?.epoch, todayEpoch];
+  if (lastHist && lastHist !== todayEpoch) {
+    ticksArr.splice(1, 0, lastHist);
+  }
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
+      const epoch = data.epoch || label;
       return (
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600">
           <p className="text-sm font-medium text-gray-800 dark:text-white">
-            {formatDate(data.date)}
+            {format(epoch, 'M/d/yy')}
           </p>
           <p className="text-sm text-coral">
             Momentum: {data.value.toFixed(3)}
@@ -217,7 +224,7 @@ export default function MomentumChart({
               type="number"
               scale="time"
               domain={['dataMin', todayEpoch]}
-              ticks={[data[0]?.epoch, lastHist, todayEpoch].filter(Boolean)}
+              ticks={ticksArr.filter(Boolean)}
               tickFormatter={(t) => format(t, 'M/d')}
               axisLine={false}
               tickLine={false}
