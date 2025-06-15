@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { HabitPair, HabitLog } from '../types';
+import { HabitPair, HabitLog, MomentumData } from '../types';
 import { 
-  calculateMomentumIndex,
-  generateMomentumHistory,
-  generate30DayProjection,
+  generateMomentumHistory, 
+  calculateMomentumIndex, 
+  calculateDailyRate, 
   calculateSuccessRate,
-  calculateDailyRate
+  generateTimeFilterProjection
 } from '../utils/compound';
 
 interface TimeFilter {
@@ -21,70 +21,113 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
       console.log(`Total logs available: ${logs.length}`);
       return { habits, logs };
     }
-    
+
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - timeFilter.days);
     const cutoffString = cutoffDate.toISOString().split('T')[0];
-    
+
     // Filter logs to only include data within the time range
     const filteredLogs = logs.filter(log => log.date >= cutoffString);
-    
+
     console.log(`Time filtering: ${timeFilter.label} → ${filteredLogs.length}/${logs.length} logs`);
-    
+
     return { habits, logs: filteredLogs };
   }, [habits, logs, timeFilter]);
+
+// Generate momentum history
   const momentumData = useMemo(() => {
-    // Calculate days based on filtered data or use time filter
-    const days = timeFilter?.days || 365; // Default to 1 year for 'All Time'
-    console.log(`Generating momentum history for ${timeFilter?.label}: ${days} days`);
-    return generateMomentumHistory(filteredData.habits, filteredData.logs, days);
+    if (filteredData.logs.length === 0) return [];
+
+    // Calculate how many days we actually have data for
+    const logDates = Array.from(new Set(filteredData.logs.map(l => l.date))).sort();
+    const actualDays = logDates.length;
+
+    console.log(`Generating momentum history for ${timeFilter?.label}: ${actualDays} days`);
+
+    return generateMomentumHistory(filteredData.habits, filteredData.logs, actualDays);
+  }, [filteredData.habits, filteredData.logs, timeFilter?.label]);
+
+  // Generate forecast data based on time filter
+  const forecastData = useMemo(() => {
+    if (!timeFilter) return [];
+    return generateTimeFilterProjection(filteredData.habits, filteredData.logs, timeFilter);
   }, [filteredData.habits, filteredData.logs, timeFilter]);
 
-  // Projection data is now included in momentumData
-  const projectionData: MomentumData[] = [];
+  // Combine historical and forecast data for chart
+  const combinedChartData = useMemo(() => {
+    // For proper 3/4 historical, 1/4 forecast layout, we need to pad historical data
+    const historical = momentumData;
+    const forecast = forecastData;
 
+    if (forecast.length === 0) {
+      return historical; // No forecast for All Time
+    }
+
+    // Calculate the ratio to make historical data take up 3/4 of the chart
+    // We want: historical_length : forecast_length = 3 : 1
+    const targetHistoricalLength = forecast.length * 3;
+
+    let paddedHistorical = [...historical];
+
+    // If we need more historical points for the 3:1 ratio, pad with empty dates
+    if (historical.length < targetHistoricalLength) {
+      const firstDate = historical.length > 0 ? new Date(historical[0].date) : new Date();
+      const daysToAdd = targetHistoricalLength - historical.length;
+
+      for (let i = daysToAdd; i > 0; i--) {
+        const date = new Date(firstDate);
+        date.setDate(date.getDate() - i);
+        const dateStr = date.toISOString().split('T')[0];
+
+        paddedHistorical.unshift({
+          date: dateStr,
+          value: momentumData[0]?.value || 1.0,
+          dailyRate: 0,
+          isProjection: false
+        });
+      }
+    }
+
+    return [...paddedHistorical, ...forecast];
+  }, [momentumData, forecastData]);
+
+  // Calculate current momentum from the filtered data
   const currentMomentum = useMemo(() => {
     if (momentumData.length === 0) return 1.0;
-    return momentumData[momentumData.length - 1].value;
+    return momentumData[momentumData.length - 1]?.value || 1.0;
   }, [momentumData]);
 
-  const successRate = useMemo(() => 
-    calculateSuccessRate(filteredData.habits, filteredData.logs, 30),
-    [filteredData.habits, filteredData.logs]
-  );
+  // Calculate total growth from filtered data
+  const totalGrowth = useMemo(() => {
+    if (momentumData.length === 0) return 0;
+    const startValue = momentumData[0]?.value || 1.0;
+    const endValue = currentMomentum;
+    return ((endValue - startValue) / startValue) * 100;
+  }, [momentumData, currentMomentum]);
 
+  // Calculate today's rate from filtered data
   const todayRate = useMemo(() => {
-    if (filteredData.logs.length === 0) return 0;
-    const latestDate = Math.max(...filteredData.logs.map(log => new Date(log.date).getTime()));
-    const latestDateString = new Date(latestDate).toISOString().split('T')[0];
-    return calculateDailyRate(filteredData.habits, filteredData.logs, latestDateString);
+    const today = new Date().toISOString().split('T')[0];
+    return calculateDailyRate(filteredData.habits, filteredData.logs, today);
   }, [filteredData.habits, filteredData.logs]);
 
-  const totalGrowth = useMemo(() => {
-    if (momentumData.length < 2) return 0;
-    const initialValue = momentumData[0].value;
-    const finalValue = momentumData[momentumData.length - 1].value;
-    return ((finalValue - initialValue) / initialValue) * 100;
-  }, [momentumData]);
+  // Calculate success rate
+  const successRate = useMemo(() => {
+    return calculateSuccessRate(filteredData.habits, filteredData.logs, timeFilter?.days || 30);
+  }, [filteredData.habits, filteredData.logs, timeFilter?.days]);
 
-  const averageDailyRate = useMemo(() => {
-    if (momentumData.length === 0) return 0;
-    return momentumData.reduce((sum, day) => sum + day.dailyRate, 0) / momentumData.length;
-  }, [momentumData]);
-
+  // Calculate projected target based on time filter forecast
   const projectedTarget = useMemo(() => {
-    if (projectionData.length === 0) return currentMomentum;
-    return projectionData[projectionData.length - 1].value;
-  }, [projectionData, currentMomentum]);
+    if (forecastData.length === 0) return currentMomentum;
+    return forecastData[forecastData.length - 1]?.value || currentMomentum;
+  }, [forecastData, currentMomentum]);
 
   return {
-    momentumData,
-    projectionData,
+    momentumData: combinedChartData, // Now includes both historical + forecast
     currentMomentum,
-    successRate,
-    todayRate,
     totalGrowth,
-    averageDailyRate,
+    todayRate,
+    successRate,
     projectedTarget
   };
 }

@@ -93,33 +93,49 @@ export function generateMomentumHistory(
   return result;
 }
 
-export function generate30DayProjection(
+export function generateTimeFilterProjection(
   habits: HabitPair[],
-  logs: HabitLog[]
+  logs: HabitLog[],
+  timeFilter: { label: string; days: number | null }
 ): MomentumData[] {
-  // Calculate trailing 7-day average rate from available log data
-  const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
-  const last7Dates = logDates.slice(-7);
-
-  let avgRate = 0;
-  if (last7Dates.length > 0) {
-    const totalRate = last7Dates.reduce((sum, date) => {
-      return sum + calculateDailyRate(habits, logs, date);
-    }, 0);
-    avgRate = totalRate / last7Dates.length;
+  // No forecast for All Time
+  if (timeFilter.days === null) {
+    return [];
   }
 
-  // If no historical data, use a small positive rate for testing
+  // Define forecast parameters based on time filter
+  const forecastConfig = {
+    '30 D': { forecastDays: 7, avgPeriodDays: 7 },
+    '4 M': { forecastDays: 30, avgPeriodDays: 30 },
+    '1 Y': { forecastDays: 90, avgPeriodDays: 120 } // 4 months for avg
+  };
+
+  const config = forecastConfig[timeFilter.label as keyof typeof forecastConfig];
+  if (!config) return [];
+
+  // Calculate average rate from the specified period
+  const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
+  const avgPeriodDates = logDates.slice(-config.avgPeriodDays);
+
+  let avgRate = 0;
+  if (avgPeriodDates.length > 0) {
+    const totalRate = avgPeriodDates.reduce((sum, date) => {
+      return sum + calculateDailyRate(habits, logs, date);
+    }, 0);
+    avgRate = totalRate / avgPeriodDates.length;
+  }
+
+  // If no historical data, use a small positive rate
   if (avgRate === 0 && logs.length > 0) {
-    avgRate = 0.001; // Small positive rate for projection
+    avgRate = 0.001;
   }
 
   const projectionData: MomentumData[] = [];
-  const startDate = new Date();
-  const currentMomentum = calculateMomentumIndex(habits, logs, startDate);
+  const today = new Date();
+  const currentMomentum = calculateMomentumIndex(habits, logs, today);
 
-  for (let i = 1; i <= 30; i++) {
-    const date = new Date(startDate);
+  for (let i = 1; i <= config.forecastDays; i++) {
+    const date = new Date(today);
     date.setDate(date.getDate() + i);
 
     const projectedMomentum = currentMomentum * Math.pow(1 + avgRate, i);
@@ -127,11 +143,20 @@ export function generate30DayProjection(
     projectionData.push({
       date: date.toISOString().split('T')[0],
       value: projectedMomentum,
-      dailyRate: avgRate
+      dailyRate: avgRate,
+      isProjection: true
     });
   }
 
   return projectionData;
+}
+
+// Keep the old function for backward compatibility
+export function generate30DayProjection(
+  habits: HabitPair[],
+  logs: HabitLog[]
+): MomentumData[] {
+  return generateTimeFilterProjection(habits, logs, { label: '30 D', days: 30 });
 }
 
 export function calculateSuccessRate(

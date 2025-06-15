@@ -203,10 +203,10 @@ export default function MomentumChart({
             />
             <RechartsTooltip content={<CustomTooltip />} />
 
-            {/* Historical data (before and including today) */}
+            {/* Historical data area */}
             <Area
               type="monotone"
-              dataKey={(entry: any) => !entry.isProjection ? entry.value : null}
+              dataKey="value"
               stroke="hsl(174, 58%, 46%)"
               strokeWidth={3}
               fill="url(#areaGradient)"
@@ -214,7 +214,7 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Projection line (dotted, from today forward) */}
+            {/* Forecast area (overlaid with different styling) */}
             <Area
               type="monotone"
               dataKey={(entry: any) => entry.isProjection ? entry.value : null}
@@ -223,18 +223,20 @@ export default function MomentumChart({
               strokeDasharray="6,6"
               fill="url(#projectionGradient)"
               dot={false}
-              connectNulls={true}
+              connectNulls={false}
             />
 
-            {/* Today's reference line */}
-            <ReferenceLine 
-              x={new Date().toISOString().split('T')[0]} 
-              stroke="hsl(8, 100%, 74%)" 
-              strokeWidth={2}
-              strokeDasharray="3,3" 
-              opacity={0.8}
-              label={{ value: "Today", position: "topLeft", offset: 10 }}
-            />
+            {/* Today's reference line - positioned at 3/4 of the chart when forecast is present */}
+            {selectedRange !== 'All Time' && (
+              <ReferenceLine 
+                x={new Date().toISOString().split('T')[0]} 
+                stroke="hsl(8, 100%, 74%)" 
+                strokeWidth={2}
+                strokeDasharray="3,3" 
+                opacity={0.8}
+                label={{ value: "Today", position: "topLeft", offset: 10 }}
+              />
+            )}
           </AreaChart>
         </ResponsiveContainer>
       </motion.div>
@@ -265,14 +267,19 @@ export default function MomentumChart({
             {projectedTarget.toFixed(2)}
           </div>
           <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-            30-Day Target
+            {selectedRange === 'All Time' ? 'Current' : selectedRange === '30 D' ? '7-Day' : selectedRange === '4 M' ? '30-Day' : '3-Month'} Target
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
                   <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs">
-                  <p>Projected momentum index in 30 days based on your recent 7-day average performance. Uses compound growth formula: current_momentum × (1 + avg_rate)^30</p>
+                  <p>
+                    {selectedRange === 'All Time' 
+                      ? 'Current momentum index (no forecast for All Time view)'
+                      : `Projected momentum index based on ${selectedRange === '30 D' ? '7-day' : selectedRange === '4 M' ? '1-month' : '4-month'} average performance using compound growth formula.`
+                    }
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
