@@ -16,3 +16,8 @@ export function debugToday(): void {
   const todayEpoch = getTodayEpoch();
   console.log('todayEpoch', todayEpoch, new Date(todayEpoch).toString());
 }
+
+// Make debugToday available in browser console for debugging
+if (typeof window !== 'undefined') {
+  (window as any).debugToday = debugToday;
+}
