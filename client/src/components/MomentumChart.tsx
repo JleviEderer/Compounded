@@ -43,7 +43,7 @@ export default function MomentumChart({
   // Separate historical and forecast data for clean rendering
   const historicalData = data.filter(d => !d.isProjection);
   const forecastData = data.filter(d => d.isProjection);
-  
+
   // Create a connecting point between historical and forecast
   const todayPoint = historicalData.length > 0 ? historicalData[historicalData.length - 1] : null;
   const forecastWithConnection = todayPoint && forecastData.length > 0 
