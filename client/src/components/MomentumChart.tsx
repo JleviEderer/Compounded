@@ -247,65 +247,65 @@ export default function MomentumChart({
       </motion.div>
 
       {/* Quick Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-              {todayRate >= 0 ? '+' : ''}{(todayRate * 100).toFixed(2)}%
-            </div>
-            <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-              Latest Rate</div>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-xs">
-                    <p>Daily momentum rate based on the latest day's habit completions in the selected time period. Positive weights for good habits, negative for bad habits.</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
+          <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+            {todayRate >= 0 ? '+' : ''}{(todayRate * 100).toFixed(2)}%
           </div>
-
-          <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-              {projectedTarget.toFixed(2)}
-            </div>
-            <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-              30-Day Target
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-xs">
-                    <p>Projected momentum index in 30 days based on your recent 7-day average performance. Uses compound growth formula: current_momentum × (1 + avg_rate)^30</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-          </div>
-
-          <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-              {combinedData.length >= 7 ? ((combinedData.slice(-7).reduce((sum, d) => sum + d.dailyRate, 0) / 7) * 100).toFixed(2) : 
-               combinedData.length > 0 ? ((combinedData.reduce((sum, d) => sum + d.dailyRate, 0) / combinedData.length) * 100).toFixed(2) : '0.00'}%
-            </div>
-            <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-              7-Day Avg Rate
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-xs">
-                    <p>Average daily momentum rate over the last 7 days. Shows your recent velocity and trend direction.</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+            Latest Rate
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>Daily momentum rate based on the latest day's habit completions in the selected time period. Positive weights for good habits, negative for bad habits.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
+
+        <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
+          <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+            {projectedTarget.toFixed(2)}
+          </div>
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+            30-Day Target
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>Projected momentum index in 30 days based on your recent 7-day average performance. Uses compound growth formula: current_momentum × (1 + avg_rate)^30</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </div>
+
+        <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
+          <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+            {combinedData.length >= 7 ? ((combinedData.slice(-7).reduce((sum, d) => sum + d.dailyRate, 0) / 7) * 100).toFixed(2) : 
+             combinedData.length > 0 ? ((combinedData.reduce((sum, d) => sum + d.dailyRate, 0) / combinedData.length) * 100).toFixed(2) : '0.00'}%
+          </div>
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+            7-Day Avg Rate
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>Average daily momentum rate over the last 7 days. Shows your recent velocity and trend direction.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 }
