@@ -40,15 +40,22 @@ export default function MomentumChart({
   timeRanges
 }: MomentumChartProps) {
 
-  // Separate historical and forecast data for clean rendering
+  // Separate historical and forecast data
   const historicalData = data.filter(d => !d.isProjection);
   const forecastData = data.filter(d => d.isProjection);
 
-  // Create a connecting point between historical and forecast to eliminate gaps
+  // Find connection point and ensure both areas connect seamlessly
   const todayPoint = historicalData.length > 0 ? historicalData[historicalData.length - 1] : null;
-
-  // Find the exact transition point for the "Today" divider
   const todayDividerDate = todayPoint ? todayPoint.date : new Date().toISOString().split('T')[0];
+
+  // Create modified datasets that include the connection point
+  const historicalWithConnection = todayPoint && forecastData.length > 0 
+    ? [...historicalData, { ...todayPoint, isProjection: true }] 
+    : historicalData;
+
+  const forecastWithConnection = todayPoint && forecastData.length > 0
+    ? [{ ...todayPoint, isProjection: true }, ...forecastData]
+    : forecastData;
 
   // Determine forecast trend direction
   const isForecastTrendingUp = () => {
@@ -229,7 +236,8 @@ export default function MomentumChart({
             {/* Historical data area - solid line with original styling */}
             <Area
               type="monotone"
-              dataKey={(entry: any) => !entry.isProjection ? entry.value : null}
+              data={historicalWithConnection}
+              dataKey="value"
               stroke="hsl(174, 58%, 46%)"
               strokeWidth={3}
               fill="url(#areaGradient)"
@@ -240,7 +248,8 @@ export default function MomentumChart({
             {/* Forecast data area - dashed line connecting seamlessly */}
             <Area
               type="monotone"
-              dataKey={(entry: any) => entry.isProjection ? entry.value : null}
+              data={forecastWithConnection}
+              dataKey="value"
               stroke={forecastStrokeColor}
               strokeWidth={1.5}
               strokeDasharray="8,4"
