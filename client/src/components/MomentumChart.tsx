@@ -226,8 +226,8 @@ export default function MomentumChart({
               type="monotone"
               dataKey={(entry: any) => entry.isProjection ? entry.value : null}
               stroke="hsl(351, 83%, 60%)"
-              strokeWidth={3}
-              strokeDasharray="12,6"
+              strokeWidth={1.5}
+              strokeDasharray="8,4"
               fill="url(#projectionGradient)"
               dot={false}
               connectNulls={false}
