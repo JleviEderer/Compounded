@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { format } from 'date-fns';
 import { 
   AreaChart, 
   Area, 
@@ -113,6 +114,18 @@ export default function MomentumChart({
     }
     return null;
   };
+
+  useEffect(() => {
+    const last = data[data.length - 1];
+    if (last) {
+      console.log(
+        'LAST-POINT ⟶',
+        last,                             // full object
+        'epoch→', new Date(last.epoch).toString(),
+        'raw-date→', last.date
+      );
+    }
+  }, [data]);
 
   return (
     <motion.div 
