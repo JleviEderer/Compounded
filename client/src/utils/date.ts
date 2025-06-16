@@ -13,11 +13,16 @@ export function getTodayString(): string {
 
 // Optional: Console check helper for debugging
 export function debugToday(): void {
+  /* eslint-disable no-console */
   const todayEpoch = getTodayEpoch();
   console.log('todayEpoch', todayEpoch, new Date(todayEpoch).toString());
 }
 
-// Make debugToday available in browser console for debugging
-if (typeof window !== 'undefined') {
+// Expose debugToday only in dev builds
+if (
+  typeof window !== 'undefined' &&
+  process.env.NODE_ENV !== 'production'
+) {
+  // @ts-ignore – dev helper
   (window as any).debugToday = debugToday;
 }
