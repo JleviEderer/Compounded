@@ -23,6 +23,8 @@ interface MomentumChartProps {
   totalGrowth: number;
   todayRate: number;
   projectedTarget: number;
+  recentAvgRate: number;
+  avgWindowDays: number;
   habits?: any[];
   logs?: any[];
   selectedRange: string;
@@ -36,6 +38,8 @@ export default function MomentumChart({
   totalGrowth,
   todayRate,
   projectedTarget,
+  recentAvgRate,
+  avgWindowDays,
   habits = [],
   logs = [],
   selectedRange,
@@ -314,7 +318,7 @@ export default function MomentumChart({
             {projectedTarget.toFixed(2)}
           </div>
           <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-            {selectedRange === 'All Time' ? 'Current' : selectedRange === '30 D' ? '7-Day' : selectedRange === '4 M' ? '30-Day' : '3-Month'} Target
+            Projected Index
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
@@ -324,32 +328,40 @@ export default function MomentumChart({
                   <p>
                     {selectedRange === 'All Time' 
                       ? 'Current momentum index (no forecast for All Time view)'
-                      : `Pro forma target based on your ${selectedRange === '30 D' ? '7-day' : selectedRange === '4 M' ? '30-day' : '4-month'} average run rate. This projects where you'll be if you maintain your recent ${selectedRange === '30 D' ? '7-day' : selectedRange === '4 M' ? '30-day' : '4-month'} performance.`
+                      : `Projected momentum index based on your recent performance trend. Shows where you'll be if you maintain your current trajectory.`
                     }
                   </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            {selectedRange === 'All Time' ? '(current)' : 
+             selectedRange === '30 D' ? '(30-day projection)' :
+             selectedRange === '4 M' ? '(30-day projection)' :
+             '(4-mo projection)'}
+          </div>
         </div>
 
         <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
           <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-            {data.length >= 7 ? ((data.slice(-7).reduce((sum, d) => sum + d.dailyRate, 0) / 7) * 100).toFixed(2) : 
-             data.length > 0 ? ((data.reduce((sum, d) => sum + d.dailyRate, 0) / data.length) * 100).toFixed(2) : '0.00'}%
+            {(recentAvgRate * 100).toFixed(2)}%
           </div>
           <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-            7-Day Avg Rate
+            Recent Avg Rate
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
                   <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs">
-                  <p>Average daily momentum rate over the last 7 days. Shows your recent velocity and trend direction.</p>
+                  <p>Average daily momentum rate over the recent period. Shows your velocity and trend direction for the selected time range.</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+          </div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            ({avgWindowDays}-day average)
           </div>
         </div>
       </div>

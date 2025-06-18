@@ -116,6 +116,33 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     return calculateSuccessRate(filteredData.habits, filteredData.logs, timeFilter?.days || 30);
   }, [filteredData.habits, filteredData.logs, timeFilter?.days]);
 
+  // Calculate dynamic window sizes based on time filter
+  const { avgWindowDays, projWindowDays } = useMemo(() => {
+    if (!timeFilter || timeFilter.days === null) {
+      // All-Time uses same windows as 1Y
+      return { avgWindowDays: 90, projWindowDays: 120 };
+    }
+    
+    switch (timeFilter.label) {
+      case '30 D':
+        return { avgWindowDays: 7, projWindowDays: 30 };
+      case '4 M':
+        return { avgWindowDays: 30, projWindowDays: 30 };
+      case '1 Y':
+        return { avgWindowDays: 90, projWindowDays: 120 };
+      default:
+        return { avgWindowDays: 90, projWindowDays: 120 };
+    }
+  }, [timeFilter]);
+
+  // Calculate recent average rate using dynamic window
+  const recentAvgRate = useMemo(() => {
+    if (momentumData.length === 0) return 0;
+    const windowSize = Math.min(avgWindowDays, momentumData.length);
+    const recentData = momentumData.slice(-windowSize);
+    return recentData.reduce((sum, d) => sum + d.dailyRate, 0) / recentData.length;
+  }, [momentumData, avgWindowDays]);
+
   // Calculate projected target based on time filter forecast
   const projectedTarget = useMemo(() => {
     if (forecastData.length === 0) return currentMomentum;
@@ -128,6 +155,9 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     totalGrowth,
     todayRate,
     successRate,
-    projectedTarget
+    projectedTarget,
+    recentAvgRate,
+    avgWindowDays,
+    projWindowDays
   };
 }
