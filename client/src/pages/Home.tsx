@@ -22,7 +22,7 @@ export default function Home() {
   const { habits, logs, logHabit } = useHabits();
   const momentum = useMomentum(habits, logs, currentTimeFilter);
   
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
   const todayLogs = logs.filter(log => log.date === today && log.completed);
   const todayRate = momentum.todayRate * 100;
   

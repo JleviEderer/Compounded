@@ -8,7 +8,7 @@ export function getTodayEpoch(): number {
 export function getTodayString(): string {
   const d = new Date(); // local now
   d.setHours(0, 0, 0, 0); // clamp to local midnight
-  return d.toISOString().split('T')[0]; // YYYY-MM-DD in local timezone
+  return d.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
 }
 
 // Optional: Console check helper for debugging
