@@ -120,7 +120,7 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
   const { avgWindowDays, projWindowDays } = useMemo(() => {
     if (!timeFilter || timeFilter.days === null) {
       // All-Time uses same windows as 1Y
-      return { avgWindowDays: 90, projWindowDays: 120 };
+      return { avgWindowDays: 120, projWindowDays: 120 };
     }
     
     switch (timeFilter.label) {
@@ -129,9 +129,9 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
       case '4 M':
         return { avgWindowDays: 30, projWindowDays: 30 };
       case '1 Y':
-        return { avgWindowDays: 90, projWindowDays: 120 };
+        return { avgWindowDays: 120, projWindowDays: 120 };
       default:
-        return { avgWindowDays: 90, projWindowDays: 120 };
+        return { avgWindowDays: 120, projWindowDays: 120 };
     }
   }, [timeFilter]);
 
