@@ -161,7 +161,7 @@ export default function MomentumChart({
                   {dynamicCurrentIndex.toFixed(2)}
                 </motion.div>
               </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
+              <TooltipContent side="bottom" className="max-w-xs">
                 <p>Total Growth since {selectedRange}: {timeFilterGrowth >= 0 ? '+' : ''}{timeFilterGrowth.toFixed(1)}%</p>
               </TooltipContent>
             </Tooltip>
