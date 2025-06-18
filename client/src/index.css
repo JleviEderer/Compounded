@@ -32,16 +32,16 @@
 }
 
 .dark {
-  --background: hsl(240, 10%, 3.9%);
+  --background: hsl(222, 26%, 8%);
   --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 3.7%, 15.9%);
-  --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
+  --muted: hsl(222, 22%, 16%);
+  --muted-foreground: hsl(220, 10%, 65%);
+  --popover: hsl(222, 26%, 8%);
   --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
+  --card: hsl(222, 22%, 11%);
   --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
+  --border: hsl(222, 15%, 22%);
+  --input: var(--border);
   --primary: hsl(174, 58%, 46%);
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(240, 3.7%, 15.9%);
@@ -52,8 +52,12 @@
   --destructive-foreground: hsl(0, 0%, 98%);
   --ring: hsl(240, 4.9%, 83.9%);
   
-  /* Dark mode specific colors */
-  --card-white: hsla(30, 30%, 30%, 0.95);
+  /* Chart styling */
+  --grid-line: hsla(0, 0%, 100%, 0.07);
+  --baseline-line: hsla(220, 10%, 80%, 0.25);
+  
+  /* Translucent card surface for metric tiles */
+  --card-white: hsla(220, 25%, 15%, 0.92);
 }
 
 @layer base {
@@ -131,6 +135,24 @@
 
   .hover\:bg-coral\/90:hover {
     background-color: hsla(8, 100%, 74%, 0.9);
+  }
+
+  /* Chart grid + baseline */
+  .recharts-cartesian-grid-horizontal line,
+  .recharts-cartesian-grid-vertical line {
+    stroke: var(--grid-line);
+  }
+  
+  .baseline-ref-line {
+    stroke: var(--baseline-line);
+    stroke-dasharray: 3 3;
+  }
+
+  /* Metric tiles */
+  .metric-card {
+    @apply backdrop-blur-sm rounded-xl shadow-lg;
+    background: var(--card-white);
+    border: 1px solid var(--border);
   }
 }
 
