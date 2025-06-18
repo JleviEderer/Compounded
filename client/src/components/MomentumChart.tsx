@@ -330,7 +330,7 @@ export default function MomentumChart({
                   <p>
                     {selectedRange === 'All Time' 
                       ? 'Current momentum index (no forecast for All Time view)'
-                      : `Projected momentum index based on your recent performance trend. Shows where you'll be if you maintain your current trajectory.`
+                      : `Projected momentum index based on your recent avg rate`
                     }
                   </p>
                 </TooltipContent>
