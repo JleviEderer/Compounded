@@ -134,19 +134,7 @@ export default function Home() {
           </div>
         )}
 
-        {habits.length > 0 && (
-          <motion.div 
-            className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-600"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <Button className="w-full btn-coral">
-              <Plus className="w-5 h-5 mr-2" />
-              Add Quick Check-In
-            </Button>
-          </motion.div>
-        )}
+        
       </motion.div>
     </div>
   );
