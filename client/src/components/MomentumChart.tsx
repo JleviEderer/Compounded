@@ -308,7 +308,7 @@ export default function MomentumChart({
                   <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs">
-                  <p>Daily momentum rate based on the latest day's habit completions in the selected time period. Positive weights for good habits, negative for bad habits.</p>
+                  <p>Daily rate from your most recent day with habit data.</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
