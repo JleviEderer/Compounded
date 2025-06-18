@@ -125,7 +125,7 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     
     switch (timeFilter.label) {
       case '30 D':
-        return { avgWindowDays: 7, projWindowDays: 30 };
+        return { avgWindowDays: 7, projWindowDays: 7 };
       case '4 M':
         return { avgWindowDays: 30, projWindowDays: 30 };
       case '1 Y':
