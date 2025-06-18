@@ -207,8 +207,8 @@ export default function MomentumChart({
           <AreaChart data={data}>
             <defs>
               <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="hsl(174, 58%, 46%)" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="hsl(261, 84%, 82%)" stopOpacity={0.1}/>
+                <stop offset="5%" stopColor="hsl(174, 58%, 46%)" stopOpacity={0.25}/>
+                <stop offset="40%" stopColor="hsl(261, 84%, 82%)" stopOpacity={0}/>
               </linearGradient>
               <linearGradient id="projectionGradientUp" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#009B72" stopOpacity={0.8}/>
@@ -274,6 +274,7 @@ export default function MomentumChart({
               opacity={0.5}
               isFront
               ifOverflow="extendDomain"
+              className="today-divider"
               label={{ 
                 value: 'Today', 
                 position: 'top', 
@@ -294,7 +295,7 @@ export default function MomentumChart({
           <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
             {todayRate >= 0 ? '+' : ''}{(todayRate * 100).toFixed(2)}%
           </div>
-          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400 label">
             Latest Rate
             <TooltipProvider>
               <Tooltip>
@@ -313,7 +314,7 @@ export default function MomentumChart({
           <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
             {projectedTarget.toFixed(2)}
           </div>
-          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400 label">
             {selectedRange === 'All Time' ? 'Current' : selectedRange === '30 D' ? '7-Day' : selectedRange === '4 M' ? '30-Day' : '3-Month'} Target
             <TooltipProvider>
               <Tooltip>
@@ -338,7 +339,7 @@ export default function MomentumChart({
             {data.length >= 7 ? ((data.slice(-7).reduce((sum, d) => sum + d.dailyRate, 0) / 7) * 100).toFixed(2) : 
              data.length > 0 ? ((data.reduce((sum, d) => sum + d.dailyRate, 0) / data.length) * 100).toFixed(2) : '0.00'}%
           </div>
-          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400 label">
             7-Day Avg Rate
             <TooltipProvider>
               <Tooltip>
