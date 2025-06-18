@@ -23,7 +23,7 @@ export default function Insights() {
       const date = new Date();
       date.setDate(date.getDate() - i);
       days.push({
-        date: date.toISOString().split('T')[0],
+        date: date.toLocaleDateString('en-CA'), // YYYY-MM-DD format in local timezone
         label: date.toLocaleDateString('en', { weekday: 'short' })
       });
     }
@@ -47,7 +47,7 @@ export default function Insights() {
     // Add all days of the month
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(today.getFullYear(), today.getMonth(), day);
-      const dateStr = date.toISOString().split('T')[0];
+      const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
       const dayLogs = logs.filter(log => log.date === dateStr && log.completed);
       const intensity = dayLogs.length / habits.length;
 

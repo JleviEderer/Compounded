@@ -13,7 +13,7 @@ interface HabitRowProps {
 export default function HabitRow({ habit, logs, onLogHabit, isToday = false }: HabitRowProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
   const todayLog = logs.find(log => log.habitId === habit.id && log.date === today);
   
   // Get last 7 days for expanded view
@@ -22,7 +22,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false }: H
     for (let i = 6; i >= 0; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i);
-      const dateStr = date.toISOString().split('T')[0];
+      const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
       const log = logs.find(l => l.habitId === habit.id && l.date === dateStr);
       
       days.push({
