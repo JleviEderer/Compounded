@@ -354,7 +354,7 @@ export default function MomentumChart({
                   <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs">
-                  <p>Recent average rate used to calculate the projected index.</p>
+                  <p>Recent average rate used to calculate the projected index</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
