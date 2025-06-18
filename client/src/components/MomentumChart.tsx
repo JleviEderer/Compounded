@@ -308,7 +308,7 @@ export default function MomentumChart({
                   <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs">
-                  <p>Daily rate from your most recent day with habit data.</p>
+                  <p>Daily rate from your most recent day with habit data</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
