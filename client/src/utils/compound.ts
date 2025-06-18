@@ -26,7 +26,8 @@ export function calculateMomentumIndex(
 
   const currentDate = new Date(startDate);
   while (currentDate.getTime() <= targetEpoch) {
-    const dateStr = currentDate.toISOString().split('T')[0];
+    // Use local date instead of UTC slice
+    const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
     momentum *= (1 + dailyRate);
     currentDate.setDate(currentDate.getDate() + 1);
@@ -89,7 +90,8 @@ export function generateMomentumHistory(
   for (let i = actualDays - 1; i >= 0; i--) {
     const date = new Date(actualEndDate);
     date.setDate(date.getDate() - i);
-    const dateStr = date.toISOString().split('T')[0];
+    // Use local date instead of UTC slice
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
     // Skip dates before our filtered start date
     if (dateStr < logDates[0]) continue;
@@ -154,7 +156,8 @@ export function generateTimeFilterProjection(
   for (let i = 1; i <= config.forecastDays; i++) {
     const date = new Date(today);
     date.setDate(date.getDate() + i);
-    const dateStr = date.toISOString().split('T')[0];
+    // Use local date instead of UTC slice
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;;
 
     const projectedMomentum = currentMomentum * Math.pow(1 + avgRate, i);
 
@@ -216,7 +219,8 @@ export function calculateCurrentStreak(
   let currentDate = new Date(today);
 
   while (true) {
-    const dateStr = currentDate.toISOString().split('T')[0];
+    // Use local date instead of UTC slice
+    const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
     const log = logs.find(l => l.habitId === habitId && l.date === dateStr);
 
     if (log?.state === 'good') {
