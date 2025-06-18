@@ -71,6 +71,7 @@ export default function Home() {
         projectedTarget={momentum.projectedTarget}
         recentAvgRate={momentum.recentAvgRate}
         avgWindowDays={momentum.avgWindowDays}
+        projWindowDays={momentum.projWindowDays}
         habits={habits}
         logs={logs}
         selectedRange={selectedTimeFilter}

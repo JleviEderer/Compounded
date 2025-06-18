@@ -30,6 +30,7 @@ interface MomentumChartProps {
   selectedRange: string;
   onRangeChange: (range: string) => void;
   timeRanges: { label: string; days: number | null }[];
+  projWindowDays: number;
 }
 
 export default function MomentumChart({
@@ -44,7 +45,8 @@ export default function MomentumChart({
   logs = [],
   selectedRange,
   onRangeChange,
-  timeRanges
+  timeRanges,
+  projWindowDays
 }: MomentumChartProps) {
 
   // Separate historical and forecast data for clean rendering
@@ -95,10 +97,10 @@ export default function MomentumChart({
 
   // Create today's epoch for reference line
   const todayEpoch = getTodayEpoch();
-  
+
   // Compute the last historical epoch for custom ticks
   const lastHist = [...data].reverse().find(d => !d.isProjection)?.epoch;
-  
+
   // Build ticks array to handle case where lastHist === todayEpoch
   const ticksArr = [data[0]?.epoch, todayEpoch];
   if (lastHist && lastHist !== todayEpoch) {
@@ -336,10 +338,7 @@ export default function MomentumChart({
             </TooltipProvider>
           </div>
           <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-            {selectedRange === 'All Time' ? '(current)' : 
-             selectedRange === '30 D' ? '(30-day projection)' :
-             selectedRange === '4 M' ? '(30-day projection)' :
-             '(4-mo projection)'}
+            {selectedRange === 'All Time' ? '(current)' : `(${projWindowDays}-day projection)`}
           </div>
         </div>
 

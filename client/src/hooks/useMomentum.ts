@@ -143,11 +143,16 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     return recentData.reduce((sum, d) => sum + d.dailyRate, 0) / recentData.length;
   }, [momentumData, avgWindowDays]);
 
-  // Calculate projected target based on time filter forecast
+  // Calculate projected target using dynamic projection window
   const projectedTarget = useMemo(() => {
-    if (forecastData.length === 0) return currentMomentum;
-    return forecastData[forecastData.length - 1]?.value || currentMomentum;
-  }, [forecastData, currentMomentum]);
+    if (momentumData.length === 0) return currentMomentum;
+    
+    // Use the recent average rate to project forward by projWindowDays
+    const startValue = currentMomentum;
+    const projectedValue = startValue * Math.pow(1 + recentAvgRate, projWindowDays);
+    
+    return projectedValue;
+  }, [momentumData, currentMomentum, recentAvgRate, projWindowDays]);
 
   return {
     momentumData: combinedChartData, // Now includes both historical + forecast
