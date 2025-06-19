@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Plus, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
+import { useLocation } from 'wouter';
 import { useHabits } from '../hooks/useHabits';
 import { useMomentum } from '../hooks/useMomentum';
 import MomentumChart from '../components/MomentumChart';
@@ -9,6 +10,7 @@ import { Button } from '@/components/ui/button';
 
 export default function Home() {
   const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('30 D');
+  const [, setLocation] = useLocation();
   
   const timeRanges = [
     { label: '30 D', days: 30 },
@@ -93,6 +95,7 @@ export default function Home() {
           <Button
             variant="ghost"
             className="text-coral hover:text-coral/80 font-medium text-sm"
+            onClick={() => setLocation('/habits')}
           >
             View All
             <ChevronRight className="w-4 h-4 ml-1" />
