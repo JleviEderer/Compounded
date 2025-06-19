@@ -14,7 +14,7 @@ export default function Home() {
   
   const timeRanges = [
     { label: '30 D', days: 30 },
-    { label: '4 M', days: 120 },
+    { label: '3 M', days: 90 },
     { label: '1 Y', days: 365 },
     { label: 'All Time', days: null }
   ];

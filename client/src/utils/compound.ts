@@ -126,7 +126,7 @@ export function generateTimeFilterProjection(
   // Define forecast parameters based on time filter
   const forecastConfig = {
     '30 D': { forecastDays: 7, avgPeriodDays: 7 },
-    '4 M': { forecastDays: 30, avgPeriodDays: 30 },
+    '3 M': { forecastDays: 30, avgPeriodDays: 30 },
     '1 Y': { forecastDays: 90, avgPeriodDays: 120 } // 4 months for avg
   };
 
