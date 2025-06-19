@@ -11,23 +11,23 @@ import { Button } from '@/components/ui/button';
 export default function Home() {
   const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('30 D');
   const [, setLocation] = useLocation();
-  
+
   const timeRanges = [
+    { label: 'All Time', days: null },
     { label: '30 D', days: 30 },
-    { label: '4 M', days: 120 },
-    { label: '1 Y', days: 365 },
-    { label: 'All Time', days: null }
+    { label: '3 M', days: 90 },
+    { label: '1 Y', days: 365 }
   ];
 
   const currentTimeFilter = timeRanges.find(range => range.label === selectedTimeFilter);
-  
+
   const { habits, logs, logHabit } = useHabits();
   const momentum = useMomentum(habits, logs, currentTimeFilter);
-  
+
   const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
   const todayLogs = logs.filter(log => log.date === today && log.completed);
   const todayRate = momentum.todayRate * 100;
-  
+
   const hasCheckedToday = todayLogs.length > 0;
 
   return (
@@ -137,7 +137,7 @@ export default function Home() {
           </div>
         )}
 
-        
+
       </motion.div>
     </div>
   );
