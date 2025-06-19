@@ -8,7 +8,7 @@ import { Slider } from '@/components/ui/slider';
 import { ViewMode } from '../types';
 
 export default function Insights() {
-  const { habits, logs, settings } = useHabits();
+  const { habits, logs, settings, updateSettings } = useHabits();
   const momentum = useMomentum(habits, logs);
   const [activeView, setActiveView] = useState<ViewMode>('day');
   const [whatIfRate, setWhatIfRate] = useState([0.8]);
@@ -99,6 +99,7 @@ export default function Insights() {
           <Button 
             variant="ghost"
             className="text-coral hover:text-coral/80 font-medium text-sm"
+            onClick={() => updateSettings({ nerdMode: !settings.nerdMode })}
           >
             🤓 {settings.nerdMode ? 'Exit' : 'Nerd'} Mode
           </Button>
