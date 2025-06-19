@@ -55,8 +55,8 @@ export default function Layout({ children }: LayoutProps) {
             
             return (
               <Link key={item.name} href={item.href}>
-                <motion.a
-                  className={`flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
+                <motion.div
+                  className={`flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 cursor-pointer ${
                     isActive 
                       ? 'bg-coral/10 text-coral dark:bg-coral/20' 
                       : 'hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300'
@@ -66,7 +66,7 @@ export default function Layout({ children }: LayoutProps) {
                 >
                   <Icon className="w-5 h-5" />
                   <span>{item.name}</span>
-                </motion.a>
+                </motion.div>
               </Link>
             );
           })}
@@ -122,8 +122,8 @@ export default function Layout({ children }: LayoutProps) {
               
               return (
                 <Link key={item.name} href={item.href}>
-                  <motion.a
-                    className={`flex flex-col items-center space-y-1 p-2 ${
+                  <motion.div
+                    className={`flex flex-col items-center space-y-1 p-2 cursor-pointer ${
                       isActive 
                         ? 'text-coral' 
                         : 'text-gray-500 dark:text-gray-400'
@@ -132,7 +132,7 @@ export default function Layout({ children }: LayoutProps) {
                   >
                     <Icon className="w-5 h-5" />
                     <span className="text-xs font-medium">{item.name}</span>
-                  </motion.a>
+                  </motion.div>
                 </Link>
               );
             })}
