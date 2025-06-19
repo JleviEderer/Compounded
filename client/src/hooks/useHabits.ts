@@ -111,16 +111,11 @@ export function useHabits() {
     return data.logs.find(log => log.habitId === habitId && log.date === date);
   };
 
-  const updateSettings = (newSettings: Partial<AppData['settings']>) => {
-    setData(prev => {
-      const updatedData = {
-        ...prev,
-        settings: { ...prev.settings, ...newSettings }
-      };
-      // Immediately save to localStorage
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedData));
-      return updatedData;
-    });
+  const updateSettings = (updates: Partial<AppData['settings']>) => {
+    setData(prev => ({
+      ...prev,
+      settings: { ...prev.settings, ...updates }
+    }));
   };
 
   const exportData = () => {
