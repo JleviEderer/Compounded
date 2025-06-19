@@ -115,7 +115,8 @@ export function generateMomentumHistory(
 export function generateTimeFilterProjection(
   habits: HabitPair[],
   logs: HabitLog[],
-  timeFilter: { label: string; days: number | null }
+  timeFilter: { label: string; days: number | null },
+  recentAvgRate?: number // Add parameter to use consistent rate
 ): MomentumData[] {
   // No forecast for All Time
   if (timeFilter.days === null) {
@@ -132,21 +133,27 @@ export function generateTimeFilterProjection(
   const config = forecastConfig[timeFilter.label as keyof typeof forecastConfig];
   if (!config) return [];
 
-  // Calculate average rate from the specified period
-  const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
-  const avgPeriodDates = logDates.slice(-config.avgPeriodDays);
-
   let avgRate = 0;
-  if (avgPeriodDates.length > 0) {
-    const totalRate = avgPeriodDates.reduce((sum, date) => {
-      return sum + calculateDailyRate(habits, logs, date);
-    }, 0);
-    avgRate = totalRate / avgPeriodDates.length;
-  }
 
-  // If no historical data, use a small positive rate
-  if (avgRate === 0 && logs.length > 0) {
-    avgRate = 0.001;
+  // Use provided recentAvgRate if available, otherwise calculate
+  if (recentAvgRate !== undefined) {
+    avgRate = recentAvgRate;
+  } else {
+    // Calculate average rate from the specified period
+    const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
+    const avgPeriodDates = logDates.slice(-config.avgPeriodDays);
+
+    if (avgPeriodDates.length > 0) {
+      const totalRate = avgPeriodDates.reduce((sum, date) => {
+        return sum + calculateDailyRate(habits, logs, date);
+      }, 0);
+      avgRate = totalRate / avgPeriodDates.length;
+    }
+
+    // If no historical data, use a small positive rate
+    if (avgRate === 0 && logs.length > 0) {
+      avgRate = 0.001;
+    }
   }
 
   const projectionData: MomentumData[] = [];
@@ -157,7 +164,7 @@ export function generateTimeFilterProjection(
     const date = new Date(today);
     date.setDate(date.getDate() + i);
     // Use local date instead of UTC slice
-    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;;
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
     const projectedMomentum = currentMomentum * Math.pow(1 + avgRate, i);
 

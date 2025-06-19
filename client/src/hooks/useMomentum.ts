@@ -47,11 +47,19 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     return generateMomentumHistory(filteredData.habits, filteredData.logs, actualDays);
   }, [filteredData.habits, filteredData.logs, timeFilter?.label]);
 
+  // Calculate recent average rate using dynamic window
+  const recentAvgRate = useMemo(() => {
+    if (momentumData.length === 0) return 0;
+    const windowSize = Math.min(avgWindowDays, momentumData.length);
+    const recentData = momentumData.slice(-windowSize);
+    return recentData.reduce((sum, d) => sum + d.dailyRate, 0) / recentData.length;
+  }, [momentumData, avgWindowDays]);
+
   // Generate forecast data based on time filter
   const forecastData = useMemo(() => {
     if (!timeFilter) return [];
-    return generateTimeFilterProjection(filteredData.habits, filteredData.logs, timeFilter);
-  }, [filteredData.habits, filteredData.logs, timeFilter]);
+    return generateTimeFilterProjection(filteredData.habits, filteredData.logs, timeFilter, recentAvgRate);
+  }, [filteredData.habits, filteredData.logs, timeFilter, recentAvgRate]);
 
   // Combine historical and forecast data for chart
   const combinedChartData = useMemo(() => {
@@ -134,14 +142,6 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
         return { avgWindowDays: 120, projWindowDays: 120 };
     }
   }, [timeFilter]);
-
-  // Calculate recent average rate using dynamic window
-  const recentAvgRate = useMemo(() => {
-    if (momentumData.length === 0) return 0;
-    const windowSize = Math.min(avgWindowDays, momentumData.length);
-    const recentData = momentumData.slice(-windowSize);
-    return recentData.reduce((sum, d) => sum + d.dailyRate, 0) / recentData.length;
-  }, [momentumData, avgWindowDays]);
 
   // Calculate projected target using dynamic projection window
   const projectedTarget = useMemo(() => {
