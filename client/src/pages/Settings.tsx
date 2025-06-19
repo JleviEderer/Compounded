@@ -55,7 +55,14 @@ export default function Settings() {
   };
 
   return (
-    <div className="space-y-8">
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      transition={{ duration: 0.15, ease: 'easeOut' }}
+      className="h-full w-full"
+    >
+      <div className="space-y-8">
       <motion.div 
         className="card-glass p-8"
         initial={{ opacity: 0, y: 20 }}
@@ -230,6 +237,7 @@ export default function Settings() {
           </motion.div>
         </div>
       </motion.div>
-    </div>
+      </div>
+    </motion.div>
   );
 }

@@ -31,7 +31,14 @@ export default function Home() {
   const hasCheckedToday = todayLogs.length > 0;
 
   return (
-    <div className="space-y-8">
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      transition={{ duration: 0.15, ease: 'easeOut' }}
+      className="h-full w-full"
+    >
+      <div className="space-y-8">
       {/* Progress Banner */}
       {hasCheckedToday && (
         <motion.div 
@@ -139,6 +146,7 @@ export default function Home() {
 
         
       </motion.div>
-    </div>
+      </div>
+    </motion.div>
   );
 }
