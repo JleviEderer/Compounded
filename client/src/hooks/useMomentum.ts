@@ -47,6 +47,25 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     return generateMomentumHistory(filteredData.habits, filteredData.logs, actualDays);
   }, [filteredData.habits, filteredData.logs, timeFilter?.label]);
 
+  // Calculate dynamic window sizes based on time filter FIRST
+  const { avgWindowDays, projWindowDays } = useMemo(() => {
+    if (!timeFilter || timeFilter.days === null) {
+      // All-Time uses same windows as 1Y
+      return { avgWindowDays: 120, projWindowDays: 120 };
+    }
+    
+    switch (timeFilter.label) {
+      case '30 D':
+        return { avgWindowDays: 7, projWindowDays: 7 };
+      case '4 M':
+        return { avgWindowDays: 30, projWindowDays: 30 };
+      case '1 Y':
+        return { avgWindowDays: 120, projWindowDays: 120 };
+      default:
+        return { avgWindowDays: 120, projWindowDays: 120 };
+    }
+  }, [timeFilter]);
+
   // Calculate recent average rate using dynamic window
   const recentAvgRate = useMemo(() => {
     if (momentumData.length === 0) return 0;
@@ -123,25 +142,6 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
   const successRate = useMemo(() => {
     return calculateSuccessRate(filteredData.habits, filteredData.logs, timeFilter?.days || 30);
   }, [filteredData.habits, filteredData.logs, timeFilter?.days]);
-
-  // Calculate dynamic window sizes based on time filter
-  const { avgWindowDays, projWindowDays } = useMemo(() => {
-    if (!timeFilter || timeFilter.days === null) {
-      // All-Time uses same windows as 1Y
-      return { avgWindowDays: 120, projWindowDays: 120 };
-    }
-    
-    switch (timeFilter.label) {
-      case '30 D':
-        return { avgWindowDays: 7, projWindowDays: 7 };
-      case '4 M':
-        return { avgWindowDays: 30, projWindowDays: 30 };
-      case '1 Y':
-        return { avgWindowDays: 120, projWindowDays: 120 };
-      default:
-        return { avgWindowDays: 120, projWindowDays: 120 };
-    }
-  }, [timeFilter]);
 
   // Calculate projected target using dynamic projection window
   const projectedTarget = useMemo(() => {
