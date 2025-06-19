@@ -1,21 +1,17 @@
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useHabits } from '../hooks/useHabits';
 import { useMomentum } from '../hooks/useMomentum';
 import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
-import { ViewMode } from '../types';
+
+type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
 
 export default function Insights() {
   const { habits, logs, settings } = useHabits();
   const momentum = useMomentum(habits, logs);
-  const [activeView, setActiveView] = useState<ViewMode>('day');
-  const [whatIfRate, setWhatIfRate] = useState([0.8]);
-
-  const calculateWhatIf = (rate: number) => {
-    return Math.pow(1 + (rate / 100), 30);
-  };
+  const [activeView, setActiveView] = useState<InsightsViewMode>('week');
 
   const getLast7Days = () => {
     const days = [];
@@ -62,6 +58,66 @@ export default function Insights() {
     return days;
   };
 
+  const getQuarterWeeks = () => {
+    const today = new Date();
+    const quarterStart = new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3, 1);
+    const weeks = [];
+
+    for (let week = 0; week < 13; week++) {
+      const weekDays = [];
+      for (let day = 0; day < 7; day++) {
+        const date = new Date(quarterStart);
+        date.setDate(quarterStart.getDate() + (week * 7) + day);
+        const dateStr = date.toLocaleDateString('en-CA');
+        const dayLogs = logs.filter(log => log.date === dateStr && log.completed);
+        const intensity = dayLogs.length / habits.length;
+
+        weekDays.push({
+          date: dateStr,
+          intensity,
+          isToday: date.toDateString() === today.toDateString()
+        });
+      }
+      weeks.push(weekDays);
+    }
+
+    return weeks;
+  };
+
+  const getAllTimeYears = () => {
+    const years = {};
+    const currentYear = new Date().getFullYear();
+
+    // Initialize years with empty months
+    for (let year = currentYear - 2; year <= currentYear; year++) {
+      years[year] = Array(12).fill(0);
+    }
+
+    // Calculate intensity for each month
+    logs.forEach(log => {
+      if (log.completed) {
+        const date = new Date(log.date);
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        
+        if (years[year]) {
+          years[year][month] += 1;
+        }
+      }
+    });
+
+    // Normalize intensities by dividing by total possible completions per month
+    Object.keys(years).forEach(year => {
+      years[year] = years[year].map(monthTotal => {
+        const daysInMonth = new Date(parseInt(year), 0, 32).getDate(); // Approximate
+        const maxPossible = habits.length * daysInMonth;
+        return maxPossible > 0 ? monthTotal / maxPossible : 0;
+      });
+    });
+
+    return years;
+  };
+
   const getIntensityColor = (intensity: number) => {
     if (intensity === 0) return 'bg-gray-100 dark:bg-gray-700';
     if (intensity <= 0.25) return 'bg-emerald-200 dark:bg-emerald-800';
@@ -70,18 +126,86 @@ export default function Insights() {
     return 'bg-emerald-500 dark:bg-emerald-500';
   };
 
-  const ViewToggle = () => (
-    <div className="flex space-x-4 mb-8">
-      {(['day', 'week', 'month'] as ViewMode[]).map((view) => (
-        <Button
+  const getMonochromeIntensityColor = (intensity: number) => {
+    const opacity = Math.min(intensity * 100, 100);
+    return `bg-gray-800 dark:bg-gray-300` + (opacity > 0 ? ` opacity-${Math.floor(opacity / 10) * 10}` : ' opacity-10');
+  };
+
+  // Time Filter Pills
+  const TimeFilterPills = () => (
+    <div className="flex gap-2 mb-6">
+      {(['week', 'month', 'quarter', 'all-time'] as InsightsViewMode[]).map((view) => (
+        <motion.button
           key={view}
-          variant={activeView === view ? 'default' : 'outline'}
           onClick={() => setActiveView(view)}
-          className={activeView === view ? 'bg-coral hover:bg-coral/90' : ''}
+          className={`relative flex px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+            activeView === view
+              ? 'text-white dark:text-white'
+              : 'text-teal-700 dark:text-teal-300 hover:text-teal-600 dark:hover:text-teal-200'
+          }`}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
-          {view.charAt(0).toUpperCase() + view.slice(1)}
-        </Button>
+          {activeView === view && (
+            <motion.div
+              layoutId="insightsRange"
+              className="absolute inset-0 bg-teal-600 dark:bg-teal-400 rounded-full"
+              initial={false}
+              transition={{
+                type: "spring",
+                stiffness: 350,
+                damping: 30
+              }}
+            />
+          )}
+          <span className="relative z-10 capitalize">{view.replace('-', ' ')}</span>
+        </motion.button>
       ))}
+    </div>
+  );
+
+  // Quick Stats Strip
+  const QuickStatsStrip = () => (
+    <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-4">
+        <motion.div 
+          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
+          whileHover={{ scale: 1.02 }}
+        >
+          <div className="text-xl font-bold text-emerald-600">
+            {momentum.successRate.toFixed(0)}%
+          </div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
+        </motion.div>
+
+        <motion.div 
+          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
+          whileHover={{ scale: 1.02 }}
+        >
+          <div className="text-xl font-bold text-purple-600">
+            +{(momentum.recentAvgRate * 100).toFixed(2)}%
+          </div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">
+            {activeView === 'all-time' ? 'Lifetime Avg' : 'Recent Avg'}
+          </div>
+        </motion.div>
+
+        <motion.div 
+          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
+          whileHover={{ scale: 1.02 }}
+        >
+          <div className="text-xl font-bold text-coral">12</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">Current Streak</div>
+        </motion.div>
+
+        <motion.div 
+          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
+          whileHover={{ scale: 1.02 }}
+        >
+          <div className="text-xl font-bold text-blue-600">{habits.length}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">Active Habits</div>
+        </motion.div>
+      </div>
     </div>
   );
 
@@ -104,94 +228,8 @@ export default function Insights() {
           </Button>
         </div>
 
-        <ViewToggle />
-
-        {/* Day View */}
-        {activeView === 'day' && (
-          <motion.div 
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            {/* What-if Analysis */}
-            <div className="space-y-6">
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                What-If Analysis
-              </h3>
-              <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
-                  If you maintain a daily rate of:
-                </label>
-                <Slider
-                  value={whatIfRate}
-                  onValueChange={setWhatIfRate}
-                  max={2}
-                  step={0.1}
-                  className="w-full mb-4"
-                />
-                <div className="flex justify-between text-sm text-gray-500 mb-4">
-                  <span>0%</span>
-                  <span className="font-medium text-coral">+{whatIfRate[0].toFixed(1)}%</span>
-                  <span>2%</span>
-                </div>
-                <div className="p-4 bg-white dark:bg-gray-700 rounded-xl">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-coral">
-                      {calculateWhatIf(whatIfRate[0]).toFixed(2)}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Momentum Index in 30 days
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                Quick Stats
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                <motion.div 
-                  className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl text-center"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <div className="text-xl font-bold text-emerald-600">
-                    {momentum.successRate.toFixed(0)}%
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
-                </motion.div>
-
-                <motion.div 
-                  className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl text-center"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <div className="text-xl font-bold text-coral">12</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Current Streak</div>
-                </motion.div>
-
-                <motion.div 
-                  className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl text-center"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <div className="text-xl font-bold text-purple-600">
-                    +{(momentum.averageDailyRate * 100).toFixed(2)}%
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Avg Daily Rate</div>
-                </motion.div>
-
-                <motion.div 
-                  className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl text-center"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <div className="text-xl font-bold text-blue-600">{habits.length}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Active Habits</div>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-        )}
+        <TimeFilterPills />
+        <QuickStatsStrip />
 
         {/* Week View */}
         {activeView === 'week' && (
@@ -306,6 +344,131 @@ export default function Insights() {
                 <div className="w-3 h-3 bg-emerald-300 dark:bg-emerald-700 rounded"></div>
                 <div className="w-3 h-3 bg-emerald-400 dark:bg-emerald-600 rounded"></div>
                 <div className="w-3 h-3 bg-emerald-500 dark:bg-emerald-500 rounded"></div>
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                More activity
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Quarter View */}
+        {activeView === 'quarter' && (
+          <motion.div 
+            className="space-y-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+              Quarterly Heatmap (13 Weeks)
+            </h3>
+            
+            <div className="space-y-2">
+              <div className="grid grid-cols-8 gap-2 text-xs text-gray-600 dark:text-gray-400">
+                <div></div>
+                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
+                  <div key={i} className="text-center font-medium">{day}</div>
+                ))}
+              </div>
+              
+              {getQuarterWeeks().map((week, weekIndex) => (
+                <motion.div 
+                  key={weekIndex} 
+                  className="grid grid-cols-8 gap-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: weekIndex * 0.05 }}
+                >
+                  <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                    W{weekIndex + 1}
+                  </div>
+                  {week.map((day, dayIndex) => (
+                    <motion.div
+                      key={dayIndex}
+                      className={`aspect-square rounded ${getIntensityColor(day.intensity)} ${
+                        day.isToday ? 'ring-2 ring-coral ring-offset-1' : ''
+                      }`}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: weekIndex * 0.05 + dayIndex * 0.01 }}
+                    />
+                  ))}
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                Less activity
+              </div>
+              <div className="flex space-x-1">
+                <div className="w-3 h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-200 dark:bg-emerald-800 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-300 dark:bg-emerald-700 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-400 dark:bg-emerald-600 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-500 dark:bg-emerald-500 rounded"></div>
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                More activity
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* All Time View */}
+        {activeView === 'all-time' && (
+          <motion.div 
+            className="space-y-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+              All Time Overview (By Year & Month)
+            </h3>
+            
+            <div className="space-y-4">
+              <div className="grid grid-cols-13 gap-2 text-xs text-gray-600 dark:text-gray-400">
+                <div></div>
+                {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month) => (
+                  <div key={month} className="text-center font-medium">{month}</div>
+                ))}
+              </div>
+              
+              {Object.entries(getAllTimeYears()).map(([year, months], yearIndex) => (
+                <motion.div 
+                  key={year} 
+                  className="grid grid-cols-13 gap-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: yearIndex * 0.1 }}
+                >
+                  <div className="text-sm text-gray-700 dark:text-gray-300 font-medium flex items-center">
+                    {year}
+                  </div>
+                  {months.map((intensity, monthIndex) => (
+                    <motion.div
+                      key={monthIndex}
+                      className={`aspect-square rounded ${getMonochromeIntensityColor(intensity)}`}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: yearIndex * 0.1 + monthIndex * 0.02 }}
+                      title={`${year}-${monthIndex + 1}: ${(intensity * 100).toFixed(1)}% completion`}
+                    />
+                  ))}
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                Less activity
+              </div>
+              <div className="flex space-x-1">
+                <div className="w-3 h-3 bg-gray-800 opacity-10 dark:bg-gray-300 rounded"></div>
+                <div className="w-3 h-3 bg-gray-800 opacity-30 dark:bg-gray-300 rounded"></div>
+                <div className="w-3 h-3 bg-gray-800 opacity-50 dark:bg-gray-300 rounded"></div>
+                <div className="w-3 h-3 bg-gray-800 opacity-70 dark:bg-gray-300 rounded"></div>
+                <div className="w-3 h-3 bg-gray-800 opacity-90 dark:bg-gray-300 rounded"></div>
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 More activity
