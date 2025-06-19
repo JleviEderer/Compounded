@@ -151,8 +151,20 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     const startValue = currentMomentum;
     const projectedValue = startValue * Math.pow(1 + recentAvgRate, projWindowDays);
     
+    // Debug logging for 1Y calculations
+    if (timeFilter?.label === '1 Y') {
+      console.log('🔍 1Y Projection Debug:');
+      console.log('  Current Momentum (exact):', startValue);
+      console.log('  Recent Avg Rate (exact):', recentAvgRate);
+      console.log('  Projection Days:', projWindowDays);
+      console.log('  Manual Calc Check:', startValue, '* (1 +', recentAvgRate, ')^', projWindowDays);
+      console.log('  Manual Result:', startValue * Math.pow(1 + recentAvgRate, projWindowDays));
+      console.log('  App Result:', projectedValue);
+      console.log('  Your Calc (1.988 * 1.0019^120):', 1.988 * Math.pow(1.0019, 120));
+    }
+    
     return projectedValue;
-  }, [momentumData, currentMomentum, recentAvgRate, projWindowDays]);
+  }, [momentumData, currentMomentum, recentAvgRate, projWindowDays, timeFilter]);
 
   return {
     momentumData: combinedChartData, // Now includes both historical + forecast
