@@ -60,9 +60,9 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
       case '3 M':
         return { avgWindowDays: 30, projWindowDays: 30 };
       case '1 Y':
-        return { avgWindowDays: 120, projWindowDays: 120 };
+        return { avgWindowDays: 90, projWindowDays: 90 };
       default:
-        return { avgWindowDays: 120, projWindowDays: 120 };
+        return { avgWindowDays: 90, projWindowDays: 90 };
     }
   }, [timeFilter]);
 

@@ -127,7 +127,7 @@ export function generateTimeFilterProjection(
   const forecastConfig = {
     '30 D': { forecastDays: 7, avgPeriodDays: 7 },
     '3 M': { forecastDays: 30, avgPeriodDays: 30 },
-    '1 Y': { forecastDays: 90, avgPeriodDays: 120 } // 4 months for avg
+    '1 Y': { forecastDays: 90, avgPeriodDays: 90 } // 3 months for avg
   };
 
   const config = forecastConfig[timeFilter.label as keyof typeof forecastConfig];
