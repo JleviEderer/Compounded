@@ -6,6 +6,9 @@ export interface DataSourceConfig {
   enableLocalStorage: boolean;
 }
 
+// Flag to control real vs mock date behavior
+export const USE_REAL_DATES = true;
+
 export const dataSourceConfig: DataSourceConfig = {
   source: 'user', // Changed to user data
   enableLocalStorage: true // Enable localStorage persistence
