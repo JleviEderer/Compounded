@@ -8,40 +8,44 @@ const STORAGE_KEY = 'compounded-data';
 export function useHabits() {
   const [data, setData] = useState<AppData>(() => {
     console.log('🏠 useHabits: Initializing data...');
+    console.log('🏠 useHabits: Data source config:', dataSourceConfig);
 
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        console.log('🏠 useHabits: Loaded from localStorage:', parsed.habits?.length, 'habits,', parsed.logs?.length, 'logs');
-        return {
-          habits: parsed.habits || dataService.getHabits(),
-          logs: parsed.logs || dataService.getLogs(),
-          settings: {
-            theme: 'light',
-            nerdMode: false,
-            ...parsed.settings
-          }
-        };
-      } catch {
-        // If parsing fails, use mock data
-        console.log('🏠 useHabits: localStorage parse failed, using mock data');
-        return {
-          habits: dataService.getHabits(),
-          logs: dataService.getLogs(),
-          settings: { theme: 'light', nerdMode: false }
-        };
+    // Check data source configuration
+    if (dataSourceConfig.source === 'user' && dataSourceConfig.enableLocalStorage) {
+      // Check if we have saved data in localStorage
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          console.log('🏠 useHabits: Loaded from localStorage:', parsed.habits?.length, 'habits,', parsed.logs?.length, 'logs');
+          return {
+            habits: parsed.habits || dataService.getHabits(),
+            logs: parsed.logs || dataService.getLogs(),
+            settings: {
+              theme: 'light',
+              nerdMode: false,
+              ...parsed.settings
+            }
+          };
+        } catch {
+          console.log('🏠 useHabits: localStorage parse failed, using mock data');
+          return {
+            habits: dataService.getHabits(),
+            logs: dataService.getLogs(),
+            settings: { theme: 'light', nerdMode: false }
+          };
+        }
       }
     }
 
-    // First time - use mock data and save it to localStorage
-    console.log('🏠 useHabits: First time load, using mock data');
+    // Initialize with data from dataService (respects dataSourceConfig)
+    console.log('🏠 useHabits: Loading from dataService with source:', dataSourceConfig.source);
     const initialData = {
       habits: dataService.getHabits(),
       logs: dataService.getLogs(),
       settings: { theme: 'light', nerdMode: false }
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
+    console.log('🏠 useHabits: Loaded from dataService:', initialData.habits.length, 'habits,', initialData.logs.length, 'logs');
     return initialData;
   });
 
@@ -84,7 +88,7 @@ export function useHabits() {
   const logHabit = (habitId: string, date: string, state: HabitLogState) => {
     setData(prev => {
       const newLogs = prev.logs.filter(log => !(log.habitId === habitId && log.date === date));
-      
+
       if (state !== HabitLogState.UNLOGGED) {
         newLogs.push({
           id: `${habitId}-${date}`,
@@ -94,12 +98,12 @@ export function useHabits() {
           completed: state === HabitLogState.GOOD
         });
       }
-      
+
       const newData = {
         ...prev,
         logs: newLogs
       };
-      
+
       console.log('🔄 Habit logged:', { habitId, date, state, totalLogs: newData.logs.length });
       return newData;
     });

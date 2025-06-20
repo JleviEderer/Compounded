@@ -69,12 +69,13 @@ class DataService {
   }
 
   getLogsForDate(date: string): HabitLog[] {
-    const logs = mockLogs.filter(log => log.date === date);
+    const allLogs = this.getLogs(); // Use the same source logic
+    const logs = allLogs.filter(log => log.date === date);
     if (this.debug) {
       console.log(`🔍 DataService.getLogsForDate(${date}):`, logs.length, 'logs found');
       if (logs.length === 0) {
         // Help debug date mismatches
-        const availableDates = [...new Set(mockLogs.map(log => log.date))].sort();
+        const availableDates = [...new Set(allLogs.map(log => log.date))].sort();
         const closestDate = this.findClosestDate(date, availableDates);
         console.log(`🔍 No logs for ${date}. Closest available date: ${closestDate}`);
         console.log(`🔍 Available date range: ${availableDates[0]} to ${availableDates[availableDates.length-1]}`);
@@ -99,7 +100,8 @@ class DataService {
   }
 
   getLogsForHabit(habitId: string): HabitLog[] {
-    const logs = mockLogs.filter(log => log.habitId === habitId);
+    const allLogs = this.getLogs(); // Use the same source logic
+    const logs = allLogs.filter(log => log.habitId === habitId);
     if (this.debug) {
       console.log(`🔍 DataService.getLogsForHabit(${habitId}):`, logs.length, 'logs found');
     }
