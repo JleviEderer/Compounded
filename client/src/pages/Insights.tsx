@@ -182,7 +182,7 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="max-w-48 text-xs">
                 <p>Percentage of habits completed successfully in the selected time period</p>
               </TooltipContent>
             </Tooltip>
@@ -202,7 +202,7 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="max-w-48 text-xs">
                 <p>
                   {activeView === 'all-time' 
                     ? 'Your overall average daily momentum rate across all time' 
@@ -225,7 +225,7 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="max-w-48 text-xs">
                 <p>Consecutive days of completing at least one habit successfully</p>
               </TooltipContent>
             </Tooltip>
@@ -243,7 +243,7 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="max-w-48 text-xs">
                 <p>Total number of habits you're currently tracking</p>
               </TooltipContent>
             </Tooltip>
