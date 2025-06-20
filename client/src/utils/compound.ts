@@ -60,49 +60,56 @@ export function calculateDailyRate(
 export function generateMomentumHistory(
   habits: HabitPair[], 
   logs: HabitLog[], 
-  days: number
+  days: number = 30
 ): MomentumData[] {
-  if (habits.length === 0 || logs.length === 0) return [];
+  const result: MomentumData[] = [];
 
-  // Find the actual latest date in the logs
-  const latestLogDate = logs.reduce((latest, log) => {
-    return log.date > latest ? log.date : latest;
-  }, '');
+  // If no logs, return empty array
+  if (logs.length === 0) return result;
 
-  // Use either today or the latest log date, whichever is more recent
+  // Get actual date range from filtered logs
+  const logDates = logs.map(log => log.date).sort();
+  const startDate = new Date(logDates[0]);
+  const endDate = new Date(logDates[logDates.length - 1]);
+
+  // Always include today in the historical range, even if no logs exist for today
   const today = new Date();
-  const latestDataDate = latestLogDate ? new Date(latestLogDate) : today;
-  const endDate = latestDataDate > today ? latestDataDate : today;
+  const actualEndDate = endDate > today ? endDate : today;
 
-  // Calculate start date
-  const startDate = new Date(endDate);
-  startDate.setDate(endDate.getDate() - days + 1);
+  // Calculate actual days between start and end dates
+  const timeDiff = actualEndDate.getTime() - startDate.getTime();
+  const actualDays = Math.min(days, Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1);
 
-  const formatDate = (date: Date) => date.toLocaleDateString('en-CA');
-  console.log(`Momentum history: ${days} days from ${formatDate(startDate)} to ${formatDate(endDate)}`);
-  console.log(`Latest log date found: ${latestLogDate}`);
+  console.log(`Momentum history: ${actualDays} days from ${startDate.toLocaleDateString('en-CA')} to ${actualEndDate.toLocaleDateString('en-CA')}`);
 
-  const history: MomentumData[] = [];
-  let currentMomentum = 1.0;
+  // Use local timezone for "today" and optimize lookup with Set
+  const todayStr = getTodayString();
+  const logDateSet = new Set(logDates); // O(1) lookup instead of O(n)
+  const shouldIncludeToday = !logDateSet.has(todayStr);
 
-  for (let i = 0; i < days; i++) {
-    const date = new Date(startDate);
-    date.setDate(date.getDate() + i);
-    const dateStr = formatDate(date);
+  for (let i = actualDays - 1; i >= 0; i--) {
+    const date = new Date(actualEndDate);
+    date.setDate(date.getDate() - i);
+    // Use local date instead of UTC slice
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+    // Skip dates before our filtered start date
+    if (dateStr < logDates[0]) continue;
 
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
-    currentMomentum *= (1 + dailyRate);
+    const momentum = calculateMomentumIndex(habits, logs, toLocalMidnight(dateStr));
+    const epoch = toLocalMidnight(dateStr);
 
-    history.push({
+    result.push({
       date: dateStr,
-      value: currentMomentum,
+      value: momentum,
       dailyRate,
-      epoch: date.getTime(),
+      epoch,
       isProjection: false
     });
   }
 
-  return history;
+  return result;
 }
 
 export function generateTimeFilterProjection(

@@ -132,16 +132,10 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     return ((endValue - startValue) / startValue) * 100;
   }, [momentumData, currentMomentum]);
 
-  // Calculate latest available rate from filtered data
+  // Calculate today's rate from filtered data
   const todayRate = useMemo(() => {
-    // Find the most recent date in the filtered logs
-    const latestLogDate = filteredData.logs.reduce((latest, log) => {
-      return log.date > latest ? log.date : latest;
-    }, '');
-    
-    // Use latest log date or today, whichever is available
-    const dateToUse = latestLogDate || new Date().toISOString().split('T')[0];
-    return calculateDailyRate(filteredData.habits, filteredData.logs, dateToUse);
+    const today = new Date().toISOString().split('T')[0];
+    return calculateDailyRate(filteredData.habits, filteredData.logs, today);
   }, [filteredData.habits, filteredData.logs]);
 
   // Calculate success rate
