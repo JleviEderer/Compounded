@@ -11,8 +11,41 @@ type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
 
 export default function Insights() {
   const { habits, logs, settings } = useHabits();
-  const momentum = useMomentum(habits, logs);
   const [activeView, setActiveView] = useState<InsightsViewMode>('week');
+  
+  // Define time filters that match what useMomentum expects
+  const getTimeFilterForView = (view: InsightsViewMode) => {
+    switch (view) {
+      case 'week':
+        return { label: '7 D', days: 7 };
+      case 'month':
+        return { label: '30 D', days: 30 };
+      case 'quarter':
+        return { label: '3 M', days: 90 };
+      case 'all-time':
+        return { label: 'All Time', days: null };
+      default:
+        return { label: '7 D', days: 7 };
+    }
+  };
+
+  const currentTimeFilter = getTimeFilterForView(activeView);
+  const momentum = useMomentum(habits, logs, currentTimeFilter);
+
+  // Filter logs based on current time filter
+  const getFilteredLogs = () => {
+    if (!currentTimeFilter.days) {
+      return logs; // All time
+    }
+    
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - currentTimeFilter.days);
+    const cutoffStr = cutoffDate.toLocaleDateString('en-CA');
+    
+    return logs.filter(log => log.date >= cutoffStr);
+  };
+
+  const filteredLogs = getFilteredLogs();
 
   const getLast7Days = () => {
     const days = [];
@@ -45,7 +78,7 @@ export default function Insights() {
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(today.getFullYear(), today.getMonth(), day);
       const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
-      const dayLogs = logs.filter(log => log.date === dateStr && log.completed);
+      const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.completed);
       const intensity = dayLogs.length / habits.length;
 
       days.push({
@@ -70,7 +103,7 @@ export default function Insights() {
         const date = new Date(quarterStart);
         date.setDate(quarterStart.getDate() + (week * 7) + day);
         const dateStr = date.toLocaleDateString('en-CA');
-        const dayLogs = logs.filter(log => log.date === dateStr && log.completed);
+        const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.completed);
         const intensity = dayLogs.length / habits.length;
 
         weekDays.push({
@@ -95,7 +128,7 @@ export default function Insights() {
     }
 
     // Calculate intensity for each month
-    logs.forEach(log => {
+    filteredLogs.forEach(log => {
       if (log.completed) {
         const date = new Date(log.date);
         const year = date.getFullYear();
@@ -165,6 +198,27 @@ export default function Insights() {
     </div>
   );
 
+  // Calculate current streak
+  const getCurrentStreak = () => {
+    const today = new Date();
+    let streak = 0;
+    
+    for (let i = 0; i < 365; i++) { // Check up to a year back
+      const checkDate = new Date(today);
+      checkDate.setDate(today.getDate() - i);
+      const dateStr = checkDate.toLocaleDateString('en-CA');
+      
+      const dayLogs = logs.filter(log => log.date === dateStr && log.completed);
+      if (dayLogs.length > 0) {
+        streak++;
+      } else {
+        break; // Streak broken
+      }
+    }
+    
+    return streak;
+  };
+
   // Quick Stats Strip
   const QuickStatsStrip = () => (
     <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mb-8">
@@ -213,7 +267,7 @@ export default function Insights() {
           className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
           whileHover={{ scale: 1.02 }}
         >
-          <div className="text-xl font-bold text-coral">12</div>
+          <div className="text-xl font-bold text-coral">{getCurrentStreak()}</div>
           <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             Current Streak
             <Tooltip>
@@ -306,7 +360,7 @@ export default function Insights() {
                         {habit.goodHabit}
                       </td>
                       {getLast7Days().map((day, dayIndex) => {
-                        const log = logs.find(l => l.habitId === habit.id && l.date === day.date);
+                        const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
                         return (
                           <td key={day.date} className="p-3 text-center">
                             <motion.div 
