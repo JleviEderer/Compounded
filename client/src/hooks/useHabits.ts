@@ -164,6 +164,11 @@ export function useHabits() {
   };
 
   const resetData = () => {
+    // Clear localStorage completely for a fresh start
+    if (dataSourceConfig.enableLocalStorage) {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+    
     setData({
       habits: [],
       logs: [],
