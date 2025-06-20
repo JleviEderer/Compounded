@@ -9,17 +9,6 @@ export function useHabits() {
   const [data, setData] = useState<AppData>(() => {
     console.log('🏠 useHabits: Initializing data...');
 
-    // TEMPORARILY DISABLE LOCALSTORAGE TO FORCE FRESH MOCK DATA
-    console.log('🏠 useHabits: FORCING fresh mock data (localStorage disabled)');
-    const freshData = {
-      habits: dataService.getHabits(),
-      logs: dataService.getLogs(),
-      settings: { theme: 'light', nerdMode: false }
-    };
-    console.log('🏠 useHabits: Fresh data loaded:', freshData.habits?.length, 'habits,', freshData.logs?.length, 'logs');
-    return freshData;
-
-    /* ORIGINAL LOCALSTORAGE CODE - COMMENTED OUT
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
@@ -45,14 +34,15 @@ export function useHabits() {
       }
     }
 
-    // First time - use mock data
+    // First time - use mock data and save it to localStorage
     console.log('🏠 useHabits: First time load, using mock data');
-    return {
+    const initialData = {
       habits: dataService.getHabits(),
       logs: dataService.getLogs(),
       settings: { theme: 'light', nerdMode: false }
     };
-    */
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
+    return initialData;
   });
 
   useEffect(() => {
@@ -92,19 +82,27 @@ export function useHabits() {
   };
 
   const logHabit = (habitId: string, date: string, state: HabitLogState) => {
-    setData(prev => ({
-      ...prev,
-      logs: prev.logs.filter(log => !(log.habitId === habitId && log.date === date)).concat(
-        state === HabitLogState.UNLOGGED
-          ? []
-          : {
-              id: `${habitId}-${date}`,
-              habitId,
-              date,
-              state
-            }
-      )
-    }));
+    setData(prev => {
+      const newLogs = prev.logs.filter(log => !(log.habitId === habitId && log.date === date));
+      
+      if (state !== HabitLogState.UNLOGGED) {
+        newLogs.push({
+          id: `${habitId}-${date}`,
+          habitId,
+          date,
+          state,
+          completed: state === HabitLogState.GOOD
+        });
+      }
+      
+      const newData = {
+        ...prev,
+        logs: newLogs
+      };
+      
+      console.log('🔄 Habit logged:', { habitId, date, state, totalLogs: newData.logs.length });
+      return newData;
+    });
   };
 
   const getHabitLog = (habitId: string, date: string): HabitLog | undefined => {
@@ -177,6 +175,7 @@ export function useHabits() {
     updateHabit,
     deleteHabit,
     logHabit,
+    getHabitLog,
     updateSettings,
     exportData,
     importData,
