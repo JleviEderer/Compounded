@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, HelpCircle } from 'lucide-react';
@@ -99,7 +100,7 @@ export default function Insights() {
         const date = new Date(log.date);
         const year = date.getFullYear();
         const month = date.getMonth();
-
+        
         if (years[year]) {
           years[year][month] += 1;
         }
@@ -181,8 +182,8 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-16 text-[6px] p-0.5 leading-none">
-                <p>% complete</p>
+              <TooltipContent className="max-w-32 text-[8px] p-1 leading-tight">
+                <p>% habits completed</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -201,8 +202,8 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-16 text-[6px] p-0.5 leading-none">
-                <p>% complete</p>
+              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
+                <p>Avg daily rate</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -219,8 +220,8 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-16 text-[6px] p-0.5 leading-none">
-                <p>% complete</p>
+              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
+                <p>Consecutive days w/ ≥1 habit</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -237,8 +238,8 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-16 text-[6px] p-0.5 leading-none">
-                <p>% complete</p>
+              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
+                <p>Total habits tracked</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -400,7 +401,7 @@ export default function Insights() {
             <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
               Quarterly Heatmap (13 Weeks)
             </h3>
-
+            
             <div className="space-y-2">
               <div className="grid grid-cols-8 gap-2 text-xs text-gray-600 dark:text-gray-400">
                 <div></div>
@@ -408,7 +409,7 @@ export default function Insights() {
                   <div key={i} className="text-center font-medium">{day}</div>
                 ))}
               </div>
-
+              
               {getQuarterWeeks().map((week, weekIndex) => (
                 <motion.div 
                   key={weekIndex} 
@@ -463,7 +464,7 @@ export default function Insights() {
             <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
               All Time Overview (By Year & Month)
             </h3>
-
+            
             <div className="space-y-4">
               <div className="grid grid-cols-13 gap-2 text-xs text-gray-600 dark:text-gray-400">
                 <div></div>
@@ -471,7 +472,7 @@ export default function Insights() {
                   <div key={month} className="text-center font-medium">{month}</div>
                 ))}
               </div>
-
+              
               {Object.entries(getAllTimeYears()).map(([year, months], yearIndex) => (
                 <motion.div 
                   key={year} 
