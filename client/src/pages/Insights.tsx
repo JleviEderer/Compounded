@@ -466,7 +466,7 @@ export default function Insights() {
             </h3>
             
             <div className="space-y-4">
-              <div className="grid grid-cols-13 gap-2 text-xs text-gray-600 dark:text-gray-400">
+              <div className="grid gap-2 text-xs text-gray-600 dark:text-gray-400" style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}>
                 <div></div>
                 {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month) => (
                   <div key={month} className="text-center font-medium">{month}</div>
@@ -476,18 +476,19 @@ export default function Insights() {
               {Object.entries(getAllTimeYears()).map(([year, months], yearIndex) => (
                 <motion.div 
                   key={year} 
-                  className="grid grid-cols-13 gap-2"
+                  className="grid gap-2"
+                  style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: yearIndex * 0.1 }}
                 >
-                  <div className="text-sm text-gray-700 dark:text-gray-300 font-medium flex items-center">
+                  <div className="text-sm text-gray-700 dark:text-gray-300 font-medium flex items-center justify-end pr-2">
                     {year}
                   </div>
                   {months.map((intensity, monthIndex) => (
                     <motion.div
                       key={monthIndex}
-                      className={`aspect-square rounded ${getMonochromeIntensityColor(intensity)}`}
+                      className={`w-4 h-4 rounded ${getIntensityColor(intensity)}`}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: yearIndex * 0.1 + monthIndex * 0.02 }}
