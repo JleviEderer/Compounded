@@ -53,7 +53,7 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
       // All-Time uses same windows as 1Y
       return { avgWindowDays: 120, projWindowDays: 120 };
     }
-
+    
     switch (timeFilter.label) {
       case '30 D':
         return { avgWindowDays: 7, projWindowDays: 7 };
@@ -132,20 +132,10 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     return ((endValue - startValue) / startValue) * 100;
   }, [momentumData, currentMomentum]);
 
-  // Calculate rate for the most recent date with data
+  // Calculate today's rate from filtered data
   const todayRate = useMemo(() => {
-    const mockMode = !USE_REAL_DATES;
-
-    // Find the most recent date in the filtered logs
-    const latestLogDate = filteredData.logs.reduce((latest, log) => {
-      return log.date > latest ? log.date : latest;
-    }, '');
-
-    // Use mock mode to determine target date
-    const targetDate = mockMode ? latestLogDate : new Date().toISOString().split('T')[0];
-    const dateToUse = targetDate || new Date().toISOString().split('T')[0];
-
-    return calculateDailyRate(filteredData.habits, filteredData.logs, dateToUse);
+    const today = new Date().toISOString().split('T')[0];
+    return calculateDailyRate(filteredData.habits, filteredData.logs, today);
   }, [filteredData.habits, filteredData.logs]);
 
   // Calculate success rate
@@ -156,11 +146,11 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
   // Calculate projected target using dynamic projection window
   const projectedTarget = useMemo(() => {
     if (momentumData.length === 0) return currentMomentum;
-
+    
     // Use the recent average rate to project forward by projWindowDays
     const startValue = currentMomentum;
     const projectedValue = startValue * Math.pow(1 + recentAvgRate, projWindowDays);
-
+    
     // Debug logging for 1Y calculations
     if (timeFilter?.label === '1 Y') {
       console.log('🔍 1Y Projection Debug:');
@@ -172,7 +162,7 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
       console.log('  App Result:', projectedValue);
       console.log('  Your Calc (1.988 * 1.0019^120):', 1.988 * Math.pow(1.0019, 120));
     }
-
+    
     return projectedValue;
   }, [momentumData, currentMomentum, recentAvgRate, projWindowDays, timeFilter]);
 

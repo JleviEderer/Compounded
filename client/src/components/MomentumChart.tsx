@@ -16,7 +16,6 @@ import { HelpCircle } from 'lucide-react';
 import { MomentumData } from '../types';
 import { toLocalMidnight } from '../utils/compound';
 import { getTodayEpoch } from '../utils/date';
-import { USE_REAL_DATES } from '../services/dataSourceConfig';
 
 interface MomentumChartProps {
   data: MomentumData[];
@@ -96,19 +95,15 @@ export default function MomentumChart({
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear().toString().slice(-2)}`;
   };
 
-  // Determine mock mode and appropriate anchor date
-  const mockMode = !USE_REAL_DATES;
-  
-  const latestDataEpoch = mockMode
-    ? Math.max(...data.filter(d => !d.isProjection).map(d => d.epoch))
-    : getTodayEpoch();
+  // Create today's epoch for reference line
+  const todayEpoch = getTodayEpoch();
 
   // Compute the last historical epoch for custom ticks
   const lastHist = [...data].reverse().find(d => !d.isProjection)?.epoch;
 
-  // Build ticks array to handle case where lastHist === latestDataEpoch
-  const ticksArr = [data[0]?.epoch, latestDataEpoch];
-  if (lastHist && lastHist !== latestDataEpoch) {
+  // Build ticks array to handle case where lastHist === todayEpoch
+  const ticksArr = [data[0]?.epoch, todayEpoch];
+  if (lastHist && lastHist !== todayEpoch) {
     ticksArr.splice(1, 0, lastHist);
   }
 
@@ -234,7 +229,7 @@ export default function MomentumChart({
               dataKey="epoch"
               type="number"
               scale="time"
-              domain={['dataMin', latestDataEpoch]}
+              domain={['dataMin', todayEpoch]}
               ticks={ticksArr.filter(Boolean)}
               tickFormatter={(t) => format(t, 'M/d')}
               axisLine={false}
@@ -277,16 +272,16 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Date marker */}
+            {/* Today marker */}
             <ReferenceLine
-              x={latestDataEpoch}
+              x={todayEpoch}
               stroke="#6B7280"
               strokeWidth={1}
               opacity={0.5}
               isFront
               ifOverflow="extendDomain"
               label={{ 
-                value: mockMode ? 'Latest' : 'Today', 
+                value: 'Today', 
                 position: 'top', 
                 offset: 8,
                 fill: '#6B7280', 

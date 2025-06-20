@@ -1,6 +1,5 @@
 import { HabitPair, HabitLog, MomentumData } from '../types';
 import { getTodayString } from './date';
-import { USE_REAL_DATES } from '../services/dataSourceConfig';
 
 // Helper to parse date strings as local midnight instead of UTC
 export function toLocalMidnight(dateStr: string): number {
@@ -158,18 +157,12 @@ export function generateTimeFilterProjection(
   }
 
   const projectionData: MomentumData[] = [];
-  const mockMode = !USE_REAL_DATES;
-  
-  // Determine anchor date based on mode
-  const anchorDate = mockMode 
-    ? new Date(Math.max(...logs.map(log => new Date(log.date).getTime())))
-    : new Date();
-    
-  const currentMomentum = calculateMomentumIndex(habits, logs, anchorDate);
+  const today = new Date();
+  const currentMomentum = calculateMomentumIndex(habits, logs, today);
 
   for (let i = 1; i <= config.forecastDays; i++) {
-    const date = new Date(anchorDate);
-    date.setDate(anchorDate.getDate() + i);
+    const date = new Date(today);
+    date.setDate(date.getDate() + i);
     // Use local date instead of UTC slice
     const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
