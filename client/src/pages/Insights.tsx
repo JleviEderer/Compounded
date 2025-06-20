@@ -182,7 +182,7 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-16 text-[5px] p-1">
+              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
                 <p>% habits completed</p>
               </TooltipContent>
             </Tooltip>
@@ -202,7 +202,7 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-16 text-[5px] p-1">
+              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
                 <p>Avg daily rate</p>
               </TooltipContent>
             </Tooltip>
@@ -220,7 +220,7 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-16 text-[5px] p-1">
+              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
                 <p>Consecutive days w/ ≥1 habit</p>
               </TooltipContent>
             </Tooltip>
@@ -238,7 +238,7 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-16 text-[5px] p-1">
+              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
                 <p>Total habits tracked</p>
               </TooltipContent>
             </Tooltip>
