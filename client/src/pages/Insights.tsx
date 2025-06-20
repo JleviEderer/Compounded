@@ -182,7 +182,7 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
+              <TooltipContent className="max-w-32 text-[8px] p-1 leading-tight">
                 <p>% habits completed</p>
               </TooltipContent>
             </Tooltip>
