@@ -7,7 +7,6 @@ import {
   calculateSuccessRate,
   generateTimeFilterProjection
 } from '../utils/compound';
-import { USE_REAL_DATES } from '../services/dataSourceConfig';
 
 interface TimeFilter {
   label: string;
