@@ -197,18 +197,13 @@ export default function Insights() {
             +{(momentum.recentAvgRate * 100).toFixed(2)}%
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
-            {activeView === 'all-time' ? 'Lifetime Avg' : 'Recent Avg'}
+            Avg Daily Rate
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
               <TooltipContent className="max-w-32 text-xs">
-                <p>
-                  {activeView === 'all-time' 
-                    ? 'Avg momentum rate' 
-                    : 'Recent momentum avg'
-                  }
-                </p>
+                <p>Avg daily rate for selected period</p>
               </TooltipContent>
             </Tooltip>
           </div>
