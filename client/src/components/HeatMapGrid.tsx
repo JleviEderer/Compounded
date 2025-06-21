@@ -19,20 +19,30 @@ interface HeatMapGridProps {
 
 export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensityColor }: HeatMapGridProps) {
   // Diverging color scale for negative/positive momentum
-  const getColor = (value: number | null) => {
-    if (value === null) return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // no data
+  const getColor = (intensity: number | null) => {
+    if (intensity === null || intensity === undefined) {
+      return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // no data
+    }
 
-    if (value < 0) {                   // negative momentum
-      if (value <= -4) return `bg-rose-500`;
-      if (value <= -2) return `bg-rose-400`;
-      return `bg-rose-200`;
+    // Negative momentum (bad habits dominate) - coral/rose shades
+    if (intensity < 0) {
+      const absValue = Math.abs(intensity);
+      if (absValue >= 0.75) return 'bg-rose-500'; // #F43F5E - heavy negative
+      if (absValue >= 0.5) return 'bg-rose-400';  // #FB7185 - mid negative  
+      if (absValue >= 0.25) return 'bg-rose-300'; // #FBC5D2 - light negative
+      return 'bg-rose-200';                       // very light negative
     }
-    if (value > 0) {                   // positive momentum
-      if (value >= 4) return `bg-emerald-600`;
-      if (value >= 2) return `bg-emerald-500`;
-      return `bg-emerald-300`;
+    
+    // Positive momentum (good habits dominate) - teal/emerald shades
+    if (intensity > 0) {
+      if (intensity >= 0.75) return 'bg-emerald-600'; // #059669 - heavy positive
+      if (intensity >= 0.5) return 'bg-emerald-500';  // #10B981 - mid positive
+      if (intensity >= 0.25) return 'bg-emerald-400'; // #6EE7B7 - light positive  
+      return 'bg-emerald-300';                        // very light positive
     }
-    return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500';       // exactly zero
+    
+    // Exactly zero or no habits logged
+    return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // #E5E7EB
   };
   const renderMonthGrid = () => {
     const daysInWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
