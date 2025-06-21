@@ -98,13 +98,14 @@ export default function Insights() {
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(anchor.getFullYear(), anchor.getMonth(), day);
       const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
-      const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
-      const intensity = dayLogs.length / habits.length;
+      const goodLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
+      const badLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'bad');
+      const netMomentum = (goodLogs.length - badLogs.length) / habits.length;
 
       days.push({
         date: dateStr,
         dateISO: dateStr,
-        intensity,
+        intensity: netMomentum,
         day,
         isToday: dateStr === today.toLocaleDateString('en-CA')
       });
@@ -123,13 +124,14 @@ export default function Insights() {
         const date = new Date(quarterStart);
         date.setDate(quarterStart.getDate() + (week * 7) + day);
         const dateStr = date.toLocaleDateString('en-CA');
-        const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
-        const intensity = dayLogs.length / habits.length;
+        const goodLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
+        const badLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'bad');
+        const netMomentum = (goodLogs.length - badLogs.length) / habits.length;
 
         cells.push({
           date: dateStr,
           dateISO: dateStr,
-          intensity,
+          intensity: netMomentum,
           isToday: date.toDateString() === today.toDateString()
         });
       }
@@ -148,17 +150,21 @@ export default function Insights() {
         const monthEnd = new Date(year, month + 1, 0);
         const daysInMonth = monthEnd.getDate();
 
-        // Calculate total good logs for this month
-        let monthTotal = 0;
+        // Calculate net momentum for this month (good - bad)
+        let monthGood = 0;
+        let monthBad = 0;
         for (let day = 1; day <= daysInMonth; day++) {
           const date = new Date(year, month, day);
           const dateStr = date.toLocaleDateString('en-CA');
-          const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
-          monthTotal += dayLogs.length;
+          const goodLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
+          const badLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'bad');
+          monthGood += goodLogs.length;
+          monthBad += badLogs.length;
         }
 
         const maxPossible = habits.length * daysInMonth;
-        const intensity = maxPossible > 0 ? monthTotal / maxPossible : 0;
+        const netMomentum = maxPossible > 0 ? (monthGood - monthBad) / maxPossible : 0;
+        const intensity = netMomentum;
         const monthISO = `${year}-${String(month + 1).padStart(2, '0')}`;
 
         cells.push({
