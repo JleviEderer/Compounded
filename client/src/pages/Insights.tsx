@@ -390,7 +390,7 @@ export default function Insights() {
                       </td>
                       {getLast7Days().map((day, dayIndex) => {
                         const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
-
+                        
                         const getSquareStyle = () => {
                           if (log?.state === 'good') {
                             return 'bg-teal-500'; // #10b981 - good habit completed
@@ -458,21 +458,17 @@ export default function Insights() {
 
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600 dark:text-gray-400">
-                More bad habits
+                Less activity
               </div>
               <div className="flex space-x-1">
-                <div className="w-3 h-3 bg-red-600 rounded"></div>
-                <div className="w-3 h-3 bg-red-500 rounded"></div>
-                <div className="w-3 h-3 bg-red-400 rounded"></div>
-                <div className="w-3 h-3 bg-red-300 rounded"></div>
-                <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-300 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-400 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-500 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-600 rounded"></div>
+                <div className="w-3 h-3 bg-gray-100 dark:bg-gray-700 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-300 dark:bg-emerald-700 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-400 dark:bg-emerald-600 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-500 dark:bg-emerald-500 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-600 dark:bg-emerald-400 rounded"></div>
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
-                More good habits
+                More activity
               </div>
             </div>
           </motion.div>
@@ -498,21 +494,17 @@ export default function Insights() {
 
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600 dark:text-gray-400">
-                More bad habits
+                Less activity
               </div>
               <div className="flex space-x-1">
-                <div className="w-3 h-3 bg-red-600 rounded"></div>
-                <div className="w-3 h-3 bg-red-500 rounded"></div>
-                <div className="w-3 h-3 bg-red-400 rounded"></div>
-                <div className="w-3 h-3 bg-red-300 rounded"></div>
-                <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-300 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-400 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-500 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-600 rounded"></div>
+                <div className="w-3 h-3 bg-gray-100 dark:bg-gray-700 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-300 dark:bg-emerald-700 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-400 dark:bg-emerald-600 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-500 dark:bg-emerald-500 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-600 dark:bg-emerald-400 rounded"></div>
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
-                More good habits
+                More activity
               </div>
             </div>
           </motion.div>
