@@ -1,4 +1,3 @@
-
 import { motion } from 'framer-motion';
 
 interface HeatMapCell {
@@ -35,7 +34,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
   };
   const renderMonthGrid = () => {
     const daysInWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    
+
     return (
       <div className="space-y-2">
         <div className="grid grid-cols-7 gap-2">
@@ -71,6 +70,12 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
       weeks.push(cells.slice(i, i + 7));
     }
 
+    const NEG_HI = '#F43F5E'; // heavy negative
+    const NEG_MID = '#FB7185';
+    const NEAR_ZERO = '#FBC5D2';
+    const POS_MID = '#6EE7B7';
+    const POS_HI = '#059669';
+
     return (
       <div className="space-y-2">
         <div className="grid grid-cols-8 gap-2 text-xs text-gray-600 dark:text-gray-400">
@@ -104,6 +109,19 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             ))}
           </motion.div>
         ))}
+
+        {/* Legend */}
+        <div className="flex items-center justify-between mt-4">
+          <span className="text-xs text-gray-500">More negative</span>
+          <div className="flex items-center space-x-1">
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: NEG_HI }}></div>
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: NEG_MID }}></div>
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: NEAR_ZERO }}></div>
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: POS_MID }}></div>
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: POS_HI }}></div>
+          </div>
+          <span className="text-xs text-gray-500">More positive</span>
+        </div>
       </div>
     );
   };
@@ -114,6 +132,12 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
       if (!years[cell.year]) years[cell.year] = [];
       years[cell.year].push(cell);
     });
+
+    const NEG_HI = '#F43F5E'; // heavy negative
+    const NEG_MID = '#FB7185';
+    const NEAR_ZERO = '#FBC5D2';
+    const POS_MID = '#6EE7B7';
+    const POS_HI = '#059669';
 
     return (
       <div className="space-y-4">
@@ -148,6 +172,19 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             ))}
           </motion.div>
         ))}
+
+        {/* Legend */}
+        <div className="flex items-center justify-between mt-4">
+          <span className="text-xs text-gray-500">More negative</span>
+          <div className="flex items-center space-x-1">
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: NEG_HI }}></div>
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: NEG_MID }}></div>
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: NEAR_ZERO }}></div>
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: POS_MID }}></div>
+            <div className="w-3 h-3 rounded" style={{ backgroundColor: POS_HI }}></div>
+          </div>
+          <span className="text-xs text-gray-500">More positive</span>
+        </div>
       </div>
     );
   };
