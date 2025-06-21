@@ -60,14 +60,14 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
 
     return (
       <div className="space-y-2">
-        <div className="grid grid-cols-7 gap-0.5 bg-white p-1 rounded">
+        <div className="grid grid-cols-7 gap-0.5 bg-gray-50 dark:bg-gray-800 p-1 rounded">
           {daysInWeek.map((day) => (
             <div key={day} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-2">
               {day}
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-7 gap-0.5 bg-white p-1 rounded">
+        <div className="grid grid-cols-7 gap-0.5 bg-gray-50 dark:bg-gray-800 p-1 rounded">
           {cells.map((cell, index) => (
             <motion.div
               key={index}
@@ -101,7 +101,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             <div key={i} className="text-center font-medium p-2">{day}</div>
           ))}
         </div>
-        <div className="grid grid-cols-8 gap-0.5 bg-white p-1 rounded">
+        <div className="grid grid-cols-8 gap-0.5 bg-gray-50 dark:bg-gray-800 p-1 rounded">
           {weeks.map((week, weekIndex) => {
             // Get the Sunday date for this week (first cell of the week)
             const sundayDate = week[0]?.date ? new Date(week[0].date) : null;
