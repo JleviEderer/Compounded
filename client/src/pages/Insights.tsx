@@ -15,6 +15,8 @@ export default function Insights() {
   const { habits, logs, settings } = useHabits();
   const [activeView, setActiveView] = useState<InsightsViewMode>('week');
   const [anchor, setAnchor] = useState<Date>(new Date());
+  const [weekAnchor, setWeekAnchor] = useState<Date>(new Date());
+  const [quarterAnchor, setQuarterAnchor] = useState<Date>(new Date());
   const [dayModal, setDayModal] = useState<string | null>(null);
 
   // Define time filters that match what useMomentum expects
@@ -63,11 +65,62 @@ export default function Insights() {
     setDayModal(isoDate);
   };
 
+  // Helper functions for navigation
+  const isCurrentWeek = () => {
+    const now = new Date();
+    const currentWeekStart = new Date(now);
+    currentWeekStart.setDate(now.getDate() - now.getDay());
+    
+    const weekAnchorStart = new Date(weekAnchor);
+    weekAnchorStart.setDate(weekAnchor.getDate() - weekAnchor.getDay());
+    
+    return currentWeekStart.toDateString() === weekAnchorStart.toDateString();
+  };
+
+  const isCurrentQuarter = () => {
+    const now = new Date();
+    const currentQuarter = Math.floor(now.getMonth() / 3);
+    const anchorQuarter = Math.floor(quarterAnchor.getMonth() / 3);
+    
+    return now.getFullYear() === quarterAnchor.getFullYear() && currentQuarter === anchorQuarter;
+  };
+
+  const navigateWeek = (direction: 'prev' | 'next') => {
+    const newAnchor = new Date(weekAnchor);
+    newAnchor.setDate(weekAnchor.getDate() + (direction === 'next' ? 7 : -7));
+    setWeekAnchor(newAnchor);
+  };
+
+  const navigateQuarter = (direction: 'prev' | 'next') => {
+    const newAnchor = new Date(quarterAnchor);
+    const monthsToAdd = direction === 'next' ? 3 : -3;
+    newAnchor.setMonth(quarterAnchor.getMonth() + monthsToAdd);
+    setQuarterAnchor(newAnchor);
+  };
+
+  const getWeekLabel = () => {
+    const startOfWeek = new Date(weekAnchor);
+    startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    
+    return `${startOfWeek.toLocaleDateString('en', { month: 'short', day: 'numeric' })} - ${endOfWeek.toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+  };
+
+  const getQuarterLabel = () => {
+    const quarter = Math.floor(quarterAnchor.getMonth() / 3) + 1;
+    return `Q${quarter} ${quarterAnchor.getFullYear()}`;
+  };
+
   const getLast7Days = () => {
     const days = [];
-    for (let i = 6; i >= 0; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
+    // Start from the Sunday of the week containing weekAnchor
+    const startOfWeek = new Date(weekAnchor);
+    startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
+    
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(startOfWeek);
+      date.setDate(startOfWeek.getDate() + i);
       days.push({
         date: date.toLocaleDateString('en-CA'), // YYYY-MM-DD format in local timezone
         label: date.toLocaleDateString('en', { weekday: 'short' })
@@ -116,7 +169,7 @@ export default function Insights() {
 
   const getQuarterWeeks = () => {
     const today = new Date();
-    const quarterStart = new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3, 1);
+    const quarterStart = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
     const cells = [];
 
     for (let week = 0; week < 13; week++) {
@@ -361,9 +414,40 @@ export default function Insights() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-              7-Day Habit Grid
-            </h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                {getWeekLabel()} - 7-Day Habit Grid
+              </h3>
+              <div className="flex space-x-2">
+                {/* Show "Current Week" button only when viewing a different week */}
+                {!isCurrentWeek() && (
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    onClick={() => setWeekAnchor(new Date())}
+                    className="bg-teal-600 hover:bg-teal-700 text-white"
+                  >
+                    Current Week
+                  </Button>
+                )}
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigateWeek('prev')}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigateWeek('next')}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -448,6 +532,7 @@ export default function Insights() {
                   variant="outline" 
                   size="sm"
                   onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() - 1, 1))}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
@@ -455,6 +540,7 @@ export default function Insights() {
                   variant="outline" 
                   size="sm"
                   onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1))}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </Button>
@@ -495,9 +581,40 @@ export default function Insights() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-              Quarterly Heatmap (13 Weeks)
-            </h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                {getQuarterLabel()} - Quarterly Heatmap (13 Weeks)
+              </h3>
+              <div className="flex space-x-2">
+                {/* Show "Current Quarter" button only when viewing a different quarter */}
+                {!isCurrentQuarter() && (
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    onClick={() => setQuarterAnchor(new Date())}
+                    className="bg-teal-600 hover:bg-teal-700 text-white"
+                  >
+                    Current Quarter
+                  </Button>
+                )}
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigateQuarter('prev')}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigateQuarter('next')}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
 
             <HeatMapGrid
               cells={getQuarterWeeks()}
