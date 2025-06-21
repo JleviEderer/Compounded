@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, HelpCircle } from 'lucide-react';
 import { useHabits } from '../hooks/useHabits';
 import { useMomentum } from '../hooks/useMomentum';
+import { calculateDailyRate } from '../utils/compound';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import HeatMapGrid from '../components/HeatMapGrid';
@@ -98,15 +99,13 @@ export default function Insights() {
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(anchor.getFullYear(), anchor.getMonth(), day);
       const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
-      // Use all logs, not filteredLogs, since we want data for the specific month being displayed
-      const goodLogs = logs.filter(log => log.date === dateStr && log.state === 'good');
-      const badLogs = logs.filter(log => log.date === dateStr && log.state === 'bad');
-      const netMomentum = habits.length > 0 ? (goodLogs.length - badLogs.length) / habits.length : 0;
+      // Use weighted calculation instead of simple counting
+      const dailyRate = calculateDailyRate(habits, logs, dateStr);
 
       days.push({
         date: dateStr,
         dateISO: dateStr,
-        intensity: netMomentum,
+        intensity: dailyRate,
         day,
         isToday: dateStr === today.toLocaleDateString('en-CA')
       });
@@ -125,14 +124,13 @@ export default function Insights() {
         const date = new Date(quarterStart);
         date.setDate(quarterStart.getDate() + (week * 7) + day);
         const dateStr = date.toLocaleDateString('en-CA');
-        const goodLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
-        const badLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'bad');
-        const netMomentum = (goodLogs.length - badLogs.length) / habits.length;
+        // Use weighted calculation instead of simple counting
+        const dailyRate = calculateDailyRate(habits, filteredLogs, dateStr);
 
         cells.push({
           date: dateStr,
           dateISO: dateStr,
-          intensity: netMomentum,
+          intensity: dailyRate,
           isToday: date.toDateString() === today.toDateString()
         });
       }
@@ -151,27 +149,30 @@ export default function Insights() {
         const monthEnd = new Date(year, month + 1, 0);
         const daysInMonth = monthEnd.getDate();
 
-        // Calculate net momentum for this month (good - bad)
-        let monthGood = 0;
-        let monthBad = 0;
+        // Calculate weighted average daily rate for this month
+        let totalDailyRate = 0;
+        let daysWithData = 0;
+        
         for (let day = 1; day <= daysInMonth; day++) {
           const date = new Date(year, month, day);
           const dateStr = date.toLocaleDateString('en-CA');
-          const goodLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
-          const badLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'bad');
-          monthGood += goodLogs.length;
-          monthBad += badLogs.length;
+          const dailyRate = calculateDailyRate(habits, filteredLogs, dateStr);
+          
+          // Only include days that have some logged data
+          const dayLogs = filteredLogs.filter(log => log.date === dateStr);
+          if (dayLogs.length > 0) {
+            totalDailyRate += dailyRate;
+            daysWithData++;
+          }
         }
 
-        const maxPossible = habits.length * daysInMonth;
-        const netMomentum = maxPossible > 0 ? (monthGood - monthBad) / maxPossible : 0;
-        const intensity = netMomentum;
+        const avgDailyRate = daysWithData > 0 ? totalDailyRate / daysWithData : 0;
         const monthISO = `${year}-${String(month + 1).padStart(2, '0')}`;
 
         cells.push({
           date: monthStart.toLocaleDateString('en-CA'),
           dateISO: monthISO,
-          intensity,
+          intensity: avgDailyRate,
           year,
           month: String(month + 1).padStart(2, '0')
         });
