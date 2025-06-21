@@ -5,12 +5,16 @@ import { useHabits } from '../hooks/useHabits';
 import { useMomentum } from '../hooks/useMomentum';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import HeatMapGrid from '../components/HeatMapGrid';
+import DayDetailModal from '../components/DayDetailModal';
 
 type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
 
 export default function Insights() {
   const { habits, logs, settings } = useHabits();
   const [activeView, setActiveView] = useState<InsightsViewMode>('week');
+  const [anchor, setAnchor] = useState<Date>(new Date());
+  const [dayModal, setDayModal] = useState<string | null>(null);
 
   // Define time filters that match what useMomentum expects
   const getTimeFilterForView = (view: InsightsViewMode) => {
@@ -46,6 +50,18 @@ export default function Insights() {
 
   const filteredLogs = getFilteredLogs();
 
+  // Click handlers for zoom functionality
+  const openMonth = (isoMonth: string) => {
+    const [year, month] = isoMonth.split('-');
+    const newAnchor = new Date(parseInt(year), parseInt(month) - 1, 1);
+    setAnchor(newAnchor);
+    setActiveView('month');
+  };
+
+  const openDay = (isoDate: string) => {
+    setDayModal(isoDate);
+  };
+
   const getLast7Days = () => {
     const days = [];
     for (let i = 6; i >= 0; i--) {
@@ -61,8 +77,8 @@ export default function Insights() {
 
   const getCalendarDays = () => {
     const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const firstDay = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
+    const lastDay = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
     const daysInMonth = lastDay.getDate();
     const startingDayOfWeek = firstDay.getDay();
 
@@ -70,21 +86,27 @@ export default function Insights() {
 
     // Add empty cells for days before the first day of the month
     for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push(null);
+      days.push({
+        date: '',
+        dateISO: '',
+        intensity: 0,
+        day: undefined
+      });
     }
 
     // Add all days of the month
     for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(today.getFullYear(), today.getMonth(), day);
+      const date = new Date(anchor.getFullYear(), anchor.getMonth(), day);
       const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
       const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
       const intensity = dayLogs.length / habits.length;
 
       days.push({
-        day,
         date: dateStr,
+        dateISO: dateStr,
         intensity,
-        isToday: day === today.getDate()
+        day,
+        isToday: dateStr === today.toLocaleDateString('en-CA')
       });
     }
 
@@ -94,10 +116,9 @@ export default function Insights() {
   const getQuarterWeeks = () => {
     const today = new Date();
     const quarterStart = new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3, 1);
-    const weeks = [];
+    const cells = [];
 
     for (let week = 0; week < 13; week++) {
-      const weekDays = [];
       for (let day = 0; day < 7; day++) {
         const date = new Date(quarterStart);
         date.setDate(quarterStart.getDate() + (week * 7) + day);
@@ -105,50 +126,52 @@ export default function Insights() {
         const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
         const intensity = dayLogs.length / habits.length;
 
-        weekDays.push({
+        cells.push({
           date: dateStr,
+          dateISO: dateStr,
           intensity,
           isToday: date.toDateString() === today.toDateString()
         });
       }
-      weeks.push(weekDays);
     }
 
-    return weeks;
+    return cells;
   };
 
   const getAllTimeYears = () => {
-    const years = {};
     const currentYear = new Date().getFullYear();
+    const cells = [];
 
-    // Initialize years with empty months
     for (let year = currentYear - 2; year <= currentYear; year++) {
-      years[year] = Array(12).fill(0);
+      for (let month = 0; month < 12; month++) {
+        const monthStart = new Date(year, month, 1);
+        const monthEnd = new Date(year, month + 1, 0);
+        const daysInMonth = monthEnd.getDate();
+
+        // Calculate total good logs for this month
+        let monthTotal = 0;
+        for (let day = 1; day <= daysInMonth; day++) {
+          const date = new Date(year, month, day);
+          const dateStr = date.toLocaleDateString('en-CA');
+          const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
+          monthTotal += dayLogs.length;
+        }
+
+        const maxPossible = habits.length * daysInMonth;
+        const intensity = maxPossible > 0 ? monthTotal / maxPossible : 0;
+        const monthISO = `${year}-${String(month + 1).padStart(2, '0')}`;
+
+        cells.push({
+          date: monthStart.toLocaleDateString('en-CA'),
+          dateISO: monthISO,
+          intensity,
+          year,
+          month: String(month + 1).padStart(2, '0')
+        });
+      }
     }
 
-    // Calculate intensity for each month
-    filteredLogs.forEach(log => {
-      if (log.state === 'good') {
-        const date = new Date(log.date);
-        const year = date.getFullYear();
-        const month = date.getMonth();
-
-        if (years[year]) {
-          years[year][month] += 1;
-        }
-      }
-    });
-
-    // Normalize intensities by dividing by total possible completions per month
-    Object.keys(years).forEach(year => {
-      years[year] = years[year].map(monthTotal => {
-        const daysInMonth = new Date(parseInt(year), 0, 32).getDate(); // Approximate
-        const maxPossible = habits.length * daysInMonth;
-        return maxPossible > 0 ? monthTotal / maxPossible : 0;
-      });
-    });
-
-    return years;
+    return cells;
   };
 
   const getIntensityColor = (intensity: number) => {
@@ -399,39 +422,32 @@ export default function Insights() {
           >
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                {new Date().toLocaleDateString('en', { month: 'long', year: 'numeric' })} - Heat Map
+                {anchor.toLocaleDateString('en', { month: 'long', year: 'numeric' })} - Heat Map
               </h3>
               <div className="flex space-x-2">
-                <Button variant="outline" size="sm">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() - 1, 1))}
+                >
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
-                <Button variant="outline" size="sm">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1))}
+                >
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-2">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                <div key={day} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-2">
-                  {day}
-                </div>
-              ))}
-
-              {getCalendarDays().map((day, index) => (
-                <motion.div
-                  key={index}
-                  className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium ${
-                    day ? getIntensityColor(day.intensity) : ''
-                  } ${day?.isToday ? 'ring-2 ring-coral ring-offset-2' : ''}`}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: index * 0.01 }}
-                >
-                  {day?.day}
-                </motion.div>
-              ))}
-            </div>
+            <HeatMapGrid
+              cells={getCalendarDays()}
+              gridType="month"
+              onCellClick={openDay}
+              getIntensityColor={getIntensityColor}
+            />
 
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600 dark:text-gray-400">
@@ -462,39 +478,12 @@ export default function Insights() {
               Quarterly Heatmap (13 Weeks)
             </h3>
 
-            <div className="space-y-2">
-              <div className="grid grid-cols-8 gap-2 text-xs text-gray-600 dark:text-gray-400">
-                <div></div>
-                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
-                  <div key={i} className="text-center font-medium">{day}</div>
-                ))}
-              </div>
-
-              {getQuarterWeeks().map((week, weekIndex) => (
-                <motion.div 
-                  key={weekIndex} 
-                  className="grid grid-cols-8 gap-2"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: weekIndex * 0.05 }}
-                >
-                  <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
-                    W{weekIndex + 1}
-                  </div>
-                  {week.map((day, dayIndex) => (
-                    <motion.div
-                      key={dayIndex}
-                      className={`aspect-square rounded ${getIntensityColor(day.intensity)} ${
-                        day.isToday ? 'ring-2 ring-coral ring-offset-1' : ''
-                      }`}
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: weekIndex * 0.05 + dayIndex * 0.01 }}
-                    />
-                  ))}
-                </motion.div>
-              ))}
-            </div>
+            <HeatMapGrid
+              cells={getQuarterWeeks()}
+              gridType="quarter"
+              onCellClick={openDay}
+              getIntensityColor={getIntensityColor}
+            />
 
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600 dark:text-gray-400">
@@ -525,39 +514,12 @@ export default function Insights() {
               All Time Overview (By Year & Month)
             </h3>
 
-            <div className="space-y-4">
-              <div className="grid gap-2 text-xs text-gray-600 dark:text-gray-400" style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}>
-                <div></div>
-                {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month) => (
-                  <div key={month} className="text-center font-medium">{month}</div>
-                ))}
-              </div>
-
-              {Object.entries(getAllTimeYears()).map(([year, months], yearIndex) => (
-                <motion.div 
-                  key={year} 
-                  className="grid gap-2"
-                  style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: yearIndex * 0.1 }}
-                >
-                  <div className="text-sm text-gray-700 dark:text-gray-300 font-medium flex items-center justify-end pr-2">
-                    {year}
-                  </div>
-                  {months.map((intensity, monthIndex) => (
-                    <motion.div
-                      key={monthIndex}
-                      className={`w-4 h-4 rounded ${getIntensityColor(intensity)}`}
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: yearIndex * 0.1 + monthIndex * 0.02 }}
-                      title={`${year}-${monthIndex + 1}: ${(intensity * 100).toFixed(1)}% completion`}
-                    />
-                  ))}
-                </motion.div>
-              ))}
-            </div>
+            <HeatMapGrid
+              cells={getAllTimeYears()}
+              gridType="all-time"
+              onCellClick={openMonth}
+              getIntensityColor={getIntensityColor}
+            />
 
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600 dark:text-gray-400">
@@ -577,6 +539,14 @@ export default function Insights() {
           </motion.div>
         )}
       </motion.div>
+
+      {/* Day Detail Modal */}
+      {dayModal && (
+        <DayDetailModal 
+          date={dayModal} 
+          onClose={() => setDayModal(null)} 
+        />
+      )}
     </div>
   );
 }
