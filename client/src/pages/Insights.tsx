@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, HelpCircle } from 'lucide-react';
@@ -12,7 +11,7 @@ type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
 export default function Insights() {
   const { habits, logs, settings } = useHabits();
   const [activeView, setActiveView] = useState<InsightsViewMode>('week');
-  
+
   // Define time filters that match what useMomentum expects
   const getTimeFilterForView = (view: InsightsViewMode) => {
     switch (view) {
@@ -37,11 +36,11 @@ export default function Insights() {
     if (!currentTimeFilter.days) {
       return logs; // All time
     }
-    
+
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - currentTimeFilter.days);
     const cutoffStr = cutoffDate.toLocaleDateString('en-CA');
-    
+
     return logs.filter(log => log.date >= cutoffStr);
   };
 
@@ -133,7 +132,7 @@ export default function Insights() {
         const date = new Date(log.date);
         const year = date.getFullYear();
         const month = date.getMonth();
-        
+
         if (years[year]) {
           years[year][month] += 1;
         }
@@ -202,12 +201,12 @@ export default function Insights() {
   const getCurrentStreak = () => {
     const today = new Date();
     let streak = 0;
-    
+
     for (let i = 0; i < 365; i++) { // Check up to a year back
       const checkDate = new Date(today);
       checkDate.setDate(today.getDate() - i);
       const dateStr = checkDate.toLocaleDateString('en-CA');
-      
+
       const dayLogs = logs.filter(log => log.date === dateStr && log.completed);
       if (dayLogs.length > 0) {
         streak++;
@@ -215,7 +214,7 @@ export default function Insights() {
         break; // Streak broken
       }
     }
-    
+
     return streak;
   };
 
@@ -432,11 +431,11 @@ export default function Insights() {
                 Less activity
               </div>
               <div className="flex space-x-1">
-                <div className="w-3 h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-200 dark:bg-emerald-800 rounded"></div>
+                <div className="w-3 h-3 bg-gray-100 dark:bg-gray-700 rounded"></div>
                 <div className="w-3 h-3 bg-emerald-300 dark:bg-emerald-700 rounded"></div>
                 <div className="w-3 h-3 bg-emerald-400 dark:bg-emerald-600 rounded"></div>
                 <div className="w-3 h-3 bg-emerald-500 dark:bg-emerald-500 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-600 dark:bg-emerald-400 rounded"></div>
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 More activity
@@ -455,7 +454,7 @@ export default function Insights() {
             <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
               Quarterly Heatmap (13 Weeks)
             </h3>
-            
+
             <div className="space-y-2">
               <div className="grid grid-cols-8 gap-2 text-xs text-gray-600 dark:text-gray-400">
                 <div></div>
@@ -463,7 +462,7 @@ export default function Insights() {
                   <div key={i} className="text-center font-medium">{day}</div>
                 ))}
               </div>
-              
+
               {getQuarterWeeks().map((week, weekIndex) => (
                 <motion.div 
                   key={weekIndex} 
@@ -495,11 +494,11 @@ export default function Insights() {
                 Less activity
               </div>
               <div className="flex space-x-1">
-                <div className="w-3 h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-200 dark:bg-emerald-800 rounded"></div>
+                <div className="w-3 h-3 bg-gray-100 dark:bg-gray-700 rounded"></div>
                 <div className="w-3 h-3 bg-emerald-300 dark:bg-emerald-700 rounded"></div>
                 <div className="w-3 h-3 bg-emerald-400 dark:bg-emerald-600 rounded"></div>
                 <div className="w-3 h-3 bg-emerald-500 dark:bg-emerald-500 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-600 dark:bg-emerald-400 rounded"></div>
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
                 More activity
@@ -518,7 +517,7 @@ export default function Insights() {
             <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
               All Time Overview (By Year & Month)
             </h3>
-            
+
             <div className="space-y-4">
               <div className="grid gap-2 text-xs text-gray-600 dark:text-gray-400" style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}>
                 <div></div>
@@ -526,7 +525,7 @@ export default function Insights() {
                   <div key={month} className="text-center font-medium">{month}</div>
                 ))}
               </div>
-              
+
               {Object.entries(getAllTimeYears()).map(([year, months], yearIndex) => (
                 <motion.div 
                   key={year} 
