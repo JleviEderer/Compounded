@@ -76,41 +76,39 @@ export default function Insights() {
   };
 
   const getCalendarDays = () => {
-    const year = anchor.getFullYear();
-    const month = anchor.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const startDate = new Date(firstDay);
-    startDate.setDate(startDate.getDate() - firstDay.getDay());
+    const today = new Date();
+    const firstDay = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
+    const lastDay = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
 
     const days = [];
-    const currentDate = new Date(startDate);
-    const momentumHistory = momentum.momentumHistory; // Access momentumHistory here
 
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < startingDayOfWeek; i++) {
+      days.push({
+        date: '',
+        dateISO: '',
+        intensity: 0,
+        day: undefined
+      });
+    }
 
-    while (currentDate <= lastDay || days.length % 7 !== 0) {
-      const dateStr = currentDate.toLocaleDateString('en-CA');
-      const dayOfMonth = currentDate.getMonth() === month ? currentDate.getDate() : null;
-      const isToday = dateStr === new Date().toLocaleDateString('en-CA');
-
-      // Get momentum value for this day
-      let momentumValue = null;
-      if (dayOfMonth && momentumHistory) {
-        const momentumDay = momentumHistory.find(d => d.date === dateStr);
-        momentumValue = momentumDay ? momentumDay.momentum : 0;
-      }
+    // Add all days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(anchor.getFullYear(), anchor.getMonth(), day);
+      const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
+      const goodLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
+      const badLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'bad');
+      const netMomentum = (goodLogs.length - badLogs.length) / habits.length;
 
       days.push({
         date: dateStr,
         dateISO: dateStr,
-        intensity: momentumValue,
-        isToday,
-        day: dayOfMonth,
-        month: String(month + 1).padStart(2, '0'),
-        year
+        intensity: netMomentum,
+        day,
+        isToday: dateStr === today.toLocaleDateString('en-CA')
       });
-
-      currentDate.setDate(currentDate.getDate() + 1);
     }
 
     return days;
@@ -391,7 +389,7 @@ export default function Insights() {
                       </td>
                       {getLast7Days().map((day, dayIndex) => {
                         const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
-
+                        
                         const getSquareStyle = () => {
                           if (log?.state === 'good') {
                             return 'bg-teal-500'; // #10b981 - good habit completed
