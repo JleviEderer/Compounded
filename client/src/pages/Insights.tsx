@@ -51,12 +51,48 @@ export default function Insights() {
 
   const filteredLogs = getFilteredLogs();
 
-  // Click handlers for zoom functionality
-  const openMonth = (isoMonth: string) => {
-    const [year, month] = isoMonth.split('-');
-    const newAnchor = new Date(parseInt(year), parseInt(month) - 1, 1);
-    setAnchor(newAnchor);
+  const openMonth = (isoDate: string) => {
+    // Parse the ISO date to get the specific month/year
+    const clickedDate = new Date(isoDate);
+    setAnchor(new Date(clickedDate.getFullYear(), clickedDate.getMonth(), 1));
     setActiveView('month');
+  };
+
+  // Helper functions for week navigation
+  const getWeekRange = (date: Date) => {
+    const startOfWeek = new Date(date);
+    startOfWeek.setDate(date.getDate() - date.getDay());
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+    const formatOptions: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+    return `${startOfWeek.toLocaleDateString('en', formatOptions)} - ${endOfWeek.toLocaleDateString('en', formatOptions)} ${endOfWeek.getFullYear()}`;
+  };
+
+  const isCurrentWeek = (date: Date) => {
+    const now = new Date();
+    const startOfCurrentWeek = new Date(now);
+    startOfCurrentWeek.setDate(now.getDate() - now.getDay());
+    const startOfWeek = new Date(date);
+    startOfWeek.setDate(date.getDate() - date.getDay());
+
+    return startOfCurrentWeek.getTime() === startOfWeek.getTime();
+  };
+
+  // Helper functions for quarter navigation
+  const getQuarterRange = (date: Date) => {
+    const quarterStart = new Date(date);
+    quarterStart.setDate(quarterStart.getDate() - 90);
+    const formatOptions: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+    return `${quarterStart.toLocaleDateString('en', formatOptions)} - ${date.toLocaleDateString('en', formatOptions)}`;
+  };
+
+  const isCurrentQuarter = (date: Date) => {
+    const now = new Date();
+    const ninetyDaysAgo = new Date(now);
+    ninetyDaysAgo.setDate(now.getDate() - 90);
+
+    return Math.abs(date.getTime() - now.getTime()) < 7 * 24 * 60 * 60 * 1000; // Within a week of current date
   };
 
   const openDay = (isoDate: string) => {
@@ -152,12 +188,12 @@ export default function Insights() {
         // Calculate weighted average daily rate for this month
         let totalDailyRate = 0;
         let daysWithData = 0;
-        
+
         for (let day = 1; day <= daysInMonth; day++) {
           const date = new Date(year, month, day);
           const dateStr = date.toLocaleDateString('en-CA');
           const dailyRate = calculateDailyRate(habits, filteredLogs, dateStr);
-          
+
           // Only include days that have some logged data
           const dayLogs = filteredLogs.filter(log => log.date === dateStr);
           if (dayLogs.length > 0) {
@@ -361,9 +397,40 @@ export default function Insights() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-              7-Day Habit Grid
-            </h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                {getWeekRange(anchor)} - Heat Map
+              </h3>
+              <div className="flex space-x-2">
+                {/* Show "Current Week" button only when viewing a different week */}
+                {!isCurrentWeek(anchor) && (
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    onClick={() => setAnchor(new Date())}
+                    className="bg-teal-600 hover:bg-teal-700 text-white dark:bg-teal-500 dark:hover:bg-teal-600"
+                  >
+                    Current Week
+                  </Button>
+                )}
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setAnchor(new Date(anchor.getTime() - 7 * 24 * 60 * 60 * 1000))}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setAnchor(new Date(anchor.getTime() + 7 * 24 * 60 * 60 * 1000))}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -439,7 +506,7 @@ export default function Insights() {
                     variant="default" 
                     size="sm"
                     onClick={() => setAnchor(new Date())}
-                    className="bg-teal-600 hover:bg-teal-700 text-white"
+                    className="bg-teal-600 hover:bg-teal-700 text-white dark:bg-teal-500 dark:hover:bg-teal-600"
                   >
                     Current Month
                   </Button>
@@ -448,6 +515,7 @@ export default function Insights() {
                   variant="outline" 
                   size="sm"
                   onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() - 1, 1))}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
@@ -455,6 +523,7 @@ export default function Insights() {
                   variant="outline" 
                   size="sm"
                   onClick={() => setAnchor(new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1))}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </Button>
@@ -495,9 +564,40 @@ export default function Insights() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-              Quarterly Heatmap (13 Weeks)
-            </h3>
+             <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                Quarterly Heatmap (13 Weeks)
+              </h3>
+              <div className="flex space-x-2">
+                {/* Show "Current Quarter" button only when viewing a different quarter */}
+                {!isCurrentQuarter(anchor) && (
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    onClick={() => setAnchor(new Date())}
+                    className="bg-teal-600 hover:bg-teal-700 text-white dark:bg-teal-500 dark:hover:bg-teal-600"
+                  >
+                    Current Quarter
+                  </Button>
+                )}
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setAnchor(new Date(anchor.getTime() - 90 * 24 * 60 * 60 * 1000))}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setAnchor(new Date(anchor.getTime() + 90 * 24 * 60 * 60 * 1000))}
+                  className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
 
             <HeatMapGrid
               cells={getQuarterWeeks()}
