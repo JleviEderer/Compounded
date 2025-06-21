@@ -77,7 +77,7 @@ export default function Insights() {
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(today.getFullYear(), today.getMonth(), day);
       const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
-      const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.completed);
+      const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
       const intensity = dayLogs.length / habits.length;
 
       days.push({
@@ -102,7 +102,7 @@ export default function Insights() {
         const date = new Date(quarterStart);
         date.setDate(quarterStart.getDate() + (week * 7) + day);
         const dateStr = date.toLocaleDateString('en-CA');
-        const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.completed);
+        const dayLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
         const intensity = dayLogs.length / habits.length;
 
         weekDays.push({
@@ -128,7 +128,7 @@ export default function Insights() {
 
     // Calculate intensity for each month
     filteredLogs.forEach(log => {
-      if (log.completed) {
+      if (log.state === 'good') {
         const date = new Date(log.date);
         const year = date.getFullYear();
         const month = date.getMonth();
@@ -207,7 +207,7 @@ export default function Insights() {
       checkDate.setDate(today.getDate() - i);
       const dateStr = checkDate.toLocaleDateString('en-CA');
 
-      const dayLogs = logs.filter(log => log.date === dateStr && log.completed);
+      const dayLogs = logs.filter(log => log.date === dateStr && log.state === 'good');
       if (dayLogs.length > 0) {
         streak++;
       } else {
@@ -364,7 +364,7 @@ export default function Insights() {
                           <td key={day.date} className="p-3 text-center">
                             <motion.div 
                               className={`w-6 h-6 rounded mx-auto ${
-                                log?.completed 
+                                log?.state === 'good'
                                   ? 'bg-emerald-500' 
                                   : 'bg-gray-300 dark:bg-gray-600'
                               }`}
