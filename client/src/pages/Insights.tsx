@@ -493,24 +493,6 @@ export default function Insights() {
               onCellClick={openDay}
               getIntensityColor={getIntensityColor}
             />
-
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                More bad habits
-              </div>
-              <div className="flex space-x-1">
-                <div className="w-3 h-3 bg-rose-500 rounded"></div>
-                <div className="w-3 h-3 bg-rose-400 rounded"></div>
-                <div className="w-3 h-3 bg-rose-200 rounded"></div>
-                <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-300 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-500 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-600 rounded"></div>
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                More good habits
-              </div>
-            </div>
           </motion.div>
         )}
 
@@ -531,24 +513,6 @@ export default function Insights() {
               onCellClick={openMonth}
               getIntensityColor={getIntensityColor}
             />
-
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                More bad habits
-              </div>
-              <div className="flex space-x-1">
-                <div className="w-3 h-3 bg-rose-500 rounded"></div>
-                <div className="w-3 h-3 bg-rose-400 rounded"></div>
-                <div className="w-3 h-3 bg-rose-200 rounded"></div>
-                <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-300 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-500 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-600 rounded"></div>
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                More good habits
-              </div>
-            </div>
           </motion.div>
         )}
       </motion.div>
