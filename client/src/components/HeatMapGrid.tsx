@@ -23,12 +23,14 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
     if (value === null) return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // no data
 
     if (value < 0) {                   // negative momentum
-      const opacity = Math.min(Math.abs(value) / 5, 1);   // scale -5% → 1.0
-      return `bg-red-400 dark:bg-red-500` + (opacity > 0.1 ? ` opacity-${Math.floor(opacity * 100 / 10) * 10}` : ' opacity-10');
+      if (value <= -4) return `bg-rose-500`;
+      if (value <= -2) return `bg-rose-400`;
+      return `bg-rose-200`;
     }
     if (value > 0) {                   // positive momentum
-      const opacity = Math.min(value / 5, 1);             // +5% → 1.0
-      return `bg-teal-500 dark:bg-teal-400` + (opacity > 0.1 ? ` opacity-${Math.floor(opacity * 100 / 10) * 10}` : ' opacity-10');
+      if (value >= 4) return `bg-emerald-600`;
+      if (value >= 2) return `bg-emerald-500`;
+      return `bg-emerald-300`;
     }
     return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500';       // exactly zero
   };
@@ -111,6 +113,8 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             <div className="w-3 h-3 bg-rose-500 rounded"></div>
             <div className="w-3 h-3 bg-rose-400 rounded"></div>
             <div className="w-3 h-3 bg-rose-200 rounded"></div>
+            <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-300 rounded"></div>
             <div className="w-3 h-3 bg-emerald-500 rounded"></div>
             <div className="w-3 h-3 bg-emerald-600 rounded"></div>
           </div>
@@ -168,6 +172,8 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             <div className="w-3 h-3 bg-rose-500 rounded"></div>
             <div className="w-3 h-3 bg-rose-400 rounded"></div>
             <div className="w-3 h-3 bg-rose-200 rounded"></div>
+            <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-300 rounded"></div>
             <div className="w-3 h-3 bg-emerald-500 rounded"></div>
             <div className="w-3 h-3 bg-emerald-600 rounded"></div>
           </div>
