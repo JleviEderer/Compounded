@@ -84,7 +84,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
 
     return (
       <div className="space-y-2">
-        <div className="grid grid-cols-8 gap-1 text-xs text-gray-600 dark:text-gray-400">
+        <div className="grid grid-cols-8 gap-2 text-xs text-gray-600 dark:text-gray-400">
           <div></div>
           {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
             <div key={i} className="text-center font-medium">{day}</div>
@@ -93,18 +93,18 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
         {weeks.map((week, weekIndex) => (
           <motion.div 
             key={weekIndex} 
-            className="grid grid-cols-8 gap-1"
+            className="grid grid-cols-8 gap-2"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: weekIndex * 0.05 }}
           >
-            <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center justify-end pr-1">
+            <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
               W{weekIndex + 1}
             </div>
             {week.map((cell, dayIndex) => (
               <motion.div
                 key={dayIndex}
-                className={`w-4 h-4 rounded cursor-pointer hover:scale-125 transition-transform ${getColor(cell.intensity)} ${
+                className={`aspect-square rounded cursor-pointer hover:scale-105 transition-transform ${getColor(cell.intensity)} ${
                   cell.isToday ? 'ring-2 ring-coral ring-offset-1' : ''
                 }`}
                 initial={{ scale: 0 }}
@@ -115,6 +115,21 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             ))}
           </motion.div>
         ))}
+
+        {/* Legend */}
+        <div className="flex items-center justify-between mt-4 px-2">
+          <span className="text-xs text-gray-500">More negative</span>
+          <div className="flex items-center space-x-1">
+            <div className="w-3 h-3 bg-rose-500 rounded"></div>
+            <div className="w-3 h-3 bg-rose-400 rounded"></div>
+            <div className="w-3 h-3 bg-rose-200 rounded"></div>
+            <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-300 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-500 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-600 rounded"></div>
+          </div>
+          <span className="text-xs text-gray-500">More positive</span>
+        </div>
       </div>
     );
   };
