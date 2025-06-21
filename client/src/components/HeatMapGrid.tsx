@@ -18,15 +18,26 @@ interface HeatMapGridProps {
 }
 
 export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensityColor }: HeatMapGridProps) {
+  // Normalize weighted daily rates to -1 to +1 range for color intensity
+  const normalizeIntensity = (rawIntensity: number): number => {
+    // Weighted daily rates typically range from -0.016 to +0.016 (4 habits * 0.004 max weight)
+    // We'll use a reasonable scale factor to map this to -1 to +1 range
+    const scaleFactor = 250; // Adjust this if needed based on actual data range
+    return Math.max(-1, Math.min(1, rawIntensity * scaleFactor));
+  };
+
   // Diverging color scale for negative/positive momentum
   const getColor = (intensity: number | null) => {
     if (intensity === null || intensity === undefined) {
       return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // no data
     }
 
+    // Normalize the intensity to -1 to +1 range
+    const normalizedIntensity = normalizeIntensity(intensity);
+
     // Negative momentum (bad habits dominate) - coral/rose shades
-    if (intensity < 0) {
-      const absValue = Math.abs(intensity);
+    if (normalizedIntensity < 0) {
+      const absValue = Math.abs(normalizedIntensity);
       if (absValue >= 0.75) return 'bg-rose-500'; // #F43F5E - heavy negative
       if (absValue >= 0.5) return 'bg-rose-400';  // #FB7185 - mid negative  
       if (absValue >= 0.25) return 'bg-rose-300'; // #FBC5D2 - light negative
@@ -34,10 +45,10 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
     }
     
     // Positive momentum (good habits dominate) - teal/emerald shades
-    if (intensity > 0) {
-      if (intensity >= 0.75) return 'bg-emerald-600'; // #059669 - heavy positive
-      if (intensity >= 0.5) return 'bg-emerald-500';  // #10B981 - mid positive
-      if (intensity >= 0.25) return 'bg-emerald-400'; // #6EE7B7 - light positive  
+    if (normalizedIntensity > 0) {
+      if (normalizedIntensity >= 0.75) return 'bg-emerald-600'; // #059669 - heavy positive
+      if (normalizedIntensity >= 0.5) return 'bg-emerald-500';  // #10B981 - mid positive
+      if (normalizedIntensity >= 0.25) return 'bg-emerald-400'; // #6EE7B7 - light positive  
       return 'bg-emerald-300';                        // very light positive
     }
     
