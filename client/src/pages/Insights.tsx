@@ -98,9 +98,10 @@ export default function Insights() {
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(anchor.getFullYear(), anchor.getMonth(), day);
       const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
-      const goodLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'good');
-      const badLogs = filteredLogs.filter(log => log.date === dateStr && log.state === 'bad');
-      const netMomentum = (goodLogs.length - badLogs.length) / habits.length;
+      // Use all logs, not filteredLogs, since we want data for the specific month being displayed
+      const goodLogs = logs.filter(log => log.date === dateStr && log.state === 'good');
+      const badLogs = logs.filter(log => log.date === dateStr && log.state === 'bad');
+      const netMomentum = habits.length > 0 ? (goodLogs.length - badLogs.length) / habits.length : 0;
 
       days.push({
         date: dateStr,
