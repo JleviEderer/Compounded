@@ -452,7 +452,7 @@ export default function Insights() {
               cells={getCalendarDays()}
               gridType="month"
               onCellClick={openDay}
-              getIntensityColor={getIntensityColor}
+              getIntensityColor={() => ''}
             />
 
             <div className="flex items-center justify-between">

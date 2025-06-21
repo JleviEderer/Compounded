@@ -51,7 +51,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             <motion.div
               key={index}
               className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium cursor-pointer hover:scale-105 transition-transform ${
-                cell.day ? getColor(cell.intensity) : ''
+                cell.day ? getColor(cell.intensity) : 'bg-gray-100 dark:bg-gray-600'
               } ${cell.isToday ? 'ring-2 ring-coral ring-offset-2' : ''}`}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
