@@ -1,3 +1,4 @@
+
 import { motion } from 'framer-motion';
 
 interface HeatMapCell {
@@ -20,41 +21,31 @@ interface HeatMapGridProps {
 export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensityColor }: HeatMapGridProps) {
   // Diverging color scale for negative/positive momentum
   const getColor = (value: number | null) => {
-    const NEG_HI = '#F43F5E';  // heavy negative
-    const NEG_MID = '#FB7185';
-    const NEAR_ZERO = '#FBC5D2';
-    const POS_MID = '#6EE7B7';
-    const POS_HI = '#059669';
-    const NO_DATA = 'bg-gray-200 border border-gray-300';
+    if (value === null) return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // no data
 
-    if (value === null) return NO_DATA;
-
-    if (value < 0) {
-      if (value <= -4) return `bg-[${NEG_HI}]`;
-      if (value <= -2) return `bg-[${NEG_MID}]`;
-      return `bg-[${NEAR_ZERO}]`;
+    if (value < 0) {                   // negative momentum
+      const opacity = Math.min(Math.abs(value) / 5, 1);   // scale -5% → 1.0
+      return `bg-red-400 dark:bg-red-500` + (opacity > 0.1 ? ` opacity-${Math.floor(opacity * 100 / 10) * 10}` : ' opacity-10');
     }
-    if (value > 0) {
-      if (value >= 4) return `bg-[${POS_HI}]`;
-      if (value >= 2) return `bg-[${POS_MID}]`;
-      return `bg-[${NEAR_ZERO}]`;
+    if (value > 0) {                   // positive momentum
+      const opacity = Math.min(value / 5, 1);             // +5% → 1.0
+      return `bg-teal-500 dark:bg-teal-400` + (opacity > 0.1 ? ` opacity-${Math.floor(opacity * 100 / 10) * 10}` : ' opacity-10');
     }
-    return NO_DATA;
+    return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500';       // exactly zero
   };
-
   const renderMonthGrid = () => {
     const daysInWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
+    
     return (
       <div className="space-y-2">
-        <div className="grid grid-cols-7 gap-0.5 bg-white dark:bg-gray-900 p-1 rounded">
+        <div className="grid grid-cols-7 gap-2">
           {daysInWeek.map((day) => (
             <div key={day} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-2">
               {day}
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-7 gap-0.5 bg-white dark:bg-gray-900 p-1 rounded">
+        <div className="grid grid-cols-7 gap-2">
           {cells.map((cell, index) => (
             <motion.div
               key={index}
@@ -82,7 +73,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
 
     return (
       <div className="space-y-2">
-        <div className="grid grid-cols-8 gap-0.5 bg-white dark:bg-gray-900 text-xs text-gray-600 dark:text-gray-400">
+        <div className="grid grid-cols-8 gap-2 text-xs text-gray-600 dark:text-gray-400">
           <div></div>
           {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
             <div key={i} className="text-center font-medium">{day}</div>
@@ -91,7 +82,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
         {weeks.map((week, weekIndex) => (
           <motion.div 
             key={weekIndex} 
-            className="grid grid-cols-8 gap-0.5 bg-white dark:bg-gray-900"
+            className="grid grid-cols-8 gap-2"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: weekIndex * 0.05 }}
@@ -126,7 +117,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
 
     return (
       <div className="space-y-4">
-        <div className="grid gap-0.5 bg-white dark:bg-gray-900 text-xs text-gray-600 dark:text-gray-400" style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}>
+        <div className="grid gap-2 text-xs text-gray-600 dark:text-gray-400" style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}>
           <div></div>
           {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month) => (
             <div key={month} className="text-center font-medium">{month}</div>
@@ -135,7 +126,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
         {Object.entries(years).map(([year, months], yearIndex) => (
           <motion.div 
             key={year} 
-            className="grid gap-0.5 bg-white dark:bg-gray-900"
+            className="grid gap-2"
             style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
