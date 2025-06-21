@@ -433,6 +433,17 @@ export default function Insights() {
                 {anchor.toLocaleDateString('en', { month: 'long', year: 'numeric' })} - Heat Map
               </h3>
               <div className="flex space-x-2">
+                {/* Show "Current Month" button only when viewing a different month */}
+                {(anchor.getFullYear() !== new Date().getFullYear() || anchor.getMonth() !== new Date().getMonth()) && (
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    onClick={() => setAnchor(new Date())}
+                    className="bg-teal-600 hover:bg-teal-700 text-white"
+                  >
+                    Current Month
+                  </Button>
+                )}
                 <Button 
                   variant="outline" 
                   size="sm"
