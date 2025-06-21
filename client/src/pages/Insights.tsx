@@ -360,14 +360,21 @@ export default function Insights() {
                       </td>
                       {getLast7Days().map((day, dayIndex) => {
                         const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
+                        
+                        const getSquareStyle = () => {
+                          if (log?.state === 'good') {
+                            return 'bg-teal-500'; // #10b981 - good habit completed
+                          } else if (log?.state === 'bad') {
+                            return 'bg-red-400'; // #f87171 (coral) - bad habit completed
+                          } else {
+                            return 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500'; // #e5e7eb - not logged
+                          }
+                        };
+
                         return (
                           <td key={day.date} className="p-3 text-center">
                             <motion.div 
-                              className={`w-6 h-6 rounded mx-auto ${
-                                log?.state === 'good'
-                                  ? 'bg-emerald-500' 
-                                  : 'bg-gray-300 dark:bg-gray-600'
-                              }`}
+                              className={`w-6 h-6 rounded mx-auto ${getSquareStyle()}`}
                               initial={{ scale: 0 }}
                               animate={{ scale: 1 }}
                               transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
