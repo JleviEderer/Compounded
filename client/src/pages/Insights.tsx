@@ -518,7 +518,7 @@ export default function Insights() {
               cells={getAllTimeYears()}
               gridType="all-time"
               onCellClick={openMonth}
-              getIntensityColor={getIntensityColor}
+              getIntensityColor={getMonochromeIntensityColor}
             />
 
             <div className="flex items-center justify-between">
