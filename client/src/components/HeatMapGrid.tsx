@@ -1,4 +1,3 @@
-
 import { motion } from 'framer-motion';
 
 interface HeatMapCell {
@@ -35,17 +34,17 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
   };
   const renderMonthGrid = () => {
     const daysInWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    
+
     return (
       <div className="space-y-2">
-        <div className="grid grid-cols-7 gap-2">
+        <div className="grid grid-cols-7 gap-0.5 bg-white p-1 rounded">
           {daysInWeek.map((day) => (
             <div key={day} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-2">
               {day}
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-7 gap-2">
+        <div className="grid grid-cols-7 gap-0.5 bg-white p-1 rounded">
           {cells.map((cell, index) => (
             <motion.div
               key={index}
@@ -104,6 +103,19 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             ))}
           </motion.div>
         ))}
+
+        {/* Legend */}
+        <div className="flex items-center justify-between mt-4 px-2">
+          <span className="text-xs text-gray-500">More negative</span>
+          <div className="flex items-center space-x-1">
+            <div className="w-3 h-3 bg-rose-500 rounded"></div>
+            <div className="w-3 h-3 bg-rose-400 rounded"></div>
+            <div className="w-3 h-3 bg-rose-200 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-500 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-600 rounded"></div>
+          </div>
+          <span className="text-xs text-gray-500">More positive</span>
+        </div>
       </div>
     );
   };
@@ -148,6 +160,19 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             ))}
           </motion.div>
         ))}
+
+        {/* Legend */}
+        <div className="flex items-center justify-between mt-4 px-2">
+          <span className="text-xs text-gray-500">More negative</span>
+          <div className="flex items-center space-x-1">
+            <div className="w-3 h-3 bg-rose-500 rounded"></div>
+            <div className="w-3 h-3 bg-rose-400 rounded"></div>
+            <div className="w-3 h-3 bg-rose-200 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-500 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-600 rounded"></div>
+          </div>
+          <span className="text-xs text-gray-500">More positive</span>
+        </div>
       </div>
     );
   };
