@@ -108,17 +108,19 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
 
         {/* Legend */}
         <div className="flex items-center justify-between mt-4 px-2">
-          <span className="text-xs text-gray-500">More negative</span>
+          <span className="text-xs text-gray-500">More bad habits</span>
           <div className="flex items-center space-x-1">
-            <div className="w-3 h-3 bg-rose-500 rounded"></div>
-            <div className="w-3 h-3 bg-rose-400 rounded"></div>
-            <div className="w-3 h-3 bg-rose-200 rounded"></div>
+            <div className="w-3 h-3 bg-red-600 rounded"></div>
+            <div className="w-3 h-3 bg-red-500 rounded"></div>
+            <div className="w-3 h-3 bg-red-400 rounded"></div>
+            <div className="w-3 h-3 bg-red-300 rounded"></div>
             <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
             <div className="w-3 h-3 bg-emerald-300 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-400 rounded"></div>
             <div className="w-3 h-3 bg-emerald-500 rounded"></div>
             <div className="w-3 h-3 bg-emerald-600 rounded"></div>
           </div>
-          <span className="text-xs text-gray-500">More positive</span>
+          <span className="text-xs text-gray-500">More good habits</span>
         </div>
       </div>
     );
@@ -167,17 +169,19 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
 
         {/* Legend */}
         <div className="flex items-center justify-between mt-4 px-2">
-          <span className="text-xs text-gray-500">More negative</span>
+          <span className="text-xs text-gray-500">More bad habits</span>
           <div className="flex items-center space-x-1">
-            <div className="w-3 h-3 bg-rose-500 rounded"></div>
-            <div className="w-3 h-3 bg-rose-400 rounded"></div>
-            <div className="w-3 h-3 bg-rose-200 rounded"></div>
+            <div className="w-3 h-3 bg-red-600 rounded"></div>
+            <div className="w-3 h-3 bg-red-500 rounded"></div>
+            <div className="w-3 h-3 bg-red-400 rounded"></div>
+            <div className="w-3 h-3 bg-red-300 rounded"></div>
             <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
             <div className="w-3 h-3 bg-emerald-300 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-400 rounded"></div>
             <div className="w-3 h-3 bg-emerald-500 rounded"></div>
             <div className="w-3 h-3 bg-emerald-600 rounded"></div>
           </div>
-          <span className="text-xs text-gray-500">More positive</span>
+          <span className="text-xs text-gray-500">More good habits</span>
         </div>
       </div>
     );
