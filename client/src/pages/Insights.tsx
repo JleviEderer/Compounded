@@ -121,16 +121,9 @@ export default function Insights() {
     for (let i = 0; i < 7; i++) {
       const date = new Date(startOfWeek);
       date.setDate(startOfWeek.getDate() + i);
-      const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
-      // Calculate weighted daily rate for heatmap colors
-      const dailyRate = calculateDailyRate(habits, logs, dateStr);
-      
       days.push({
-        date: dateStr,
-        dateISO: dateStr,
-        intensity: dailyRate,
-        label: date.toLocaleDateString('en', { weekday: 'short' }),
-        isToday: dateStr === new Date().toLocaleDateString('en-CA')
+        date: date.toLocaleDateString('en-CA'), // YYYY-MM-DD format in local timezone
+        label: date.toLocaleDateString('en', { weekday: 'short' })
       });
     }
     return days;
@@ -184,8 +177,8 @@ export default function Insights() {
         const date = new Date(quarterStart);
         date.setDate(quarterStart.getDate() + (week * 7) + day);
         const dateStr = date.toLocaleDateString('en-CA');
-        // Use weighted calculation with all logs (not filtered logs) for past quarters
-        const dailyRate = calculateDailyRate(habits, logs, dateStr);
+        // Use weighted calculation instead of simple counting
+        const dailyRate = calculateDailyRate(habits, filteredLogs, dateStr);
 
         cells.push({
           date: dateStr,
@@ -423,7 +416,7 @@ export default function Insights() {
           >
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                {getWeekLabel()} - Weekly Heatmap
+                {getWeekLabel()} - 7-Day Habit Grid
               </h3>
               <div className="flex space-x-2">
                 {/* Show "Current Week" button only when viewing a different week */}
@@ -455,40 +448,59 @@ export default function Insights() {
                 </Button>
               </div>
             </div>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <th className="text-left p-3 text-sm font-medium text-gray-600 dark:text-gray-400">
+                      Habit
+                    </th>
+                    {getLast7Days().map((day) => (
+                      <th key={day.date} className="text-center p-3 text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {day.label}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="space-y-2">
+                  {habits.map((habit, habitIndex) => (
+                    <motion.tr 
+                      key={habit.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: habitIndex * 0.1 }}
+                    >
+                      <td className="p-3 font-medium text-gray-800 dark:text-white">
+                        {habit.goodHabit}
+                      </td>
+                      {getLast7Days().map((day, dayIndex) => {
+                        const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
 
-            <div className="space-y-4">
-              <div className="grid grid-cols-7 gap-2">
-                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                  <div key={day} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-2">
-                    {day}
-                  </div>
-                ))}
-              </div>
-              
-              <HeatMapGrid
-                cells={getLast7Days()}
-                gridType="month"
-                onCellClick={openDay}
-                getIntensityColor={getIntensityColor}
-              />
-            </div>
+                        const getSquareStyle = () => {
+                          if (log?.state === 'good') {
+                            return 'bg-teal-500'; // #10b981 - good habit completed
+                          } else if (log?.state === 'bad') {
+                            return 'bg-red-400'; // #f87171 (coral) - bad habit completed
+                          } else {
+                            return 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500'; // #e5e7eb - not logged
+                          }
+                        };
 
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                More bad habits
-              </div>
-              <div className="flex space-x-1">
-                <div className="w-3 h-3 bg-rose-500 rounded"></div>
-                <div className="w-3 h-3 bg-rose-400 rounded"></div>
-                <div className="w-3 h-3 bg-rose-200 rounded"></div>
-                <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-300 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-500 rounded"></div>
-                <div className="w-3 h-3 bg-emerald-600 rounded"></div>
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                More good habits
-              </div>
+                        return (
+                          <td key={day.date} className="p-3 text-center">
+                            <motion.div 
+                              className={`w-6 h-6 rounded mx-auto ${getSquareStyle()}`}
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
+                            />
+                          </td>
+                        );
+                      })}
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </motion.div>
         )}
