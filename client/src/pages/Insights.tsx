@@ -64,10 +64,10 @@ export default function Insights() {
       startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
       const endOfWeek = new Date(startOfWeek);
       endOfWeek.setDate(startOfWeek.getDate() + 6);
-      
+
       const startStr = startOfWeek.toLocaleDateString('en-CA');
       const endStr = endOfWeek.toLocaleDateString('en-CA');
-      
+
       return logs.filter(log => log.date >= startStr && log.date <= endStr);
     }
 
@@ -77,10 +77,10 @@ export default function Insights() {
       const quarterEnd = new Date(quarterStart);
       quarterEnd.setMonth(quarterStart.getMonth() + 3);
       quarterEnd.setDate(quarterEnd.getDate() - 1); // Last day of quarter
-      
+
       const startStr = quarterStart.toLocaleDateString('en-CA');
       const endStr = quarterEnd.toLocaleDateString('en-CA');
-      
+
       return logs.filter(log => log.date >= startStr && log.date <= endStr);
     }
 
@@ -93,6 +93,17 @@ export default function Insights() {
   };
 
   const filteredLogs = getFilteredLogs();
+  const { 
+    momentumData, 
+    currentMomentum, 
+    totalGrowth, 
+    todayRate, 
+    successRate, 
+    projectedTarget,
+    recentAvgRate,
+    avgWindowDays,
+    projWindowDays
+  } = useMomentum(habits, logs, currentTimeFilter, filteredLogs);
 
   // Click handlers for zoom functionality
   const openMonth = (isoMonth: string) => {
@@ -111,10 +122,10 @@ export default function Insights() {
     const now = new Date();
     const currentWeekStart = new Date(now);
     currentWeekStart.setDate(now.getDate() - now.getDay());
-    
+
     const weekAnchorStart = new Date(weekAnchor);
     weekAnchorStart.setDate(weekAnchor.getDate() - weekAnchor.getDay());
-    
+
     return currentWeekStart.toDateString() === weekAnchorStart.toDateString();
   };
 
@@ -122,7 +133,7 @@ export default function Insights() {
     const now = new Date();
     const currentQuarter = Math.floor(now.getMonth() / 3);
     const anchorQuarter = Math.floor(quarterAnchor.getMonth() / 3);
-    
+
     return now.getFullYear() === quarterAnchor.getFullYear() && currentQuarter === anchorQuarter;
   };
 
@@ -144,7 +155,7 @@ export default function Insights() {
     startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(startOfWeek.getDate() + 6);
-    
+
     return `${startOfWeek.toLocaleDateString('en', { month: 'short', day: 'numeric' })} - ${endOfWeek.toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}`;
   };
 
@@ -158,7 +169,7 @@ export default function Insights() {
     // Start from the Sunday of the week containing weekAnchor
     const startOfWeek = new Date(weekAnchor);
     startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
-    
+
     for (let i = 0; i < 7; i++) {
       const date = new Date(startOfWeek);
       date.setDate(startOfWeek.getDate() + i);
@@ -246,12 +257,12 @@ export default function Insights() {
         // Calculate weighted average daily rate for this month
         let totalDailyRate = 0;
         let daysWithData = 0;
-        
+
         for (let day = 1; day <= daysInMonth; day++) {
           const date = new Date(year, month, day);
           const dateStr = date.toLocaleDateString('en-CA');
           const dailyRate = calculateDailyRate(habits, filteredLogs, dateStr);
-          
+
           // Only include days that have some logged data
           const dayLogs = filteredLogs.filter(log => log.date === dateStr);
           if (dayLogs.length > 0) {
@@ -352,7 +363,7 @@ export default function Insights() {
           whileHover={{ scale: 1.02 }}
         >
           <div className="text-xl font-bold text-emerald-600">
-            {momentum.successRate.toFixed(0)}%
+            {successRate.toFixed(0)}%
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             Success Rate
@@ -372,7 +383,7 @@ export default function Insights() {
           whileHover={{ scale: 1.02 }}
         >
           <div className="text-xl font-bold text-purple-600">
-            +{(momentum.recentAvgRate * 100).toFixed(2)}%
+            +{(recentAvgRate * 100).toFixed(2)}%
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             Avg Daily Rate

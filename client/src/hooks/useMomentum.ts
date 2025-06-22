@@ -14,9 +14,16 @@ interface TimeFilter {
   days: number | null;
 }
 
-export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: TimeFilter) {
-  // Filter data based on selected time range
+export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: TimeFilter, preFilteredLogs?: HabitLog[]) {
+  // Use pre-filtered logs if provided, otherwise apply basic time filter
   const filteredData = useMemo(() => {
+    // If pre-filtered logs are provided, use them (this ensures exact date range matching)
+    if (preFilteredLogs) {
+      console.log(`Using pre-filtered logs: ${preFilteredLogs.length}/${logs.length} logs`);
+      return { habits, logs: preFilteredLogs };
+    }
+
+    // Fallback to basic time filter for backward compatibility
     if (!timeFilter || timeFilter.days === null) {
       console.log('Time Filter: All Time selected, using all data');
       console.log(`Total logs available: ${logs.length}`);
@@ -33,7 +40,7 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     console.log(`Time filtering: ${timeFilter.label} → ${filteredLogs.length}/${logs.length} logs`);
 
     return { habits, logs: filteredLogs };
-  }, [habits, logs, timeFilter]);
+  }, [habits, logs, timeFilter, preFilteredLogs]);
 
 // Generate momentum history
   const momentumData = useMemo(() => {
