@@ -62,68 +62,7 @@ export default function Habits() {
     deleteHabit(habitId);
   };
 
-  const HabitModal = () => (
-    <DialogContent className="max-w-md">
-      <DialogHeader>
-        <DialogTitle>
-          {editingId ? 'Edit Habit Pair' : 'Add New Habit Pair'}
-        </DialogTitle>
-      </DialogHeader>
-      
-      <div className="space-y-6">
-        <div>
-          <Label htmlFor="good-habit">
-            Good Habit (What you want to do)
-          </Label>
-          <Input
-            id="good-habit"
-            value={goodHabit}
-            onChange={(e) => setGoodHabit(e.target.value)}
-            placeholder="e.g., Read for 15 minutes"
-            className="mt-2"
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="bad-habit">
-            Bad Habit (What you want to replace)
-          </Label>
-          <Input
-            id="bad-habit"
-            value={badHabit}
-            onChange={(e) => setBadHabit(e.target.value)}
-            placeholder="e.g., Mindless phone scrolling"
-            className="mt-2"
-          />
-        </div>
-
-        <WeightSlider
-          value={weight}
-          onChange={setWeight}
-        />
-
-        <div className="flex space-x-4 pt-4">
-          <Button
-            variant="outline"
-            onClick={() => {
-              setIsAddModalOpen(false);
-              resetForm();
-            }}
-            className="flex-1"
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={editingId ? handleUpdate : handleAdd}
-            className="flex-1 btn-coral"
-            disabled={!goodHabit.trim() || !badHabit.trim()}
-          >
-            {editingId ? 'Update' : 'Add'} Habit
-          </Button>
-        </div>
-      </div>
-    </DialogContent>
-  );
+  
 
   return (
     <div className="space-y-8">
@@ -138,15 +77,71 @@ export default function Habits() {
           </h2>
           <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
             <DialogTrigger asChild>
-              <Button 
-                className="btn-coral"
-                onClick={() => setIsAddModalOpen(true)}
-              >
+              <Button className="btn-coral">
                 <Plus className="w-5 h-5 mr-2" />
                 Add Pair
               </Button>
             </DialogTrigger>
-            <HabitModal />
+            <DialogContent className="max-w-md">
+              <DialogHeader>
+                <DialogTitle>
+                  {editingId ? 'Edit Habit Pair' : 'Add New Habit Pair'}
+                </DialogTitle>
+              </DialogHeader>
+              
+              <div className="space-y-6">
+                <div>
+                  <Label htmlFor="good-habit">
+                    Good Habit (What you want to do)
+                  </Label>
+                  <Input
+                    id="good-habit"
+                    value={goodHabit}
+                    onChange={(e) => setGoodHabit(e.target.value)}
+                    placeholder="e.g., Read for 15 minutes"
+                    className="mt-2"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="bad-habit">
+                    Bad Habit (What you want to replace)
+                  </Label>
+                  <Input
+                    id="bad-habit"
+                    value={badHabit}
+                    onChange={(e) => setBadHabit(e.target.value)}
+                    placeholder="e.g., Mindless phone scrolling"
+                    className="mt-2"
+                  />
+                </div>
+
+                <WeightSlider
+                  value={weight}
+                  onChange={setWeight}
+                />
+
+                <div className="flex space-x-4 pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setIsAddModalOpen(false);
+                      resetForm();
+                    }}
+                    className="flex-1"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={editingId ? handleUpdate : handleAdd}
+                    className="flex-1 btn-coral"
+                    disabled={!goodHabit.trim() || !badHabit.trim()}
+                  >
+                    {editingId ? 'Update' : 'Add'} Habit
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
           </Dialog>
         </div>
 
