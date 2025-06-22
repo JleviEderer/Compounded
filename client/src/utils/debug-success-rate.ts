@@ -96,8 +96,6 @@ export function debugSuccessRateCalculation(
       bad: dayBad,
       unlogged: dayUnlogged,
       total: dayGood + dayBad + dayUnlogged
-    });ged: dayUnlogged,
-      total: dayGood + dayBad + dayUnlogged
     });
   });
   
