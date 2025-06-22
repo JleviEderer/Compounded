@@ -10,17 +10,19 @@ class DataService {
   private getUserDataFromStorage(): { habits: HabitPair[], logs: HabitLog[] } {
     const stored = localStorage.getItem('compounded-data');
     if (!stored) {
+      console.log('📱 No user data found in localStorage, starting fresh');
       return { habits: [], logs: [] };
     }
     
     try {
       const parsed = JSON.parse(stored);
+      console.log('📱 Loaded user data from localStorage:', parsed.habits?.length || 0, 'habits,', parsed.logs?.length || 0, 'logs');
       return {
         habits: parsed.habits || [],
         logs: parsed.logs || []
       };
-    } catch {
-      console.error('Failed to parse user data from localStorage');
+    } catch (error) {
+      console.error('❌ Failed to parse user data from localStorage:', error);
       return { habits: [], logs: [] };
     }
   }

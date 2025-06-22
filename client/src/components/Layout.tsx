@@ -47,12 +47,12 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </div>
         </div>
-        
+
         <nav className="flex-1 p-4 space-y-2">
           {navigation.map((item) => {
             const isActive = location === item.href;
             const Icon = item.icon;
-            
+
             return (
               <Link key={item.name} href={item.href}>
                 <motion.div
@@ -119,7 +119,7 @@ export default function Layout({ children }: LayoutProps) {
             {navigation.map((item) => {
               const isActive = location === item.href;
               const Icon = item.icon;
-              
+
               return (
                 <Link key={item.name} href={item.href}>
                   <motion.div

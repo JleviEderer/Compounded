@@ -1,11 +1,48 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { HabitPair, HabitLog, HabitWeight, HabitLogState } from '../types';
 import { dataService } from '../services/dataService';
 import { dataSourceConfig } from '../services/dataSourceConfig';
+import { toast } from './use-toast';
 
 const STORAGE_KEY = 'compounded-data';
 
 export function useHabits() {
+  const saveTimeoutRef = useRef<NodeJS.Timeout>();
+  const [isSaving, setIsSaving] = useState(false);
+
+  const debouncedSave = useCallback((dataToSave: AppData) => {
+    if (!dataSourceConfig.enableLocalStorage) return;
+    
+    // Clear existing timeout
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+    
+    // Set new timeout for 500ms
+    saveTimeoutRef.current = setTimeout(async () => {
+      try {
+        setIsSaving(true);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+        console.log('💾 Auto-saved:', dataToSave.habits.length, 'habits,', dataToSave.logs.length, 'logs');
+        toast({
+          title: "✓ Saved",
+          description: "Changes saved automatically",
+          duration: 2000,
+        });
+      } catch (error) {
+        console.error('❌ Auto-save failed:', error);
+        toast({
+          title: "⚠︎ Offline, will retry",
+          description: "Failed to save changes",
+          variant: "destructive",
+          duration: 3000,
+        });
+      } finally {
+        setIsSaving(false);
+      }
+    }, 500);
+  }, []);
+
   const [data, setData] = useState<AppData>(() => {
     console.log('🏠 useHabits: Initializing data...');
     console.log('🏠 useHabits: Data source config:', dataSourceConfig);
@@ -50,8 +87,17 @@ export function useHabits() {
   });
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }, [data]);
+    debouncedSave(data);
+  }, [data, debouncedSave]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const addHabit = (goodHabit: string, badHabit: string, weight: HabitWeight) => {
     const newHabit: HabitPair = {
@@ -180,6 +226,7 @@ export function useHabits() {
     habits: data.habits,
     logs: data.logs,
     settings: data.settings,
+    isSaving,
     addHabit,
     updateHabit,
     deleteHabit,
