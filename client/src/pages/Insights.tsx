@@ -71,6 +71,17 @@ export default function Insights() {
       return logs.filter(log => log.date >= startStr && log.date <= endStr);
     }
 
+    // For month view, filter based on anchor (specific month)
+    if (activeView === 'month') {
+      const monthStart = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
+      const monthEnd = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0); // Last day of month
+
+      const startStr = monthStart.toLocaleDateString('en-CA');
+      const endStr = monthEnd.toLocaleDateString('en-CA');
+
+      return logs.filter(log => log.date >= startStr && log.date <= endStr);
+    }
+
     // For quarter view, filter based on quarterAnchor
     if (activeView === 'quarter') {
       const quarterStart = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
@@ -84,7 +95,7 @@ export default function Insights() {
       return logs.filter(log => log.date >= startStr && log.date <= endStr);
     }
 
-    // For month and other views, use the original logic
+    // For other views, use the original logic
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - currentTimeFilter.days);
     const cutoffStr = cutoffDate.toLocaleDateString('en-CA');
