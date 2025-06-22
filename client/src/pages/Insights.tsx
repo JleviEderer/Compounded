@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, HelpCircle } from 'lucide-react';
 import { useHabits } from '../hooks/useHabits';
 import { useMomentum } from '../hooks/useMomentum';
+import { useInsightsData } from '../hooks/useInsightsData';
 import { calculateDailyRate } from '../utils/compound';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
@@ -18,6 +19,18 @@ export default function Insights() {
   const [weekAnchor, setWeekAnchor] = useState<Date>(new Date());
   const [quarterAnchor, setQuarterAnchor] = useState<Date>(new Date());
   const [dayModal, setDayModal] = useState<string | null>(null);
+
+  // Get current anchor based on active view
+  const getCurrentAnchor = () => {
+    switch (activeView) {
+      case 'week': return weekAnchor;
+      case 'quarter': return quarterAnchor;
+      default: return anchor;
+    }
+  };
+
+  // Use anchor-based data aggregation
+  const { gridData, quickStats } = useInsightsData(activeView, getCurrentAnchor());
 
   // Define time filters that match what useMomentum expects
   const getTimeFilterForView = (view: InsightsViewMode) => {
@@ -311,7 +324,7 @@ export default function Insights() {
           whileHover={{ scale: 1.02 }}
         >
           <div className="text-xl font-bold text-emerald-600">
-            {momentum.successRate.toFixed(0)}%
+            {quickStats.successRate.toFixed(0)}%
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             Success Rate
@@ -331,7 +344,7 @@ export default function Insights() {
           whileHover={{ scale: 1.02 }}
         >
           <div className="text-xl font-bold text-purple-600">
-            +{(momentum.recentAvgRate * 100).toFixed(2)}%
+            +{quickStats.avgDailyRate.toFixed(2)}%
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             Avg Daily Rate
@@ -350,7 +363,7 @@ export default function Insights() {
           className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
           whileHover={{ scale: 1.02 }}
         >
-          <div className="text-xl font-bold text-coral">{getCurrentStreak()}</div>
+          <div className="text-xl font-bold text-coral">{quickStats.currentStreak}</div>
           <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             Current Streak
             <Tooltip>
@@ -368,7 +381,7 @@ export default function Insights() {
           className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
           whileHover={{ scale: 1.02 }}
         >
-          <div className="text-xl font-bold text-blue-600">{habits.length}</div>
+          <div className="text-xl font-bold text-blue-600">{quickStats.activeHabits}</div>
           <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             Active Habits
             <Tooltip>
@@ -448,59 +461,29 @@ export default function Insights() {
                 </Button>
               </div>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th className="text-left p-3 text-sm font-medium text-gray-600 dark:text-gray-400">
-                      Habit
-                    </th>
-                    {getLast7Days().map((day) => (
-                      <th key={day.date} className="text-center p-3 text-sm font-medium text-gray-600 dark:text-gray-400">
-                        {day.label}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="space-y-2">
-                  {habits.map((habit, habitIndex) => (
-                    <motion.tr 
-                      key={habit.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: habitIndex * 0.1 }}
-                    >
-                      <td className="p-3 font-medium text-gray-800 dark:text-white">
-                        {habit.goodHabit}
-                      </td>
-                      {getLast7Days().map((day, dayIndex) => {
-                        const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
+            <HeatMapGrid
+              cells={gridData}
+              gridType="quarter"
+              onCellClick={openDay}
+              getIntensityColor={getIntensityColor}
+            />
 
-                        const getSquareStyle = () => {
-                          if (log?.state === 'good') {
-                            return 'bg-teal-500'; // #10b981 - good habit completed
-                          } else if (log?.state === 'bad') {
-                            return 'bg-red-400'; // #f87171 (coral) - bad habit completed
-                          } else {
-                            return 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500'; // #e5e7eb - not logged
-                          }
-                        };
-
-                        return (
-                          <td key={day.date} className="p-3 text-center">
-                            <motion.div 
-                              className={`w-6 h-6 rounded mx-auto ${getSquareStyle()}`}
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
-                            />
-                          </td>
-                        );
-                      })}
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                More bad habits
+              </div>
+              <div className="flex space-x-1">
+                <div className="w-3 h-3 bg-rose-500 rounded"></div>
+                <div className="w-3 h-3 bg-rose-400 rounded"></div>
+                <div className="w-3 h-3 bg-rose-200 rounded"></div>
+                <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-300 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-500 rounded"></div>
+                <div className="w-3 h-3 bg-emerald-600 rounded"></div>
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                More good habits
+              </div>
             </div>
           </motion.div>
         )}
@@ -548,7 +531,7 @@ export default function Insights() {
             </div>
 
             <HeatMapGrid
-              cells={getCalendarDays()}
+              cells={gridData}
               gridType="month"
               onCellClick={openDay}
               getIntensityColor={() => ''}
@@ -617,7 +600,7 @@ export default function Insights() {
             </div>
 
             <HeatMapGrid
-              cells={getQuarterWeeks()}
+              cells={gridData}
               gridType="quarter"
               onCellClick={openDay}
               getIntensityColor={getIntensityColor}
@@ -655,7 +638,7 @@ export default function Insights() {
             </h3>
 
             <HeatMapGrid
-              cells={getAllTimeYears()}
+              cells={gridData}
               gridType="all-time"
               onCellClick={openMonth}
               getIntensityColor={getIntensityColor}
