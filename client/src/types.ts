@@ -7,10 +7,11 @@ export interface HabitPair {
 }
 
 export enum HabitWeight {
-  SMALL = 0.0005,    // 0.05%
-  LOW = 0.001,       // 0.10% 
-  MEDIUM = 0.0025,   // 0.25%
-  HIGH = 0.004       // 0.40%
+  MICRO = 0.0001,     // 0.01%
+  SMALL = 0.00025,    // 0.025%
+  MEDIUM = 0.0004,    // 0.04%
+  LARGE = 0.0008,     // 0.08%
+  KEYSTONE = 0.0018   // 0.18%
 }
 
 export enum HabitLogState {
@@ -45,16 +46,18 @@ export interface AppData {
 
 export type ViewMode = 'day' | 'week' | 'month';
 
-export const WEIGHT_LABELS = {
-  [HabitWeight.SMALL]: 'Small (+0.05%)',
-  [HabitWeight.LOW]: 'Low (+0.10%)', 
-  [HabitWeight.MEDIUM]: 'Medium (+0.25%)',
-  [HabitWeight.HIGH]: 'High (+0.40%)'
-};
-
 export const WEIGHT_VALUES = [
+  HabitWeight.MICRO,
   HabitWeight.SMALL,
-  HabitWeight.LOW,
   HabitWeight.MEDIUM,
-  HabitWeight.HIGH
+  HabitWeight.LARGE,
+  HabitWeight.KEYSTONE
 ];
+
+export const WEIGHT_LABELS = {
+  [HabitWeight.MICRO]: 'Micro (+0.01%)',
+  [HabitWeight.SMALL]: 'Small (+0.025%)',
+  [HabitWeight.MEDIUM]: 'Medium (+0.04%)',
+  [HabitWeight.LARGE]: 'Large (+0.08%)',
+  [HabitWeight.KEYSTONE]: 'Keystone (+0.18%)'
+};
