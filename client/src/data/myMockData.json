@@ -4,21 +4,21 @@
       "id": "1",
       "goodHabit": "Read articles",
       "badHabit": "Endless scrolling",
-      "weight": 0.00025,
+      "weight": 0.0005,
       "createdAt": "2024-06-01T00:00:00.000Z"
     },
     {
       "id": "2",
       "goodHabit": "10\u2011minute walk",
       "badHabit": "Staying seated all day",
-      "weight": 0.00025,
+      "weight": 0.0003,
       "createdAt": "2024-06-01T00:00:00.000Z"
     },
     {
       "id": "3",
       "goodHabit": "Drink water",
       "badHabit": "Sugary drinks",
-      "weight": 0.0001,
+      "weight": 0.0003,
       "createdAt": "2024-06-01T00:00:00.000Z"
     },
     {
