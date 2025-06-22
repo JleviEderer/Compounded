@@ -8,10 +8,17 @@ const STORAGE_KEY = 'compounded-data';
 
 export function useHabits() {
   const saveTimeoutRef = useRef<NodeJS.Timeout>();
+  const isInitialLoadRef = useRef(true);
   const [isSaving, setIsSaving] = useState(false);
 
   const debouncedSave = useCallback((dataToSave: AppData) => {
     if (!dataSourceConfig.enableLocalStorage) return;
+    
+    // Skip toast on initial load
+    if (isInitialLoadRef.current) {
+      isInitialLoadRef.current = false;
+      return;
+    }
     
     // Clear existing timeout
     if (saveTimeoutRef.current) {
