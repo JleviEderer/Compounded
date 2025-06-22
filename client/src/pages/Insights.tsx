@@ -383,7 +383,7 @@ export default function Insights() {
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
               <TooltipContent className="max-w-48 text-xs p-2">
-                <p>Percentage of habits completed successfully</p>
+                <p>Good Habits / Habits Logged</p>
               </TooltipContent>
             </Tooltip>
           </div>
