@@ -36,7 +36,7 @@ export default function WeightSlider({
         <Slider
           value={[currentIndex]}
           onValueChange={handleChange}
-          max={3}
+          max={4}
           step={1}
           className="w-full"
         />
