@@ -146,6 +146,7 @@ export default function Habits() {
                 Add Pair
               </Button>
             </DialogTrigger>
+            <HabitModal />
           </Dialog>
         </div>
 
@@ -251,8 +252,6 @@ export default function Habits() {
           </div>
         )}
       </motion.div>
-
-      <HabitModal />
     </div>
   );
 }
