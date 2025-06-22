@@ -13,14 +13,13 @@ export function debugSuccessRateCalculation(
   
   // Get all unique dates from logs to work with actual data
   const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
-  console.log(`📊 Total unique dates in ALL logs: ${logDates.length}`);
-  console.log(`📊 Full date range: ${logDates[0]} → ${logDates[logDates.length - 1]}`);
+  console.log(`📊 Total unique dates in logs: ${logDates.length}`);
+  console.log(`📊 Date range: ${logDates[0]} → ${logDates[logDates.length - 1]}`);
   
   // Take the last 'days' number of dates, or all available dates if fewer
   const relevantDates = logDates.slice(-days);
-  console.log(`📊 FILTERED for ${label}: Using last ${days} dates`);
-  console.log(`📊 FILTERED date range: ${relevantDates[0]} → ${relevantDates[relevantDates.length - 1]}`);
-  console.log(`📊 FILTERED dates (${relevantDates.length}):`, relevantDates);
+  console.log(`📊 Relevant dates for calculation (last ${days}):`, relevantDates);
+  console.log(`📊 Actually using ${relevantDates.length} dates`);
   
   let totalLogged = 0;
   let totalGood = 0;
@@ -31,13 +30,11 @@ export function debugSuccessRateCalculation(
     let dayGood = 0;
     let dayBad = 0;
     let dayUnlogged = 0;
-    let dayLogs: any[] = [];
     
     habits.forEach(habit => {
       const log = logs.find(l => l.habitId === habit.id && l.date === dateStr);
       if (log && log.state !== 'unlogged') {
         totalLogged++;
-        dayLogs.push({ habitId: habit.id, state: log.state });
         if (log.state === 'good') {
           totalGood++;
           dayGood++;
@@ -55,17 +52,13 @@ export function debugSuccessRateCalculation(
       good: dayGood,
       bad: dayBad,
       unlogged: dayUnlogged,
-      total: dayGood + dayBad + dayUnlogged,
-      logs: dayLogs
+      total: dayGood + dayBad + dayUnlogged
     });
   });
   
   console.log('\n📋 DATE-BY-DATE BREAKDOWN:');
   dateBreakdown.forEach(day => {
     console.log(`  ${day.date}: ${day.good} good, ${day.bad} bad, ${day.unlogged} unlogged (${day.total} total habits)`);
-    if (day.logs.length > 0) {
-      console.log(`    📝 Logs: ${day.logs.map(l => `habit${l.habitId}=${l.state}`).join(', ')}`);
-    }
   });
   
   const calculatedRate = totalLogged > 0 ? Math.round((totalGood / totalLogged) * 100) : 0;

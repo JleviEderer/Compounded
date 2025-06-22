@@ -43,19 +43,13 @@ export default function Insights() {
     if (habits.length > 0 && logs.length > 0) {
       // Import debug function dynamically
       import('../utils/debug-success-rate').then(({ debugSuccessRateCalculation }) => {
-        console.log('\n🗓️ WEEK VIEW DEBUG:');
-        console.log('Current weekAnchor:', weekAnchor.toLocaleDateString('en-CA'));
-        console.log('Filtered logs for current view:', filteredLogs.length, 'logs');
-        console.log('Active view:', activeView);
-        
-        debugSuccessRateCalculation(habits, logs, 7, 'WEEK (GLOBAL LOGS)');
-        debugSuccessRateCalculation(habits, filteredLogs, 7, 'WEEK (FILTERED LOGS)');
+        debugSuccessRateCalculation(habits, logs, 7, 'WEEK');
         debugSuccessRateCalculation(habits, logs, 30, 'MONTH');
         debugSuccessRateCalculation(habits, logs, 90, 'QUARTER');
         debugSuccessRateCalculation(habits, logs, logs.length, 'ALL TIME');
       });
     }
-  }, [habits, logs, filteredLogs, weekAnchor, activeView]);
+  }, [habits, logs]);
 
   // Filter logs based on current time filter and anchor dates
   const getFilteredLogs = () => {
