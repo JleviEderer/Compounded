@@ -36,6 +36,8 @@ export default function Insights() {
   };
 
   const currentTimeFilter = getTimeFilterForView(activeView);
+  const momentum = useMomentum(habits, logs, currentTimeFilter);
+
   // Filter logs based on current time filter and anchor dates
   const getFilteredLogs = () => {
     if (!currentTimeFilter.days) {
@@ -77,9 +79,6 @@ export default function Insights() {
   };
 
   const filteredLogs = getFilteredLogs();
-  
-  // Use anchor-filtered logs for momentum calculations
-  const momentum = useMomentum(habits, filteredLogs, currentTimeFilter);
 
   // Click handlers for zoom functionality
   const openMonth = (isoMonth: string) => {
