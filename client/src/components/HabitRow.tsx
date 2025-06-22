@@ -70,25 +70,12 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
 
   return (
     <motion.div 
-      className={`card-glass p-6 transition-all duration-300 hover:shadow-lg relative ${
-        showSavedFlash ? 'ring-2 ring-emerald-400' : ''
-      }`}
+      className="card-glass p-6 transition-all duration-300 hover:shadow-lg relative"
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.01 }}
     >
-      {showSavedFlash && (
-        <motion.div
-          className="absolute top-2 right-2 flex items-center space-x-1 text-emerald-600 text-sm font-medium"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-        >
-          <Check className="w-4 h-4" />
-          <span>Saved</span>
-        </motion.div>
-      )}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-4">
@@ -123,11 +110,16 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
             </motion.button>
 
             <div>
-              <div className={`font-semibold text-gray-800 dark:text-white ${
+              <div className={`font-semibold text-gray-800 dark:text-white relative ${
                 todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' : 
                 todayLog?.state === HabitLogState.BAD ? 'text-red-600 line-through' : ''
               }`}>
                 {habit.goodHabit}
+                <Check 
+                  className={`absolute -right-6 w-5 h-5 text-emerald-500 transition-opacity duration-1000 ${
+                    showSavedFlash ? 'opacity-100' : 'opacity-0'
+                  }`}
+                />
               </div>
               <div className={`text-sm text-gray-500 ${
                 todayLog?.state === HabitLogState.BAD ? 'text-red-500 font-medium' : 

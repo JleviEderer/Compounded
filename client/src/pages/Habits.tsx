@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit2, Trash2, GripVertical, X } from 'lucide-react';
+import { Plus, Edit2, Trash2, GripVertical, X, Check } from 'lucide-react';
 import { useHabits } from '../hooks/useHabits';
 import { HabitWeight, WEIGHT_LABELS } from '../types';
 import WeightSlider from '../components/WeightSlider';
@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 export default function Habits() {
-  const { habits, addHabit, updateHabit, deleteHabit } = useHabits();
+  const { habits, addHabit, updateHabit, deleteHabit, lastSavedHabitId } = useHabits();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   
@@ -185,8 +185,13 @@ export default function Habits() {
                         <GripVertical className="w-5 h-5" />
                       </motion.div>
                       <div>
-                        <div className="font-semibold text-gray-800 dark:text-white">
+                        <div className="font-semibold text-gray-800 dark:text-white relative">
                           {habit.goodHabit} → Replace {habit.badHabit}
+                          <Check 
+                            className={`absolute -right-6 w-5 h-5 text-emerald-500 transition-opacity duration-1000 ${
+                              lastSavedHabitId === habit.id ? 'opacity-100' : 'opacity-0'
+                            }`}
+                          />
                         </div>
                         <div className="text-sm text-gray-600 dark:text-gray-400">
                           {WEIGHT_LABELS[habit.weight]}

@@ -74,16 +74,8 @@ export function useHabits() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
         console.log('💾 Auto-saved:', dataToSave.habits.length, 'habits,', dataToSave.logs.length, 'logs');
 
-        // Show first-edit toast only once
-        if (!hasShownFirstEditToastRef.current) {
-          hasShownFirstEditToastRef.current = true;
-          toast({
-            title: "Autosave enabled",
-            description: "Your changes are being saved automatically",
-            duration: 2000,
-          });
-        } else if (habitId) {
-          // Flash tick for specific habit
+        // Show inline flash for specific habit
+        if (habitId) {
           setLastSavedHabitId(habitId);
           setTimeout(() => setLastSavedHabitId(null), 1000);
         }
@@ -123,19 +115,33 @@ export function useHabits() {
       createdAt: new Date()
     };
 
-    setData(prev => ({
-      ...prev,
-      habits: [...prev.habits, newHabit]
-    }));
+    setData(prev => {
+      const newData = {
+        ...prev,
+        habits: [...prev.habits, newHabit]
+      };
+      
+      // Trigger flash feedback for new habit
+      setTimeout(() => debouncedSave(newData, newHabit.id), 0);
+      
+      return newData;
+    });
   };
 
   const updateHabit = (id: string, updates: Partial<HabitPair>) => {
-    setData(prev => ({
-      ...prev,
-      habits: prev.habits.map(habit => 
-        habit.id === id ? { ...habit, ...updates } : habit
-      )
-    }));
+    setData(prev => {
+      const newData = {
+        ...prev,
+        habits: prev.habits.map(habit => 
+          habit.id === id ? { ...habit, ...updates } : habit
+        )
+      };
+      
+      // Trigger flash feedback for updated habit
+      setTimeout(() => debouncedSave(newData, id), 0);
+      
+      return newData;
+    });
   };
 
   const deleteHabit = (id: string) => {
