@@ -126,7 +126,7 @@ export default function Settings() {
                 <Button
                   onClick={handleExport}
                   variant="outline"
-                  className="border-coral text-coral hover:bg-coral hover:text-white"
+                  className="border-coral text-coral hover:bg-coral hover:text-white dark:border-coral dark:text-coral dark:hover:bg-coral dark:hover:text-white"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Export
@@ -151,6 +151,7 @@ export default function Settings() {
                   <Button
                     onClick={() => fileInputRef.current?.click()}
                     variant="outline"
+                    className="border-coral text-coral hover:bg-coral hover:text-white dark:border-coral dark:text-coral dark:hover:bg-coral dark:hover:text-white"
                   >
                     <Upload className="w-4 h-4 mr-2" />
                     Import
