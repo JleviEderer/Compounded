@@ -237,10 +237,9 @@ const activeHabits = habits.length;
 ## Weight System
 
 Habits have different weights that affect daily rate calculations:
-- **Micro:** 0.01% (0.0001)
-- **Small:** 0.025% (0.00025)
-- **Medium:** 0.04% (0.0004)
-- **Large:** 0.08% (0.0008)
-- **Keystone:** 0.18% (0.0018)
+- **Small:** 0.05% (0.0005)
+- **Low:** 0.10% (0.001)
+- **Medium:** 0.25% (0.0025)
+- **High:** 0.40% (0.004)
 
 Good habits add their weight to the daily rate, bad habits subtract their weight.
