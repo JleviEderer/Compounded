@@ -346,8 +346,8 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-32 text-[8px] p-1 leading-tight">
-                <p>% habits completed</p>
+              <TooltipContent className="max-w-48 text-xs p-2">
+                <p>Percentage of habits completed successfully</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -366,8 +366,8 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
-                <p>Avg daily rate</p>
+              <TooltipContent className="max-w-48 text-xs p-2">
+                <p>Average daily compound rate of improvement</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -384,8 +384,8 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
-                <p>Consecutive days w/ ≥1 habit</p>
+              <TooltipContent className="max-w-48 text-xs p-2">
+                <p>Consecutive days with at least one habit completed</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -402,8 +402,8 @@ export default function Insights() {
               <TooltipTrigger asChild>
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-20 text-[8px] p-1 leading-tight">
-                <p>Total habits tracked</p>
+              <TooltipContent className="max-w-48 text-xs p-2">
+                <p>Total number of habits currently being tracked</p>
               </TooltipContent>
             </Tooltip>
           </div>
