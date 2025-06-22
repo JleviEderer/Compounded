@@ -38,12 +38,39 @@ export default function Insights() {
   const currentTimeFilter = getTimeFilterForView(activeView);
   const momentum = useMomentum(habits, logs, currentTimeFilter);
 
-  // Filter logs based on current time filter
+  // Filter logs based on current time filter and anchor dates
   const getFilteredLogs = () => {
     if (!currentTimeFilter.days) {
       return logs; // All time
     }
 
+    // For week view, filter based on weekAnchor
+    if (activeView === 'week') {
+      const startOfWeek = new Date(weekAnchor);
+      startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      
+      const startStr = startOfWeek.toLocaleDateString('en-CA');
+      const endStr = endOfWeek.toLocaleDateString('en-CA');
+      
+      return logs.filter(log => log.date >= startStr && log.date <= endStr);
+    }
+
+    // For quarter view, filter based on quarterAnchor
+    if (activeView === 'quarter') {
+      const quarterStart = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
+      const quarterEnd = new Date(quarterStart);
+      quarterEnd.setMonth(quarterStart.getMonth() + 3);
+      quarterEnd.setDate(quarterEnd.getDate() - 1); // Last day of quarter
+      
+      const startStr = quarterStart.toLocaleDateString('en-CA');
+      const endStr = quarterEnd.toLocaleDateString('en-CA');
+      
+      return logs.filter(log => log.date >= startStr && log.date <= endStr);
+    }
+
+    // For month and other views, use the original logic
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - currentTimeFilter.days);
     const cutoffStr = cutoffDate.toLocaleDateString('en-CA');
