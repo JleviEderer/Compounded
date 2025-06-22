@@ -6,12 +6,52 @@ import { toast } from './use-toast';
 
 const STORAGE_KEY = 'compounded-data';
 
+interface AppData {
+  habits: HabitPair[];
+  logs: HabitLog[];
+  settings: {
+    theme: 'light' | 'dark';
+    nerdMode: boolean;
+  };
+}
+
 export function useHabits() {
   const saveTimeoutRef = useRef<NodeJS.Timeout>();
   const isInitialLoadRef = useRef(true);
   const hasShownFirstEditToastRef = useRef(false);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSavedHabitId, setLastSavedHabitId] = useState<string | null>(null);
+
+  // Initialize data state
+  const [data, setData] = useState<AppData>(() => {
+    if (dataSourceConfig.enableLocalStorage) {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          console.log('🏠 useHabits: Loaded from localStorage:', parsed.habits?.length || 0, 'habits,', parsed.logs?.length || 0, 'logs');
+          return {
+            habits: parsed.habits || [],
+            logs: parsed.logs || [],
+            settings: {
+              theme: 'light',
+              nerdMode: false,
+              ...parsed.settings
+            }
+          };
+        }
+      } catch (error) {
+        console.error('Failed to load from localStorage:', error);
+      }
+    }
+
+    // Fallback to dataService
+    return {
+      habits: dataService.getHabits(),
+      logs: dataService.getLogs(),
+      settings: { theme: 'light', nerdMode: false }
+    };
+  });
 
   const debouncedSave = useCallback((dataToSave: AppData, habitId?: string) => {
     if (!dataSourceConfig.enableLocalStorage) return;
@@ -206,6 +246,7 @@ export function useHabits() {
     logs: data.logs,
     settings: data.settings,
     isSaving,
+    lastSavedHabitId,
     addHabit,
     updateHabit,
     deleteHabit,
