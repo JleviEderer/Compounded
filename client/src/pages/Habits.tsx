@@ -82,16 +82,16 @@ export default function Habits() {
                 Add Pair
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-md">
+            <DialogContent className="max-w-md bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
               <DialogHeader>
-                <DialogTitle>
+                <DialogTitle className="text-gray-900 dark:text-white">
                   {editingId ? 'Edit Habit Pair' : 'Add New Habit Pair'}
                 </DialogTitle>
               </DialogHeader>
               
               <div className="space-y-6">
                 <div>
-                  <Label htmlFor="good-habit">
+                  <Label htmlFor="good-habit" className="text-gray-700 dark:text-gray-300 font-medium">
                     Good Habit (What you want to do)
                   </Label>
                   <Input
@@ -99,12 +99,12 @@ export default function Habits() {
                     value={goodHabit}
                     onChange={(e) => setGoodHabit(e.target.value)}
                     placeholder="e.g., Read for 15 minutes"
-                    className="mt-2"
+                    className="mt-2 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="bad-habit">
+                  <Label htmlFor="bad-habit" className="text-gray-700 dark:text-gray-300 font-medium">
                     Bad Habit (What you want to replace)
                   </Label>
                   <Input
@@ -112,7 +112,7 @@ export default function Habits() {
                     value={badHabit}
                     onChange={(e) => setBadHabit(e.target.value)}
                     placeholder="e.g., Mindless phone scrolling"
-                    className="mt-2"
+                    className="mt-2 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                   />
                 </div>
 
