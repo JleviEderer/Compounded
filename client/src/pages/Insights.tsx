@@ -38,6 +38,25 @@ export default function Insights() {
   const currentTimeFilter = getTimeFilterForView(activeView);
   const momentum = useMomentum(habits, logs, currentTimeFilter);
 
+  // Debug success rate calculations
+  React.useEffect(() => {
+    if (habits.length > 0 && logs.length > 0) {
+      // Import debug function dynamically
+      import('../utils/debug-success-rate').then(({ debugSuccessRateCalculation }) => {
+        console.log('\n🗓️ WEEK VIEW DEBUG:');
+        console.log('Current weekAnchor:', weekAnchor.toLocaleDateString('en-CA'));
+        console.log('Filtered logs for current view:', filteredLogs.length, 'logs');
+        console.log('Active view:', activeView);
+        
+        debugSuccessRateCalculation(habits, logs, 7, 'WEEK (GLOBAL LOGS)');
+        debugSuccessRateCalculation(habits, filteredLogs, 7, 'WEEK (FILTERED LOGS)');
+        debugSuccessRateCalculation(habits, logs, 30, 'MONTH');
+        debugSuccessRateCalculation(habits, logs, 90, 'QUARTER');
+        debugSuccessRateCalculation(habits, logs, logs.length, 'ALL TIME');
+      });
+    }
+  }, [habits, logs, filteredLogs, weekAnchor, activeView]);
+
   // Filter logs based on current time filter and anchor dates
   const getFilteredLogs = () => {
     if (!currentTimeFilter.days) {
@@ -79,25 +98,6 @@ export default function Insights() {
   };
 
   const filteredLogs = getFilteredLogs();
-
-  // Debug success rate calculations
-  React.useEffect(() => {
-    if (habits.length > 0 && logs.length > 0) {
-      // Import debug function dynamically
-      import('../utils/debug-success-rate').then(({ debugSuccessRateCalculation }) => {
-        console.log('\n🗓️ WEEK VIEW DEBUG:');
-        console.log('Current weekAnchor:', weekAnchor.toLocaleDateString('en-CA'));
-        console.log('Filtered logs for current view:', filteredLogs.length, 'logs');
-        console.log('Active view:', activeView);
-        
-        debugSuccessRateCalculation(habits, logs, 7, 'WEEK (GLOBAL LOGS)');
-        debugSuccessRateCalculation(habits, filteredLogs, 7, 'WEEK (FILTERED LOGS)');
-        debugSuccessRateCalculation(habits, logs, 30, 'MONTH');
-        debugSuccessRateCalculation(habits, logs, 90, 'QUARTER');
-        debugSuccessRateCalculation(habits, logs, logs.length, 'ALL TIME');
-      });
-    }
-  }, [habits, logs, filteredLogs, weekAnchor, activeView]);
 
   // Click handlers for zoom functionality
   const openMonth = (isoMonth: string) => {
