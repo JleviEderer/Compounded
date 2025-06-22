@@ -74,10 +74,19 @@ export function useHabits() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
         console.log('💾 Auto-saved:', dataToSave.habits.length, 'habits,', dataToSave.logs.length, 'logs');
 
+        // Show one-time micro-toast on first edit
+        if (!hasShownFirstEditToastRef.current) {
+          hasShownFirstEditToastRef.current = true;
+          toast({
+            title: "✓ Autosave on — changes are saved automatically.",
+            duration: 2000,
+          });
+        }
+
         // Show inline flash for specific habit
         if (habitId) {
           setLastSavedHabitId(habitId);
-          setTimeout(() => setLastSavedHabitId(null), 1000);
+          setTimeout(() => setLastSavedHabitId(null), 800);
         }
       } catch (error) {
         console.error('❌ Auto-save failed:', error);

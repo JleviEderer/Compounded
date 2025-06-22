@@ -13,10 +13,10 @@ interface HabitRowProps {
 
 export default function HabitRow({ habit, logs, onLogHabit, isToday = false, showSavedFlash = false }: HabitRowProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  
+
   const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
   const todayLog = logs.find(log => log.habitId === habit.id && log.date === today);
-  
+
   // Get last 7 days for expanded view
   const getLast7Days = () => {
     const days = [];
@@ -25,7 +25,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
       date.setDate(date.getDate() - i);
       const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
       const log = logs.find(l => l.habitId === habit.id && l.date === dateStr);
-      
+
       days.push({
         date: dateStr,
         label: i === 0 ? 'Today' : date.toLocaleDateString('en', { weekday: 'short' }),
@@ -116,7 +116,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
               }`}>
                 {habit.goodHabit}
                 <Check 
-                  className={`absolute -right-6 w-5 h-5 text-emerald-500 transition-opacity duration-1000 ${
+                  className={`absolute -right-6 w-5 h-5 text-emerald-500 transition-opacity duration-800 ${
                     showSavedFlash ? 'opacity-100' : 'opacity-0'
                   }`}
                 />
@@ -130,7 +130,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
             </div>
           </div>
         </div>
-        
+
         <div className="flex items-center space-x-4">
           <div className="text-right">
             {todayLog?.state === HabitLogState.GOOD && (
@@ -166,7 +166,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
           </motion.button>
         </div>
       </div>
-      
+
       <AnimatePresence>
         {isExpanded && (
           <motion.div
