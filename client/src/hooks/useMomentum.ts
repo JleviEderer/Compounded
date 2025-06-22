@@ -5,6 +5,7 @@ import {
   calculateMomentumIndex, 
   calculateDailyRate, 
   calculateSuccessRate,
+  calculateDynamicSuccessRate,
   generateTimeFilterProjection
 } from '../utils/compound';
 
@@ -138,10 +139,10 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     return calculateDailyRate(filteredData.habits, filteredData.logs, today);
   }, [filteredData.habits, filteredData.logs]);
 
-  // Calculate success rate
+  // Calculate success rate using dynamic calculation with exact filtered logs
   const successRate = useMemo(() => {
-    return calculateSuccessRate(filteredData.habits, filteredData.logs, timeFilter?.days || 30);
-  }, [filteredData.habits, filteredData.logs, timeFilter?.days]);
+    return calculateDynamicSuccessRate(filteredData.habits, filteredData.logs);
+  }, [filteredData.habits, filteredData.logs]);
 
   // Calculate projected target using dynamic projection window
   const projectedTarget = useMemo(() => {

@@ -217,6 +217,32 @@ export function calculateSuccessRate(
   return totalLogged > 0 ? Math.round((totalGood / totalLogged) * 100) : 0;
 }
 
+// Dynamic success rate that works with filtered logs for exact time periods
+export function calculateDynamicSuccessRate(
+  habits: HabitPair[],
+  filteredLogs: HabitLog[]
+): number {
+  let totalLogged = 0;
+  let totalGood = 0;
+
+  // Get all unique dates from the filtered logs
+  const relevantDates = Array.from(new Set(filteredLogs.map(l => l.date))).sort();
+
+  for (const dateStr of relevantDates) {
+    for (const habit of habits) {
+      const log = filteredLogs.find(l => l.habitId === habit.id && l.date === dateStr);
+      if (log && log.state !== 'unlogged') {
+        totalLogged++;
+        if (log.state === 'good') {
+          totalGood++;
+        }
+      }
+    }
+  }
+
+  return totalLogged > 0 ? Math.round((totalGood / totalLogged) * 100) : 0;
+}
+
 export function calculateCurrentStreak(
   habitId: string,
   logs: HabitLog[]
