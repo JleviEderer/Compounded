@@ -43,10 +43,11 @@ export default function Insights() {
     if (habits.length > 0 && logs.length > 0) {
       // Import debug function dynamically
       import('../utils/debug-success-rate').then(({ debugSuccessRateCalculation }) => {
+        // Each debug call will handle its own filtering based on the label
         debugSuccessRateCalculation(habits, logs, 7, 'WEEK');
         debugSuccessRateCalculation(habits, logs, 30, 'MONTH');
         debugSuccessRateCalculation(habits, logs, 90, 'QUARTER');
-        debugSuccessRateCalculation(habits, logs, logs.length, 'ALL TIME');
+        debugSuccessRateCalculation(habits, logs, 365, 'ALL TIME');
       });
     }
   }, [habits, logs]);

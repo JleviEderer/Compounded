@@ -11,14 +11,57 @@ export function debugSuccessRateCalculation(
   console.log(`\n🔍 DEBUG SUCCESS RATE CALCULATION - ${label} (${days} days)`);
   console.log('='.repeat(60));
   
-  // Get all unique dates from logs to work with actual data
-  const logDates = Array.from(new Set(logs.map(l => l.date))).sort();
-  console.log(`📊 Total unique dates in logs: ${logDates.length}`);
-  console.log(`📊 Date range: ${logDates[0]} → ${logDates[logDates.length - 1]}`);
+  let filteredLogs = logs;
+  let relevantDates: string[] = [];
   
-  // Take the last 'days' number of dates, or all available dates if fewer
-  const relevantDates = logDates.slice(-days);
-  console.log(`📊 Relevant dates for calculation (last ${days}):`, relevantDates);
+  // Filter logs based on the time filter type, matching Insights.tsx logic
+  if (label === 'WEEK') {
+    // Week: June 15-21, 2025 (current week containing today June 21)
+    const today = new Date('2025-06-21'); // Using June 21 as "today" for consistency
+    const weekAnchor = today;
+    const startOfWeek = new Date(weekAnchor);
+    startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay()); // June 15, 2025
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); // June 21, 2025
+    
+    const startStr = startOfWeek.toLocaleDateString('en-CA');
+    const endStr = endOfWeek.toLocaleDateString('en-CA');
+    
+    filteredLogs = logs.filter(log => log.date >= startStr && log.date <= endStr);
+    relevantDates = Array.from(new Set(filteredLogs.map(l => l.date))).sort();
+    
+    console.log(`📊 WEEK FILTER: ${startStr} → ${endStr}`);
+  } else if (label === 'MONTH') {
+    // Month: June 1-21, 2025 (current month up to today)
+    const startStr = '2025-06-01';
+    const endStr = '2025-06-21';
+    
+    filteredLogs = logs.filter(log => log.date >= startStr && log.date <= endStr);
+    relevantDates = Array.from(new Set(filteredLogs.map(l => l.date))).sort();
+    
+    console.log(`📊 MONTH FILTER: ${startStr} → ${endStr}`);
+  } else if (label === 'QUARTER') {
+    // Quarter: March 31 - June 21, 2025 (Q2 2025 up to today)
+    const startStr = '2025-04-01'; // Q2 starts April 1
+    const endStr = '2025-06-21';
+    
+    filteredLogs = logs.filter(log => log.date >= startStr && log.date <= endStr);
+    relevantDates = Array.from(new Set(filteredLogs.map(l => l.date))).sort();
+    
+    console.log(`📊 QUARTER FILTER: ${startStr} → ${endStr}`);
+  } else if (label === 'ALL TIME') {
+    // All Time: June 1, 2024 - June 21, 2025 (all available data)
+    const startStr = '2024-06-01';
+    const endStr = '2025-06-21';
+    
+    filteredLogs = logs.filter(log => log.date >= startStr && log.date <= endStr);
+    relevantDates = Array.from(new Set(filteredLogs.map(l => l.date))).sort();
+    
+    console.log(`📊 ALL TIME FILTER: ${startStr} → ${endStr}`);
+  }
+  
+  console.log(`📊 Total unique dates in filtered logs: ${relevantDates.length}`);
+  console.log(`📊 Filtered date range: ${relevantDates[0]} → ${relevantDates[relevantDates.length - 1]}`);
   console.log(`📊 Actually using ${relevantDates.length} dates`);
   
   let totalLogged = 0;
@@ -32,7 +75,7 @@ export function debugSuccessRateCalculation(
     let dayUnlogged = 0;
     
     habits.forEach(habit => {
-      const log = logs.find(l => l.habitId === habit.id && l.date === dateStr);
+      const log = filteredLogs.find(l => l.habitId === habit.id && l.date === dateStr);
       if (log && log.state !== 'unlogged') {
         totalLogged++;
         if (log.state === 'good') {
@@ -52,6 +95,8 @@ export function debugSuccessRateCalculation(
       good: dayGood,
       bad: dayBad,
       unlogged: dayUnlogged,
+      total: dayGood + dayBad + dayUnlogged
+    });ged: dayUnlogged,
       total: dayGood + dayBad + dayUnlogged
     });
   });
