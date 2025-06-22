@@ -8,9 +8,10 @@ interface HabitRowProps {
   logs: HabitLog[];
   onLogHabit: (habitId: string, date: string, state: HabitLogState) => void;
   isToday?: boolean;
+  showSavedFlash?: boolean;
 }
 
-export default function HabitRow({ habit, logs, onLogHabit, isToday = false }: HabitRowProps) {
+export default function HabitRow({ habit, logs, onLogHabit, isToday = false, showSavedFlash = false }: HabitRowProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   
   const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
@@ -69,12 +70,25 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false }: H
 
   return (
     <motion.div 
-      className="card-glass p-6 transition-all duration-300 hover:shadow-lg"
+      className={`card-glass p-6 transition-all duration-300 hover:shadow-lg relative ${
+        showSavedFlash ? 'ring-2 ring-emerald-400' : ''
+      }`}
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.01 }}
     >
+      {showSavedFlash && (
+        <motion.div
+          className="absolute top-2 right-2 flex items-center space-x-1 text-emerald-600 text-sm font-medium"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+        >
+          <Check className="w-4 h-4" />
+          <span>Saved</span>
+        </motion.div>
+      )}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-4">

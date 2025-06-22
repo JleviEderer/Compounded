@@ -9,33 +9,44 @@ const STORAGE_KEY = 'compounded-data';
 export function useHabits() {
   const saveTimeoutRef = useRef<NodeJS.Timeout>();
   const isInitialLoadRef = useRef(true);
+  const hasShownFirstEditToastRef = useRef(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [lastSavedHabitId, setLastSavedHabitId] = useState<string | null>(null);
 
-  const debouncedSave = useCallback((dataToSave: AppData) => {
+  const debouncedSave = useCallback((dataToSave: AppData, habitId?: string) => {
     if (!dataSourceConfig.enableLocalStorage) return;
-    
-    // Skip toast on initial load
+
+    // Skip on initial load
     if (isInitialLoadRef.current) {
       isInitialLoadRef.current = false;
       return;
     }
-    
+
     // Clear existing timeout
     if (saveTimeoutRef.current) {
       clearTimeout(saveTimeoutRef.current);
     }
-    
+
     // Set new timeout for 500ms
     saveTimeoutRef.current = setTimeout(async () => {
       try {
         setIsSaving(true);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
         console.log('💾 Auto-saved:', dataToSave.habits.length, 'habits,', dataToSave.logs.length, 'logs');
-        toast({
-          title: "✓ Saved",
-          description: "Changes saved automatically",
-          duration: 2000,
-        });
+
+        // Show first-edit toast only once
+        if (!hasShownFirstEditToastRef.current) {
+          hasShownFirstEditToastRef.current = true;
+          toast({
+            title: "Autosave enabled",
+            description: "Your changes are being saved automatically",
+            duration: 2000,
+          });
+        } else if (habitId) {
+          // Flash tick for specific habit
+          setLastSavedHabitId(habitId);
+          setTimeout(() => setLastSavedHabitId(null), 1000);
+        }
       } catch (error) {
         console.error('❌ Auto-save failed:', error);
         toast({
@@ -49,49 +60,6 @@ export function useHabits() {
       }
     }, 500);
   }, []);
-
-  const [data, setData] = useState<AppData>(() => {
-    console.log('🏠 useHabits: Initializing data...');
-    console.log('🏠 useHabits: Data source config:', dataSourceConfig);
-
-    // Check data source configuration
-    if (dataSourceConfig.source === 'user' && dataSourceConfig.enableLocalStorage) {
-      // Check if we have saved data in localStorage
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          console.log('🏠 useHabits: Loaded from localStorage:', parsed.habits?.length, 'habits,', parsed.logs?.length, 'logs');
-          return {
-            habits: parsed.habits || dataService.getHabits(),
-            logs: parsed.logs || dataService.getLogs(),
-            settings: {
-              theme: 'light',
-              nerdMode: false,
-              ...parsed.settings
-            }
-          };
-        } catch {
-          console.log('🏠 useHabits: localStorage parse failed, using mock data');
-          return {
-            habits: dataService.getHabits(),
-            logs: dataService.getLogs(),
-            settings: { theme: 'light', nerdMode: false }
-          };
-        }
-      }
-    }
-
-    // Initialize with data from dataService (respects dataSourceConfig)
-    console.log('🏠 useHabits: Loading from dataService with source:', dataSourceConfig.source);
-    const initialData = {
-      habits: dataService.getHabits(),
-      logs: dataService.getLogs(),
-      settings: { theme: 'light', nerdMode: false }
-    };
-    console.log('🏠 useHabits: Loaded from dataService:', initialData.habits.length, 'habits,', initialData.logs.length, 'logs');
-    return initialData;
-  });
 
   useEffect(() => {
     debouncedSave(data);
@@ -158,6 +126,10 @@ export function useHabits() {
       };
 
       console.log('🔄 Habit logged:', { habitId, date, state, totalLogs: newData.logs.length });
+
+      // Trigger save with habit ID for targeted feedback
+      setTimeout(() => debouncedSave(newData, habitId), 0);
+
       return newData;
     });
   };
@@ -221,7 +193,7 @@ export function useHabits() {
     if (dataSourceConfig.enableLocalStorage) {
       localStorage.removeItem(STORAGE_KEY);
     }
-    
+
     setData({
       habits: [],
       logs: [],

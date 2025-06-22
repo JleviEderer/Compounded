@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 export default function Home() {
   const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('30 D');
   const [, setLocation] = useLocation();
-  
+
   const timeRanges = [
     { label: '30 D', days: 30 },
     { label: '3 M', days: 90 },
@@ -20,14 +20,14 @@ export default function Home() {
   ];
 
   const currentTimeFilter = timeRanges.find(range => range.label === selectedTimeFilter);
-  
-  const { habits, logs, logHabit } = useHabits();
+
+  const { habits, logs, logHabit, lastSavedHabitId } = useHabits();
   const momentum = useMomentum(habits, logs, currentTimeFilter);
-  
+
   const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
   const todayLogs = logs.filter(log => log.date === today && log.completed);
   const todayRate = momentum.todayRate * 100;
-  
+
   const hasCheckedToday = todayLogs.length > 0;
 
   return (
@@ -131,13 +131,14 @@ export default function Home() {
                   logs={logs}
                   onLogHabit={logHabit}
                   isToday={true}
+                  showSavedFlash={lastSavedHabitId === habit.id}
                 />
               </motion.div>
             ))}
           </div>
         )}
 
-        
+
       </motion.div>
     </div>
   );
