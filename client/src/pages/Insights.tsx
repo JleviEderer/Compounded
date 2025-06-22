@@ -38,6 +38,19 @@ export default function Insights() {
   const currentTimeFilter = getTimeFilterForView(activeView);
   const momentum = useMomentum(habits, logs, currentTimeFilter);
 
+  // Debug success rate calculations
+  React.useEffect(() => {
+    if (habits.length > 0 && logs.length > 0) {
+      // Import debug function dynamically
+      import('../utils/debug-success-rate').then(({ debugSuccessRateCalculation }) => {
+        debugSuccessRateCalculation(habits, logs, 7, 'WEEK');
+        debugSuccessRateCalculation(habits, logs, 30, 'MONTH');
+        debugSuccessRateCalculation(habits, logs, 90, 'QUARTER');
+        debugSuccessRateCalculation(habits, logs, logs.length, 'ALL TIME');
+      });
+    }
+  }, [habits, logs]);
+
   // Filter logs based on current time filter and anchor dates
   const getFilteredLogs = () => {
     if (!currentTimeFilter.days) {
