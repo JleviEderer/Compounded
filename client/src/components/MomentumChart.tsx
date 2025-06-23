@@ -186,7 +186,7 @@ export default function MomentumChart({
               }`}
             >
               {range.label}
-            </button>
+            </motion.button>
           ))}
         </div>
       </div>
