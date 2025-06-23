@@ -92,7 +92,7 @@ export default function Layout({ children }: LayoutProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="max-w-[640px] md:max-w-[960px] lg:max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8"
+            className="w-full px-4 max-w-[640px] md:max-w-3xl xl:max-w-5xl mx-auto sm:px-6 lg:px-8"
           >
             {children}
           </motion.div>
@@ -127,7 +127,7 @@ export default function Layout({ children }: LayoutProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="max-w-[640px] md:max-w-[960px] mx-auto px-4 sm:px-6"
+              className="w-full px-4 max-w-[640px] md:max-w-3xl xl:max-w-5xl mx-auto sm:px-6"
             >
               {children}
             </motion.div>

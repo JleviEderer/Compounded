@@ -64,8 +64,8 @@ export default function Home() {
         </motion.div>
       )}
 
-      {/* KPI Strip */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:justify-between gap-4 mb-6">
+      {/* KPI Strip - mobile only */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:justify-between gap-4 mb-6 md:hidden">
         <div className="card-glass p-4">
           <div className="text-2xl font-bold text-coral">{todayRate.toFixed(1)}%</div>
           <div className="text-sm text-gray-600 dark:text-gray-400">Today's Rate</div>
