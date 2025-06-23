@@ -64,25 +64,7 @@ export default function Home() {
         </motion.div>
       )}
 
-      {/* KPI Strip - mobile only */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:justify-between gap-4 mb-6 md:hidden">
-        <div className="card-glass p-4">
-          <div className="text-2xl font-bold text-coral">{todayRate.toFixed(1)}%</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Today's Rate</div>
-        </div>
-        <div className="card-glass p-4">
-          <div className="text-2xl font-bold text-gray-800 dark:text-white">{momentum.currentMomentum.toFixed(2)}x</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Current Momentum</div>
-        </div>
-        <div className="card-glass p-4">
-          <div className="text-2xl font-bold text-emerald-600">{momentum.totalGrowth.toFixed(1)}%</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Total Growth</div>
-        </div>
-        <div className="card-glass p-4">
-          <div className="text-2xl font-bold text-purple-600">{momentum.projectedTarget.toFixed(1)}%</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Projected Target</div>
-        </div>
-      </div>
+      
 
       {/* Momentum Chart */}
       <MomentumChart
