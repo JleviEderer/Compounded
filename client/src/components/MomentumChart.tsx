@@ -133,7 +133,7 @@ export default function MomentumChart({
 
   return (
     <motion.div 
-      className="card-glass p-8"
+      className="w-full px-4 sm:px-6 lg:px-8 lg:max-w-3xl rounded-none shadow-none sm:rounded-xl sm:shadow card-glass p-8"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
@@ -191,7 +191,7 @@ export default function MomentumChart({
         </div>
 
         <motion.div 
-          className="h-80 w-full"
+          className="h-[220px] md:h-[300px] w-full"
           layout
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >
@@ -281,7 +281,7 @@ export default function MomentumChart({
       </motion.div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+      <div className="grid gap-3 grid-cols-2 md:grid-cols-3 mb-6">
         <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
           <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
             {todayRate >= 0 ? '+' : ''}{(todayRate * 100).toFixed(2)}%
