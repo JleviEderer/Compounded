@@ -7,11 +7,11 @@ export interface HabitPair {
 }
 
 export enum HabitWeight {
-  MICRO = 0.00010,    // 0.010%
-  SMALL = 0.00020,    // 0.020%
-  MEDIUM = 0.00030,   // 0.030%
-  LARGE = 0.00050,    // 0.050%
-  KEYSTONE = 0.00100  // 0.100%
+  MICRO = 0.0001,     // 0.010%
+  SMALL = 0.0002,     // 0.020%
+  MEDIUM = 0.0003,    // 0.030%
+  LARGE = 0.0005,     // 0.050%
+  KEYSTONE = 0.001    // 0.100%
 }
 
 export enum HabitLogState {

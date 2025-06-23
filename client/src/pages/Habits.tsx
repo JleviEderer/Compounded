@@ -194,7 +194,7 @@ export default function Habits() {
                           />
                         </div>
                         <div className="text-sm text-gray-600 dark:text-gray-400">
-                          {WEIGHT_LABELS[habit.weight]}
+                          {WEIGHT_LABELS[habit.weight] || 'Unknown weight'}
                         </div>
                       </div>
                     </div>

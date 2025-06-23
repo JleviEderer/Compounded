@@ -149,7 +149,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
               </div>
             )}
             <div className="text-xs text-gray-500">
-              {WEIGHT_LABELS[habit.weight].split(' ')[0]} impact
+              {WEIGHT_LABELS[habit.weight]?.split(' ')[0] || 'Unknown'} impact
             </div>
           </div>
           <motion.button
