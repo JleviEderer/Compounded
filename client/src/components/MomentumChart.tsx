@@ -1,6 +1,5 @@
-
 import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { 
   AreaChart, 
@@ -8,9 +7,10 @@ import {
   XAxis, 
   YAxis, 
   ResponsiveContainer, 
-  ReferenceLine,
-  CartesianGrid 
+  Tooltip as RechartsTooltip,
+  ReferenceLine 
 } from 'recharts';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { HelpCircle } from 'lucide-react';
 import { MomentumData } from '../types';
@@ -33,85 +33,6 @@ interface MomentumChartProps {
   projWindowDays: number;
 }
 
-interface ScrubTooltipData {
-  x: number;
-  value: number;
-  date: string;
-  rate: number;
-}
-
-// Custom hook for mobile scrub tooltip
-function useScrubTooltip(data: MomentumData[], containerRef: React.RefObject<HTMLDivElement>) {
-  const [tooltip, setTooltip] = useState<ScrubTooltipData | null>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container || data.length === 0) return;
-
-    const handlePointerMove = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const containerWidth = rect.width;
-      
-      // Calculate which data point we're closest to
-      const dataIndex = Math.round((x / containerWidth) * (data.length - 1));
-      const clampedIndex = Math.max(0, Math.min(dataIndex, data.length - 1));
-      const dataPoint = data[clampedIndex];
-      
-      if (dataPoint) {
-        setTooltip({
-          x,
-          value: dataPoint.value,
-          date: dataPoint.date,
-          rate: dataPoint.dailyRate
-        });
-      }
-    };
-
-    const handlePointerLeave = () => {
-      setTooltip(null);
-    };
-
-    container.addEventListener('pointermove', handlePointerMove);
-    container.addEventListener('pointerleave', handlePointerLeave);
-
-    return () => {
-      container.removeEventListener('pointermove', handlePointerMove);
-      container.removeEventListener('pointerleave', handlePointerLeave);
-    };
-  }, [data]);
-
-  return tooltip;
-}
-
-// Mobile scrub bubble component
-function MobileScrubBubble({ tooltip }: { tooltip: ScrubTooltipData | null }) {
-  if (!tooltip) return null;
-
-  return (
-    <div
-      className="absolute pointer-events-none z-10 sm:hidden"
-      style={{
-        left: tooltip.x,
-        top: -60,
-        transform: 'translateX(-50%)'
-      }}
-    >
-      <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md p-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 text-xs">
-        <p className="font-medium text-gray-800 dark:text-white">
-          {format(new Date(tooltip.date), 'M/d/yy')}
-        </p>
-        <p className="text-coral font-medium">
-          {tooltip.value.toFixed(3)}
-        </p>
-        <p className="text-gray-600 dark:text-gray-400">
-          {(tooltip.rate * 100).toFixed(2)}%
-        </p>
-      </div>
-    </div>
-  );
-}
-
 export default function MomentumChart({
   data,
   currentMomentum,
@@ -127,8 +48,6 @@ export default function MomentumChart({
   timeRanges,
   projWindowDays
 }: MomentumChartProps) {
-  const chartContainerRef = useRef<HTMLDivElement>(null);
-  const tooltip = useScrubTooltip(data, chartContainerRef);
 
   // Separate historical and forecast data for clean rendering
   const historicalData = data.filter(d => !d.isProjection);
@@ -188,9 +107,33 @@ export default function MomentumChart({
     ticksArr.splice(1, 0, lastHist);
   }
 
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      const epoch = data.epoch || label;
+      return (
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600">
+          <p className="text-sm font-medium text-gray-800 dark:text-white">
+            {format(epoch, 'M/d/yy')}
+          </p>
+          <p className="text-sm text-coral">
+            Momentum: {data.value.toFixed(3)}
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Daily Rate: {(data.dailyRate * 100).toFixed(2)}%
+          </p>
+          {data.isProjection && (
+            <p className="text-xs text-gray-500 italic">Projected</p>
+          )}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <motion.div 
-      className="w-full sm:px-4 px-4 sm:px-6 lg:px-8 rounded-none shadow-none sm:rounded-xl sm:shadow card-glass p-8"
+      className="w-full px-4 sm:px-6 lg:px-8 rounded-none shadow-none sm:rounded-xl sm:shadow card-glass p-8"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
@@ -248,103 +191,94 @@ export default function MomentumChart({
         </div>
 
         <motion.div 
-          ref={chartContainerRef}
-          className="h-[220px] md:h-[300px] relative"
+          className="h-[220px] md:h-[300px] w-full"
           layout
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >
-          <div className="-mx-4 sm:mx-0 w-full h-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={data}>
-                <defs>
-                  <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(174, 58%, 46%)" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="hsl(261, 84%, 82%)" stopOpacity={0.1}/>
-                  </linearGradient>
-                  <linearGradient id="projectionGradientUp" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#009B72" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#009B72" stopOpacity={0.1}/>
-                  </linearGradient>
-                  <linearGradient id="projectionGradientDown" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#D84C3E" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#D84C3E" stopOpacity={0.1}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" className="hidden sm:block" />
-                <XAxis 
-                  dataKey="epoch"
-                  type="number"
-                  scale="time"
-                  domain={['dataMin', todayEpoch]}
-                  ticks={ticksArr.filter(Boolean)}
-                  tickFormatter={(t) => format(t, 'M/d')}
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
-                />
-                <YAxis 
-                  hide
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
-                  domain={[
-                    (dataMin: number) => Math.max(0.98, dataMin - 0.02),
-                    (dataMax: number) => dataMax + 0.02
-                  ]}
-                  tickFormatter={(value) => value.toFixed(3)}
-                  tickCount={5}
-                />
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={data}>
+            <defs>
+              <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="hsl(174, 58%, 46%)" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="hsl(261, 84%, 82%)" stopOpacity={0.1}/>
+              </linearGradient>
+              <linearGradient id="projectionGradientUp" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#009B72" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="#009B72" stopOpacity={0.1}/>
+              </linearGradient>
+              <linearGradient id="projectionGradientDown" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#D84C3E" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="#D84C3E" stopOpacity={0.1}/>
+              </linearGradient>
+            </defs>
+            <XAxis 
+              dataKey="epoch"
+              type="number"
+              scale="time"
+              domain={['dataMin', todayEpoch]}
+              ticks={ticksArr.filter(Boolean)}
+              tickFormatter={(t) => format(t, 'M/d')}
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
+            />
+            <YAxis 
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
+              domain={[
+                (dataMin: number) => Math.max(0.98, dataMin - 0.02),
+                (dataMax: number) => dataMax + 0.02
+              ]}
+              tickFormatter={(value) => value.toFixed(3)}
+              tickCount={5}
+            />
+            <RechartsTooltip content={<CustomTooltip />} />
 
-                {/* Historical data area - only show non-projection points */}
-                <Area
-                  type="monotone"
-                  dataKey={(entry: any) => !entry.isProjection ? entry.value : null}
-                  stroke="hsl(174, 58%, 46%)"
-                  strokeWidth={3}
-                  fill="url(#areaGradient)"
-                  dot={false}
-                  connectNulls={false}
-                  isAnimationActive={false}
-                />
+            {/* Historical data area - only show non-projection points */}
+            <Area
+              type="monotone"
+              dataKey={(entry: any) => !entry.isProjection ? entry.value : null}
+              stroke="hsl(174, 58%, 46%)"
+              strokeWidth={3}
+              fill="url(#areaGradient)"
+              dot={false}
+              connectNulls={false}
+            />
 
-                {/* Forecast area - only show projection points */}
-                <Area
-                  type="monotone"
-                  dataKey={(entry: any) => entry.isProjection ? entry.value : null}
-                  stroke={forecastStrokeColor}
-                  strokeWidth={1.5}
-                  strokeDasharray="8,4"
-                  fill={`url(#${forecastGradientId})`}
-                  dot={false}
-                  connectNulls={false}
-                  isAnimationActive={false}
-                />
+            {/* Forecast area - only show projection points */}
+            <Area
+              type="monotone"
+              dataKey={(entry: any) => entry.isProjection ? entry.value : null}
+              stroke={forecastStrokeColor}
+              strokeWidth={1.5}
+              strokeDasharray="8,4"
+              fill={`url(#${forecastGradientId})`}
+              dot={false}
+              connectNulls={false}
+            />
 
-                {/* Today marker */}
-                <ReferenceLine
-                  x={todayEpoch}
-                  stroke="#6B7280"
-                  strokeWidth={1}
-                  opacity={0.5}
-                  isFront
-                  ifOverflow="extendDomain"
-                  label={{ 
-                    value: 'Today', 
-                    position: 'top', 
-                    offset: 8,
-                    fill: '#6B7280', 
-                    fontSize: 12, 
-                    fontWeight: 500 
-                  }}
-                  data-testid="today-line"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-          
-          {/* Mobile scrub tooltip */}
-          <MobileScrubBubble tooltip={tooltip} />
-        </motion.div>
+            {/* Today marker */}
+            <ReferenceLine
+              x={todayEpoch}
+              stroke="#6B7280"
+              strokeWidth={1}
+              opacity={0.5}
+              isFront
+              ifOverflow="extendDomain"
+              label={{ 
+                value: 'Today', 
+                position: 'top', 
+                offset: 8,
+                fill: '#6B7280', 
+                fontSize: 12, 
+                fontWeight: 500 
+              }}
+              data-testid="today-line"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </motion.div>
 
       {/* Quick Stats */}
       <div className="grid gap-3 grid-cols-2 md:grid-cols-3 mb-6">
