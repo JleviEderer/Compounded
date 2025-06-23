@@ -222,17 +222,7 @@ export default function MomentumChart({
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
             />
-            <YAxis 
-              axisLine={false}
-              tickLine={false}
-              tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
-              domain={[
-                (dataMin: number) => Math.max(0.98, dataMin - 0.02),
-                (dataMax: number) => dataMax + 0.02
-              ]}
-              tickFormatter={(value) => value.toFixed(3)}
-              tickCount={5}
-            />
+            <YAxis hide />
             <RechartsTooltip content={<CustomTooltip />} />
 
             {/* Historical data area - only show non-projection points */}
