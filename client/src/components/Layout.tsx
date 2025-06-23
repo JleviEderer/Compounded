@@ -1,3 +1,4 @@
+
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'wouter';
 import { motion } from 'framer-motion';
@@ -83,29 +84,8 @@ export default function Layout({ children }: LayoutProps) {
         </div>
       </motion.div>
 
-      {/* Mobile/Tablet Layout Container */}
-      <div className="flex h-screen overflow-hidden lg:hidden">
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Mobile Header */}
-        <div className="lg:hidden card-glass border-b border-white/20 dark:border-gray-700/50 p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3 flex-1 min-w-0">
-              <div className="w-8 h-8 bg-gradient-to-r from-coral to-pink-400 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-4 h-4 text-white" />
-              </div>
-              <h1 className="text-lg font-bold text-gray-800 dark:text-white truncate">Compounded</h1>
-            </div>
-            <div className="ml-4">
-              <Switch
-                checked={theme === 'dark'}
-                onCheckedChange={toggleTheme}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Page Content */}
+      {/* Desktop Main Content */}
+      <div className="hidden lg:flex flex-col overflow-hidden">
         <main className="flex-1 overflow-y-auto p-4 lg:p-8">
           <motion.div
             key={location}
@@ -117,48 +97,68 @@ export default function Layout({ children }: LayoutProps) {
             {children}
           </motion.div>
         </main>
-
-        {/* Mobile Bottom Navigation */}
-        <div className="lg:hidden card-glass border-t border-white/20 dark:border-gray-700/50 p-4">
-          <nav className="flex justify-around">
-            {navigation.map((item) => {
-              const isActive = location === item.href;
-              const Icon = item.icon;
-
-              return (
-                <Link key={item.name} href={item.href}>
-                  <motion.div
-                    className={`flex flex-col items-center space-y-1 p-2 cursor-pointer ${
-                      isActive 
-                        ? 'text-coral' 
-                        : 'text-gray-500 dark:text-gray-400'
-                    }`}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Icon className="w-5 h-5" />
-                    <span className="text-xs font-medium">{item.name}</span>
-                  </motion.div>
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
       </div>
 
-      {/* Main Content for Desktop */}
-      <div className="hidden lg:flex flex-col overflow-hidden">
-        {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-4 lg:p-8">
-          <motion.div
-            key={location}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="max-w-[640px] md:max-w-[960px] lg:max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8"
-          >
-            {children}
-          </motion.div>
-        </main>
+      {/* Mobile/Tablet Layout */}
+      <div className="flex h-screen overflow-hidden lg:hidden">
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Mobile Header */}
+          <div className="card-glass border-b border-white/20 dark:border-gray-700/50 p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3 flex-1 min-w-0">
+                <div className="w-8 h-8 bg-gradient-to-r from-coral to-pink-400 rounded-lg flex items-center justify-center">
+                  <TrendingUp className="w-4 h-4 text-white" />
+                </div>
+                <h1 className="text-lg font-bold text-gray-800 dark:text-white truncate">Compounded</h1>
+              </div>
+              <div className="ml-4">
+                <Switch
+                  checked={theme === 'dark'}
+                  onCheckedChange={toggleTheme}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Page Content */}
+          <main className="flex-1 overflow-y-auto p-4">
+            <motion.div
+              key={location}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-[640px] md:max-w-[960px] mx-auto px-4 sm:px-6"
+            >
+              {children}
+            </motion.div>
+          </main>
+
+          {/* Mobile Bottom Navigation */}
+          <div className="card-glass border-t border-white/20 dark:border-gray-700/50 p-4">
+            <nav className="flex justify-around">
+              {navigation.map((item) => {
+                const isActive = location === item.href;
+                const Icon = item.icon;
+
+                return (
+                  <Link key={item.name} href={item.href}>
+                    <motion.div
+                      className={`flex flex-col items-center space-y-1 p-2 cursor-pointer ${
+                        isActive 
+                          ? 'text-coral' 
+                          : 'text-gray-500 dark:text-gray-400'
+                      }`}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span className="text-xs font-medium">{item.name}</span>
+                    </motion.div>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        </div>
       </div>
     </div>
   );
