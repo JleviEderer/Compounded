@@ -174,34 +174,21 @@ export default function MomentumChart({
       </div>
 
       {/* Time Range Selector */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 md:gap-4 mb-4">
         {timeRanges.map((range) => (
           <motion.button
             key={range.label}
             onClick={() => onRangeChange(range.label)}
-            className={`relative flex px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
               selectedRange === range.label
-                ? 'text-white dark:text-white'
-                : 'text-teal-700 dark:text-teal-300 hover:text-teal-600 dark:hover:text-teal-200'
-            }`}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {selectedRange === range.label && (
-              <motion.div
-                layoutId="range"
-                className="absolute inset-0 bg-teal-600 dark:bg-teal-400 rounded-full"
-                initial={false}
-                transition={{
-                  type: "spring",
-                  stiffness: 350,
-                  damping: 30
-                }}
-              />
-            )}
-            <span className="relative z-10">{range.label}</span>
-          </motion.button>
-        ))}
+                ? 'bg-coral text-white shadow-lg'
+                : 'bg-white/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-600/50'
+              }`}
+            >
+              {range.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <motion.div 

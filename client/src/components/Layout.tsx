@@ -28,14 +28,24 @@ export default function Layout({ children }: LayoutProps) {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="lg:grid lg:grid-cols-[220px_1fr] h-screen overflow-hidden">
       {/* Desktop Sidebar */}
       <motion.div 
-        className="hidden lg:flex flex-col w-64 card-glass border-r border-white/20 dark:border-gray-700/50"
+        className="hidden lg:flex flex-col card-glass border-r border-white/20 dark:border-gray-700/50"
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.3 }}
-      >
+      ></motion.div>
+
+      {/* Mobile/Tablet Layout Container */}
+      <div className="flex h-screen overflow-hidden lg:hidden">
+        {/* Desktop Sidebar (duplicate for mobile hidden) */}
+        <motion.div 
+          className="hidden lg:flex flex-col w-64 card-glass border-r border-white/20 dark:border-gray-700/50"
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
         <div className="p-6 border-b border-white/10 dark:border-gray-700/50">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-r from-coral to-pink-400 rounded-xl flex items-center justify-center">
@@ -110,7 +120,7 @@ export default function Layout({ children }: LayoutProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="max-w-[640px] mx-auto px-4 sm:px-6 lg:px-8"
+            className="max-w-[640px] md:max-w-[960px] lg:max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8"
           >
             {children}
           </motion.div>
