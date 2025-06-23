@@ -88,16 +88,18 @@ export default function Layout({ children }: LayoutProps) {
         {/* Mobile Header */}
         <div className="lg:hidden card-glass border-b border-white/20 dark:border-gray-700/50 p-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 flex-1 min-w-0">
               <div className="w-8 h-8 bg-gradient-to-r from-coral to-pink-400 rounded-lg flex items-center justify-center">
                 <TrendingUp className="w-4 h-4 text-white" />
               </div>
-              <h1 className="text-lg font-bold text-gray-800 dark:text-white">Compounded</h1>
+              <h1 className="text-lg font-bold text-gray-800 dark:text-white truncate">Compounded</h1>
             </div>
-            <Switch
-              checked={theme === 'dark'}
-              onCheckedChange={toggleTheme}
-            />
+            <div className="ml-4">
+              <Switch
+                checked={theme === 'dark'}
+                onCheckedChange={toggleTheme}
+              />
+            </div>
           </div>
         </div>
 
@@ -108,6 +110,7 @@ export default function Layout({ children }: LayoutProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
+            className="max-w-[640px] mx-auto px-4 sm:px-6 lg:px-8"
           >
             {children}
           </motion.div>

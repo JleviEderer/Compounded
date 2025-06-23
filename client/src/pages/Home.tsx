@@ -31,26 +31,26 @@ export default function Home() {
   const hasCheckedToday = todayLogs.length > 0;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Progress Banner */}
       {hasCheckedToday && (
         <motion.div 
-          className="bg-gradient-to-r from-emerald-400/90 to-teal-500/90 rounded-2xl p-6 text-white"
+          className="bg-gradient-to-r from-emerald-400/90 to-teal-500/90 rounded-2xl p-4 sm:p-6 text-white"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-bold mb-2">Great momentum today! 🚀</h2>
-              <p className="text-emerald-50">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg sm:text-xl font-bold mb-2">Great momentum today! 🚀</h2>
+              <p className="text-emerald-50 text-sm sm:text-base">
                 You've completed {todayLogs.length} out of {habits.length} good habits. 
                 Keep building that compound growth!
               </p>
             </div>
-            <div className="text-right">
+            <div className="text-center sm:text-right flex-shrink-0">
               <motion.div 
-                className="text-3xl font-bold"
+                className="text-2xl sm:text-3xl font-bold"
                 key={todayRate}
                 initial={{ scale: 1.2 }}
                 animate={{ scale: 1 }}
@@ -58,7 +58,7 @@ export default function Home() {
               >
                 +{todayRate.toFixed(1)}%
               </motion.div>
-              <div className="text-sm text-emerald-100">Today's impact</div>
+              <div className="text-xs sm:text-sm text-emerald-100">Today's impact</div>
             </div>
           </div>
         </motion.div>
