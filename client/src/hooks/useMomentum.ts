@@ -17,13 +17,17 @@ interface TimeFilter {
 export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: TimeFilter, preFilteredLogs?: HabitLog[]) {
   // Use pre-filtered logs if provided, otherwise apply basic time filter
   const filteredData = useMemo(() => {
-    // Mobile debugging
-    const isMobile = window.innerWidth < 640;
+    // Better mobile detection
+    const isMobile = window.innerWidth < 640 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const deviceType = isMobile ? 'MOBILE' : 'DESKTOP';
     
+    // Enhanced debugging
+    console.log(`🔍 [${deviceType}] Window width: ${window.innerWidth}px`);
+    console.log(`🔍 [${deviceType}] User agent contains mobile: ${/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)}`);
     console.log(`🔍 [${deviceType}] Filtering data - TimeFilter:`, timeFilter?.label);
     console.log(`🔍 [${deviceType}] Input logs count:`, logs.length);
     console.log(`🔍 [${deviceType}] Current date:`, new Date().toISOString().split('T')[0]);
+    console.log(`🔍 [${deviceType}] Timezone offset:`, new Date().getTimezoneOffset());
     
     // If pre-filtered logs are provided, use them (this ensures exact date range matching)
     if (preFilteredLogs) {
@@ -188,8 +192,8 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     return projectedValue;
   }, [momentumData, currentMomentum, recentAvgRate, projWindowDays, timeFilter]);
 
-  // Debug final calculated values
-  const isMobile = window.innerWidth < 640;
+  // Debug final calculated values with consistent mobile detection
+  const isMobile = window.innerWidth < 640 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const deviceType = isMobile ? 'MOBILE' : 'DESKTOP';
   
   console.log(`📊 [${deviceType}] Final calculated values:`, {

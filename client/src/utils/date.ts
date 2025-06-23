@@ -1,14 +1,26 @@
-
 export function getTodayEpoch(): number {
-  const d = new Date(); // local now
-  d.setHours(0, 0, 0, 0); // clamp to local midnight
-  return d.getTime(); // epoch ms
+  const today = new Date();
+  const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const epoch = startOfDay.getTime();
+  const isMobile = window.innerWidth < 640 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    console.log(`📅 [MOBILE] Today epoch: ${epoch}, Start of day: ${startOfDay.toString()}`);
+  }
+
+  return epoch;
 }
 
 export function getTodayString(): string {
-  const d = new Date(); // local now
-  d.setHours(0, 0, 0, 0); // clamp to local midnight
-  return d.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
+  const today = new Date();
+  const todayString = today.toISOString().split('T')[0];
+  const isMobile = window.innerWidth < 640 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    console.log(`📅 [MOBILE] Today string: ${todayString}, Raw date: ${today.toString()}`);
+  }
+
+  return todayString;
 }
 
 // Optional: Console check helper for debugging
