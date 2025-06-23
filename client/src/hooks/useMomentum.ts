@@ -74,13 +74,21 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     }
   }, [timeFilter]);
 
-  // Calculate recent average rate using dynamic window
+  // Calculate recent average rate using dynamic window - ONLY from historical data
   const recentAvgRate = useMemo(() => {
     if (momentumData.length === 0) return 0;
-    const windowSize = Math.min(avgWindowDays, momentumData.length);
-    const recentData = momentumData.slice(-windowSize);
+    
+    // Only use historical data points (not forecast) for average calculation
+    const historicalData = momentumData.filter(d => !d.isProjection);
+    if (historicalData.length === 0) return 0;
+    
+    const windowSize = Math.min(avgWindowDays, historicalData.length);
+    const recentData = historicalData.slice(-windowSize);
+    
+    console.log(`Recent Avg Rate calc for ${timeFilter?.label}: ${recentData.length} historical days from window of ${avgWindowDays}`);
+    
     return recentData.reduce((sum, d) => sum + d.dailyRate, 0) / recentData.length;
-  }, [momentumData, avgWindowDays]);
+  }, [momentumData, avgWindowDays, timeFilter?.label]);
 
   // Generate forecast data based on time filter
   const forecastData = useMemo(() => {
