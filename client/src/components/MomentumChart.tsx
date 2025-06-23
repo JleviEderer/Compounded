@@ -189,7 +189,7 @@ export default function MomentumChart({
             </motion.button>
           ))}
         </div>
-      </motion.div>
+      </div>
 
       <motion.div 
         className="h-80 w-full"
