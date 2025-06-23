@@ -17,28 +17,16 @@ interface TimeFilter {
 export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: TimeFilter, preFilteredLogs?: HabitLog[]) {
   // Use pre-filtered logs if provided, otherwise apply basic time filter
   const filteredData = useMemo(() => {
-    // Better mobile detection
-    const isMobile = window.innerWidth < 640 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    const deviceType = isMobile ? 'MOBILE' : 'DESKTOP';
-    
-    // Enhanced debugging
-    console.log(`🔍 [${deviceType}] Window width: ${window.innerWidth}px`);
-    console.log(`🔍 [${deviceType}] User agent contains mobile: ${/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)}`);
-    console.log(`🔍 [${deviceType}] Filtering data - TimeFilter:`, timeFilter?.label);
-    console.log(`🔍 [${deviceType}] Input logs count:`, logs.length);
-    console.log(`🔍 [${deviceType}] Current date:`, new Date().toISOString().split('T')[0]);
-    console.log(`🔍 [${deviceType}] Timezone offset:`, new Date().getTimezoneOffset());
-    
     // If pre-filtered logs are provided, use them (this ensures exact date range matching)
     if (preFilteredLogs) {
-      console.log(`🔍 [${deviceType}] Using pre-filtered logs: ${preFilteredLogs.length}/${logs.length} logs`);
+      console.log(`Using pre-filtered logs: ${preFilteredLogs.length}/${logs.length} logs`);
       return { habits, logs: preFilteredLogs };
     }
 
     // Fallback to basic time filter for backward compatibility
     if (!timeFilter || timeFilter.days === null) {
-      console.log(`🔍 [${deviceType}] Time Filter: All Time selected, using all data`);
-      console.log(`🔍 [${deviceType}] Total logs available: ${logs.length}`);
+      console.log('Time Filter: All Time selected, using all data');
+      console.log(`Total logs available: ${logs.length}`);
       return { habits, logs };
     }
 
@@ -46,16 +34,10 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     cutoffDate.setDate(cutoffDate.getDate() - timeFilter.days);
     const cutoffString = cutoffDate.toISOString().split('T')[0];
 
-    console.log(`🔍 [${deviceType}] Cutoff date: ${cutoffString} (${timeFilter.days} days ago)`);
-
     // Filter logs to only include data within the time range
     const filteredLogs = logs.filter(log => log.date >= cutoffString);
 
-    console.log(`🔍 [${deviceType}] Time filtering: ${timeFilter.label} → ${filteredLogs.length}/${logs.length} logs`);
-    console.log(`🔍 [${deviceType}] Filtered date range:`, {
-      earliest: filteredLogs[0]?.date,
-      latest: filteredLogs[filteredLogs.length - 1]?.date
-    });
+    console.log(`Time filtering: ${timeFilter.label} → ${filteredLogs.length}/${logs.length} logs`);
 
     return { habits, logs: filteredLogs };
   }, [habits, logs, timeFilter, preFilteredLogs]);
@@ -191,20 +173,6 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     
     return projectedValue;
   }, [momentumData, currentMomentum, recentAvgRate, projWindowDays, timeFilter]);
-
-  // Debug final calculated values with consistent mobile detection
-  const isMobile = window.innerWidth < 640 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  const deviceType = isMobile ? 'MOBILE' : 'DESKTOP';
-  
-  console.log(`📊 [${deviceType}] Final calculated values:`, {
-    currentMomentum: currentMomentum.toFixed(3),
-    totalGrowth: totalGrowth.toFixed(2) + '%',
-    todayRate: (todayRate * 100).toFixed(2) + '%',
-    projectedTarget: projectedTarget.toFixed(3),
-    recentAvgRate: (recentAvgRate * 100).toFixed(2) + '%',
-    momentumDataPoints: combinedChartData.length,
-    timeFilter: timeFilter?.label
-  });
 
   return {
     momentumData: combinedChartData, // Now includes both historical + forecast
