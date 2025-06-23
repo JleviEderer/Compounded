@@ -86,13 +86,12 @@ export default function Layout({ children }: LayoutProps) {
 
       {/* Desktop Main Content */}
       <div className="hidden lg:flex flex-col overflow-hidden">
-        <main className="flex-1 overflow-y-auto p-4 lg:p-8">
+        <main className="flex-1 overflow-y-auto mx-auto px-4 sm:px-6 lg:px-8 xl:px-4 2xl:px-0 max-w-3xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] w-full">
           <motion.div
             key={location}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="w-full px-4 max-w-[640px] md:max-w-3xl xl:max-w-5xl mx-auto sm:px-6 lg:px-8"
           >
             {children}
           </motion.div>
@@ -121,13 +120,12 @@ export default function Layout({ children }: LayoutProps) {
           </div>
 
           {/* Mobile Page Content */}
-          <main className="flex-1 overflow-y-auto p-4">
+          <main className="flex-1 overflow-y-auto mx-auto px-4 sm:px-6 lg:px-8 xl:px-4 2xl:px-0 max-w-3xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] w-full">
             <motion.div
               key={location}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="w-full px-4 max-w-[640px] md:max-w-3xl xl:max-w-5xl mx-auto sm:px-6"
             >
               {children}
             </motion.div>
