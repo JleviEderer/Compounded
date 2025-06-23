@@ -189,13 +189,12 @@ export default function MomentumChart({
             </motion.button>
           ))}
         </div>
-      </div>
 
-      <motion.div 
-        className="h-80 w-full"
-        layout
-        transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
-      >
+        <motion.div 
+          className="h-80 w-full"
+          layout
+          transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
+        >
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>
