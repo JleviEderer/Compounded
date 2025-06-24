@@ -154,7 +154,7 @@ export default function MomentumChart({
 
   return (
     <motion.section 
-      className="w-full px-0 sm:px-6 lg:px-8 bg-white/50 dark:bg-gray-800/50 rounded-xl shadow-lg backdrop-blur-md p-4 sm:p-8"
+      className="w-full px-0 sm:px-6 lg:px-8 md:bg-white/50 md:dark:bg-gray-800/50 md:rounded-xl md:shadow-lg md:backdrop-blur-md p-4 sm:p-8"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
