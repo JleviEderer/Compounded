@@ -11,6 +11,27 @@ import {
   Tooltip as RechartsTooltip,
   ReferenceLine 
 } from 'recharts';
+
+// Custom tooltip component for drag interactions
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (!active || !payload || !payload.length) return null;
+
+  const data = payload[0].payload;
+  
+  return (
+    <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 shadow-lg text-sm">
+      <div className="font-medium text-gray-800 dark:text-white">
+        {dayjs(data.date).format('MMM D, YYYY')}
+      </div>
+      <div className="text-coral font-semibold">
+        Index: {data.value?.toFixed(3)}
+      </div>
+      <div className={`${(data.dailyRate || 0) >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+        Rate: {((data.dailyRate || 0) * 100).toFixed(2)}%
+      </div>
+    </div>
+  );
+};
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { HelpCircle } from 'lucide-react';
 import { MomentumData } from '../types';
@@ -50,6 +71,7 @@ export default function MomentumChart({
 }: MomentumChartProps) {
   
   const [hover, setHover] = useState(data[data.length-1]); // last point as default
+  const [isDragging, setIsDragging] = useState(false);
 
   // Separate historical and forecast data for clean rendering
   const historicalData = data.filter(d => !d.isProjection);
@@ -126,18 +148,18 @@ export default function MomentumChart({
       </div>
 
       {/* Floating HUD positioned directly under title */}
-      <div className="mb-4 px-3 py-2 rounded-lg bg-white/80 dark:bg-gray-800/80 shadow-sm border border-gray-200/50 dark:border-gray-600/50 backdrop-blur-sm">
+      <div className="mb-4 px-2 py-1">
         <div className="flex items-center justify-between gap-4 text-sm">
           <div className="text-center">
-            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">DATE</div>
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">DATE</div>
             <div className="text-gray-800 dark:text-white font-medium">{dayjs(hover?.date).format('MMM D YY')}</div>
           </div>
           <div className="text-center">
-            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">INDEX</div>
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">INDEX</div>
             <div className="text-lg font-bold text-coral">{hover?.value?.toFixed(3)}</div>
           </div>
           <div className="text-center">
-            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">DAILY RATE</div>
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">DAILY RATE</div>
             <div className={`font-semibold ${(hover?.dailyRate || 0) >= 0 ? 'text-green-600' : 'text-red-500'}`}>
               {((hover?.dailyRate || 0) * 100).toFixed(2)}%
             </div>
@@ -157,7 +179,14 @@ export default function MomentumChart({
             data={data}
             margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
             onMouseMove={({activePayload}) => activePayload && setHover(activePayload[0].payload)}
-            onMouseLeave={() => setHover(data[data.length-1])}
+            onMouseLeave={() => {
+              setHover(data[data.length-1]);
+              setIsDragging(false);
+            }}
+            onTouchStart={() => setIsDragging(true)}
+            onTouchEnd={() => setIsDragging(false)}
+            onMouseDown={() => setIsDragging(true)}
+            onMouseUp={() => setIsDragging(false)}
           >
             <defs>
               <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
@@ -221,6 +250,12 @@ export default function MomentumChart({
               fill={`url(#${forecastGradientId})`}
               dot={false}
               connectNulls={false}
+            />
+
+            {/* Conditional tooltip - only show during drag/touch */}
+            <RechartsTooltip 
+              content={isDragging ? <CustomTooltip /> : null}
+              cursor={{ stroke: '#6B7280', strokeWidth: 1, strokeDasharray: '3,3' }}
             />
 
             {/* Today marker */}
