@@ -153,8 +153,8 @@ export default function MomentumChart({
   };
 
   return (
-    <motion.div 
-      className="w-full px-0 sm:px-6 lg:px-8 rounded-none shadow-none sm:rounded-xl sm:shadow card-glass p-4 sm:p-8"
+    <motion.section 
+      className="w-full px-0 sm:px-6 lg:px-8 md:bg-white/50 md:dark:bg-gray-800/50 md:rounded-xl md:shadow-lg md:backdrop-blur-md p-4 sm:p-8"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
@@ -373,6 +373,6 @@ export default function MomentumChart({
           </div>
         </div>
       </div>
-    </motion.div>
+    </motion.section>
   );
 }
