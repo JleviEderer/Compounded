@@ -194,25 +194,8 @@ export default function MomentumChart({
         </div>
       </div>
 
-      {/* Time Range Selector */}
-      <div className="flex flex-wrap gap-2 md:gap-4 mb-4">
-        {timeRanges.map((range) => (
-          <motion.button
-            key={range.label}
-            onClick={() => onRangeChange(range.label)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-              selectedRange === range.label
-                ? 'bg-coral text-white shadow-lg'
-                : 'bg-white/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-600/50'
-              }`}
-            >
-              {range.label}
-            </motion.button>
-          ))}
-        </div>
-
-        <motion.div 
-          className="h-[220px] md:h-[300px] w-full"
+      <motion.div 
+          className="h-[220px] md:h-[300px] w-full mb-6"
           layout
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >
@@ -303,8 +286,25 @@ export default function MomentumChart({
         </ResponsiveContainer>
       </motion.div>
 
+      {/* Time Range Selector */}
+      <div className="flex flex-wrap gap-2 md:gap-4 mb-8 justify-center">
+        {timeRanges.map((range) => (
+          <motion.button
+            key={range.label}
+            onClick={() => onRangeChange(range.label)}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+              selectedRange === range.label
+                ? 'bg-coral text-white shadow-lg'
+                : 'bg-white/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-600/50'
+              }`}
+            >
+              {range.label}
+            </motion.button>
+          ))}
+        </div>
+
       {/* Quick Stats */}
-      <div className="grid gap-3 grid-cols-2 md:grid-cols-3 mb-6">
+      <div className="grid gap-3 grid-cols-2 md:grid-cols-3">
         <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
           <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
             {todayRate >= 0 ? '+' : ''}{(todayRate * 100).toFixed(2)}%
