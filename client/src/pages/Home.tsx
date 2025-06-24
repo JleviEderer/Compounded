@@ -39,7 +39,7 @@ export default function Home() {
 
       {/* Momentum Chart */}
       {/* phones */}  
-      <div className="pt-4 sm:pt-0">
+      <div className="pt-8 sm:pt-0">
         <div className="sm:hidden">
           <FullBleed>
             <MomentumChart
