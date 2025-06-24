@@ -126,18 +126,19 @@ export default function MomentumChart({
       </div>
 
       <motion.div 
-          className="h-[220px] md:h-[300px] w-full mb-6 relative"
+          className="h-[220px] md:h-[300px] w-full mb-6"
           layout
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >
-        {/* Floating HUD */}
-        <div className="absolute top-2 right-2 z-10 text-right text-xs font-medium rounded-lg bg-white/70 dark:bg-gray-800/70 backdrop-blur px-3 py-1">
-          <div className="text-gray-600 dark:text-gray-400">{dayjs(hover?.date).format('MMM D YY')}</div>
-          <div className="text-lg font-semibold text-gray-800 dark:text-white">{hover?.value?.toFixed(3)}</div>
-          <div className="text-gray-600 dark:text-gray-400">{((hover?.dailyRate || 0) * 100).toFixed(2)}%</div>
-        </div>
-        
-        <ResponsiveContainer width="100%" height="100%">
+        <div className="relative w-full h-full">
+          {/* Floating HUD */}
+          <div className="absolute right-0 -top-3 z-10 px-2 py-1 rounded text-xs bg-transparent shadow-none backdrop-blur-0">
+            <div className="text-gray-600 dark:text-gray-400">{dayjs(hover?.date).format('MMM D YY')}</div>
+            <div className="text-lg font-semibold text-gray-800 dark:text-white">{hover?.value?.toFixed(3)}</div>
+            <div className="text-gray-600 dark:text-gray-400">{((hover?.dailyRate || 0) * 100).toFixed(2)}%</div>
+          </div>
+          
+          <ResponsiveContainer width="100%" height="100%">
           <AreaChart 
             data={data}
             margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
@@ -228,6 +229,7 @@ export default function MomentumChart({
             />
           </AreaChart>
         </ResponsiveContainer>
+        </div>
       </motion.div>
 
       {/* Time Range Selector */}
