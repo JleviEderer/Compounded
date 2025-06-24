@@ -131,6 +131,27 @@ export default function MomentumChart({
     return null;
   };
 
+  const CustomMobileTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      const epoch = data.epoch || label;
+      return (
+        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md p-2 rounded-md shadow-lg border border-gray-200 dark:border-gray-600 text-xs">
+          <p className="font-medium text-gray-800 dark:text-white">
+            {format(epoch, 'M/d/yy')}
+          </p>
+          <p className="text-coral">
+            {data.value.toFixed(3)}
+          </p>
+          <p className="text-gray-600 dark:text-gray-400">
+            {(data.dailyRate * 100).toFixed(1)}%
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <motion.div 
       className="w-full px-4 sm:px-6 lg:px-8 rounded-none shadow-none sm:rounded-xl sm:shadow card-glass p-8"
@@ -222,14 +243,15 @@ export default function MomentumChart({
               tickLine={false}
               tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
             />
-            <YAxis 
-              hide
-              domain={[
-                (dataMin: number) => Math.max(0.98, dataMin - 0.02),
-                (dataMax: number) => dataMax + 0.02
-              ]}
+            <RechartsTooltip 
+              content={<CustomMobileTooltip />}
+              cursor={{ stroke: '#fff', strokeWidth: 1, opacity: 0.25 }}
+              wrapperClassName="sm:hidden"
             />
-            <RechartsTooltip content={<CustomTooltip />} />
+            <RechartsTooltip 
+              content={<CustomTooltip />}
+              wrapperClassName="hidden sm:block"
+            />
 
             {/* Historical data area - only show non-projection points */}
             <Area

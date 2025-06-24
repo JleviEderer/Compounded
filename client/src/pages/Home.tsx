@@ -7,6 +7,7 @@ import { useMomentum } from '../hooks/useMomentum';
 import MomentumChart from '../components/MomentumChart';
 import HabitRow from '../components/HabitRow';
 import { Button } from '@/components/ui/button';
+import { FullBleed } from '../components/FullBleed';
 
 export default function Home() {
   const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>('30 D');
@@ -67,21 +68,45 @@ export default function Home() {
       
 
       {/* Momentum Chart */}
-      <MomentumChart
-        data={momentum.momentumData}
-        currentMomentum={momentum.currentMomentum}
-        totalGrowth={momentum.totalGrowth}
-        todayRate={momentum.todayRate}
-        projectedTarget={momentum.projectedTarget}
-        recentAvgRate={momentum.recentAvgRate}
-        avgWindowDays={momentum.avgWindowDays}
-        projWindowDays={momentum.projWindowDays}
-        habits={habits}
-        logs={logs}
-        selectedRange={selectedTimeFilter}
-        onRangeChange={setSelectedTimeFilter}
-        timeRanges={timeRanges}
-      />
+      {/* phones */}  
+      <div className="sm:hidden">
+        <FullBleed>
+          <MomentumChart
+            data={momentum.momentumData}
+            currentMomentum={momentum.currentMomentum}
+            totalGrowth={momentum.totalGrowth}
+            todayRate={momentum.todayRate}
+            projectedTarget={momentum.projectedTarget}
+            recentAvgRate={momentum.recentAvgRate}
+            avgWindowDays={momentum.avgWindowDays}
+            projWindowDays={momentum.projWindowDays}
+            habits={habits}
+            logs={logs}
+            selectedRange={selectedTimeFilter}
+            onRangeChange={setSelectedTimeFilter}
+            timeRanges={timeRanges}
+          />
+        </FullBleed>
+      </div>
+
+      {/* ≥ sm keeps old layout */}  
+      <div className="hidden sm:block">
+        <MomentumChart
+          data={momentum.momentumData}
+          currentMomentum={momentum.currentMomentum}
+          totalGrowth={momentum.totalGrowth}
+          todayRate={momentum.todayRate}
+          projectedTarget={momentum.projectedTarget}
+          recentAvgRate={momentum.recentAvgRate}
+          avgWindowDays={momentum.avgWindowDays}
+          projWindowDays={momentum.projWindowDays}
+          habits={habits}
+          logs={logs}
+          selectedRange={selectedTimeFilter}
+          onRangeChange={setSelectedTimeFilter}
+          timeRanges={timeRanges}
+        />
+      </div>
 
       {/* Today's Habits */}
       <motion.div 
