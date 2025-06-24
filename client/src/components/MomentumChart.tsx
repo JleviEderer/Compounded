@@ -252,11 +252,7 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Conditional tooltip - only show during drag/touch */}
-            <RechartsTooltip 
-              content={isDragging ? <CustomTooltip /> : null}
-              cursor={{ stroke: '#6B7280', strokeWidth: 1, strokeDasharray: '3,3' }}
-            />
+            
 
             {/* Today marker */}
             <ReferenceLine
