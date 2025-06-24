@@ -232,15 +232,7 @@ export default function MomentumChart({
               hide
             />
             <YAxis 
-              domain={[(dataMin: number) => {
-                const range = data.length > 0 ? Math.max(...data.map(d => d.value)) - Math.min(...data.map(d => d.value)) : 0;
-                const buffer = Math.max(0.005, range * 0.1); // At least 0.005 or 10% of range
-                return dataMin - buffer;
-              }, (dataMax: number) => {
-                const range = data.length > 0 ? Math.max(...data.map(d => d.value)) - Math.min(...data.map(d => d.value)) : 0;
-                const buffer = Math.max(0.005, range * 0.1); // At least 0.005 or 10% of range
-                return dataMax + buffer;
-              }]}
+              domain={['dataMin - 0.01', 'dataMax + 0.01']}
               hide
             />
             <RechartsTooltip 
