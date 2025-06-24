@@ -159,39 +159,13 @@ export default function MomentumChart({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
     >
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-            Momentum Index
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400">
-            Your compound growth over time
-          </p>
-        </div>
-        <div className="text-right">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <motion.div 
-                  className="text-4xl font-bold text-coral cursor-help"
-                  key={dynamicCurrentIndex}
-                  initial={{ scale: 1.2 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  {dynamicCurrentIndex.toFixed(2)}
-                </motion.div>
-              </TooltipTrigger>
-              <TooltipContent side="bottom" className="max-w-xs">
-                <p>Total Growth since {selectedRange}: {timeFilterGrowth >= 0 ? '+' : ''}{timeFilterGrowth.toFixed(1)}%</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <div className="text-sm text-gray-500 dark:text-gray-400">Current Index</div>
-          <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-            Growth since {formatDate(getTimeFilterStartDate())}
-          </div>
-        </div>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+          Momentum Index
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400">
+          Your compound growth over time
+        </p>
       </div>
 
       <motion.div 
@@ -316,7 +290,8 @@ export default function MomentumChart({
         </div>
 
       {/* Quick Stats */}
-      <div className="grid gap-3 grid-cols-2 md:grid-cols-3">
+      <div className="grid gap-3 grid-cols-2">
+        {/* Top Row */}
         <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
           <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
             {todayRate >= 0 ? '+' : ''}{(todayRate * 100).toFixed(2)}%
@@ -333,6 +308,54 @@ export default function MomentumChart({
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+          </div>
+        </div>
+
+        <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
+          <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+            {(recentAvgRate * 100).toFixed(2)}%
+          </div>
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+            Recent Avg Rate
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>Recent average rate used to calculate the projected index</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            ({avgWindowDays}-day average)
+          </div>
+        </div>
+
+        {/* Bottom Row */}
+        <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <motion.div 
+                  className="text-2xl font-bold text-coral cursor-help"
+                  key={dynamicCurrentIndex}
+                  initial={{ scale: 1.2 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {dynamicCurrentIndex.toFixed(2)}
+                </motion.div>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs">
+                <p>Total Growth since {selectedRange}: {timeFilterGrowth >= 0 ? '+' : ''}{timeFilterGrowth.toFixed(1)}%</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <div className="text-sm text-gray-600 dark:text-gray-400">Current Index</div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            Growth since {formatDate(getTimeFilterStartDate())}
           </div>
         </div>
 
@@ -360,28 +383,6 @@ export default function MomentumChart({
           </div>
           <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
             {selectedRange === 'All Time' ? '(current)' : `(${projWindowDays}-day projection)`}
-          </div>
-        </div>
-
-        <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-          <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-            {(recentAvgRate * 100).toFixed(2)}%
-          </div>
-          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-            Recent Avg Rate
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
-                </TooltipTrigger>
-                <TooltipContent className="max-w-xs">
-                  <p>Recent average rate used to calculate the projected index</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-            ({avgWindowDays}-day average)
           </div>
         </div>
       </div>
