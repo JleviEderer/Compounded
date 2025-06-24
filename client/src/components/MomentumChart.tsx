@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
+import dayjs from 'dayjs';
 import { 
   AreaChart, 
   Area, 
@@ -48,6 +49,8 @@ export default function MomentumChart({
   timeRanges,
   projWindowDays
 }: MomentumChartProps) {
+  
+  const [hover, setHover] = useState(data[data.length-1]); // last point as default
 
   // Separate historical and forecast data for clean rendering
   const historicalData = data.filter(d => !d.isProjection);
@@ -107,54 +110,9 @@ export default function MomentumChart({
     ticksArr.splice(1, 0, lastHist);
   }
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      const epoch = data.epoch || label;
-      return (
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600">
-          <p className="text-sm font-medium text-gray-800 dark:text-white">
-            {format(epoch, 'M/d/yy')}
-          </p>
-          <p className="text-sm text-coral">
-            Momentum: {data.value.toFixed(3)}
-          </p>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Daily Rate: {(data.dailyRate * 100).toFixed(2)}%
-          </p>
-          {data.isProjection && (
-            <p className="text-xs text-gray-500 italic">Projected</p>
-          )}
-        </div>
-      );
-    }
-    return null;
-  };
-
-  const CustomMobileTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      const epoch = data.epoch || label;
-      return (
-        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md p-2 rounded-md shadow-lg border border-gray-200 dark:border-gray-600 text-xs">
-          <p className="font-medium text-gray-800 dark:text-white">
-            {format(epoch, 'M/d/yy')}
-          </p>
-          <p className="text-coral">
-            {data.value.toFixed(3)}
-          </p>
-          <p className="text-gray-600 dark:text-gray-400">
-            {(data.dailyRate * 100).toFixed(1)}%
-          </p>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <motion.section 
-      className="w-full px-0 sm:px-6 lg:px-8 md:bg-white/50 md:dark:bg-gray-800/50 md:rounded-xl md:shadow-lg md:backdrop-blur-md p-4 sm:p-8"
+      className="relative w-full px-0 sm:px-6 lg:px-8 md:bg-white/50 md:dark:bg-gray-800/50 md:rounded-xl md:shadow-lg md:backdrop-blur-md p-4 sm:p-8"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
@@ -169,14 +127,23 @@ export default function MomentumChart({
       </div>
 
       <motion.div 
-          className="h-[220px] md:h-[300px] w-full mb-6"
+          className="h-[220px] md:h-[300px] w-full mb-6 relative"
           layout
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >
+        {/* Floating HUD */}
+        <div className="absolute top-2 right-2 z-10 text-right text-xs font-medium rounded-lg bg-white/70 dark:bg-gray-800/70 backdrop-blur px-3 py-1">
+          <div className="text-gray-600 dark:text-gray-400">{dayjs(hover?.date).format('MMM D YY')}</div>
+          <div className="text-lg font-semibold text-gray-800 dark:text-white">{hover?.value?.toFixed(3)}</div>
+          <div className="text-gray-600 dark:text-gray-400">{((hover?.dailyRate || 0) * 100).toFixed(2)}%</div>
+        </div>
+        
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart 
             data={data}
             margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
+            onMouseMove={({activePayload}) => activePayload && setHover(activePayload[0].payload)}
+            onMouseLeave={() => setHover(data[data.length-1])}
           >
             <defs>
               <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
@@ -217,15 +184,7 @@ export default function MomentumChart({
               }]}
               hide
             />
-            <RechartsTooltip 
-              content={<CustomMobileTooltip />}
-              cursor={{ stroke: '#fff', strokeWidth: 1, opacity: 0.25 }}
-              wrapperClassName="sm:hidden"
-            />
-            <RechartsTooltip 
-              content={<CustomTooltip />}
-              wrapperClassName="hidden sm:block"
-            />
+            
 
             {/* Historical data area - only show non-projection points */}
             <Area
