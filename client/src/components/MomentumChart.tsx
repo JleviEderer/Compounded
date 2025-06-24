@@ -48,8 +48,6 @@ export default function MomentumChart({
   timeRanges,
   projWindowDays
 }: MomentumChartProps) {
-  
-  const [tooltipData, setTooltipData] = useState<any>(null);
 
   // Separate historical and forecast data for clean rendering
   const historicalData = data.filter(d => !d.isProjection);
@@ -109,91 +107,49 @@ export default function MomentumChart({
     ticksArr.splice(1, 0, lastHist);
   }
 
-  // Initialize with the most recent data point
-  useState(() => {
-    if (data.length > 0) {
-      // Get the most recent historical data point
-      const mostRecentHistorical = historicalData.length > 0 
-        ? historicalData[historicalData.length - 1] 
-        : data[data.length - 1];
-      setTooltipData(mostRecentHistorical);
-    }
-  }, [data, historicalData]);
-
-  const handleMouseMove = (state: any) => {
-    if (state && state.activePayload && state.activePayload.length > 0) {
-      const chartData = state.activePayload[0].payload;
-      setTooltipData(chartData);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    // Reset to most recent historical data point instead of hiding
-    if (historicalData.length > 0) {
-      setTooltipData(historicalData[historicalData.length - 1]);
-    }
-  };
-
-  const FloatingDataDisplay = () => {
-    if (!tooltipData) return null;
-
-    const epoch = tooltipData.epoch;
-    return (
-      <motion.div 
-        className="absolute top-4 right-4 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg p-4 rounded-2xl shadow-2xl border border-gray-300/50 dark:border-gray-600/50 min-w-[200px]"
-        initial={{ opacity: 0, scale: 0.9, y: -10 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      >
-        <div className="space-y-3">
-          <motion.p 
-            className="text-sm font-bold text-gray-900 dark:text-white border-b border-gray-300/50 dark:border-gray-600/50 pb-2"
-            key={epoch}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.2 }}
-          >
-            {format(epoch, 'MMM d, yyyy')}
-          </motion.p>
-          <div className="space-y-2">
-            <motion.div 
-              className="flex justify-between items-center"
-              key={`momentum-${tooltipData.value}`}
-              initial={{ x: 10, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.2, delay: 0.05 }}
-            >
-              <span className="text-sm text-gray-600 dark:text-gray-400">Momentum</span>
-              <span className="font-bold text-coral text-lg">{tooltipData.value.toFixed(3)}</span>
-            </motion.div>
-            <motion.div 
-              className="flex justify-between items-center"
-              key={`rate-${tooltipData.dailyRate}`}
-              initial={{ x: 10, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.2, delay: 0.1 }}
-            >
-              <span className="text-sm text-gray-600 dark:text-gray-400">Daily Rate</span>
-              <span className={`font-bold text-lg ${tooltipData.dailyRate >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                {tooltipData.dailyRate >= 0 ? '+' : ''}{(tooltipData.dailyRate * 100).toFixed(2)}%
-              </span>
-            </motion.div>
-            {tooltipData.isProjection && (
-              <motion.div 
-                className="text-center pt-2 border-t border-gray-300/30 dark:border-gray-600/30"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2, delay: 0.15 }}
-              >
-                <span className="text-xs text-purple-600 dark:text-purple-400 italic font-medium bg-purple-100/50 dark:bg-purple-900/30 px-2 py-1 rounded-full">
-                  Projected
-                </span>
-              </motion.div>
-            )}
-          </div>
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      const epoch = data.epoch || label;
+      return (
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600">
+          <p className="text-sm font-medium text-gray-800 dark:text-white">
+            {format(epoch, 'M/d/yy')}
+          </p>
+          <p className="text-sm text-coral">
+            Momentum: {data.value.toFixed(3)}
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Daily Rate: {(data.dailyRate * 100).toFixed(2)}%
+          </p>
+          {data.isProjection && (
+            <p className="text-xs text-gray-500 italic">Projected</p>
+          )}
         </div>
-      </motion.div>
-    );
+      );
+    }
+    return null;
+  };
+
+  const CustomMobileTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      const epoch = data.epoch || label;
+      return (
+        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md p-2 rounded-md shadow-lg border border-gray-200 dark:border-gray-600 text-xs">
+          <p className="font-medium text-gray-800 dark:text-white">
+            {format(epoch, 'M/d/yy')}
+          </p>
+          <p className="text-coral">
+            {data.value.toFixed(3)}
+          </p>
+          <p className="text-gray-600 dark:text-gray-400">
+            {(data.dailyRate * 100).toFixed(1)}%
+          </p>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -213,17 +169,14 @@ export default function MomentumChart({
       </div>
 
       <motion.div 
-          className="h-[220px] md:h-[300px] w-full mb-6 relative"
+          className="h-[220px] md:h-[300px] w-full mb-6"
           layout
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >
-        <FloatingDataDisplay />
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart 
             data={data}
             margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
           >
             <defs>
               <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
@@ -264,7 +217,15 @@ export default function MomentumChart({
               }]}
               hide
             />
-            
+            <RechartsTooltip 
+              content={<CustomMobileTooltip />}
+              cursor={{ stroke: '#fff', strokeWidth: 1, opacity: 0.25 }}
+              wrapperClassName="sm:hidden"
+            />
+            <RechartsTooltip 
+              content={<CustomTooltip />}
+              wrapperClassName="hidden sm:block"
+            />
 
             {/* Historical data area - only show non-projection points */}
             <Area
