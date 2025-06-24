@@ -116,7 +116,7 @@ export default function MomentumChart({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
     >
-      <div className="mb-6">
+      <div className="mb-4">
         <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
           Momentum Index
         </h2>
@@ -125,18 +125,19 @@ export default function MomentumChart({
         </p>
       </div>
 
+      {/* Floating HUD positioned directly under title */}
+      <div className="mb-6 px-2 py-1 rounded text-xs bg-transparent shadow-none backdrop-blur-0">
+        <div className="text-gray-600 dark:text-gray-400">{dayjs(hover?.date).format('MMM D YY')}</div>
+        <div className="text-lg font-semibold text-gray-800 dark:text-white">{hover?.value?.toFixed(3)}</div>
+        <div className="text-gray-600 dark:text-gray-400">{((hover?.dailyRate || 0) * 100).toFixed(2)}%</div>
+      </div>
+
       <motion.div 
           className="h-[300px] md:h-[300px] w-full mb-6"
           layout
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >
         <div className="relative w-full h-full">
-          {/* Floating HUD */}
-          <div className="absolute right-0 -top-3 z-10 px-2 py-1 rounded text-xs bg-transparent shadow-none backdrop-blur-0">
-            <div className="text-gray-600 dark:text-gray-400">{dayjs(hover?.date).format('MMM D YY')}</div>
-            <div className="text-lg font-semibold text-gray-800 dark:text-white">{hover?.value?.toFixed(3)}</div>
-            <div className="text-gray-600 dark:text-gray-400">{((hover?.dailyRate || 0) * 100).toFixed(2)}%</div>
-          </div>
           
           <ResponsiveContainer width="100%" height="100%">
           <AreaChart 
