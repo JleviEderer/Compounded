@@ -111,29 +111,29 @@ export default function MomentumChart({
 
   return (
     <motion.section 
-      className="relative w-full px-0 sm:px-6 lg:px-8 md:bg-white/50 md:dark:bg-gray-800/50 md:rounded-xl md:shadow-lg md:backdrop-blur-md p-4 sm:p-8"
+      className="relative w-full px-0 sm:px-6 lg:px-8 md:bg-white/50 md:dark:bg-gray-800/50 md:rounded-xl md:shadow-lg md:backdrop-blur-md p-2 sm:p-4"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
     >
-      <div className="mb-4">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+      <div className="mb-2">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
           Momentum Index
         </h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-gray-600 dark:text-gray-400 text-sm">
           Your compound growth over time
         </p>
       </div>
 
       {/* Floating HUD positioned directly under title */}
-      <div className="mb-6 px-2 py-1 rounded text-xs bg-transparent shadow-none backdrop-blur-0">
+      <div className="mb-4 px-2 py-1 rounded text-xs bg-transparent shadow-none backdrop-blur-0">
         <div className="text-gray-600 dark:text-gray-400">{dayjs(hover?.date).format('MMM D YY')}</div>
         <div className="text-lg font-semibold text-gray-800 dark:text-white">{hover?.value?.toFixed(3)}</div>
         <div className="text-gray-600 dark:text-gray-400">{((hover?.dailyRate || 0) * 100).toFixed(2)}%</div>
       </div>
 
       <motion.div 
-          className="h-[300px] md:h-[300px] w-full mb-6"
+          className="h-[300px] md:h-[300px] w-full mb-4"
           layout
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >
