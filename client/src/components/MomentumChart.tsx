@@ -252,7 +252,18 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            
+            {/* Trackball cursor - shows during interactions but no tooltip popup */}
+            <RechartsTooltip 
+              content={() => null}
+              cursor={{ 
+                stroke: '#6B7280', 
+                strokeWidth: 2, 
+                strokeDasharray: '3,3',
+                fill: '#6B7280',
+                fillOpacity: 0.1,
+                r: 4
+              }}
+            />
 
             {/* Today marker */}
             <ReferenceLine
