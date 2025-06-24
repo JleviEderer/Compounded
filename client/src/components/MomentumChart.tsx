@@ -231,6 +231,10 @@ export default function MomentumChart({
               padding={{ left: 0, right: 0 }}
               hide
             />
+            <YAxis 
+              domain={['dataMin - 0.01', 'dataMax + 0.01']}
+              hide
+            />
             <RechartsTooltip 
               content={<CustomMobileTooltip />}
               cursor={{ stroke: '#fff', strokeWidth: 1, opacity: 0.25 }}
