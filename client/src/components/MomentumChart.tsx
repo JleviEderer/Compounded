@@ -11,7 +11,6 @@ import {
   Tooltip as RechartsTooltip,
   ReferenceLine 
 } from 'recharts';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { HelpCircle } from 'lucide-react';
 import { MomentumData } from '../types';
