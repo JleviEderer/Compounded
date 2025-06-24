@@ -50,7 +50,6 @@ export default function MomentumChart({
 }: MomentumChartProps) {
   
   const [tooltipData, setTooltipData] = useState<any>(null);
-  const [showTooltip, setShowTooltip] = useState(false);
 
   // Separate historical and forecast data for clean rendering
   const historicalData = data.filter(d => !d.isProjection);
@@ -110,51 +109,90 @@ export default function MomentumChart({
     ticksArr.splice(1, 0, lastHist);
   }
 
+  // Initialize with the most recent data point
+  useState(() => {
+    if (data.length > 0) {
+      // Get the most recent historical data point
+      const mostRecentHistorical = historicalData.length > 0 
+        ? historicalData[historicalData.length - 1] 
+        : data[data.length - 1];
+      setTooltipData(mostRecentHistorical);
+    }
+  }, [data, historicalData]);
+
   const handleMouseMove = (state: any) => {
     if (state && state.activePayload && state.activePayload.length > 0) {
-      const data = state.activePayload[0].payload;
-      setTooltipData(data);
-      setShowTooltip(true);
-    } else {
-      setShowTooltip(false);
-      setTooltipData(null);
+      const chartData = state.activePayload[0].payload;
+      setTooltipData(chartData);
     }
   };
 
   const handleMouseLeave = () => {
-    setShowTooltip(false);
-    setTooltipData(null);
+    // Reset to most recent historical data point instead of hiding
+    if (historicalData.length > 0) {
+      setTooltipData(historicalData[historicalData.length - 1]);
+    }
   };
 
-  const CustomFixedTooltip = () => {
-    if (!showTooltip || !tooltipData) return null;
+  const FloatingDataDisplay = () => {
+    if (!tooltipData) return null;
 
     const epoch = tooltipData.epoch;
     return (
-      <div className="absolute top-4 right-4 z-50 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md p-4 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-600 min-w-[180px]">
-        <div className="space-y-2">
-          <p className="text-sm font-semibold text-gray-800 dark:text-white border-b border-gray-200 dark:border-gray-600 pb-1">
+      <motion.div 
+        className="absolute top-4 right-4 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg p-4 rounded-2xl shadow-2xl border border-gray-300/50 dark:border-gray-600/50 min-w-[200px]"
+        initial={{ opacity: 0, scale: 0.9, y: -10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        <div className="space-y-3">
+          <motion.p 
+            className="text-sm font-bold text-gray-900 dark:text-white border-b border-gray-300/50 dark:border-gray-600/50 pb-2"
+            key={epoch}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
             {format(epoch, 'MMM d, yyyy')}
-          </p>
-          <div className="space-y-1">
-            <p className="text-sm">
-              <span className="text-gray-600 dark:text-gray-400">Momentum:</span>
-              <span className="ml-2 font-bold text-coral">{tooltipData.value.toFixed(3)}</span>
-            </p>
-            <p className="text-sm">
-              <span className="text-gray-600 dark:text-gray-400">Daily Rate:</span>
-              <span className="ml-2 font-bold text-blue-600 dark:text-blue-400">
+          </motion.p>
+          <div className="space-y-2">
+            <motion.div 
+              className="flex justify-between items-center"
+              key={`momentum-${tooltipData.value}`}
+              initial={{ x: 10, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.2, delay: 0.05 }}
+            >
+              <span className="text-sm text-gray-600 dark:text-gray-400">Momentum</span>
+              <span className="font-bold text-coral text-lg">{tooltipData.value.toFixed(3)}</span>
+            </motion.div>
+            <motion.div 
+              className="flex justify-between items-center"
+              key={`rate-${tooltipData.dailyRate}`}
+              initial={{ x: 10, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
+            >
+              <span className="text-sm text-gray-600 dark:text-gray-400">Daily Rate</span>
+              <span className={`font-bold text-lg ${tooltipData.dailyRate >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                 {tooltipData.dailyRate >= 0 ? '+' : ''}{(tooltipData.dailyRate * 100).toFixed(2)}%
               </span>
-            </p>
+            </motion.div>
             {tooltipData.isProjection && (
-              <p className="text-xs text-purple-600 dark:text-purple-400 italic font-medium">
-                Projected
-              </p>
+              <motion.div 
+                className="text-center pt-2 border-t border-gray-300/30 dark:border-gray-600/30"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2, delay: 0.15 }}
+              >
+                <span className="text-xs text-purple-600 dark:text-purple-400 italic font-medium bg-purple-100/50 dark:bg-purple-900/30 px-2 py-1 rounded-full">
+                  Projected
+                </span>
+              </motion.div>
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   };
 
@@ -179,7 +217,7 @@ export default function MomentumChart({
           layout
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >
-        <CustomFixedTooltip />
+        <FloatingDataDisplay />
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart 
             data={data}
