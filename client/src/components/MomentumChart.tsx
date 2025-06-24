@@ -126,7 +126,7 @@ export default function MomentumChart({
       </div>
 
       <motion.div 
-          className="h-[220px] md:h-[300px] w-full mb-6"
+          className="h-[300px] md:h-[300px] w-full mb-6"
           layout
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >

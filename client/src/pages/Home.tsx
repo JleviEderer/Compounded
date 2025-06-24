@@ -39,9 +39,10 @@ export default function Home() {
 
       {/* Momentum Chart */}
       {/* phones */}  
-      <div className="sm:hidden">
-        <FullBleed>
-          <MomentumChart
+      <div className="pt-4 sm:pt-0">
+        <div className="sm:hidden">
+          <FullBleed>
+            <MomentumChart
             data={momentum.momentumData}
             currentMomentum={momentum.currentMomentum}
             totalGrowth={momentum.totalGrowth}
@@ -56,7 +57,8 @@ export default function Home() {
             onRangeChange={setSelectedTimeFilter}
             timeRanges={timeRanges}
           />
-        </FullBleed>
+          </FullBleed>
+        </div>
       </div>
 
       {/* ≥ sm keeps old layout */}  

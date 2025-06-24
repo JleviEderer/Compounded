@@ -102,7 +102,7 @@ export default function Layout({ children }: LayoutProps) {
       <div className="flex h-screen overflow-hidden lg:hidden">
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Mobile Header */}
-          <div className="card-glass border-b border-white/20 dark:border-gray-700/50 p-4">
+          <div className="card-glass border-b border-white/20 dark:border-gray-700/50 p-4 h-10 sm:h-14">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3 flex-1 min-w-0">
                 <div className="w-8 h-8 bg-gradient-to-r from-coral to-pink-400 rounded-lg flex items-center justify-center">
