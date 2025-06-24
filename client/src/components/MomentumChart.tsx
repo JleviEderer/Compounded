@@ -152,7 +152,7 @@ export default function MomentumChart({
         <div className="flex items-center justify-between gap-4 text-sm">
           <div className="text-center">
             <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">DATE</div>
-            <div className="text-gray-800 dark:text-white font-medium">{dayjs(hover?.date).format('MMM D YY')}</div>
+            <div className="text-gray-800 dark:text-white font-medium">{dayjs(hover?.date).format('MMM D, YYYY')}</div>
           </div>
           <div className="text-center">
             <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">INDEX</div>
