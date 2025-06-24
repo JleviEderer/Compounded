@@ -126,10 +126,23 @@ export default function MomentumChart({
       </div>
 
       {/* Floating HUD positioned directly under title */}
-      <div className="mb-4 px-2 py-1 rounded text-xs bg-transparent shadow-none backdrop-blur-0">
-        <div className="text-gray-600 dark:text-gray-400">{dayjs(hover?.date).format('MMM D YY')}</div>
-        <div className="text-lg font-semibold text-gray-800 dark:text-white">{hover?.value?.toFixed(3)}</div>
-        <div className="text-gray-600 dark:text-gray-400">{((hover?.dailyRate || 0) * 100).toFixed(2)}%</div>
+      <div className="mb-4 px-3 py-2 rounded-lg bg-white/80 dark:bg-gray-800/80 shadow-sm border border-gray-200/50 dark:border-gray-600/50 backdrop-blur-sm">
+        <div className="flex items-center justify-between gap-4 text-sm">
+          <div className="text-center">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">DATE</div>
+            <div className="text-gray-800 dark:text-white font-medium">{dayjs(hover?.date).format('MMM D YY')}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">INDEX</div>
+            <div className="text-lg font-bold text-coral">{hover?.value?.toFixed(3)}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">DAILY RATE</div>
+            <div className={`font-semibold ${(hover?.dailyRate || 0) >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+              {((hover?.dailyRate || 0) * 100).toFixed(2)}%
+            </div>
+          </div>
+        </div>
       </div>
 
       <motion.div 
