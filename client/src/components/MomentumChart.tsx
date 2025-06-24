@@ -9,8 +9,7 @@ import {
   YAxis, 
   ResponsiveContainer, 
   Tooltip as RechartsTooltip,
-  ReferenceLine,
-  Line
+  ReferenceLine 
 } from 'recharts';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { HelpCircle } from 'lucide-react';
@@ -51,7 +50,6 @@ export default function MomentumChart({
 }: MomentumChartProps) {
   
   const [hover, setHover] = useState(data[data.length-1]); // last point as default
-  const [isDragging, setIsDragging] = useState(false);
 
   // Separate historical and forecast data for clean rendering
   const historicalData = data.filter(d => !d.isProjection);
@@ -127,7 +125,25 @@ export default function MomentumChart({
         </p>
       </div>
 
-      
+      {/* Floating HUD positioned directly under title */}
+      <div className="mb-4 px-3 py-2 rounded-lg bg-white/80 dark:bg-gray-800/80 shadow-sm border border-gray-200/50 dark:border-gray-600/50 backdrop-blur-sm">
+        <div className="flex items-center justify-between gap-4 text-sm">
+          <div className="text-center">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">DATE</div>
+            <div className="text-gray-800 dark:text-white font-medium">{dayjs(hover?.date).format('MMM D YY')}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">INDEX</div>
+            <div className="text-lg font-bold text-coral">{hover?.value?.toFixed(3)}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">DAILY RATE</div>
+            <div className={`font-semibold ${(hover?.dailyRate || 0) >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+              {((hover?.dailyRate || 0) * 100).toFixed(2)}%
+            </div>
+          </div>
+        </div>
+      </div>
 
       <motion.div 
           className="h-[300px] md:h-[300px] w-full mb-4"
@@ -135,29 +151,14 @@ export default function MomentumChart({
           transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
         >
         <div className="relative w-full h-full">
+          
           <ResponsiveContainer width="100%" height="100%">
-            {/* Overlay bar with static stats */}
-            <div className="absolute w-full top-1 px-2 flex text-xs font-medium justify-between tracking-wide pointer-events-none z-10">
-              <div className="bg-transparent h-5 text-slate-200/80">
-                <span className="uppercase">INDEX</span>
-                <span className="font-semibold ml-1">{dynamicCurrentIndex.toFixed(2)}</span>
-              </div>
-              <div className="bg-transparent h-5 text-slate-200/80">
-                <span className="uppercase">TODAY</span>
-                <span className="font-semibold ml-1">{(todayRate * 100).toFixed(1)}%</span>
-              </div>
-              <div className="bg-transparent h-5 text-slate-200/80">
-                <span className="uppercase">AVG</span>
-                <span className="font-semibold ml-1">{(recentAvgRate * 100).toFixed(1)}%</span>
-              </div>
-            </div>
-            
-            <AreaChart 
-              data={data}
-              margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
-              onMouseMove={({activePayload}) => activePayload && setHover(activePayload[0].payload)}
-              onMouseLeave={() => setHover(data[data.length-1])}
-            >
+          <AreaChart 
+            data={data}
+            margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
+            onMouseMove={({activePayload}) => activePayload && setHover(activePayload[0].payload)}
+            onMouseLeave={() => setHover(data[data.length-1])}
+          >
             <defs>
               <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="hsl(174, 58%, 46%)" stopOpacity={0.8}/>
@@ -222,19 +223,6 @@ export default function MomentumChart({
               connectNulls={false}
             />
 
-            {/* Interactive line for drag detection */}
-            <Line
-              type="monotone"
-              dataKey="value"
-              stroke="transparent"
-              strokeWidth={20}
-              dot={false}
-              onMouseDown={() => setIsDragging(true)}
-              onMouseUp={() => setIsDragging(false)}
-              onTouchStart={() => setIsDragging(true)}
-              onTouchEnd={() => setIsDragging(false)}
-            />
-
             {/* Today marker */}
             <ReferenceLine
               x={todayEpoch}
@@ -252,23 +240,6 @@ export default function MomentumChart({
                 fontWeight: 500 
               }}
               data-testid="today-line"
-            />
-
-            {/* Conditional tooltip bubble */}
-            <RechartsTooltip
-              content={isDragging ? ({ active, payload }) => {
-                if (!active || !payload?.length) return null;
-                const data = payload[0].payload;
-                return (
-                  <div className="bg-white/90 dark:bg-gray-800/90 px-3 py-2 rounded-lg shadow-lg border border-gray-200/50 dark:border-gray-600/50 text-sm">
-                    <div className="text-gray-600 dark:text-gray-400">{dayjs(data.date).format('MMM D YY')}</div>
-                    <div className="text-lg font-bold text-coral">{data.value?.toFixed(3)}</div>
-                    <div className={`font-semibold ${(data.dailyRate || 0) >= 0 ? 'text-green-600' : 'text-red-500'}`}>
-                      {((data.dailyRate || 0) * 100).toFixed(2)}%
-                    </div>
-                  </div>
-                );
-              } : () => null}
             />
           </AreaChart>
         </ResponsiveContainer>
