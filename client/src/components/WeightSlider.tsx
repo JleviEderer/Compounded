@@ -85,11 +85,11 @@ export default function WeightSlider({
           style={{
             background: `linear-gradient(to right, #FF6B7D 0%, #FF6B7D ${((value - min) / (max - min)) * 100}%, #e5e7eb ${((value - min) / (max - min)) * 100}%, #e5e7eb 100%)`
           }}
-          aria-label={isHabitWeight ? `Weight slider: +${(value * 100).toFixed(3)}%` : `Weight slider: ${value}%`}
+          aria-label={isHabitWeight ? `Weight slider: ${value}` : `Weight slider: ${value}%`}
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={value}
-          aria-valuetext={isHabitWeight ? `${(value * 100).toFixed(3)} percent` : `${value} percent`}
+          aria-valuetext={isHabitWeight ? `${value}` : `${value} percent`}
         />
 
         {/* Custom thumb indicator - enhanced for mobile with haptic-like feedback */}
@@ -139,7 +139,7 @@ export default function WeightSlider({
           }}
           transition={{ duration: 0.2 }}
         >
-          {isHabitWeight ? `+${(value * 100).toFixed(3)}%` : `${value}%`}
+          {isHabitWeight ? `${value}` : `${value}%`}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-100" />
         </motion.div>
       </div>
@@ -205,6 +205,9 @@ export default function WeightSlider({
           ))
         )}
       </div>
+    </div>
+  );
+}
 
       
     </div>
