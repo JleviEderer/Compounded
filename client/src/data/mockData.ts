@@ -1,15 +1,15 @@
-
 import { HabitPair, HabitLog, HabitWeight } from '../types';
 
-// Dynamic import for production bundle optimization
+// Production-optimized loading: exclude mock data from production bundles
 let rawJsonData: any;
 
 if (import.meta.env.DEV) {
-  // Development: Direct import for faster loading
+  // Development: Load mock data
   rawJsonData = (await import('../fixtures/myMockData.json')).default;
 } else {
-  // Production: Dynamic import to avoid bundling large fixture
-  rawJsonData = (await import('../fixtures/myMockData.json')).default;
+  // Production: Use empty data structure to avoid bundling mock data
+  rawJsonData = { habits: [], logs: [] };
+  console.log('🚀 PRODUCTION: Using empty mock data structure (real data loaded via dataSourceConfig)');
 }
 
 console.log('🚀 STARTING mockData.ts with dynamic import...');
@@ -27,7 +27,7 @@ if (rawJsonData?.logs) {
   console.log('🔍 RAW JSON - Unique dates:', uniqueRawDates.length);
   console.log('🔍 RAW JSON - First 5 dates:', uniqueRawDates.slice(0, 5));
   console.log('🔍 RAW JSON - Last 5 dates:', uniqueRawDates.slice(-5));
-  
+
   // Check for 2025 data specifically
   const raw2025Logs = rawJsonData.logs.filter((log: any) => log.date.startsWith('2025'));
   console.log('🔍 RAW JSON - 2025 logs found:', raw2025Logs.length);
@@ -62,7 +62,7 @@ export const mockHabits: HabitPair[] = rawJsonData.habits?.map((habit: any) => {
       console.warn(`Unknown weight value ${habit.weight}, defaulting to MEDIUM`);
       mappedWeight = HabitWeight.MEDIUM;
   }
-  
+
   return {
     ...habit,
     weight: mappedWeight,
@@ -82,23 +82,23 @@ console.log('📊 Logs exported:', mockLogs.length);
 if (mockLogs.length > 0) {
   const sortedDates = mockLogs.map(l => l.date).sort();
   console.log('📊 Full date range:', `${sortedDates[0]} → ${sortedDates[sortedDates.length-1]}`);
-  
+
   // Verify 2025 data specifically
   const logs2025 = mockLogs.filter(log => log.date.startsWith('2025'));
   console.log('📊 2025 logs found:', logs2025.length);
-  
+
   if (logs2025.length > 0) {
     const dates2025 = [...new Set(logs2025.map(l => l.date))].sort();
     console.log('📊 2025 date range:', `${dates2025[0]} → ${dates2025[dates2025.length-1]}`);
     console.log('✅ SUCCESS: 2025 data loaded successfully!');
-    
+
     // Show sample of recent data
     const recent2025 = logs2025.filter(l => l.date.includes('2025-06')).slice(0, 5);
     console.log('📊 Sample June 2025 logs:', recent2025.map(l => `${l.date}: habit ${l.habitId} = ${l.state}`));
   } else {
     console.error('❌ CRITICAL: NO 2025 DATA FOUND!');
   }
-  
+
   // Show all unique dates for debugging
   const allUniqueDates = [...new Set(mockLogs.map(l => l.date))].sort();
   console.log('📊 All unique dates count:', allUniqueDates.length);
