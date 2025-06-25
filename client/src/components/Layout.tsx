@@ -76,10 +76,12 @@ export default function Layout({ children }: LayoutProps) {
         <div className="p-4 border-t border-white/10 dark:border-gray-700/50">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-600 dark:text-gray-400">Dark Mode</span>
-            <Switch
-              checked={theme === 'dark'}
-              onCheckedChange={toggleTheme}
-            />
+            <div className="p-2 -m-2">
+              <Switch
+                checked={theme === 'dark'}
+                onCheckedChange={toggleTheme}
+              />
+            </div>
           </div>
         </div>
       </motion.div>
@@ -110,7 +112,7 @@ export default function Layout({ children }: LayoutProps) {
                 </div>
                 <h1 className="text-lg font-bold text-gray-800 dark:text-white truncate">Compounded</h1>
               </div>
-              <div className="ml-4">
+              <div className="ml-4 p-2 -m-2">
                 <Switch
                   checked={theme === 'dark'}
                   onCheckedChange={toggleTheme}
@@ -135,7 +137,7 @@ export default function Layout({ children }: LayoutProps) {
           </main>
 
           {/* Mobile Bottom Navigation */}
-          <div className="card-glass border-t border-white/20 dark:border-gray-700/50 p-4">
+          <div className="card-glass border-t border-white/20 dark:border-gray-700/50 p-2">
             <nav className="flex justify-around">
               {navigation.map((item) => {
                 const isActive = location === item.href;
@@ -144,16 +146,16 @@ export default function Layout({ children }: LayoutProps) {
                 return (
                   <Link key={item.name} href={item.href}>
                     <motion.div
-                      className={`flex flex-col items-center space-y-1 p-2 cursor-pointer ${
+                      className={`flex flex-col items-center justify-center space-y-1 p-3 cursor-pointer rounded-lg min-h-[44px] min-w-[44px] touch-manipulation ${
                         isActive 
-                          ? 'text-coral' 
-                          : 'text-gray-500 dark:text-gray-400'
+                          ? 'text-coral bg-coral/10' 
+                          : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50'
                       }`}
                       whileTap={{ scale: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0.95 }}
                       transition={{ duration: 0.1 }}
                     >
-                      <Icon className="w-5 h-5" />
-                      <span className="text-xs font-medium">{item.name}</span>
+                      <Icon className="w-6 h-6" />
+                      <span className="text-xs font-medium leading-tight">{item.name}</span>
                     </motion.div>
                   </Link>
                 );

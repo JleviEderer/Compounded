@@ -298,11 +298,13 @@ export default function MomentumChart({
           <motion.button
             key={range.label}
             onClick={() => onRangeChange(range.label)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+            className={`px-4 py-3 min-h-[44px] rounded-full text-sm font-medium transition-all duration-200 touch-manipulation ${
               selectedRange === range.label
                 ? 'bg-coral text-white shadow-lg'
                 : 'bg-white/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-600/50'
               }`}
+            whileTap={{ scale: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0.98 }}
+            transition={{ duration: 0.1 }}
             >
               {range.label}
             </motion.button>
