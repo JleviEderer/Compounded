@@ -121,6 +121,7 @@ export default function Habits() {
                 <WeightSlider
                   value={weight}
                   onChange={setWeight}
+                  isHabitWeight={true}
                 />
 
                 <div className="flex space-x-4 pt-4">
@@ -264,6 +265,7 @@ export default function Habits() {
                     <WeightSlider
                       value={habit.weight}
                       onChange={(newWeight) => updateHabit(habit.id, { weight: newWeight })}
+                      isHabitWeight={true}
                     />
                   </div>
                 </motion.div>

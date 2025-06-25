@@ -2,19 +2,22 @@ import { motion } from 'framer-motion';
 import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { HabitWeight, WEIGHT_VALUES, WEIGHT_LABELS } from '@/types';
 
 interface WeightSliderProps {
   value: number;
   onChange: (value: number) => void;
   min?: number;
   max?: number;
+  isHabitWeight?: boolean;
 }
 
 export default function WeightSlider({ 
   value, 
   onChange, 
   min = 0, 
-  max = 100 
+  max = 100,
+  isHabitWeight = false
 }: WeightSliderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -143,32 +146,64 @@ export default function WeightSlider({
 
       {/* Quick preset buttons - enhanced for mobile with haptic-style feedback */}
       <div className="flex gap-2 justify-center flex-wrap">
-        {[0, 25, 50, 75, 100].map((preset) => (
-          <motion.div key={preset}>
-            <Button
-              variant={value === preset ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => onChange(preset)}
-              className={`text-xs min-h-[44px] min-w-[44px] touch-manipulation transition-all duration-200 ${
-                value === preset 
-                  ? 'bg-coral text-white shadow-lg' 
-                  : 'hover:bg-coral/10 hover:border-coral/50'
-              }`}
-              asChild
-            >
-              <motion.button
-                whileHover={{ scale: isMobile ? 1 : 1.05 }}
-                whileTap={{ 
-                  scale: 0.92,
-                  transition: { duration: 0.1 }
-                }}
-                transition={{ type: 'spring', stiffness: 400 }}
+        {isHabitWeight ? (
+          WEIGHT_VALUES.map((weightValue) => {
+            const label = WEIGHT_LABELS[weightValue].split(' ')[0]; // Get just "Micro", "Small", etc.
+            return (
+              <motion.div key={weightValue}>
+                <Button
+                  variant={value === weightValue ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => onChange(weightValue)}
+                  className={`text-xs min-h-[44px] min-w-[60px] touch-manipulation transition-all duration-200 ${
+                    value === weightValue 
+                      ? 'bg-coral text-white shadow-lg' 
+                      : 'hover:bg-coral/10 hover:border-coral/50'
+                  }`}
+                  asChild
+                >
+                  <motion.button
+                    whileHover={{ scale: isMobile ? 1 : 1.05 }}
+                    whileTap={{ 
+                      scale: 0.92,
+                      transition: { duration: 0.1 }
+                    }}
+                    transition={{ type: 'spring', stiffness: 400 }}
+                  >
+                    {label}
+                  </motion.button>
+                </Button>
+              </motion.div>
+            );
+          })
+        ) : (
+          [0, 25, 50, 75, 100].map((preset) => (
+            <motion.div key={preset}>
+              <Button
+                variant={value === preset ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => onChange(preset)}
+                className={`text-xs min-h-[44px] min-w-[44px] touch-manipulation transition-all duration-200 ${
+                  value === preset 
+                    ? 'bg-coral text-white shadow-lg' 
+                    : 'hover:bg-coral/10 hover:border-coral/50'
+                }`}
+                asChild
               >
-                {preset}%
-              </motion.button>
-            </Button>
-          </motion.div>
-        ))}
+                <motion.button
+                  whileHover={{ scale: isMobile ? 1 : 1.05 }}
+                  whileTap={{ 
+                    scale: 0.92,
+                    transition: { duration: 0.1 }
+                  }}
+                  transition={{ type: 'spring', stiffness: 400 }}
+                >
+                  {preset}%
+                </motion.button>
+              </Button>
+            </motion.div>
+          ))
+        )}
       </div>
 
       {/* Mobile-friendly increment/decrement buttons */}
