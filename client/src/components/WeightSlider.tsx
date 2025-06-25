@@ -1,8 +1,7 @@
-
 import { motion } from 'framer-motion';
 import { useState, useRef, useCallback } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { HabitWeight } from '@/types';
+import { HabitWeight, WEIGHT_VALUES, WEIGHT_LABELS } from '@/types';
 
 interface WeightSliderProps {
   value: number; // Index (0-4)
@@ -60,9 +59,11 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
     }
   }, [value, onChange]);
 
+  const currentWeight = WEIGHTS[value];
+
   return (
     <div className="w-full space-y-4">
-      <div className="relative py-4 w-full px-0 sm:px-4">
+      <div className="relative py-4">
         <input
           ref={sliderRef}
           type="range"
@@ -78,20 +79,20 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onKeyDown={handleKeyDown}
-          className="w-full h-4 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer touch-manipulation slider-thumb focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2 dark:focus:ring-offset-gray-800 relative before:absolute before:-inset-3 before:sm:inset-0"
+          className="w-full h-4 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer touch-manipulation slider-thumb focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2 dark:focus:ring-offset-gray-800"
           style={{
             background: `linear-gradient(to right, #FF6B7D 0%, #FF6B7D ${(value / 4) * 100}%, #e5e7eb ${(value / 4) * 100}%, #e5e7eb 100%)`
           }}
-          aria-label={`Weight slider: ${WEIGHTS[value].label}`}
+          aria-label={`Weight slider: ${currentWeight.label}`}
           aria-valuemin={0}
           aria-valuemax={4}
           aria-valuenow={value}
-          aria-valuetext={WEIGHTS[value].label}
+          aria-valuetext={currentWeight.label}
         />
 
-        {/* Custom thumb indicator with larger touch target */}
+        {/* Custom thumb indicator */}
         <motion.div
-          className="absolute top-1/2 w-10 h-10 bg-coral rounded-full shadow-lg pointer-events-none border-3 border-white dark:border-gray-800 before:absolute before:-inset-3 before:sm:inset-0 before:rounded-full"
+          className="absolute top-1/2 w-10 h-10 bg-coral rounded-full shadow-lg pointer-events-none border-3 border-white dark:border-gray-800"
           style={{
             left: `calc(${(value / 4) * 100}% - 20px)`,
             transform: 'translateY(-50%)',
@@ -119,10 +120,29 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
             transition={{ duration: 0.2 }}
           />
         </motion.div>
+
+        {/* Value display tooltip */}
+        <motion.div
+          className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-1 rounded-lg text-sm font-medium pointer-events-none"
+          style={{
+            left: `calc(${(value / 4) * 100}% - 0px)`,
+            transform: 'translateX(-50%)',
+          }}
+          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+          animate={{
+            opacity: (isDragging || isFocused) ? 1 : 0,
+            scale: (isDragging || isFocused) ? 1 : 0.8,
+            y: (isDragging || isFocused) ? 0 : 10,
+          }}
+          transition={{ duration: 0.2 }}
+        >
+          {currentWeight.label}
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-100" />
+        </motion.div>
       </div>
 
       {/* Clickable labels */}
-      <div className="flex justify-between items-center w-full">
+      <div className="flex justify-between items-center">
         {WEIGHTS.map((weight, index) => (
           <motion.button
             key={index}
@@ -140,11 +160,7 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
             transition={{ type: 'spring', stiffness: 400 }}
           >
             <span className="font-medium">{weight.label}</span>
-            {value === index && (
-              <span className="text-xs font-semibold text-teal-600 dark:text-teal-400">
-                {weight.percentage}
-              </span>
-            )}
+            <span className="text-xs opacity-75">{weight.percentage}</span>
           </motion.button>
         ))}
       </div>
