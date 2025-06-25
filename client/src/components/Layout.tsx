@@ -146,16 +146,17 @@ export default function Layout({ children }: LayoutProps) {
                 return (
                   <Link key={item.name} href={item.href}>
                     <motion.div
-                      className={`flex flex-col items-center justify-center space-y-1 p-3 cursor-pointer rounded-lg min-h-[44px] min-w-[44px] touch-manipulation ${
+                      className={`flex flex-col items-center justify-center space-y-1 p-3 cursor-pointer rounded-lg min-h-[60px] min-w-[60px] touch-manipulation ${
                         isActive 
                           ? 'text-coral bg-coral/10' 
                           : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50'
                       }`}
                       whileTap={{ scale: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0.95 }}
                       transition={{ duration: 0.1 }}
+                      aria-label={`Navigate to ${item.name}`}
                     >
                       <Icon className="w-6 h-6" />
-                      <span className="text-xs font-medium leading-tight">{item.name}</span>
+                      <span className="text-xs font-medium leading-tight text-center">{item.name}</span>
                     </motion.div>
                   </Link>
                 );
