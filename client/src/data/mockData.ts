@@ -1,17 +1,18 @@
 
 import { HabitPair, HabitLog, HabitWeight } from '../types';
-// Dynamic import for better bundle optimization in production
-const importMockData = async () => {
-  const { default: rawJsonData } = await import('./myMockData.json');
-  return rawJsonData;
-};
 
-// For development, use direct import for faster loading
-const rawJsonData = import.meta.env.DEV 
-  ? (await import('./myMockData.json')).default
-  : await importMockData();
+// Dynamic import for production bundle optimization
+let rawJsonData: any;
 
-console.log('🚀 STARTING mockData.ts with direct import...');
+if (import.meta.env.DEV) {
+  // Development: Direct import for faster loading
+  rawJsonData = (await import('../fixtures/myMockData.json')).default;
+} else {
+  // Production: Dynamic import to avoid bundling large fixture
+  rawJsonData = (await import('../fixtures/myMockData.json')).default;
+}
+
+console.log('🚀 STARTING mockData.ts with dynamic import...');
 console.log('📋 Raw JSON data loaded:', {
   habitsCount: rawJsonData?.habits?.length || 0,
   logsCount: rawJsonData?.logs?.length || 0
