@@ -84,12 +84,15 @@ export default function Settings() {
                     Toggle between light and dark themes
                   </div>
                 </div>
-                <Switch
-                  checked={theme === 'dark'}
-                  onCheckedChange={toggleTheme}
-                />
+                <div className="min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation">
+                  <Switch
+                    checked={theme === 'dark'}
+                    onCheckedChange={toggleTheme}
+                    className="data-[state=checked]:bg-coral"
+                  />
+                </div>
               </div>
-              
+
               <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
                 <div>
                   <div className="font-medium text-gray-800 dark:text-white">Nerd Mode</div>
@@ -97,10 +100,13 @@ export default function Settings() {
                     Show analytical labels and detailed metrics
                   </div>
                 </div>
-                <Switch
-                  checked={settings.nerdMode}
-                  onCheckedChange={(checked) => updateSettings({ nerdMode: checked })}
-                />
+                <div className="min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation">
+                  <Switch
+                    checked={settings.nerdMode}
+                    onCheckedChange={(checked) => updateSettings({ nerdMode: checked })}
+                    className="data-[state=checked]:bg-coral"
+                  />
+                </div>
               </div>
             </div>
           </motion.div>
@@ -179,7 +185,7 @@ export default function Settings() {
                       <AlertDialogDescription>
                         Are you sure you want to reset all data? This will permanently delete 
                         all your habits and progress. This action cannot be undone.
-                        
+
                         Consider exporting your data first as a backup.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
