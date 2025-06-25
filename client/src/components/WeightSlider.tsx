@@ -123,7 +123,7 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
 
         {/* Value display tooltip */}
         <motion.div
-          className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-1 rounded-lg text-sm font-medium pointer-events-none"
+          className="absolute -top-14 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-2 rounded-lg text-sm font-medium pointer-events-none shadow-lg"
           style={{
             left: `calc(${(value / 4) * 100}% - 0px)`,
             transform: 'translateX(-50%)',
@@ -136,31 +136,33 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
           }}
           transition={{ duration: 0.2 }}
         >
-          {currentWeight.label}
+          <div className="text-center">
+            <div className="font-semibold">{currentWeight.label}</div>
+            <div className="text-xs opacity-90">{currentWeight.percentage}</div>
+          </div>
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-100" />
         </motion.div>
       </div>
 
       {/* Clickable labels */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center gap-1 px-1">
         {WEIGHTS.map((weight, index) => (
           <motion.button
             key={index}
             onClick={() => onChange(index)}
-            className={`text-xs px-2 py-2 rounded-lg min-h-[44px] min-w-[44px] touch-manipulation transition-all duration-200 flex flex-col items-center justify-center ${
+            className={`text-sm px-3 py-3 rounded-xl min-h-[48px] flex-1 touch-manipulation transition-all duration-200 flex items-center justify-center font-medium ${
               value === index 
-                ? 'font-semibold text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20' 
+                ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20 shadow-sm' 
                 : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
             }`}
-            whileHover={{ scale: isMobile ? 1 : 1.05 }}
+            whileHover={{ scale: isMobile ? 1 : 1.02 }}
             whileTap={{ 
-              scale: 0.92,
+              scale: 0.95,
               transition: { duration: 0.1 }
             }}
             transition={{ type: 'spring', stiffness: 400 }}
           >
-            <span className="font-medium">{weight.label}</span>
-            <span className="text-xs opacity-75">{weight.percentage}</span>
+            {weight.label}
           </motion.button>
         ))}
       </div>
