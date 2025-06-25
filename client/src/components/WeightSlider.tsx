@@ -85,11 +85,11 @@ export default function WeightSlider({
           style={{
             background: `linear-gradient(to right, #FF6B7D 0%, #FF6B7D ${((value - min) / (max - min)) * 100}%, #e5e7eb ${((value - min) / (max - min)) * 100}%, #e5e7eb 100%)`
           }}
-          aria-label={`Weight slider: ${value}%`}
+          aria-label={isHabitWeight ? `Weight slider: +${(value * 100).toFixed(3)}%` : `Weight slider: ${value}%`}
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={value}
-          aria-valuetext={`${value} percent`}
+          aria-valuetext={isHabitWeight ? `${(value * 100).toFixed(3)} percent` : `${value} percent`}
         />
 
         {/* Custom thumb indicator - enhanced for mobile with haptic-like feedback */}
@@ -124,7 +124,7 @@ export default function WeightSlider({
           />
         </motion.div>
 
-        {/* Value display tooltip - shows on mobile during interaction */}
+        {/* Value display tooltip - shows weight value on mobile during interaction */}
         <motion.div
           className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-1 rounded-lg text-sm font-medium pointer-events-none"
           style={{
@@ -133,13 +133,13 @@ export default function WeightSlider({
           }}
           initial={{ opacity: 0, scale: 0.8, y: 10 }}
           animate={{
-            opacity: (isDragging || isFocused) && isMobile ? 1 : 0,
-            scale: (isDragging || isFocused) && isMobile ? 1 : 0.8,
-            y: (isDragging || isFocused) && isMobile ? 0 : 10,
+            opacity: (isDragging || isFocused) && isMobile && isHabitWeight ? 1 : 0,
+            scale: (isDragging || isFocused) && isMobile && isHabitWeight ? 1 : 0.8,
+            y: (isDragging || isFocused) && isMobile && isHabitWeight ? 0 : 10,
           }}
           transition={{ duration: 0.2 }}
         >
-          {value}%
+          {isHabitWeight ? `+${(value * 100).toFixed(3)}%` : `${value}%`}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-100" />
         </motion.div>
       </div>
@@ -206,30 +206,7 @@ export default function WeightSlider({
         )}
       </div>
 
-      {/* Mobile-friendly increment/decrement buttons */}
-      {isMobile && (
-        <div className="flex justify-center gap-4 mt-2">
-          <motion.button
-            onClick={() => onChange(Math.max(min, value - 5))}
-            disabled={value <= min}
-            className="flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
-            whileTap={{ scale: 0.9 }}
-            aria-label="Decrease weight by 5%"
-          >
-            <span className="text-xl font-bold text-gray-600 dark:text-gray-300">−</span>
-          </motion.button>
-          
-          <motion.button
-            onClick={() => onChange(Math.min(max, value + 5))}
-            disabled={value >= max}
-            className="flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
-            whileTap={{ scale: 0.9 }}
-            aria-label="Increase weight by 5%"
-          >
-            <span className="text-xl font-bold text-gray-600 dark:text-gray-300">+</span>
-          </motion.button>
-        </div>
-      )}
+      
     </div>
   );
 }
