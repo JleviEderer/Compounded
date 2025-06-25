@@ -209,8 +209,15 @@ export default function Habits() {
                         size="default"
                         className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
                         aria-label={`Edit ${habit.goodHabit} habit`}
+                        asChild
                       >
-                        <Edit2 className="w-4 h-4" />
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </motion.button>
                       </IconButton>
                       
                       <AlertDialog>
@@ -220,8 +227,15 @@ export default function Habits() {
                             size="default"
                             className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
                             aria-label={`Delete ${habit.goodHabit} habit`}
+                            asChild
                           >
-                            <Trash2 className="w-4 h-4" />
+                            <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </motion.button>
                           </IconButton>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
