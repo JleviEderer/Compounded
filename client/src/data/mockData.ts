@@ -1,15 +1,20 @@
 import { HabitPair, HabitLog, HabitWeight } from '../types';
 
-// Production-optimized loading: exclude mock data from production bundles
+// Production-optimized loading: conditionally load mock data
 let rawJsonData: any;
 
-if (import.meta.env.DEV) {
-  // Development: Load mock data
+if (import.meta.env.DEV || import.meta.env.VITE_ENABLE_MOCK_DATA === 'true') {
+  // Development OR explicitly enabled: Load full mock data
   rawJsonData = (await import('../fixtures/myMockData.json')).default;
+  console.log('🚀 MOCK DATA: Loaded full dataset for development/demo');
 } else {
-  // Production: Use empty data structure to avoid bundling mock data
-  rawJsonData = { habits: [], logs: [] };
-  console.log('🚀 PRODUCTION: Using empty mock data structure (real data loaded via dataSourceConfig)');
+  // Production default: Minimal empty structure (no 7MB bundle)
+  rawJsonData = { 
+    habits: [], 
+    logs: [],
+    _note: 'Production build - mock data excluded for bundle optimization'
+  };
+  console.log('🚀 PRODUCTION: Using minimal mock data structure (optimized bundle)');
 }
 
 console.log('🚀 STARTING mockData.ts with dynamic import...');
