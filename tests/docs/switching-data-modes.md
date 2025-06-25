@@ -88,6 +88,50 @@ export const dataSourceConfig: DataSourceConfig = {
 };
 ```
 
+## Production Mock Data Control
+
+Your app now supports flexible mock data loading in production using environment variables. This gives you control over bundle size and demo capabilities without code changes.
+
+### How It Works
+
+The mock data loading in `mockData.ts` checks two conditions:
+
+```typescript
+if (import.meta.env.DEV || import.meta.env.VITE_ENABLE_MOCK_DATA === 'true') {
+  // Load full 7MB mock dataset
+  rawJsonData = (await import('../fixtures/myMockData.json')).default;
+} else {
+  // Use minimal empty structure (optimized bundle)
+  rawJsonData = { habits: [], logs: [] };
+}
+```
+
+### Production Deployment Options
+
+**Option 1: Optimized Production (Default)**
+- Don't set `VITE_ENABLE_MOCK_DATA`
+- Result: Smaller bundle, no mock data available
+- Use case: Real users with their own data
+
+**Option 2: Demo-Enabled Production**
+- Set `VITE_ENABLE_MOCK_DATA=true` in deployment environment
+- Result: Full mock data bundled and available
+- Use case: Staging environments, demos, user onboarding
+
+### Verification
+
+Check console logs to confirm which mode is active:
+
+- **Mock data loaded**: `🚀 MOCK DATA: Loaded full dataset for development/demo`
+- **Optimized bundle**: `🚀 PRODUCTION: Using minimal mock data structure (optimized bundle)`
+
+### Key Benefits
+
+- **Bundle optimization**: Production builds exclude 7MB mock data by default
+- **Demo flexibility**: Enable rich demo data when needed for showcasing
+- **No code changes**: Control behavior through deployment configuration
+- **Staging support**: Use full mock data in staging environments
+
 ## Programmatic Switching
 
 You can also switch modes at runtime using the built-in function:
