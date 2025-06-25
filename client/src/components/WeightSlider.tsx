@@ -208,8 +208,3 @@ export default function WeightSlider({
     </div>
   );
 }
-
-      
-    </div>
-  );
-}
