@@ -123,9 +123,12 @@ export default function Layout({ children }: LayoutProps) {
           <main className="flex-1 overflow-y-auto mx-auto px-4 sm:px-6 lg:px-8 xl:px-4 2xl:px-0 max-w-3xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] w-full">
             <motion.div
               key={location}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: window.innerWidth < 768 ? 5 : 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ 
+                duration: window.innerWidth < 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.1 : 0.3,
+                ease: "easeOut"
+              }}
             >
               {children}
             </motion.div>
@@ -146,7 +149,8 @@ export default function Layout({ children }: LayoutProps) {
                           ? 'text-coral' 
                           : 'text-gray-500 dark:text-gray-400'
                       }`}
-                      whileTap={{ scale: 0.95 }}
+                      whileTap={{ scale: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0.95 }}
+                      transition={{ duration: 0.1 }}
                     >
                       <Icon className="w-5 h-5" />
                       <span className="text-xs font-medium">{item.name}</span>

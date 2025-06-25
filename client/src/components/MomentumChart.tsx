@@ -170,7 +170,11 @@ export default function MomentumChart({
       <motion.div 
           className="h-[300px] md:h-[300px] w-full mb-4"
           layout
-          transition={{ type: 'spring', stiffness: 80, duration: 0.3 }}
+          transition={{ 
+            type: window.innerWidth < 768 ? 'tween' : 'spring', 
+            stiffness: 80, 
+            duration: window.innerWidth < 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.1 : 0.3 
+          }}
         >
         <div className="relative w-full h-full">
           

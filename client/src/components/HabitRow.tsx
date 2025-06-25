@@ -72,9 +72,11 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
     <motion.div 
       className="card-glass p-6 transition-all duration-300 hover:shadow-lg relative"
       layout
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: window.innerWidth < 768 ? 5 : 20 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.01 }}
+      transition={{ 
+        duration: window.innerWidth < 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.1 : 0.3 
+      }}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
