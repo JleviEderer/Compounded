@@ -5,9 +5,12 @@ export interface DataSourceConfig {
   enableLocalStorage: boolean;
 }
 
+// Auto-switch based on environment
+const isProduction = import.meta.env.PROD;
+
 export const dataSourceConfig: DataSourceConfig = {
-  source: 'user',
-  enableLocalStorage: true
+  source: isProduction ? 'user' : 'mock',
+  enableLocalStorage: isProduction
 };
 
 export function setDataSource(source: DataSource) {

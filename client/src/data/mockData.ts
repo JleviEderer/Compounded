@@ -1,7 +1,15 @@
 
 import { HabitPair, HabitLog, HabitWeight } from '../types';
-// Direct import - this is the most reliable method in Vite
-import rawJsonData from './myMockData.json';
+// Dynamic import for better bundle optimization in production
+const importMockData = async () => {
+  const { default: rawJsonData } = await import('./myMockData.json');
+  return rawJsonData;
+};
+
+// For development, use direct import for faster loading
+const rawJsonData = import.meta.env.DEV 
+  ? (await import('./myMockData.json')).default
+  : await importMockData();
 
 console.log('🚀 STARTING mockData.ts with direct import...');
 console.log('📋 Raw JSON data loaded:', {
