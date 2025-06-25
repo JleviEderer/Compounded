@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface WeightSliderProps {
   value: number;
@@ -16,15 +17,55 @@ export default function WeightSlider({
   max = 100 
 }: WeightSliderProps) {
   const [isDragging, setIsDragging] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const sliderRef = useRef<HTMLInputElement>(null);
+  const isMobile = useIsMobile();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(Number(e.target.value));
-  };
+  }, [onChange]);
+
+  const handleTouchStart = useCallback(() => {
+    setIsDragging(true);
+    // Prevent scrolling while dragging on mobile
+    document.body.style.overflow = 'hidden';
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+    document.body.style.overflow = '';
+  }, []);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    const step = isMobile ? 5 : 1; // Larger steps on mobile for easier control
+    
+    switch (e.key) {
+      case 'ArrowLeft':
+      case 'ArrowDown':
+        e.preventDefault();
+        onChange(Math.max(min, value - step));
+        break;
+      case 'ArrowRight':
+      case 'ArrowUp':
+        e.preventDefault();
+        onChange(Math.min(max, value + step));
+        break;
+      case 'Home':
+        e.preventDefault();
+        onChange(min);
+        break;
+      case 'End':
+        e.preventDefault();
+        onChange(max);
+        break;
+    }
+  }, [value, onChange, min, max, isMobile]);
 
   return (
     <div className="w-full space-y-4">
-      <div className="relative py-2">
+      <div className="relative py-4"> {/* Increased padding for mobile */}
         <input
+          ref={sliderRef}
           type="range"
           min={min}
           max={max}
@@ -32,43 +73,128 @@ export default function WeightSlider({
           onChange={handleChange}
           onMouseDown={() => setIsDragging(true)}
           onMouseUp={() => setIsDragging(false)}
-          onTouchStart={() => setIsDragging(true)}
-          onTouchEnd={() => setIsDragging(false)}
-          className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer touch-manipulation slider-thumb"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onKeyDown={handleKeyDown}
+          className="w-full h-4 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer touch-manipulation slider-thumb focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2 dark:focus:ring-offset-gray-800"
           style={{
             background: `linear-gradient(to right, #FF6B7D 0%, #FF6B7D ${((value - min) / (max - min)) * 100}%, #e5e7eb ${((value - min) / (max - min)) * 100}%, #e5e7eb 100%)`
           }}
+          aria-label={`Weight slider: ${value}%`}
+          aria-valuemin={min}
+          aria-valuemax={max}
+          aria-valuenow={value}
+          aria-valuetext={`${value} percent`}
         />
 
-        {/* Custom thumb indicator - larger for mobile */}
+        {/* Custom thumb indicator - enhanced for mobile with haptic-like feedback */}
         <motion.div
-          className="absolute top-1/2 w-8 h-8 bg-coral rounded-full shadow-lg pointer-events-none border-2 border-white dark:border-gray-800"
+          className="absolute top-1/2 w-10 h-10 bg-coral rounded-full shadow-lg pointer-events-none border-3 border-white dark:border-gray-800"
           style={{
-            left: `calc(${((value - min) / (max - min)) * 100}% - 16px)`,
+            left: `calc(${((value - min) / (max - min)) * 100}% - 20px)`,
             transform: 'translateY(-50%)',
           }}
           animate={{
-            scale: isDragging ? 1.3 : 1,
-            boxShadow: isDragging ? '0 8px 25px rgba(255, 107, 125, 0.3)' : '0 4px 15px rgba(0, 0, 0, 0.1)',
+            scale: isDragging ? 1.4 : isFocused ? 1.1 : 1,
+            boxShadow: isDragging 
+              ? '0 12px 30px rgba(255, 107, 125, 0.4)' 
+              : isFocused 
+                ? '0 8px 20px rgba(255, 107, 125, 0.25)' 
+                : '0 4px 15px rgba(0, 0, 0, 0.1)',
           }}
-          transition={{ type: 'spring', stiffness: 300 }}
-        />
+          transition={{ 
+            type: 'spring', 
+            stiffness: isMobile ? 400 : 300,
+            damping: isMobile ? 25 : 20
+          }}
+        >
+          {/* Inner circle for visual feedback */}
+          <motion.div
+            className="absolute inset-2 bg-white dark:bg-gray-100 rounded-full opacity-30"
+            animate={{
+              scale: isDragging ? 0.8 : 1,
+              opacity: isDragging ? 0.6 : 0.3,
+            }}
+            transition={{ duration: 0.2 }}
+          />
+        </motion.div>
+
+        {/* Value display tooltip - shows on mobile during interaction */}
+        <motion.div
+          className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-1 rounded-lg text-sm font-medium pointer-events-none"
+          style={{
+            left: `calc(${((value - min) / (max - min)) * 100}% - 0px)`,
+            transform: 'translateX(-50%)',
+          }}
+          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+          animate={{
+            opacity: (isDragging || isFocused) && isMobile ? 1 : 0,
+            scale: (isDragging || isFocused) && isMobile ? 1 : 0.8,
+            y: (isDragging || isFocused) && isMobile ? 0 : 10,
+          }}
+          transition={{ duration: 0.2 }}
+        >
+          {value}%
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-100" />
+        </motion.div>
       </div>
 
-      {/* Quick preset buttons - enlarged for mobile */}
+      {/* Quick preset buttons - enhanced for mobile with haptic-style feedback */}
       <div className="flex gap-2 justify-center flex-wrap">
         {[0, 25, 50, 75, 100].map((preset) => (
-          <Button
-            key={preset}
-            variant={value === preset ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => onChange(preset)}
-            className="text-xs min-h-[44px] min-w-[44px] touch-manipulation"
-          >
-            {preset}%
-          </Button>
+          <motion.div key={preset}>
+            <Button
+              variant={value === preset ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => onChange(preset)}
+              className={`text-xs min-h-[44px] min-w-[44px] touch-manipulation transition-all duration-200 ${
+                value === preset 
+                  ? 'bg-coral text-white shadow-lg' 
+                  : 'hover:bg-coral/10 hover:border-coral/50'
+              }`}
+              asChild
+            >
+              <motion.button
+                whileHover={{ scale: isMobile ? 1 : 1.05 }}
+                whileTap={{ 
+                  scale: 0.92,
+                  transition: { duration: 0.1 }
+                }}
+                transition={{ type: 'spring', stiffness: 400 }}
+              >
+                {preset}%
+              </motion.button>
+            </Button>
+          </motion.div>
         ))}
       </div>
+
+      {/* Mobile-friendly increment/decrement buttons */}
+      {isMobile && (
+        <div className="flex justify-center gap-4 mt-2">
+          <motion.button
+            onClick={() => onChange(Math.max(min, value - 5))}
+            disabled={value <= min}
+            className="flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+            whileTap={{ scale: 0.9 }}
+            aria-label="Decrease weight by 5%"
+          >
+            <span className="text-xl font-bold text-gray-600 dark:text-gray-300">−</span>
+          </motion.button>
+          
+          <motion.button
+            onClick={() => onChange(Math.min(max, value + 5))}
+            disabled={value >= max}
+            className="flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+            whileTap={{ scale: 0.9 }}
+            aria-label="Increase weight by 5%"
+          >
+            <span className="text-xl font-bold text-gray-600 dark:text-gray-300">+</span>
+          </motion.button>
+        </div>
+      )}
     </div>
   );
 }
