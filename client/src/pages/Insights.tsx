@@ -368,19 +368,19 @@ export default function Insights() {
   // Quick Stats Strip
   const QuickStatsStrip = () => (
     <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mb-8">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <motion.div 
-          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
+          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center shadow-sm"
           whileHover={{ scale: 1.02 }}
         >
-          <div className="text-xl font-bold text-emerald-600">
+          <div className="text-lg sm:text-xl font-bold text-emerald-600">
             {successRate.toFixed(0)}%
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
-            Success Rate
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
+            <span className="truncate">Success Rate</span>
             <Tooltip>
               <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
+                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
               </TooltipTrigger>
               <TooltipContent className="max-w-48 text-xs p-2">
                 <p>Good Habits / Habits Logged</p>
@@ -390,17 +390,17 @@ export default function Insights() {
         </motion.div>
 
         <motion.div 
-          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
+          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center shadow-sm"
           whileHover={{ scale: 1.02 }}
         >
-          <div className="text-xl font-bold text-purple-600">
+          <div className="text-lg sm:text-xl font-bold text-purple-600">
             +{(recentAvgRate * 100).toFixed(2)}%
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
-            Avg Daily Rate
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
+            <span className="truncate">Avg Daily Rate</span>
             <Tooltip>
               <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
+                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
               </TooltipTrigger>
               <TooltipContent className="max-w-48 text-xs p-2">
                 <p>Average daily compound rate of improvement</p>
@@ -410,15 +410,15 @@ export default function Insights() {
         </motion.div>
 
         <motion.div 
-          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
+          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center shadow-sm"
           whileHover={{ scale: 1.02 }}
         >
-          <div className="text-xl font-bold text-coral">{getCurrentStreak()}</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
-            Current Streak
+          <div className="text-lg sm:text-xl font-bold text-coral">{getCurrentStreak()}</div>
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
+            <span className="truncate">Current Streak</span>
             <Tooltip>
               <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
+                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
               </TooltipTrigger>
               <TooltipContent className="max-w-48 text-xs p-2">
                 <p>Consecutive days with at least one habit completed</p>
@@ -428,15 +428,15 @@ export default function Insights() {
         </motion.div>
 
         <motion.div 
-          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm"
+          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center shadow-sm"
           whileHover={{ scale: 1.02 }}
         >
-          <div className="text-xl font-bold text-blue-600">{habits.length}</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
-            Active Habits
+          <div className="text-lg sm:text-xl font-bold text-blue-600">{habits.length}</div>
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
+            <span className="truncate">Active Habits</span>
             <Tooltip>
               <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help" />
+                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
               </TooltipTrigger>
               <TooltipContent className="max-w-48 text-xs p-2">
                 <p>Total number of habits currently being tracked</p>
