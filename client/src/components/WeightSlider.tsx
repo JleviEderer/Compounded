@@ -1,24 +1,22 @@
 import { motion } from 'framer-motion';
 import { useState, useRef, useCallback } from 'react';
-import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { HabitWeight, WEIGHT_VALUES, WEIGHT_LABELS } from '@/types';
 
 interface WeightSliderProps {
-  value: number;
-  onChange: (value: number) => void;
-  min?: number;
-  max?: number;
-  isHabitWeight?: boolean;
+  value: number; // Index (0-4)
+  onChange: (index: number) => void;
 }
 
-export default function WeightSlider({ 
-  value, 
-  onChange, 
-  min = 0, 
-  max = 100,
-  isHabitWeight = false
-}: WeightSliderProps) {
+const WEIGHTS = [
+  { weight: HabitWeight.MICRO, label: 'Micro', percentage: '0.010%' },
+  { weight: HabitWeight.SMALL, label: 'Small', percentage: '0.020%' },
+  { weight: HabitWeight.MEDIUM, label: 'Medium', percentage: '0.030%' },
+  { weight: HabitWeight.LARGE, label: 'Large', percentage: '0.050%' },
+  { weight: HabitWeight.KEYSTONE, label: 'Keystone', percentage: '0.100%' }
+];
+
+export default function WeightSlider({ value, onChange }: WeightSliderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const sliderRef = useRef<HTMLInputElement>(null);
@@ -30,7 +28,6 @@ export default function WeightSlider({
 
   const handleTouchStart = useCallback(() => {
     setIsDragging(true);
-    // Prevent scrolling while dragging on mobile
     document.body.style.overflow = 'hidden';
   }, []);
 
@@ -40,38 +37,39 @@ export default function WeightSlider({
   }, []);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    const step = isMobile ? 5 : 1; // Larger steps on mobile for easier control
-    
     switch (e.key) {
       case 'ArrowLeft':
       case 'ArrowDown':
         e.preventDefault();
-        onChange(Math.max(min, value - step));
+        onChange(Math.max(0, value - 1));
         break;
       case 'ArrowRight':
       case 'ArrowUp':
         e.preventDefault();
-        onChange(Math.min(max, value + step));
+        onChange(Math.min(4, value + 1));
         break;
       case 'Home':
         e.preventDefault();
-        onChange(min);
+        onChange(0);
         break;
       case 'End':
         e.preventDefault();
-        onChange(max);
+        onChange(4);
         break;
     }
-  }, [value, onChange, min, max, isMobile]);
+  }, [value, onChange]);
+
+  const currentWeight = WEIGHTS[value];
 
   return (
     <div className="w-full space-y-4">
-      <div className="relative py-4"> {/* Increased padding for mobile */}
+      <div className="relative py-4">
         <input
           ref={sliderRef}
           type="range"
-          min={min}
-          max={max}
+          min={0}
+          max={4}
+          step={1}
           value={value}
           onChange={handleChange}
           onMouseDown={() => setIsDragging(true)}
@@ -83,20 +81,20 @@ export default function WeightSlider({
           onKeyDown={handleKeyDown}
           className="w-full h-4 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer touch-manipulation slider-thumb focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2 dark:focus:ring-offset-gray-800"
           style={{
-            background: `linear-gradient(to right, #FF6B7D 0%, #FF6B7D ${((value - min) / (max - min)) * 100}%, #e5e7eb ${((value - min) / (max - min)) * 100}%, #e5e7eb 100%)`
+            background: `linear-gradient(to right, #FF6B7D 0%, #FF6B7D ${(value / 4) * 100}%, #e5e7eb ${(value / 4) * 100}%, #e5e7eb 100%)`
           }}
-          aria-label={isHabitWeight ? `Weight slider: +${(value * 100).toFixed(3)}%` : `Weight slider: ${value}%`}
-          aria-valuemin={min}
-          aria-valuemax={max}
+          aria-label={`Weight slider: ${currentWeight.label}`}
+          aria-valuemin={0}
+          aria-valuemax={4}
           aria-valuenow={value}
-          aria-valuetext={isHabitWeight ? `${(value * 100).toFixed(3)} percent` : `${value} percent`}
+          aria-valuetext={currentWeight.label}
         />
 
-        {/* Custom thumb indicator - enhanced for mobile with haptic-like feedback */}
+        {/* Custom thumb indicator */}
         <motion.div
           className="absolute top-1/2 w-10 h-10 bg-coral rounded-full shadow-lg pointer-events-none border-3 border-white dark:border-gray-800"
           style={{
-            left: `calc(${((value - min) / (max - min)) * 100}% - 20px)`,
+            left: `calc(${(value / 4) * 100}% - 20px)`,
             transform: 'translateY(-50%)',
           }}
           animate={{
@@ -113,7 +111,6 @@ export default function WeightSlider({
             damping: isMobile ? 25 : 20
           }}
         >
-          {/* Inner circle for visual feedback */}
           <motion.div
             className="absolute inset-2 bg-white dark:bg-gray-100 rounded-full opacity-30"
             animate={{
@@ -124,89 +121,49 @@ export default function WeightSlider({
           />
         </motion.div>
 
-        {/* Value display tooltip - shows weight value on mobile during interaction */}
+        {/* Value display tooltip */}
         <motion.div
           className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-1 rounded-lg text-sm font-medium pointer-events-none"
           style={{
-            left: `calc(${((value - min) / (max - min)) * 100}% - 0px)`,
+            left: `calc(${(value / 4) * 100}% - 0px)`,
             transform: 'translateX(-50%)',
           }}
           initial={{ opacity: 0, scale: 0.8, y: 10 }}
           animate={{
-            opacity: (isDragging || isFocused) && isMobile && isHabitWeight ? 1 : 0,
-            scale: (isDragging || isFocused) && isMobile && isHabitWeight ? 1 : 0.8,
-            y: (isDragging || isFocused) && isMobile && isHabitWeight ? 0 : 10,
+            opacity: (isDragging || isFocused) ? 1 : 0,
+            scale: (isDragging || isFocused) ? 1 : 0.8,
+            y: (isDragging || isFocused) ? 0 : 10,
           }}
           transition={{ duration: 0.2 }}
         >
-          {isHabitWeight ? `+${(value * 100).toFixed(3)}%` : `${value}%`}
+          {currentWeight.label}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-100" />
         </motion.div>
       </div>
 
-      {/* Quick preset buttons - enhanced for mobile with haptic-style feedback */}
-      <div className="flex gap-2 justify-center flex-wrap">
-        {isHabitWeight ? (
-          WEIGHT_VALUES.map((weightValue) => {
-            const label = WEIGHT_LABELS[weightValue].split(' ')[0]; // Get just "Micro", "Small", etc.
-            return (
-              <motion.div key={weightValue}>
-                <Button
-                  variant={value === weightValue ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => onChange(weightValue)}
-                  className={`text-xs min-h-[44px] min-w-[60px] touch-manipulation transition-all duration-200 ${
-                    value === weightValue 
-                      ? 'bg-coral text-white shadow-lg' 
-                      : 'hover:bg-coral/10 hover:border-coral/50'
-                  }`}
-                  asChild
-                >
-                  <motion.button
-                    whileHover={{ scale: isMobile ? 1 : 1.05 }}
-                    whileTap={{ 
-                      scale: 0.92,
-                      transition: { duration: 0.1 }
-                    }}
-                    transition={{ type: 'spring', stiffness: 400 }}
-                  >
-                    {label}
-                  </motion.button>
-                </Button>
-              </motion.div>
-            );
-          })
-        ) : (
-          [0, 25, 50, 75, 100].map((preset) => (
-            <motion.div key={preset}>
-              <Button
-                variant={value === preset ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => onChange(preset)}
-                className={`text-xs min-h-[44px] min-w-[44px] touch-manipulation transition-all duration-200 ${
-                  value === preset 
-                    ? 'bg-coral text-white shadow-lg' 
-                    : 'hover:bg-coral/10 hover:border-coral/50'
-                }`}
-                asChild
-              >
-                <motion.button
-                  whileHover={{ scale: isMobile ? 1 : 1.05 }}
-                  whileTap={{ 
-                    scale: 0.92,
-                    transition: { duration: 0.1 }
-                  }}
-                  transition={{ type: 'spring', stiffness: 400 }}
-                >
-                  {preset}%
-                </motion.button>
-              </Button>
-            </motion.div>
-          ))
-        )}
+      {/* Clickable labels */}
+      <div className="flex justify-between items-center">
+        {WEIGHTS.map((weight, index) => (
+          <motion.button
+            key={index}
+            onClick={() => onChange(index)}
+            className={`text-xs px-2 py-2 rounded-lg min-h-[44px] min-w-[44px] touch-manipulation transition-all duration-200 flex flex-col items-center justify-center ${
+              value === index 
+                ? 'font-semibold text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20' 
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
+            }`}
+            whileHover={{ scale: isMobile ? 1 : 1.05 }}
+            whileTap={{ 
+              scale: 0.92,
+              transition: { duration: 0.1 }
+            }}
+            transition={{ type: 'spring', stiffness: 400 }}
+          >
+            <span className="font-medium">{weight.label}</span>
+            <span className="text-xs opacity-75">{weight.percentage}</span>
+          </motion.button>
+        ))}
       </div>
-
-      
     </div>
   );
 }

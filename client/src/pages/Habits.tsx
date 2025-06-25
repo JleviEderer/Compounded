@@ -19,17 +19,18 @@ export default function Habits() {
   // Form state
   const [goodHabit, setGoodHabit] = useState('');
   const [badHabit, setBadHabit] = useState('');
-  const [weight, setWeight] = useState<HabitWeight>(HabitWeight.MEDIUM);
+  const [weightIndex, setWeightIndex] = useState<number>(2); // Default to MEDIUM (index 2)
 
   const resetForm = () => {
     setGoodHabit('');
     setBadHabit('');
-    setWeight(HabitWeight.MEDIUM);
+    setWeightIndex(2); // MEDIUM
     setEditingId(null);
   };
 
   const handleAdd = () => {
     if (goodHabit.trim() && badHabit.trim()) {
+      const weight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][weightIndex];
       addHabit(goodHabit.trim(), badHabit.trim(), weight);
       setIsAddModalOpen(false);
       resetForm();
@@ -41,7 +42,8 @@ export default function Habits() {
     if (habit) {
       setGoodHabit(habit.goodHabit);
       setBadHabit(habit.badHabit);
-      setWeight(habit.weight);
+      const weightValues = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE];
+      setWeightIndex(weightValues.indexOf(habit.weight));
       setEditingId(habitId);
       setIsAddModalOpen(true);
     }
@@ -49,6 +51,7 @@ export default function Habits() {
 
   const handleUpdate = () => {
     if (editingId && goodHabit.trim() && badHabit.trim()) {
+      const weight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][weightIndex];
       updateHabit(editingId, {
         goodHabit: goodHabit.trim(),
         badHabit: badHabit.trim(),
@@ -119,9 +122,8 @@ export default function Habits() {
                 </div>
 
                 <WeightSlider
-                  value={weight}
-                  onChange={setWeight}
-                  isHabitWeight={true}
+                  value={weightIndex}
+                  onChange={setWeightIndex}
                 />
 
                 <div className="flex space-x-4 pt-4">
@@ -263,9 +265,11 @@ export default function Habits() {
                   
                   <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                     <WeightSlider
-                      value={habit.weight}
-                      onChange={(newWeight) => updateHabit(habit.id, { weight: newWeight })}
-                      isHabitWeight={true}
+                      value={[HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE].indexOf(habit.weight)}
+                      onChange={(newIndex) => {
+                        const newWeight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][newIndex];
+                        updateHabit(habit.id, { weight: newWeight });
+                      }}
                     />
                   </div>
                 </motion.div>
