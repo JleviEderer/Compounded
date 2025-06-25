@@ -5,6 +5,7 @@ import { useHabits } from '../hooks/useHabits';
 import { HabitWeight, WEIGHT_LABELS } from '../types';
 import WeightSlider from '../components/WeightSlider';
 import { Button } from '@/components/ui/button';
+import { IconButton } from '@/components/ui/icon-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -77,19 +78,20 @@ export default function Habits() {
           </h2>
           <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
             <DialogTrigger asChild>
-              <Button className="btn-coral">
-                <Plus className="w-5 h-5 mr-2" />
-                Add Pair
+              <Button className="btn-coral min-h-[44px] min-w-[44px] px-4 py-3 text-base font-medium touch-manipulation">
+                <Plus className="w-5 h-5 mr-2 flex-shrink-0" />
+                <span className="hidden sm:inline">Add Pair</span>
+                <span className="sm:hidden">Add</span>
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-md bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
+            <DialogContent className="max-w-md bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 max-h-[calc(100vh-4rem)] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle className="text-gray-900 dark:text-white">
+                <DialogTitle className="text-gray-900 dark:text-white text-lg">
                   {editingId ? 'Edit Habit Pair' : 'Add New Habit Pair'}
                 </DialogTitle>
               </DialogHeader>
               
-              <div className="space-y-6">
+              <div className="space-y-6 pb-4">
                 <div>
                   <Label htmlFor="good-habit" className="text-gray-700 dark:text-gray-300 font-medium">
                     Good Habit (What you want to do)
@@ -99,7 +101,7 @@ export default function Habits() {
                     value={goodHabit}
                     onChange={(e) => setGoodHabit(e.target.value)}
                     placeholder="e.g., Read for 15 minutes"
-                    className="mt-2 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                    className="mt-2 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 min-h-[44px] text-base"
                   />
                 </div>
 
@@ -112,7 +114,7 @@ export default function Habits() {
                     value={badHabit}
                     onChange={(e) => setBadHabit(e.target.value)}
                     placeholder="e.g., Mindless phone scrolling"
-                    className="mt-2 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                    className="mt-2 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 min-h-[44px] text-base"
                   />
                 </div>
 
@@ -128,13 +130,13 @@ export default function Habits() {
                       setIsAddModalOpen(false);
                       resetForm();
                     }}
-                    className="flex-1"
+                    className="flex-1 min-h-[48px] text-base font-medium touch-manipulation"
                   >
                     Cancel
                   </Button>
                   <Button
                     onClick={editingId ? handleUpdate : handleAdd}
-                    className="flex-1 btn-coral"
+                    className="flex-1 btn-coral min-h-[48px] text-base font-medium touch-manipulation"
                     disabled={!goodHabit.trim() || !badHabit.trim()}
                   >
                     {editingId ? 'Update' : 'Add'} Habit
@@ -156,10 +158,10 @@ export default function Habits() {
               No habits yet. Ready to build something amazing?
             </div>
             <Button 
-              className="btn-coral"
+              className="btn-coral min-h-[48px] px-6 py-3 text-base font-medium touch-manipulation"
               onClick={() => setIsAddModalOpen(true)}
             >
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="w-5 h-5 mr-3 flex-shrink-0" />
               Add your first habit pair
             </Button>
           </motion.div>
@@ -178,17 +180,19 @@ export default function Habits() {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <motion.div 
-                        className="cursor-move p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                        whileHover={{ scale: 1.1 }}
+                      <IconButton
+                        variant="ghost"
+                        size="sm"
+                        className="cursor-move text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                        aria-label="Drag to reorder habit"
                       >
                         <GripVertical className="w-5 h-5" />
-                      </motion.div>
+                      </IconButton>
                       <div>
                         <div className="font-semibold text-gray-800 dark:text-white relative">
                           {habit.goodHabit} → Replace {habit.badHabit}
                           <Check 
-                            className={`absolute -right-6 w-5 h-5 text-emerald-500 transition-opacity duration-1000 ${
+                            className={`absolute -right-7 sm:-right-6 w-5 h-5 text-emerald-500 transition-opacity duration-1000 ${
                               lastSavedHabitId === habit.id ? 'opacity-100' : 'opacity-0'
                             }`}
                           />
@@ -198,25 +202,27 @@ export default function Habits() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <motion.button
+                    <div className="flex items-center space-x-1">
+                      <IconButton
                         onClick={() => handleEdit(habit.id)}
-                        className="p-2 hover:bg-white/50 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                        variant="ghost"
+                        size="default"
+                        className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                        aria-label={`Edit ${habit.goodHabit} habit`}
                       >
-                        <Edit2 className="w-4 h-4 text-gray-500" />
-                      </motion.button>
+                        <Edit2 className="w-4 h-4" />
+                      </IconButton>
                       
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <motion.button
-                            className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                          <IconButton
+                            variant="ghost"
+                            size="default"
+                            className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                            aria-label={`Delete ${habit.goodHabit} habit`}
                           >
-                            <Trash2 className="w-4 h-4 text-red-500" />
-                          </motion.button>
+                            <Trash2 className="w-4 h-4" />
+                          </IconButton>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
