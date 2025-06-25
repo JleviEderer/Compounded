@@ -62,8 +62,8 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
   const currentWeight = WEIGHTS[value];
 
   return (
-    <div className="w-full space-y-4">
-      <div className="relative py-4">
+    <div className="w-full space-y-3">
+      <div className="relative py-4 px-2">
         <input
           ref={sliderRef}
           type="range"
@@ -92,38 +92,29 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
 
         {/* Custom thumb indicator */}
         <motion.div
-          className="absolute top-1/2 w-10 h-10 bg-coral rounded-full shadow-lg pointer-events-none border-3 border-white dark:border-gray-800"
+          className="absolute top-1/2 w-8 h-8 bg-coral rounded-full shadow-lg pointer-events-none border-2 border-white dark:border-gray-800"
           style={{
-            left: `calc(${(value / 4) * 100}% - 20px)`,
+            left: `calc(${(value / 4) * 100}% - 16px)`,
             transform: 'translateY(-50%)',
           }}
           animate={{
-            scale: isDragging ? 1.4 : isFocused ? 1.1 : 1,
+            scale: isDragging ? 1.3 : isFocused ? 1.1 : 1,
             boxShadow: isDragging 
-              ? '0 12px 30px rgba(255, 107, 125, 0.4)' 
+              ? '0 8px 25px rgba(255, 107, 125, 0.4)' 
               : isFocused 
-                ? '0 8px 20px rgba(255, 107, 125, 0.25)' 
-                : '0 4px 15px rgba(0, 0, 0, 0.1)',
+                ? '0 6px 20px rgba(255, 107, 125, 0.25)' 
+                : '0 2px 10px rgba(0, 0, 0, 0.1)',
           }}
           transition={{ 
             type: 'spring', 
             stiffness: isMobile ? 400 : 300,
             damping: isMobile ? 25 : 20
           }}
-        >
-          <motion.div
-            className="absolute inset-2 bg-white dark:bg-gray-100 rounded-full opacity-30"
-            animate={{
-              scale: isDragging ? 0.8 : 1,
-              opacity: isDragging ? 0.6 : 0.3,
-            }}
-            transition={{ duration: 0.2 }}
-          />
-        </motion.div>
+        />
 
         {/* Value display tooltip */}
         <motion.div
-          className="absolute -top-14 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-2 rounded-lg text-sm font-medium pointer-events-none shadow-lg"
+          className="absolute -top-14 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-2 rounded-lg text-sm font-medium pointer-events-none shadow-lg z-10"
           style={{
             left: `calc(${(value / 4) * 100}% - 0px)`,
             transform: 'translateX(-50%)',
@@ -145,12 +136,12 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
       </div>
 
       {/* Clickable labels */}
-      <div className="flex justify-between items-center gap-1 px-1">
+      <div className="flex justify-between items-center gap-0.5 px-2">
         {WEIGHTS.map((weight, index) => (
           <motion.button
             key={index}
             onClick={() => onChange(index)}
-            className={`text-sm px-3 py-3 rounded-xl min-h-[48px] flex-1 touch-manipulation transition-all duration-200 flex items-center justify-center font-medium ${
+            className={`text-xs px-1.5 py-2.5 rounded-lg min-h-[44px] flex-1 touch-manipulation transition-all duration-200 flex items-center justify-center font-medium ${
               value === index 
                 ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20 shadow-sm' 
                 : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
