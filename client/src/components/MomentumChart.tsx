@@ -138,33 +138,30 @@ export default function MomentumChart({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
     >
-      {/* Title and HUD with safe padding on mobile */}
-      <div className="px-4 sm:px-0">
-        <div className="mb-2">
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
-            Momentum Index
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Your compound growth over time
-          </p>
-        </div>
+      <div className="mb-2">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
+          Momentum Index
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400 text-sm">
+          Your compound growth over time
+        </p>
+      </div>
 
-        {/* Floating HUD positioned directly under title */}
-        <div className="mb-4 px-2 py-1">
-          <div className="flex items-center justify-between gap-4 text-sm">
-            <div className="text-center">
-              <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">DATE</div>
-              <div className="text-gray-800 dark:text-white font-medium">{dayjs(hover?.date).format('MMM D, YYYY')}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">INDEX</div>
-              <div className="text-lg font-bold text-coral">{hover?.value?.toFixed(3)}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">DAILY RATE</div>
-              <div className={`font-semibold ${(hover?.dailyRate || 0) >= 0 ? 'text-green-600' : 'text-red-500'}`}>
-                {((hover?.dailyRate || 0) * 100).toFixed(2)}%
-              </div>
+      {/* Floating HUD positioned directly under title */}
+      <div className="mb-4 px-2 py-1">
+        <div className="flex items-center justify-between gap-4 text-sm">
+          <div className="text-center">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">DATE</div>
+            <div className="text-gray-800 dark:text-white font-medium">{dayjs(hover?.date).format('MMM D, YYYY')}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">INDEX</div>
+            <div className="text-lg font-bold text-coral">{hover?.value?.toFixed(3)}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">DAILY RATE</div>
+            <div className={`font-semibold ${(hover?.dailyRate || 0) >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+              {((hover?.dailyRate || 0) * 100).toFixed(2)}%
             </div>
           </div>
         </div>
@@ -295,30 +292,27 @@ export default function MomentumChart({
         </div>
       </motion.div>
 
-      {/* Time Range Selector with safe padding on mobile */}
-      <div className="px-4 sm:px-0">
-        <div className="flex flex-wrap gap-2 md:gap-4 mb-8 justify-center">
-          {timeRanges.map((range) => (
-            <motion.button
-              key={range.label}
-              onClick={() => onRangeChange(range.label)}
-              className={`px-4 py-3 min-h-[44px] rounded-full text-sm font-medium transition-all duration-200 touch-manipulation ${
-                selectedRange === range.label
-                  ? 'bg-coral text-white shadow-lg'
-                  : 'bg-white/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-600/50'
-                }`}
-              whileTap={{ scale: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0.98 }}
-              transition={{ duration: 0.1 }}
-              >
-                {range.label}
-              </motion.button>
-            ))}
-          </div>
+      {/* Time Range Selector */}
+      <div className="flex flex-wrap gap-2 md:gap-4 mb-8 justify-center">
+        {timeRanges.map((range) => (
+          <motion.button
+            key={range.label}
+            onClick={() => onRangeChange(range.label)}
+            className={`px-4 py-3 min-h-[44px] rounded-full text-sm font-medium transition-all duration-200 touch-manipulation ${
+              selectedRange === range.label
+                ? 'bg-coral text-white shadow-lg'
+                : 'bg-white/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-600/50'
+              }`}
+            whileTap={{ scale: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0.98 }}
+            transition={{ duration: 0.1 }}
+            >
+              {range.label}
+            </motion.button>
+          ))}
         </div>
 
-      {/* Quick Stats with safe padding on mobile */}
-      <div className="px-4 sm:px-0">
-        <div className="grid gap-3 grid-cols-2">
+      {/* Quick Stats */}
+      <div className="grid gap-3 grid-cols-2">
         {/* Top Row */}
         <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
           <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
@@ -413,7 +407,6 @@ export default function MomentumChart({
             {selectedRange === 'All Time' ? '(current)' : `(${projWindowDays}-day projection)`}
           </div>
         </div>
-      </div>
       </div>
     </motion.section>
   );
