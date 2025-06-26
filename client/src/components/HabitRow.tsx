@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Check, X, Minus } from 'lucide-react';
 import { HabitPair, HabitLog, HabitLogState, WEIGHT_LABELS } from '../types';
+import { cn } from '../lib/utils';
 
 interface HabitRowProps {
   habit: HabitPair;
@@ -82,34 +83,36 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-4">
             {/* Good Habit Button */}
-            <motion.button
-              onClick={handleGoodHabit}
-              whileTap={{ scale: 0.9 }}
-              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all ${
-                todayLog?.state === HabitLogState.GOOD
-                  ? 'bg-emerald-500 border-emerald-500'
-                  : 'border-emerald-300 hover:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
-              }`}
-            >
-              <Check className={`w-5 h-5 ${
-                todayLog?.state === HabitLogState.GOOD ? 'text-white' : 'text-emerald-500'
-              }`} />
-            </motion.button>
-
+            
             {/* Bad Habit Button */}
-            <motion.button
-              onClick={handleBadHabit}
-              whileTap={{ scale: 0.9 }}
-              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all ${
-                todayLog?.state === HabitLogState.BAD
-                  ? 'bg-red-500 border-red-500'
-                  : 'border-red-300 hover:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/20'
-              }`}
-            >
-              <X className={`w-5 h-5 ${
-                todayLog?.state === HabitLogState.BAD ? 'text-white' : 'text-red-500'
-              }`} />
-            </motion.button>
+            
+
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => onLogHabit(habit.id, today, 'good')}
+                className={cn(
+                  "p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center",
+                  todayLog?.state === 'good' 
+                    ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400" 
+                    : "hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+                )}
+                aria-label={`Mark ${habit.goodHabit} as completed`}
+              >
+                <Check className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => onLogHabit(habit.id, today, 'bad')}
+                className={cn(
+                  "p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center",
+                  todayLog?.state === 'bad' 
+                    ? "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400" 
+                    : "hover:bg-red-50 text-gray-400 dark:hover:bg-red-900/20 dark:text-gray-500 active:bg-red-100 dark:active:bg-red-900/30"
+                )}
+                aria-label={`Mark ${habit.badHabit} as not completed`}
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
 
             <div>
               <div className={`font-semibold text-gray-800 dark:text-white relative ${

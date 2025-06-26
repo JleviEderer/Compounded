@@ -43,7 +43,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
       if (absValue >= 0.25) return 'bg-rose-300'; // #FBC5D2 - light negative
       return 'bg-rose-200';                       // very light negative
     }
-    
+
     // Positive momentum (good habits dominate) - teal/emerald shades
     if (normalizedIntensity > 0) {
       if (normalizedIntensity >= 0.75) return 'bg-emerald-600'; // #059669 - heavy positive
@@ -51,7 +51,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
       if (normalizedIntensity >= 0.25) return 'bg-emerald-400'; // #6EE7B7 - light positive  
       return 'bg-emerald-300';                        // very light positive
     }
-    
+
     // Exactly zero or no habits logged
     return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // #E5E7EB
   };
@@ -60,18 +60,18 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
 
     return (
       <div className="space-y-2">
-        <div className="grid grid-cols-7 gap-0.5 bg-gray-50 dark:bg-gray-800 p-1 rounded">
+        <div className="grid grid-cols-7 gap-1 bg-gray-50 dark:bg-gray-800 p-1 rounded">
           {daysInWeek.map((day) => (
             <div key={day} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-2">
               {day}
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-7 gap-0.5 bg-gray-50 dark:bg-gray-800 p-1 rounded">
+        <div className="grid grid-cols-7 gap-1 bg-gray-50 dark:bg-gray-800 p-1 rounded">
           {cells.map((cell, index) => (
             <motion.div
               key={index}
-              className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium cursor-pointer hover:scale-105 transition-transform ${
+              className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium cursor-pointer hover:scale-105 active:scale-95 transition-transform ${
                 cell.day ? getColor(cell.intensity) : 'bg-gray-100 dark:bg-gray-600'
               } ${cell.isToday ? 'ring-2 ring-coral ring-offset-2' : ''}`}
               initial={{ scale: 0 }}
@@ -95,18 +95,18 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
 
     return (
       <div className="space-y-2">
-        <div className="grid grid-cols-8 gap-0.5 text-xs text-gray-600 dark:text-gray-400">
+        <div className="grid grid-cols-8 gap-1 text-xs text-gray-600 dark:text-gray-400">
           <div></div>
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => (
             <div key={i} className="text-center font-medium p-2">{day}</div>
           ))}
         </div>
-        <div className="grid grid-cols-8 gap-0.5 bg-gray-50 dark:bg-gray-800 p-1 rounded">
+        <div className="grid grid-cols-8 gap-1 bg-gray-50 dark:bg-gray-800 p-1 rounded">
           {weeks.map((week, weekIndex) => {
             // Get the Sunday date for this week (first cell of the week)
             const sundayDate = week[0]?.date ? new Date(week[0].date) : null;
             const sundayLabel = sundayDate ? sundayDate.toLocaleDateString('en', { month: 'short', day: 'numeric' }) : '';
-            
+
             return [
               <motion.div 
                 key={`label-${weekIndex}`}
@@ -120,7 +120,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
               ...week.map((cell, dayIndex) => (
                 <motion.div
                   key={`${weekIndex}-${dayIndex}`}
-                  className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium cursor-pointer hover:scale-105 transition-transform ${getColor(cell.intensity)} ${
+                  className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium cursor-pointer hover:scale-105 active:scale-95 transition-transform ${getColor(cell.intensity)} ${
                     cell.isToday ? 'ring-2 ring-coral ring-offset-2' : ''
                   }`}
                   initial={{ scale: 0 }}
@@ -166,7 +166,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             {(months as HeatMapCell[]).map((cell, monthIndex) => (
               <motion.div
                 key={monthIndex}
-                className={`w-4 h-4 rounded cursor-pointer hover:scale-125 transition-transform ${getColor(cell.intensity)}`}
+                className={`w-6 h-6 rounded cursor-pointer hover:scale-125 active:scale-110 transition-transform ${getColor(cell.intensity)}`}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: yearIndex * 0.1 + monthIndex * 0.02 }}
