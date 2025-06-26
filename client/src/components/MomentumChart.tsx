@@ -414,6 +414,7 @@ export default function MomentumChart({
           </div>
         </div>
       </div>
+      </div>
     </motion.section>
   );
 }
