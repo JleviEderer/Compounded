@@ -10,7 +10,7 @@ interface HeatMapGridProps {
   onCellClick?: (date: string) => void;
 }
 
-export function HeatMapGrid({ logs, onCellClick }: HeatMapGridProps) {
+function HeatMapGrid({ logs, onCellClick }: HeatMapGridProps) {
   // Generate last 14 days
   const today = new Date();
   const startDate = addDays(today, -13);
@@ -68,3 +68,5 @@ export function HeatMapGrid({ logs, onCellClick }: HeatMapGridProps) {
     </div>
   );
 }
+
+export default HeatMapGrid;
