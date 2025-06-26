@@ -17,7 +17,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload || !payload.length) return null;
 
   const data = payload[0].payload;
-  
+
   return (
     <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 shadow-lg text-sm">
       <div className="font-medium text-gray-800 dark:text-white">
@@ -69,7 +69,7 @@ export default function MomentumChart({
   timeRanges,
   projWindowDays
 }: MomentumChartProps) {
-  
+
   const [hover, setHover] = useState(data[data.length-1]); // last point as default
   const [isDragging, setIsDragging] = useState(false);
 
@@ -177,7 +177,7 @@ export default function MomentumChart({
           }}
         >
         <div className="relative w-full h-full">
-          
+
           <ResponsiveContainer width="100%" height="100%">
           <AreaChart 
             data={data}
@@ -231,7 +231,7 @@ export default function MomentumChart({
               }]}
               hide
             />
-            
+
 
             {/* Historical data area - only show non-projection points */}
             <Area
