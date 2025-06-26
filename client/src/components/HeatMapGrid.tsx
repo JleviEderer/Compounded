@@ -145,37 +145,42 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
 
     return (
       <div className="space-y-4">
-        <div className="grid gap-2 text-xs text-gray-600 dark:text-gray-400" style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}>
-          <div></div>
-          {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month) => (
-            <div key={month} className="text-center font-medium">{month}</div>
-          ))}
-        </div>
-        {Object.entries(years).map(([year, months], yearIndex) => (
-          <motion.div 
-            key={year} 
-            className="grid gap-2"
-            style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: yearIndex * 0.1 }}
-          >
-            <div className="text-sm text-gray-700 dark:text-gray-300 font-medium flex items-center justify-end pr-2">
-              {year}
+        {/* Mobile responsive container with horizontal scroll */}
+        <div className="overflow-x-auto">
+          <div className="min-w-[320px] space-y-4">
+            <div className="grid gap-2 text-xs text-gray-600 dark:text-gray-400" style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}>
+              <div></div>
+              {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month) => (
+                <div key={month} className="text-center font-medium">{month}</div>
+              ))}
             </div>
-            {(months as HeatMapCell[]).map((cell, monthIndex) => (
-              <motion.div
-                key={monthIndex}
-                className={`w-6 h-6 rounded cursor-pointer hover:scale-125 active:scale-110 transition-transform ${getColor(cell.intensity)}`}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: yearIndex * 0.1 + monthIndex * 0.02 }}
-                title={`${year}-${monthIndex + 1}: ${(cell.intensity * 100).toFixed(1)}% completion`}
-                onClick={() => onCellClick?.(cell.dateISO)}
-              />
+            {Object.entries(years).map(([year, months], yearIndex) => (
+              <motion.div 
+                key={year} 
+                className="grid gap-2"
+                style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: yearIndex * 0.1 }}
+              >
+                <div className="text-sm text-gray-700 dark:text-gray-300 font-medium flex items-center justify-end pr-2">
+                  {year}
+                </div>
+                {(months as HeatMapCell[]).map((cell, monthIndex) => (
+                  <motion.div
+                    key={monthIndex}
+                    className={`w-6 h-6 rounded cursor-pointer hover:scale-125 active:scale-110 transition-transform ${getColor(cell.intensity)}`}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: yearIndex * 0.1 + monthIndex * 0.02 }}
+                    title={`${year}-${monthIndex + 1}: ${(cell.intensity * 100).toFixed(1)}% completion`}
+                    onClick={() => onCellClick?.(cell.dateISO)}
+                  />
+                ))}
+              </motion.div>
             ))}
-          </motion.div>
-        ))}
+          </div>
+        </div>
 
         {/* Legend */}
         <div className="flex items-center justify-between mt-4 px-2">

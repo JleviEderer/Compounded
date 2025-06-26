@@ -32,7 +32,7 @@ export default function Home() {
   const hasCheckedToday = todayLogs.length > 0;
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-6 sm:space-y-8 overflow-x-hidden">
 
 
 

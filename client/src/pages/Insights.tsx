@@ -449,7 +449,7 @@ export default function Insights() {
   );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 overflow-x-hidden">
       <motion.div 
         className="card-glass p-8"
         initial={{ opacity: 0, y: 20 }}
