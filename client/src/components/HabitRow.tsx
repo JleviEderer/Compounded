@@ -83,9 +83,9 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-4">
             {/* Good Habit Button */}
-            
+
             {/* Bad Habit Button */}
-            
+
 
             <div className="flex items-center space-x-2">
               <button
@@ -114,8 +114,8 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
               </button>
             </div>
 
-            <div>
-              <div className={`font-semibold text-gray-800 dark:text-white relative ${
+            <div className="flex-1 min-w-0">
+              <div className={`font-semibold text-gray-800 dark:text-white relative truncate ${
                 todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' : 
                 todayLog?.state === HabitLogState.BAD ? 'text-red-600 line-through' : ''
               }`}>
@@ -126,7 +126,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
                   }`}
                 />
               </div>
-              <div className={`text-sm text-gray-500 ${
+              <div className={`text-sm text-gray-500 truncate ${
                 todayLog?.state === HabitLogState.BAD ? 'text-red-500 font-medium' : 
                 todayLog?.state === HabitLogState.GOOD ? 'line-through' : ''
               }`}>

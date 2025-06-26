@@ -178,7 +178,7 @@ export default function MomentumChart({
         >
         <div className="relative w-full h-full">
 
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={300} minHeight={200}>
           <AreaChart 
             data={data}
             margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
