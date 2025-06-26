@@ -3,9 +3,11 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, HelpCircle } from 'lucide-react';
 import { useHabits } from '../hooks/useHabits';
 import { useMomentum } from '../hooks/useMomentum';
+import { useLongPress } from '../hooks/useLongPress';
 import { calculateDailyRate } from '../utils/compound';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import HeatMapGrid from '../components/HeatMapGrid';
 import DayDetailModal from '../components/DayDetailModal';
 
@@ -18,6 +20,22 @@ export default function Insights() {
   const [weekAnchor, setWeekAnchor] = useState<Date>(new Date());
   const [quarterAnchor, setQuarterAnchor] = useState<Date>(new Date());
   const [dayModal, setDayModal] = useState<string | null>(null);
+  const [popoverHabit, setPopoverHabit] = useState<{ id: string; name: string } | null>(null);
+  const popoverTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  // Auto-dismiss popover after 2 seconds
+  React.useEffect(() => {
+    if (popoverHabit) {
+      popoverTimeoutRef.current = setTimeout(() => {
+        setPopoverHabit(null);
+      }, 2000);
+    }
+    return () => {
+      if (popoverTimeoutRef.current) {
+        clearTimeout(popoverTimeoutRef.current);
+      }
+    };
+  }, [popoverHabit]);
 
   // Define time filters that match what useMomentum expects
   const getTimeFilterForView = (view: InsightsViewMode) => {
@@ -512,7 +530,7 @@ export default function Insights() {
               </div>
             </div>
             <div className="w-full overflow-x-hidden">
-              <div className="grid grid-cols-[112px_repeat(7,44px)] gap-y-3 xs:grid-cols-[96px_repeat(7,44px)]">
+              <div className="grid grid-cols-[112px_repeat(7,44px)] gap-y-3">
                 {/* Header Row */}
                 <div className="text-left text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
                   Habit
@@ -524,43 +542,68 @@ export default function Insights() {
                 ))}
                 
                 {/* Habit Rows */}
-                {habits.map((habit, habitIndex) => (
-                  <React.Fragment key={habit.id}>
-                    <motion.div 
-                      className="p-3 font-medium text-gray-800 dark:text-white max-w-[112px] xs:max-w-[96px] truncate"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: habitIndex * 0.1 }}
-                      title={habit.goodHabit}
-                    >
-                      {habit.goodHabit}
-                    </motion.div>
-                    {getLast7Days().map((day, dayIndex) => {
-                      const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
+                {habits.map((habit, habitIndex) => {
+                  const longPressHandlers = useLongPress({
+                    onLongPress: () => setPopoverHabit({ id: habit.id, name: habit.goodHabit }),
+                    delay: 300
+                  });
 
-                      const getSquareStyle = () => {
-                        if (log?.state === 'good') {
-                          return 'bg-teal-500'; // #10b981 - good habit completed
-                        } else if (log?.state === 'bad') {
-                          return 'bg-red-400'; // #f87171 (coral) - bad habit completed
-                        } else {
-                          return 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500'; // #e5e7eb - not logged
-                        }
-                      };
-
-                      return (
-                        <div key={day.date} className="p-3 flex items-center justify-center">
+                  return (
+                    <React.Fragment key={habit.id}>
+                      <Popover 
+                        open={popoverHabit?.id === habit.id} 
+                        onOpenChange={(open) => {
+                          if (!open) setPopoverHabit(null);
+                        }}
+                      >
+                        <PopoverTrigger asChild>
                           <motion.div 
-                            className={`w-6 h-6 rounded ${getSquareStyle()}`}
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
-                          />
-                        </div>
-                      );
-                    })}
-                  </React.Fragment>
-                ))}
+                            className="p-3 font-medium text-gray-800 dark:text-white w-[112px] line-clamp-2 break-words leading-tight text-left cursor-default sm:cursor-auto"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: habitIndex * 0.1 }}
+                            {...(window.innerWidth <= 640 ? longPressHandlers : {})}
+                          >
+                            {habit.goodHabit}
+                          </motion.div>
+                        </PopoverTrigger>
+                        <PopoverContent 
+                          className="w-64 p-3 text-sm sm:hidden" 
+                          side="right"
+                          align="start"
+                        >
+                          <div className="font-medium text-gray-800 dark:text-white">
+                            {habit.goodHabit}
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                      {getLast7Days().map((day, dayIndex) => {
+                        const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
+
+                        const getSquareStyle = () => {
+                          if (log?.state === 'good') {
+                            return 'bg-teal-500'; // #10b981 - good habit completed
+                          } else if (log?.state === 'bad') {
+                            return 'bg-red-400'; // #f87171 (coral) - bad habit completed
+                          } else {
+                            return 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500'; // #e5e7eb - not logged
+                          }
+                        };
+
+                        return (
+                          <div key={day.date} className="p-3 flex items-center justify-center">
+                            <motion.div 
+                              className={`w-6 h-6 rounded ${getSquareStyle()}`}
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
+                            />
+                          </div>
+                        );
+                      })}
+                    </React.Fragment>
+                  );
+                })}
               </div>
             </div>
           </motion.div>
