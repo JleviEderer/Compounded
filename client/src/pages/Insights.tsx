@@ -511,59 +511,57 @@ export default function Insights() {
                 </Button>
               </div>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th className="text-left p-3 text-sm font-medium text-gray-600 dark:text-gray-400">
-                      Habit
-                    </th>
-                    {getLast7Days().map((day) => (
-                      <th key={day.date} className="text-center p-3 text-sm font-medium text-gray-600 dark:text-gray-400">
-                        {day.label}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="space-y-2">
-                  {habits.map((habit, habitIndex) => (
-                    <motion.tr 
-                      key={habit.id}
+            <div className="w-full overflow-x-hidden">
+              <div className="grid grid-cols-[112px_repeat(7,44px)] gap-y-3 xs:grid-cols-[96px_repeat(7,44px)]">
+                {/* Header Row */}
+                <div className="text-left text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
+                  Habit
+                </div>
+                {getLast7Days().map((day) => (
+                  <div key={day.date} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
+                    {day.label}
+                  </div>
+                ))}
+                
+                {/* Habit Rows */}
+                {habits.map((habit, habitIndex) => (
+                  <React.Fragment key={habit.id}>
+                    <motion.div 
+                      className="p-3 font-medium text-gray-800 dark:text-white max-w-[112px] xs:max-w-[96px] truncate"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: habitIndex * 0.1 }}
+                      title={habit.goodHabit}
                     >
-                      <td className="p-3 font-medium text-gray-800 dark:text-white">
-                        {habit.goodHabit}
-                      </td>
-                      {getLast7Days().map((day, dayIndex) => {
-                        const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
+                      {habit.goodHabit}
+                    </motion.div>
+                    {getLast7Days().map((day, dayIndex) => {
+                      const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
 
-                        const getSquareStyle = () => {
-                          if (log?.state === 'good') {
-                            return 'bg-teal-500'; // #10b981 - good habit completed
-                          } else if (log?.state === 'bad') {
-                            return 'bg-red-400'; // #f87171 (coral) - bad habit completed
-                          } else {
-                            return 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500'; // #e5e7eb - not logged
-                          }
-                        };
+                      const getSquareStyle = () => {
+                        if (log?.state === 'good') {
+                          return 'bg-teal-500'; // #10b981 - good habit completed
+                        } else if (log?.state === 'bad') {
+                          return 'bg-red-400'; // #f87171 (coral) - bad habit completed
+                        } else {
+                          return 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500'; // #e5e7eb - not logged
+                        }
+                      };
 
-                        return (
-                          <td key={day.date} className="p-3 text-center">
-                            <motion.div 
-                              className={`w-6 h-6 rounded mx-auto ${getSquareStyle()}`}
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
-                            />
-                          </td>
-                        );
-                      })}
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
+                      return (
+                        <div key={day.date} className="p-3 flex items-center justify-center">
+                          <motion.div 
+                            className={`w-6 h-6 rounded ${getSquareStyle()}`}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}
