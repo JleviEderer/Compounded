@@ -709,7 +709,7 @@ export default function Insights() {
         {/* All Time View */}
         {activeView === 'all-time' && (
           <motion.div 
-            className="space-y-6"
+            className="space-y-6 overflow-x-hidden px-2 sm:px-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >

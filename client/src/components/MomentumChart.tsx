@@ -138,7 +138,7 @@ export default function MomentumChart({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
     >
-      <div className="mb-2">
+      <div className="mb-2 px-4 sm:px-0 max-w-[640px] mx-auto">
         <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
           Momentum Index
         </h2>
@@ -148,7 +148,7 @@ export default function MomentumChart({
       </div>
 
       {/* Floating HUD positioned directly under title */}
-      <div className="mb-4 px-2 py-1">
+      <div className="mb-4 px-4 sm:px-0 max-w-[640px] mx-auto py-1">
         <div className="flex items-center justify-between gap-4 text-sm">
           <div className="text-center">
             <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">DATE</div>
@@ -293,7 +293,7 @@ export default function MomentumChart({
       </motion.div>
 
       {/* Time Range Selector */}
-      <div className="flex flex-wrap gap-2 md:gap-4 mb-8 justify-center">
+      <div className="flex flex-wrap gap-2 md:gap-4 mb-8 justify-center px-4 sm:px-0 max-w-[640px] mx-auto">
         {timeRanges.map((range) => (
           <motion.button
             key={range.label}
@@ -312,7 +312,7 @@ export default function MomentumChart({
         </div>
 
       {/* Quick Stats */}
-      <div className="grid gap-3 grid-cols-2">
+      <div className="grid gap-3 grid-cols-2 px-4 sm:px-0 max-w-[640px] mx-auto">
         {/* Top Row */}
         <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
           <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
