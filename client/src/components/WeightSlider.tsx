@@ -131,7 +131,7 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
         <AnimatePresence>
           {showPeek && (
             <motion.div
-              className="absolute pointer-events-none w-14 h-7 rounded-full bg-accent/80 text-xs font-semibold flex items-center justify-center shadow-sm"
+              className="absolute pointer-events-none w-14 h-7 rounded-full bg-accent/80 text-white text-xs font-semibold flex items-center justify-center shadow-sm"
               style={{
                 left: `calc(${peekPosition}% - 28px)`,
                 top: '-32px',
