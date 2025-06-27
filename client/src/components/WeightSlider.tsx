@@ -90,28 +90,6 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
           aria-valuetext={currentWeight.label}
         />
 
-        {/* Custom thumb indicator */}
-        <motion.div
-          className="absolute top-1/2 w-8 h-8 bg-coral rounded-full shadow-lg pointer-events-none border-2 border-white dark:border-gray-800"
-          style={{
-            left: `calc(${(value / 4) * 100}% - 16px)`,
-            transform: 'translateY(-50%)',
-          }}
-          animate={{
-            scale: isDragging ? 1.3 : isFocused ? 1.1 : 1,
-            boxShadow: isDragging 
-              ? '0 8px 25px rgba(255, 107, 125, 0.4)' 
-              : isFocused 
-                ? '0 6px 20px rgba(255, 107, 125, 0.25)' 
-                : '0 2px 10px rgba(0, 0, 0, 0.1)',
-          }}
-          transition={{ 
-            type: 'spring', 
-            stiffness: isMobile ? 400 : 300,
-            damping: isMobile ? 25 : 20
-          }}
-        />
-
         
       </div>
 
