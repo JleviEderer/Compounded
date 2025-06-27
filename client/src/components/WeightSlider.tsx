@@ -19,42 +19,49 @@ const WEIGHTS = [
 export default function WeightSlider({ value, onChange }: WeightSliderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [showPeek, setShowPeek] = useState(false);
-  const [peekPosition, setPeekPosition] = useState(0);
+  const [showPill, setShowPill] = useState(false);
+  const [pillPosition, setPillPosition] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const sliderRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
   const animationFrameRef = useRef<number>();
 
-  const updatePeekPosition = useCallback((currentValue: number) => {
+  const updatePillPosition = useCallback((currentValue: number) => {
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
     
     animationFrameRef.current = requestAnimationFrame(() => {
       const position = (currentValue / 4) * 100;
-      setPeekPosition(position);
+      setPillPosition(position);
     });
   }, []);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
     onChange(newValue);
-    if (showPeek) {
-      updatePeekPosition(newValue);
+    if (showPill) {
+      updatePillPosition(newValue);
     }
-  }, [onChange, showPeek, updatePeekPosition]);
+  }, [onChange, showPill, updatePillPosition]);
 
   const handlePointerDown = useCallback(() => {
     setIsDragging(true);
-    setShowPeek(true);
-    updatePeekPosition(value);
+    setShowPill(true);
+    updatePillPosition(value);
     document.body.style.overflow = 'hidden';
-  }, [value, updatePeekPosition]);
+  }, [value, updatePillPosition]);
 
   const handlePointerUp = useCallback(() => {
     setIsDragging(false);
-    setShowPeek(false);
+    setIsTransitioning(true);
     document.body.style.overflow = '';
+    
+    // Fade out pill then hide it
+    setTimeout(() => {
+      setShowPill(false);
+      setIsTransitioning(false);
+    }, 150);
   }, []);
 
   const handleTouchStart = useCallback(() => {
@@ -127,21 +134,33 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
           aria-valuetext={currentWeight.label}
         />
 
-        {/* ValuePeek - Live percentage tooltip */}
+        {/* Live percentage pill */}
         <AnimatePresence>
-          {showPeek && (
+          {showPill && (
             <motion.div
-              className="absolute pointer-events-none w-14 h-7 rounded-full bg-accent/80 text-white text-xs font-semibold flex items-center justify-center shadow-sm"
+              className="absolute pointer-events-none rounded-full bg-zinc-900/90 text-xs px-2 py-0.5 shadow-sm flex items-center justify-center text-white font-medium"
               style={{
-                left: `calc(${peekPosition}% - 28px)`,
-                top: '-32px',
+                left: `calc(${pillPosition}% - 24px)`,
+                top: '-36px',
               }}
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{ 
+                opacity: isTransitioning ? 0 : 1, 
+                scale: isTransitioning ? 0.9 : 1 
+              }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.15 }}
+              aria-live="polite"
             >
-              +{currentWeight.percentage}
+              <span 
+                className={`${
+                  value <= 1 ? 'text-red-400' : 
+                  value === 2 ? 'text-yellow-400' : 
+                  'text-green-400'
+                }`}
+              >
+                {currentWeight.percentage}
+              </span>
             </motion.div>
           )}
         </AnimatePresence>
@@ -149,7 +168,11 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
       </div>
 
       {/* Clickable labels */}
-      <div className="flex justify-between items-center gap-0.5 px-2">
+      <div 
+        className={`flex justify-between items-center gap-0.5 px-2 transition-opacity duration-200 ${
+          showPill ? 'opacity-30' : 'opacity-100'
+        }`}
+      >
         {WEIGHTS.map((weight, index) => (
           <motion.button
             key={index}
