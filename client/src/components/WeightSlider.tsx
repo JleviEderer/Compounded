@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { useState, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { HabitWeight, WEIGHT_VALUES, WEIGHT_LABELS } from '@/types';
 
@@ -19,22 +19,51 @@ const WEIGHTS = [
 export default function WeightSlider({ value, onChange }: WeightSliderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [showPeek, setShowPeek] = useState(false);
+  const [peekPosition, setPeekPosition] = useState(0);
   const sliderRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
+  const animationFrameRef = useRef<number>();
+
+  const updatePeekPosition = useCallback((currentValue: number) => {
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+    
+    animationFrameRef.current = requestAnimationFrame(() => {
+      const position = (currentValue / 4) * 100;
+      setPeekPosition(position);
+    });
+  }, []);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(Number(e.target.value));
-  }, [onChange]);
+    const newValue = Number(e.target.value);
+    onChange(newValue);
+    if (showPeek) {
+      updatePeekPosition(newValue);
+    }
+  }, [onChange, showPeek, updatePeekPosition]);
 
-  const handleTouchStart = useCallback(() => {
+  const handlePointerDown = useCallback(() => {
     setIsDragging(true);
+    setShowPeek(true);
+    updatePeekPosition(value);
     document.body.style.overflow = 'hidden';
-  }, []);
+  }, [value, updatePeekPosition]);
 
-  const handleTouchEnd = useCallback(() => {
+  const handlePointerUp = useCallback(() => {
     setIsDragging(false);
+    setShowPeek(false);
     document.body.style.overflow = '';
   }, []);
+
+  const handleTouchStart = useCallback(() => {
+    handlePointerDown();
+  }, [handlePointerDown]);
+
+  const handleTouchEnd = useCallback(() => {
+    handlePointerUp();
+  }, [handlePointerUp]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     switch (e.key) {
@@ -59,6 +88,14 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
     }
   }, [value, onChange]);
 
+  useEffect(() => {
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
   const currentWeight = WEIGHTS[value];
 
   return (
@@ -72,8 +109,8 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
           step={1}
           value={value}
           onChange={handleChange}
-          onMouseDown={() => setIsDragging(true)}
-          onMouseUp={() => setIsDragging(false)}
+          onMouseDown={handlePointerDown}
+          onMouseUp={handlePointerUp}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           onFocus={() => setIsFocused(true)}
@@ -90,6 +127,24 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
           aria-valuetext={currentWeight.label}
         />
 
+        {/* ValuePeek - Live percentage tooltip */}
+        <AnimatePresence>
+          {showPeek && (
+            <motion.div
+              className="absolute pointer-events-none w-14 h-7 rounded-full bg-accent/80 text-xs font-semibold flex items-center justify-center shadow-sm"
+              style={{
+                left: `calc(${peekPosition}% - 28px)`,
+                top: '-32px',
+              }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.15 }}
+            >
+              +{currentWeight.percentage}
+            </motion.div>
+          )}
+        </AnimatePresence>
         
       </div>
 
