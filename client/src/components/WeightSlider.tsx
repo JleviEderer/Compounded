@@ -112,27 +112,7 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
           }}
         />
 
-        {/* Value display tooltip */}
-        <motion.div
-          className="absolute -top-14 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-2 rounded-lg text-sm font-medium pointer-events-none shadow-lg z-10"
-          style={{
-            left: `calc(${(value / 4) * 100}% - 0px)`,
-            transform: 'translateX(-50%)',
-          }}
-          initial={{ opacity: 0, scale: 0.8, y: 10 }}
-          animate={{
-            opacity: (isDragging || isFocused) ? 1 : 0,
-            scale: (isDragging || isFocused) ? 1 : 0.8,
-            y: (isDragging || isFocused) ? 0 : 10,
-          }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="text-center">
-            <div className="font-semibold">{currentWeight.label}</div>
-            <div className="text-xs opacity-90">{currentWeight.percentage}</div>
-          </div>
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-100" />
-        </motion.div>
+        
       </div>
 
       {/* Clickable labels */}
