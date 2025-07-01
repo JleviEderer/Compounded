@@ -793,7 +793,7 @@ export default function Insights() {
             animate={{ opacity: 1 }}
           >
             <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-              All Time Overview (By Year & Month)
+              All Time Overview
             </h3>
 
             <HeatMapGrid
