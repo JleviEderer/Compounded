@@ -656,7 +656,7 @@ export default function Insights() {
           >
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                {anchor.toLocaleDateString('en', { month: 'long', year: 'numeric' })} - Heat Map
+                {anchor.toLocaleDateString('en', { month: 'long', year: 'numeric' })}
               </h3>
               <div className="flex space-x-2">
                 {/* Show "Current Month" button only when viewing a different month */}
