@@ -10,7 +10,18 @@ Based on the file-by-file analysis, here are the findings for files in the main 
 
 ### Files Over 300 Lines (Candidates for Splitting)
 
-*Results from line count analysis will be populated here after running the command*
+Based on the analysis of actual source files (excluding node_modules):
+
+1. **client/src/pages/Insights.tsx** - 835 lines ⚠️ **PRIORITY**
+2. **client/src/components/ui/sidebar.tsx** - 771 lines ⚠️ **PRIORITY** 
+3. **client/src/components/MomentumChart.tsx** - 412 lines ⚠️ **NEEDS SPLITTING**
+
+### Analysis Summary
+
+- **3 files exceed the 300-line threshold**
+- **Insights.tsx** is the largest at 835 lines - nearly 3x the recommended size
+- **sidebar.tsx** is a UI component library file that could be split into individual components
+- **MomentumChart.tsx** contains complex chart logic that could be modularized
 
 ### Modularization Guidelines
 
@@ -43,4 +54,4 @@ For any files identified as over 300 lines:
 ---
 
 *Last updated: [Current Date]*
-*Analysis command: `find . -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" | grep -E "(client/src|server|tests)" | xargs wc -l | sort -nr`*
+*Analysis command: `find . -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" | grep -E "(client/src|server|tests)" | grep -v node_modules | xargs wc -l | sort -nr`*
