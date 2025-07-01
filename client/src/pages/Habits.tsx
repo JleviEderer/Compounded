@@ -15,8 +15,7 @@ export default function Habits() {
   const { habits, addHabit, updateHabit, deleteHabit, lastSavedHabitId } = useHabits();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [draggingHabitId, setDraggingHabitId] = useState<string | null>(null);
-
+  
   // Form state
   const [goodHabit, setGoodHabit] = useState('');
   const [badHabit, setBadHabit] = useState('');
@@ -67,7 +66,7 @@ export default function Habits() {
     deleteHabit(habitId);
   };
 
-
+  
 
   return (
     <div className="space-y-8">
@@ -94,7 +93,7 @@ export default function Habits() {
                   {editingId ? 'Edit Habit Pair' : 'Add New Habit Pair'}
                 </DialogTitle>
               </DialogHeader>
-
+              
               <div className="space-y-6 pb-4">
                 <div>
                   <Label htmlFor="good-habit" className="text-gray-700 dark:text-gray-300 font-medium">
@@ -201,7 +200,7 @@ export default function Habits() {
                             }`}
                           />
                         </div>
-                        <div className={`text-sm text-gray-600 dark:text-gray-400 ${draggingHabitId === habit.id ? 'opacity-25' : 'opacity-100'} transition-opacity duration-200`}>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">
                           {WEIGHT_LABELS[habit.weight] || 'Unknown weight'}
                         </div>
                       </div>
@@ -223,7 +222,7 @@ export default function Habits() {
                           <Edit2 className="w-4 h-4" />
                         </motion.button>
                       </IconButton>
-
+                      
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <IconButton
@@ -263,7 +262,7 @@ export default function Habits() {
                       </AlertDialog>
                     </div>
                   </div>
-
+                  
                   <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                     <WeightSlider
                       value={[HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE].indexOf(habit.weight)}
@@ -271,8 +270,6 @@ export default function Habits() {
                         const newWeight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][newIndex];
                         updateHabit(habit.id, { weight: newWeight });
                       }}
-                      onDragStart={() => setDraggingHabitId(habit.id)}
-                      onDragEnd={() => setDraggingHabitId(null)}
                     />
                   </div>
                 </motion.div>

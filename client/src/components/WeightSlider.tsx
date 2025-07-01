@@ -6,7 +6,6 @@ import { HabitWeight, WEIGHT_VALUES, WEIGHT_LABELS } from '@/types';
 interface WeightSliderProps {
   value: number; // Index (0-4)
   onChange: (index: number) => void;
-  onDragStateChange?: (isDragging: boolean) => void;
 }
 
 const WEIGHTS = [
@@ -17,7 +16,7 @@ const WEIGHTS = [
   { weight: HabitWeight.KEYSTONE, label: 'Keystone', percentage: '0.100%' }
 ];
 
-export default function WeightSlider({ value, onChange, onDragStateChange }: WeightSliderProps) {
+export default function WeightSlider({ value, onChange }: WeightSliderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [showPeek, setShowPeek] = useState(false);
@@ -50,15 +49,13 @@ export default function WeightSlider({ value, onChange, onDragStateChange }: Wei
     setShowPeek(true);
     updatePeekPosition(value);
     document.body.style.overflow = 'hidden';
-    onDragStateChange?.(true);
-  }, [value, updatePeekPosition, onDragStateChange]);
+  }, [value, updatePeekPosition]);
 
   const handlePointerUp = useCallback(() => {
     setIsDragging(false);
     setShowPeek(false);
     document.body.style.overflow = '';
-    onDragStateChange?.(false);
-  }, [onDragStateChange]);
+  }, []);
 
   const handleTouchStart = useCallback(() => {
     handlePointerDown();
