@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit2, Trash2, GripVertical, X, Check } from 'lucide-react';
 import { useHabits } from '../hooks/useHabits';
@@ -15,11 +15,12 @@ export default function Habits() {
   const { habits, addHabit, updateHabit, deleteHabit, lastSavedHabitId } = useHabits();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  
+
   // Form state
   const [goodHabit, setGoodHabit] = useState('');
   const [badHabit, setBadHabit] = useState('');
   const [weightIndex, setWeightIndex] = useState<number>(2); // Default to MEDIUM (index 2)
+  const weightSummaryRef = useRef<HTMLSpanElement>(null);
 
   const resetForm = () => {
     setGoodHabit('');
@@ -66,7 +67,14 @@ export default function Habits() {
     deleteHabit(habitId);
   };
 
-  
+  const WEIGHTS = [
+    { weight: HabitWeight.MICRO, label: 'Micro', percentage: '0.010%' },
+    { weight: HabitWeight.SMALL, label: 'Small', percentage: '0.020%' },
+    { weight: HabitWeight.MEDIUM, label: 'Medium', percentage: '0.030%' },
+    { weight: HabitWeight.LARGE, label: 'Large', percentage: '0.050%' },
+    { weight: HabitWeight.KEYSTONE, label: 'Keystone', percentage: '0.100%' }
+  ];
+
 
   return (
     <div className="space-y-8">
@@ -93,7 +101,7 @@ export default function Habits() {
                   {editingId ? 'Edit Habit Pair' : 'Add New Habit Pair'}
                 </DialogTitle>
               </DialogHeader>
-              
+
               <div className="space-y-6 pb-4">
                 <div>
                   <Label htmlFor="good-habit" className="text-gray-700 dark:text-gray-300 font-medium">
@@ -121,10 +129,23 @@ export default function Habits() {
                   />
                 </div>
 
-                <WeightSlider
-                  value={weightIndex}
-                  onChange={setWeightIndex}
-                />
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-gray-700 dark:text-gray-300 font-medium">
+                      Impact Weight
+                    </Label>
+                    <span 
+                      ref={weightSummaryRef}
+                      className="weight-summary text-sm text-muted-foreground transition-opacity duration-200"
+                    >
+                      {WEIGHTS[weightIndex].label} (+{WEIGHTS[weightIndex].percentage})
+                    </span>
+                  </div>
+                  <WeightSlider
+                    value={weightIndex}
+                    onChange={setWeightIndex}
+                  />
+                </div>
 
                 <div className="flex space-x-4 pt-4">
                   <Button
@@ -222,7 +243,7 @@ export default function Habits() {
                           <Edit2 className="w-4 h-4" />
                         </motion.button>
                       </IconButton>
-                      
+
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <IconButton
@@ -262,7 +283,7 @@ export default function Habits() {
                       </AlertDialog>
                     </div>
                   </div>
-                  
+
                   <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                     <WeightSlider
                       value={[HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE].indexOf(habit.weight)}
