@@ -22,7 +22,6 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
   const [showPeek, setShowPeek] = useState(false);
   const [peekPosition, setPeekPosition] = useState(0);
   const sliderRef = useRef<HTMLInputElement>(null);
-  const weightSummaryRef = useRef<HTMLSpanElement>(null);
   const isMobile = useIsMobile();
   const animationFrameRef = useRef<number>();
 
@@ -50,22 +49,12 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
     setShowPeek(true);
     updatePeekPosition(value);
     document.body.style.overflow = 'hidden';
-    
-    // Fade the weight summary label
-    if (weightSummaryRef.current) {
-      weightSummaryRef.current.style.opacity = '0.25';
-    }
   }, [value, updatePeekPosition]);
 
   const handlePointerUp = useCallback(() => {
     setIsDragging(false);
     setShowPeek(false);
     document.body.style.overflow = '';
-    
-    // Restore the weight summary label
-    if (weightSummaryRef.current) {
-      weightSummaryRef.current.style.opacity = '1';
-    }
   }, []);
 
   const handleTouchStart = useCallback(() => {
@@ -111,13 +100,6 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
 
   return (
     <div className="w-full space-y-3">
-      {/* Weight summary */}
-      <span 
-        ref={weightSummaryRef} 
-        className="weight-summary text-sm text-muted-foreground transition-opacity duration-200"
-      >
-        {currentWeight.label} (+{currentWeight.percentage})
-      </span>
       <div className="relative py-4 px-2">
         <input
           ref={sliderRef}
