@@ -6,7 +6,6 @@ import { HabitWeight, WEIGHT_VALUES, WEIGHT_LABELS } from '@/types';
 interface WeightSliderProps {
   value: number; // Index (0-4)
   onChange: (index: number) => void;
-  weightSummaryRef?: React.RefObject<HTMLSpanElement>; // Ref to the weight summary label
 }
 
 const WEIGHTS = [
@@ -17,7 +16,7 @@ const WEIGHTS = [
   { weight: HabitWeight.KEYSTONE, label: 'Keystone', percentage: '0.100%' }
 ];
 
-export default function WeightSlider({ value, onChange, weightSummaryRef }: WeightSliderProps) {
+export default function WeightSlider({ value, onChange }: WeightSliderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [showPeek, setShowPeek] = useState(false);
@@ -50,23 +49,13 @@ export default function WeightSlider({ value, onChange, weightSummaryRef }: Weig
     setShowPeek(true);
     updatePeekPosition(value);
     document.body.style.overflow = 'hidden';
-
-    // Fade the weight summary
-    if (weightSummaryRef?.current) {
-      weightSummaryRef.current.style.opacity = '0.25';
-    }
-  }, [value, updatePeekPosition, weightSummaryRef]);
+  }, [value, updatePeekPosition]);
 
   const handlePointerUp = useCallback(() => {
     setIsDragging(false);
     setShowPeek(false);
     document.body.style.overflow = '';
-
-    // Restore the weight summary
-    if (weightSummaryRef?.current) {
-      weightSummaryRef.current.style.opacity = '1';
-    }
-  }, [weightSummaryRef]);
+  }, []);
 
   const handleTouchStart = useCallback(() => {
     handlePointerDown();
