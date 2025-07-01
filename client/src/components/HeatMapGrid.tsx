@@ -153,7 +153,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month) => (
               <div key={month} className="text-center font-medium text-xs text-gray-600 dark:text-gray-400 pb-2">{month}</div>
             ))}
-
+            
             {/* Year rows */}
             {Object.entries(years).map(([year, months], yearIndex) => [
               <motion.div 
