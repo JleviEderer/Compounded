@@ -15,7 +15,6 @@ export default function Habits() {
   const { habits, addHabit, updateHabit, deleteHabit, lastSavedHabitId } = useHabits();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [lastSavedHabitId, setLastSavedHabitId] = useState<string | null>(null);
   const [draggingHabitId, setDraggingHabitId] = useState<string | null>(null);
 
   // Form state
