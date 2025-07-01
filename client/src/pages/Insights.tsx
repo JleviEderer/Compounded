@@ -586,7 +586,7 @@ export default function Insights() {
           >
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                {getWeekLabel()} - 7-Day Habit Grid
+                {getWeekLabel()}
               </h3>
               <div className="flex space-x-2">
                 {/* Show "Current Week" button only when viewing a different week */}
