@@ -46,12 +46,115 @@ For any files identified as over 300 lines:
 - Use composition over large monolithic components
 - Maintain clear separation between UI and business logic
 
+### Naming Conventions
+
+#### Component Split Naming
+- **Main Component**: Keep original name (e.g., `Insights.tsx`)
+- **Sub-components**: Use descriptive prefixes (e.g., `InsightsChart.tsx`, `InsightsMetrics.tsx`)
+- **Hooks**: Use `use` prefix + context (e.g., `useInsightsData.ts`, `useChartFilters.ts`)
+- **Utils**: Use descriptive function names (e.g., `insightsHelpers.ts`, `chartUtils.ts`)
+
+#### File Organization
+```
+components/
+  Insights/
+    index.tsx          # Main component
+    InsightsChart.tsx   # Chart sub-component
+    InsightsMetrics.tsx # Metrics sub-component
+    types.ts           # Local types
+    utils.ts           # Helper functions
+```
+
+### Modularization Strategies
+
+#### 1. Component Splitting Patterns
+- **By Feature**: Group related functionality (chart, metrics, filters)
+- **By Responsibility**: UI vs Logic vs Data (presentation vs container pattern)
+- **By Reusability**: Extract common components for reuse
+
+#### 2. Hook Extraction Guidelines
+- **State Management**: Move complex state logic to custom hooks
+- **Data Fetching**: Create hooks for API calls and data transformation
+- **Side Effects**: Isolate useEffect logic into dedicated hooks
+
+#### 3. Utility Function Organization
+- **Pure Functions**: Extract calculations and transformations
+- **Constants**: Move magic numbers and config to separate files
+- **Type Definitions**: Create shared type files for complex interfaces
+
+### Implementation Checklist
+
+#### Before Splitting
+- [ ] Identify clear separation boundaries
+- [ ] List all props and dependencies
+- [ ] Document current functionality
+- [ ] Ensure test coverage exists
+
+#### During Splitting
+- [ ] Create sub-components one at a time
+- [ ] Maintain TypeScript strict typing
+- [ ] Preserve existing prop interfaces
+- [ ] Test each split incrementally
+
+#### After Splitting
+- [ ] Verify no functionality is lost
+- [ ] Update imports and exports
+- [ ] Run full test suite
+- [ ] Check bundle size impact
+
+### Code Quality Standards
+
+#### Component Size Targets
+- **Components**: 50-150 lines (excluding types/imports)
+- **Hooks**: 30-100 lines
+- **Utility files**: 20-200 lines
+- **Type files**: No strict limit
+
+#### Complexity Indicators (Split When You See)
+- Multiple useEffect hooks with different concerns
+- Large switch/case statements
+- Deeply nested conditional rendering
+- Mixed business logic and UI logic
+- Functions longer than 20 lines
+
+### Priority Matrix
+
+| File | Lines | Priority | Complexity | Strategy |
+|------|-------|----------|------------|----------|
+| Insights.tsx | 835 | 🔴 Critical | High | Feature-based split |
+| sidebar.tsx | 771 | 🔴 Critical | Medium | Component extraction |
+| MomentumChart.tsx | 412 | 🟡 High | High | Logic/UI separation |
+| chart.tsx | 365 | 🟡 High | Medium | Component library split |
+
 ### Next Steps
 
-1. Run the line count analysis command
-2. Identify files exceeding 300 lines
-3. Plan modularization strategy for each large file
-4. Implement splits incrementally to maintain functionality
+1. **Phase 1**: Start with Insights.tsx (highest priority)
+   - Extract chart components
+   - Create custom hooks for data logic
+   - Split metrics display components
+
+2. **Phase 2**: Tackle sidebar.tsx
+   - Split into individual UI components
+   - Extract navigation logic
+   - Create reusable sidebar primitives
+
+3. **Phase 3**: Optimize chart components
+   - Separate chart types into individual files
+   - Extract shared chart utilities
+   - Create chart hook abstractions
+
+4. **Phase 4**: Review and refine
+   - Run analysis command again
+   - Verify no new large files created
+   - Document new architecture
+
+### Success Metrics
+
+- All files under 300 lines
+- Improved test coverage
+- Reduced component complexity
+- Better code reusability
+- Faster development velocity
 
 ---
 
