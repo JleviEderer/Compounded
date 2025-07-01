@@ -725,7 +725,7 @@ export default function Insights() {
           >
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                {getQuarterLabel()} - Quarterly Heatmap (13 Weeks)
+                {getQuarterLabel()}
               </h3>
               <div className="flex space-x-2">
                 {/* Show "Current Quarter" button only when viewing a different quarter */}
