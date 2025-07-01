@@ -11,6 +11,18 @@
   }
 }
 
+/* Heat-map scroll behavior */
+.heatmap-wrapper {
+  scroll-snap-type: x proximity;
+}
+
+/* Disable scroll-snap for mouse/scrollbar interactions */
+@media (hover: hover) and (pointer: fine) {
+  .heatmap-wrapper {
+    scroll-snap-type: none;
+  }
+}
+
 /* iPhone notch safe area padding */
 .safe-pad {
   padding-top: env(safe-area-inset-top);
