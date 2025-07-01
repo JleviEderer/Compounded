@@ -10,12 +10,18 @@ Based on the file-by-file analysis, here are the findings for files in the main 
 
 ### Files Over 300 Lines (Candidates for Splitting)
 
-Based on the analysis of actual source files (excluding node_modules):
+**Analysis Command Output:**
+```bash
+find . -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" | grep -E "(client/src|server|tests)" | grep -v node_modules | xargs wc -l | sort -nr
+```
 
+**Current Results:**
 1. **client/src/pages/Insights.tsx** - 835 lines ⚠️ **PRIORITY**
 2. **client/src/components/ui/sidebar.tsx** - 771 lines ⚠️ **PRIORITY** 
 3. **client/src/components/MomentumChart.tsx** - 412 lines ⚠️ **NEEDS SPLITTING**
 4. **client/src/components/ui/chart.tsx** - 365 lines ⚠️ **NEEDS SPLITTING**
+
+> **CI Integration Note**: Line-count script should run in CI; any file >300 lines fails the build.
 
 ### Analysis Summary
 
@@ -84,6 +90,12 @@ components/
 
 ### Implementation Checklist
 
+#### Branch Protocol
+- [ ] **Each modularization goes in its own PR; no UI changes in that PR except renamed imports**
+- [ ] Create feature branch with naming: `refactor/split-[component-name]`
+- [ ] Keep PR focused on single file/component split
+- [ ] Ensure all tests pass before and after split
+
 #### Before Splitting
 - [ ] Identify clear separation boundaries
 - [ ] List all props and dependencies
@@ -119,12 +131,14 @@ components/
 
 ### Priority Matrix
 
-| File | Lines | Priority | Complexity | Strategy |
-|------|-------|----------|------------|----------|
-| Insights.tsx | 835 | 🔴 Critical | High | Feature-based split |
-| sidebar.tsx | 771 | 🔴 Critical | Medium | Component extraction |
-| MomentumChart.tsx | 412 | 🟡 High | High | Logic/UI separation |
-| chart.tsx | 365 | 🟡 High | Medium | Component library split |
+| File | Lines | Priority | Complexity | Strategy | Owner | ETA |
+|------|-------|----------|------------|----------|-------|-----|
+| Insights.tsx | 835 | 🔴 Critical | High | Feature-based split | TBD | 2-3 days |
+| sidebar.tsx | 771 | 🔴 Critical | Medium | Component extraction | TBD | 1-2 days |
+| MomentumChart.tsx | 412 | 🟡 High | High | Logic/UI separation | TBD | 1 day |
+| chart.tsx | 365 | 🟡 High | Medium | Component library split | TBD | 1 day |
+
+> **Assignment Protocol**: Update Owner column when work begins to prevent duplicate effort and set team expectations.
 
 ### Next Steps
 
