@@ -22,6 +22,7 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
   const [showPeek, setShowPeek] = useState(false);
   const [peekPosition, setPeekPosition] = useState(0);
   const sliderRef = useRef<HTMLInputElement>(null);
+  const labelRef = useRef<HTMLSpanElement>(null);
   const isMobile = useIsMobile();
   const animationFrameRef = useRef<number>();
 
@@ -29,7 +30,7 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
-    
+
     animationFrameRef.current = requestAnimationFrame(() => {
       const position = (currentValue / 4) * 100;
       setPeekPosition(position);
@@ -49,12 +50,22 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
     setShowPeek(true);
     updatePeekPosition(value);
     document.body.style.overflow = 'hidden';
+
+    // Fade the static label
+    if (labelRef.current) {
+      labelRef.current.style.opacity = '0.25';
+    }
   }, [value, updatePeekPosition]);
 
   const handlePointerUp = useCallback(() => {
     setIsDragging(false);
     setShowPeek(false);
     document.body.style.overflow = '';
+
+    // Restore the static label
+    if (labelRef.current) {
+      labelRef.current.style.opacity = '1';
+    }
   }, []);
 
   const handleTouchStart = useCallback(() => {
@@ -97,6 +108,7 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
   }, []);
 
   const currentWeight = WEIGHTS[value];
+  const weightLabel = `${currentWeight.label} (+${currentWeight.percentage})`;
 
   return (
     <div className="w-full space-y-3">
@@ -145,8 +157,13 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
             </motion.div>
           )}
         </AnimatePresence>
-        
+
       </div>
+
+      {/* Static weight label */}
+      <span ref={labelRef} className="weight-label text-sm text-muted-foreground">
+        {weightLabel}
+      </span>
 
       {/* Clickable labels */}
       <div className="flex justify-between items-center gap-0.5 px-2">
