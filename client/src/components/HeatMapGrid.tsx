@@ -146,8 +146,8 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
     return (
       <div className="space-y-4">
         {/* Scrollable wrapper for mobile */}
-        <div className="w-full overflow-x-auto heatmap-wrapper pr-6 lg:pr-8 scrollbar-none scroll-smooth relative after:content-['→'] after:text-neutral-500 after:text-xs after:absolute after:right-1 after:top-1/2 after:-translate-y-1/2 after:pointer-events-none sm:after:hidden">
-          <div className="grid gap-2 min-w-[760px]" style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}>
+        <div className="w-full overflow-x-auto heatmap-wrapper pr-6 lg:pr-8 scrollbar-none snap-x relative after:content-['→'] after:text-neutral-500 after:text-xs after:absolute after:right-1 after:top-1/2 after:-translate-y-1/2 after:pointer-events-none sm:after:hidden">
+          <div className="grid gap-2 min-w-[672px]" style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}>
             {/* Header row */}
             <div></div>
             {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month) => (
