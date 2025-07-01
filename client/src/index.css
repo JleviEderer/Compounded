@@ -293,18 +293,6 @@
   animation: slide-up 0.4s ease-out;
 }
 
-/* Heat-map scroll behavior */
-.heatmap-wrapper {
-  scroll-snap-type: x proximity;
-}
-
-/* Disable scroll-snap for mouse/scrollbar interactions */
-@media (hover: hover) and (pointer: fine) {
-  .heatmap-wrapper {
-    scroll-snap-type: none;
-  }
-}
-
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
