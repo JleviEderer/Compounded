@@ -151,7 +151,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
             <div className="grid gap-2 text-xs text-gray-600 dark:text-gray-400" style={{ gridTemplateColumns: 'auto repeat(12, 1fr)' }}>
               <div></div>
               {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month) => (
-                <div key={month} className="text-center font-medium">{month}</div>
+                <div key={month} className="text-center font-medium flex items-center justify-center">{month}</div>
               ))}
             </div>
             {Object.entries(years).map(([year, months], yearIndex) => (
