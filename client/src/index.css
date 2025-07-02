@@ -231,6 +231,15 @@
     padding-bottom: calc(1rem + env(safe-area-inset-bottom));
   }
 
+  .touch-target {
+    @apply p-2 -m-2 rounded-full transition-colors hover:bg-gray-100 dark:hover:bg-gray-800;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   /* Page scroll container improvements */
   .page-scroll {
     overflow-y: auto;

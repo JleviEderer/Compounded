@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { HelpCircle } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface InsightsQuickStatsProps {
   successRate: number;
@@ -29,14 +29,16 @@ export const InsightsQuickStats: React.FC<InsightsQuickStatsProps> = ({
           </div>
           <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             <span className="truncate">Success Rate</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-48 text-xs p-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="touch-target">
+                  <HelpCircle className="w-4 h-4 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-64 text-xs p-3">
                 <p>Good Habits / Habits Logged</p>
-              </TooltipContent>
-            </Tooltip>
+              </PopoverContent>
+            </Popover>
           </div>
         </motion.div>
 
@@ -49,14 +51,16 @@ export const InsightsQuickStats: React.FC<InsightsQuickStatsProps> = ({
           </div>
           <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             <span className="truncate">Avg Daily Rate</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-48 text-xs p-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="touch-target">
+                  <HelpCircle className="w-4 h-4 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-64 text-xs p-3">
                 <p>Average daily compound rate of improvement</p>
-              </TooltipContent>
-            </Tooltip>
+              </PopoverContent>
+            </Popover>
           </div>
         </motion.div>
 
@@ -67,14 +71,16 @@ export const InsightsQuickStats: React.FC<InsightsQuickStatsProps> = ({
           <div className="text-lg sm:text-xl font-bold text-coral">{currentStreak}</div>
           <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             <span className="truncate">Current Streak</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-48 text-xs p-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="touch-target">
+                  <HelpCircle className="w-4 h-4 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-64 text-xs p-3">
                 <p>Consecutive days with at least one habit completed</p>
-              </TooltipContent>
-            </Tooltip>
+              </PopoverContent>
+            </Popover>
           </div>
         </motion.div>
 
@@ -85,14 +91,16 @@ export const InsightsQuickStats: React.FC<InsightsQuickStatsProps> = ({
           <div className="text-lg sm:text-xl font-bold text-blue-600">{totalHabits}</div>
           <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
             <span className="truncate">Active Habits</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-48 text-xs p-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="touch-target">
+                  <HelpCircle className="w-4 h-4 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-64 text-xs p-3">
                 <p>Total number of habits currently being tracked</p>
-              </TooltipContent>
-            </Tooltip>
+              </PopoverContent>
+            </Popover>
           </div>
         </motion.div>
       </div>
