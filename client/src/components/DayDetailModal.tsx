@@ -12,8 +12,8 @@ interface DayDetailModalProps {
 
 export default function DayDetailModal({ date, onClose, filteredLogs }: DayDetailModalProps) {
   const { habits, logs: allLogs, logHabit } = useHabits();
-  
-  // Use filtered logs if provided, otherwise fall back to all logs
+
+  // Use filteredLogs if provided to stay in sync with heatmap, otherwise fall back to allLogs
   const logs = filteredLogs || allLogs;
 
   const formatDate = (isoDate: string) => {
