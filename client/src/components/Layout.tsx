@@ -1,140 +1,169 @@
-import { ReactNode, useEffect } from 'react';
-import { Home, BarChart3, Target, Settings, TrendingUp } from 'lucide-react';
-import { useLocation } from 'wouter';
+import { ReactNode } from 'react';
+import { Link, useLocation } from 'wouter';
 import { motion } from 'framer-motion';
+import { 
+  Home, 
+  BarChart2, 
+  Repeat, 
+  Settings, 
+  TrendingUp
+} from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { Button } from '@/components/ui/button';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarProvider,
-  SidebarTrigger,
-} from '@/components/ui/sidebar';
+import { Switch } from '@/components/ui/switch';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-const navItems = [
+const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
-  { name: 'Insights', href: '/insights', icon: BarChart3 },
-  { name: 'Habits', href: '/habits', icon: Target },
+  { name: 'Insights', href: '/insights', icon: BarChart2 },
+  { name: 'Habits', href: '/habits', icon: Repeat },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 
 export default function Layout({ children }: LayoutProps) {
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
   const { theme, toggleTheme } = useTheme();
 
-  // Keyboard shortcut for sidebar toggle
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'b') {
-        e.preventDefault();
-        // The sidebar will handle this via its context
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
-        {/* Enhanced Sidebar - Hidden on mobile, collapsible on desktop */}
-        <Sidebar className="border-r-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md">
-          <div className="flex items-center gap-2 px-4 py-6 border-b border-gray-200/50 dark:border-gray-700/50">
-            <TrendingUp className="w-6 h-6 text-coral" />
-            <span className="font-bold text-lg text-gray-800 dark:text-white">
-              Compounded
-            </span>
-          </div>
-
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {navItems.map((item) => (
-                    <SidebarMenuItem key={item.name}>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={location === item.href}
-                        className="w-full justify-start gap-3 py-3 px-4 text-gray-700 dark:text-gray-300 hover:text-coral hover:bg-coral/10 data-[active=true]:bg-coral/10 data-[active=true]:text-coral data-[active=true]:border-r-2 data-[active=true]:border-coral"
-                      >
-                        <button onClick={() => setLocation(item.href)}>
-                          <item.icon className="w-5 h-5" />
-                          <span className="font-medium">{item.name}</span>
-                        </button>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-
-          {/* Theme toggle in sidebar */}
-          <div className="mt-auto p-4 border-t border-gray-200/50 dark:border-gray-700/50">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleTheme}
-              className="w-full justify-start gap-3 text-gray-700 dark:text-gray-300 hover:text-coral hover:bg-coral/10"
-            >
-              {theme === 'dark' ? '🌙' : '☀️'}
-              <span>{theme === 'dark' ? 'Dark' : 'Light'} Mode</span>
-            </Button>
-          </div>
-        </Sidebar>
-
-        {/* Main Content - CRITICAL: No padding constraints for mobile full bleeding */}
-        <div className="flex-1 flex flex-col min-w-0">
-          {/* Header with sidebar trigger - Only visible on desktop */}
-          <div className="hidden lg:flex items-center gap-2 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-md border-b border-gray-200/20 dark:border-gray-700/20">
-            <SidebarTrigger className="text-gray-600 dark:text-gray-400 hover:text-coral" />
-          </div>
-
-          {/* Page Content - NO PADDING on mobile to preserve FullBleed */}
-          <main className="flex-1 lg:p-6">
-            <div className="lg:max-w-6xl lg:mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="p-4 lg:p-0" // Only add padding on desktop
-              >
-                {children}
-              </motion.div>
+    <div className="lg:grid lg:grid-cols-[220px_1fr] h-screen overflow-hidden">
+      {/* Desktop Sidebar */}
+      <motion.div 
+        className="hidden lg:flex flex-col card-glass border-r border-white/20 dark:border-gray-700/50"
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="p-6 border-b border-white/10 dark:border-gray-700/50">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-coral to-pink-400 rounded-xl flex items-center justify-center">
+              <TrendingUp className="w-6 h-6 text-white" />
             </div>
-          </main>
-
-          {/* Mobile Bottom Navigation - Only visible on mobile when sidebar is hidden */}
-          <div className="lg:hidden bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50 safe-area-pb">
-            <div className="flex items-center justify-around px-4 py-2">
-              {navItems.map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => setLocation(item.href)}
-                  className={`flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-colors ${
-                    location === item.href
-                      ? 'text-coral bg-coral/10'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-coral'
-                  }`}
-                >
-                  <item.icon className="w-5 h-5" />
-                  <span className="text-xs font-medium">{item.name}</span>
-                </button>
-              ))}
+            <div>
+              <h1 className="text-xl font-bold text-gray-800 dark:text-white">Compounded</h1>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Tiny gains, massive growth</p>
             </div>
           </div>
         </div>
+
+        <nav className="flex-1 p-4 space-y-2">
+          {navigation.map((item) => {
+            const isActive = location === item.href;
+            const Icon = item.icon;
+
+            return (
+              <Link key={item.name} href={item.href}>
+                <motion.div
+                  className={`flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 cursor-pointer ${
+                    isActive 
+                      ? 'bg-coral/10 text-coral dark:bg-coral/20' 
+                      : 'hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300'
+                  }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Icon className="w-5 h-5" />
+                  <span>{item.name}</span>
+                </motion.div>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="p-4 border-t border-white/10 dark:border-gray-700/50">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-600 dark:text-gray-400">Dark Mode</span>
+            <div className="p-2 -m-2">
+              <Switch
+                checked={theme === 'dark'}
+                onCheckedChange={toggleTheme}
+              />
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Desktop Main Content */}
+      <div className="hidden lg:flex flex-col overflow-hidden">
+        <main className="flex-1 overflow-y-auto mx-auto px-4 sm:px-6 lg:px-8 xl:px-4 2xl:px-0 max-w-3xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] w-full">
+          <motion.div
+            key={location}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {children}
+          </motion.div>
+        </main>
       </div>
-    </SidebarProvider>
+
+      {/* Mobile/Tablet Layout */}
+      <div className="flex h-screen overflow-hidden lg:hidden safe-pad">
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Mobile Header */}
+          <div className="card-glass border-b border-white/20 dark:border-gray-700/50 p-4 h-16 sm:h-14">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3 flex-1 min-w-0">
+                <div className="w-8 h-8 bg-gradient-to-r from-coral to-pink-400 rounded-lg flex items-center justify-center">
+                  <TrendingUp className="w-4 h-4 text-white" />
+                </div>
+                <h1 className="text-lg font-bold text-gray-800 dark:text-white truncate">Compounded</h1>
+              </div>
+              <div className="ml-4 p-2 -m-2">
+                <Switch
+                  checked={theme === 'dark'}
+                  onCheckedChange={toggleTheme}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Page Content */}
+          <main className="flex-1 page-scroll p-4 pb-20 lg:pb-4 safe-pad mx-auto px-4 sm:px-6 lg:px-8 xl:px-4 2xl:px-0 max-w-3xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] w-full">
+            <motion.div
+              key={location}
+              initial={{ opacity: 0, y: window.innerWidth < 768 ? 5 : 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: window.innerWidth < 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.1 : 0.3,
+                ease: "easeOut"
+              }}
+            >
+              {children}
+            </motion.div>
+          </main>
+
+          {/* Mobile Bottom Navigation */}
+          <div className="card-glass border-t border-white/20 dark:border-gray-700/50 p-2">
+            <nav className="flex justify-around">
+              {navigation.map((item) => {
+                const isActive = location === item.href;
+                const Icon = item.icon;
+
+                return (
+                  <Link key={item.name} href={item.href}>
+                    <motion.div
+                      className={`flex flex-col items-center justify-center space-y-1 p-3 cursor-pointer rounded-lg min-h-[60px] min-w-[60px] touch-manipulation ${
+                        isActive 
+                          ? 'text-coral bg-coral/10' 
+                          : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50'
+                      }`}
+                      whileTap={{ scale: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0.95 }}
+                      transition={{ duration: 0.1 }}
+                      aria-label={`Navigate to ${item.name}`}
+                    >
+                      <Icon className="w-6 h-6" />
+                      <span className="text-xs font-medium leading-tight text-center">{item.name}</span>
+                    </motion.div>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
