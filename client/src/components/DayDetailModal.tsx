@@ -1,16 +1,20 @@
 import { motion } from 'framer-motion';
 import { X, Check } from 'lucide-react';
 import { useHabits } from '../hooks/useHabits';
-import { HabitLogState } from '../types';
+import { HabitLogState, HabitLog } from '../types';
 import { Button } from './ui/button';
 
 interface DayDetailModalProps {
   date: string; // ISO date string (YYYY-MM-DD)
   onClose: () => void;
+  filteredLogs?: HabitLog[]; // Use filtered logs if provided
 }
 
-export default function DayDetailModal({ date, onClose }: DayDetailModalProps) {
-  const { habits, logs, logHabit } = useHabits();
+export default function DayDetailModal({ date, onClose, filteredLogs }: DayDetailModalProps) {
+  const { habits, logs: allLogs, logHabit } = useHabits();
+  
+  // Use filtered logs if provided, otherwise use all logs
+  const logs = filteredLogs || allLogs;
 
   const formatDate = (isoDate: string) => {
     const date = new Date(isoDate);
