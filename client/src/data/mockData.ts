@@ -113,36 +113,8 @@ if (mockLogs.length > 0) {
   console.error('❌ CRITICAL: NO LOGS EXPORTED AT ALL!');
 }
 
-export const mockHabits: HabitPair[] = [
-  {
-    id: '1',
-    goodHabit: 'Read for 20 minutes',
-    weight: HabitWeight.MEDIUM,
-    goalIds: ['goal-1', 'goal-2'],
-    createdAt: new Date('2024-01-01')
-  },
-  {
-    id: '2', 
-    goodHabit: 'Drink 8 glasses of water',
-    weight: HabitWeight.SMALL,
-    goalIds: ['goal-2'],
-    createdAt: new Date('2024-01-01')
-  },
-  {
-    id: '3',
-    goodHabit: 'Exercise for 30 minutes', 
-    weight: HabitWeight.LARGE,
-    goalIds: ['goal-3'],
-    createdAt: new Date('2024-01-01')
-  },
-  {
-    id: '4',
-    goodHabit: 'Meditate for 10 minutes',
-    weight: HabitWeight.KEYSTONE,
-    goalIds: ['goal-1'],
-    createdAt: new Date('2024-01-01')
-  }
-];
+// Note: mockHabits and mockLogs are exported above from the dynamic import processing
+// mockGoals will be added when we implement Phase 1 of the Goals feature
 
 export const mockGoals: Goal[] = [
   {
