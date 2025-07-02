@@ -7,14 +7,10 @@ import { Button } from './ui/button';
 interface DayDetailModalProps {
   date: string; // ISO date string (YYYY-MM-DD)
   onClose: () => void;
-  filteredLogs?: any[]; // Use filtered logs if provided for data consistency
 }
 
-export default function DayDetailModal({ date, onClose, filteredLogs }: DayDetailModalProps) {
-  const { habits, logs: allLogs, logHabit } = useHabits();
-
-  // Use filteredLogs if provided to stay in sync with heatmap, otherwise fall back to allLogs
-  const logs = filteredLogs || allLogs;
+export default function DayDetailModal({ date, onClose }: DayDetailModalProps) {
+  const { habits, logs, logHabit } = useHabits();
 
   const formatDate = (isoDate: string) => {
     const date = new Date(isoDate);
