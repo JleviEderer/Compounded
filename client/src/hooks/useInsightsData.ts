@@ -1,0 +1,97 @@
+
+import { useState, useEffect } from 'react';
+import { useHabits } from './useHabits';
+import { useMomentum } from './useMomentum';
+
+type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
+
+export const useInsightsData = () => {
+  const { habits, logs, settings } = useHabits();
+  const [activeView, setActiveView] = useState<InsightsViewMode>('week');
+  const [anchor, setAnchor] = useState<Date>(new Date());
+  const [weekAnchor, setWeekAnchor] = useState<Date>(new Date());
+  const [quarterAnchor, setQuarterAnchor] = useState<Date>(new Date());
+
+  const getTimeFilterForView = (view: InsightsViewMode) => {
+    switch (view) {
+      case 'week':
+        return { label: '7 D', days: 7 };
+      case 'month':
+        return { label: '30 D', days: 30 };
+      case 'quarter':
+        return { label: '3 M', days: 90 };
+      case 'all-time':
+        return { label: 'All Time', days: null };
+      default:
+        return { label: '7 D', days: 7 };
+    }
+  };
+
+  const currentTimeFilter = getTimeFilterForView(activeView);
+
+  const getFilteredLogs = () => {
+    if (!currentTimeFilter.days) {
+      return logs;
+    }
+
+    if (activeView === 'week') {
+      const startOfWeek = new Date(weekAnchor);
+      startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+      const startStr = startOfWeek.toLocaleDateString('en-CA');
+      const endStr = endOfWeek.toLocaleDateString('en-CA');
+
+      return logs.filter(log => log.date >= startStr && log.date <= endStr);
+    }
+
+    if (activeView === 'month') {
+      const monthStart = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
+      const monthEnd = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
+
+      const startStr = monthStart.toLocaleDateString('en-CA');
+      const endStr = monthEnd.toLocaleDateString('en-CA');
+
+      return logs.filter(log => log.date >= startStr && log.date <= endStr);
+    }
+
+    if (activeView === 'quarter') {
+      const quarterStart = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
+      const quarterEnd = new Date(quarterStart);
+      quarterEnd.setMonth(quarterStart.getMonth() + 3);
+      quarterEnd.setDate(quarterEnd.getDate() - 1);
+
+      const startStr = quarterStart.toLocaleDateString('en-CA');
+      const endStr = quarterEnd.toLocaleDateString('en-CA');
+
+      return logs.filter(log => log.date >= startStr && log.date <= endStr);
+    }
+
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - currentTimeFilter.days);
+    const cutoffStr = cutoffDate.toLocaleDateString('en-CA');
+
+    return logs.filter(log => log.date >= cutoffStr);
+  };
+
+  const filteredLogs = getFilteredLogs();
+  const momentum = useMomentum(habits, logs, currentTimeFilter, filteredLogs);
+
+  return {
+    habits,
+    logs,
+    settings,
+    activeView,
+    setActiveView,
+    anchor,
+    setAnchor,
+    weekAnchor,
+    setWeekAnchor,
+    quarterAnchor,
+    setQuarterAnchor,
+    currentTimeFilter,
+    filteredLogs,
+    momentum
+  };
+};
