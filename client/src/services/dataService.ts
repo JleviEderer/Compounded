@@ -109,17 +109,6 @@ class DataService {
     return logs;
   }
 
-  async getLogs(): Promise<HabitLog[]> {
-    if (dataSourceConfig.source === 'mock') {
-      console.log('🔍 DataService.getLogs() called (MOCK DATA), returning:', mockLogs.length, 'logs');
-      console.log('🔍 Log date range:', mockLogs.length > 0 ? `${mockLogs[0].date} to ${mockLogs[mockLogs.length-1].date}` : 'No logs');
-      return mockLogs;
-    }
-
-    // TODO: Real API implementation
-    return [];
-  }
-
   async getGoals(): Promise<Goal[]> {
     if (dataSourceConfig.source === 'mock') {
       console.log('🔍 DataService.getGoals() called (MOCK DATA), returning:', mockGoals.length, 'goals');
