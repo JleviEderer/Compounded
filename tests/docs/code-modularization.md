@@ -16,10 +16,13 @@ find . -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" | grep -E 
 ```
 
 **Current Results:**
-1. **client/src/pages/Insights.tsx** - 835 lines ⚠️ **PRIORITY**
-2. **client/src/components/ui/sidebar.tsx** - 771 lines ⚠️ **PRIORITY** 
-3. **client/src/components/MomentumChart.tsx** - 412 lines ⚠️ **NEEDS SPLITTING**
-4. **client/src/components/ui/chart.tsx** - 365 lines ⚠️ **NEEDS SPLITTING**
+1. **client/src/components/ui/sidebar/SidebarMenu.tsx** - 303 lines ⚠️ **PRIORITY**
+2. **client/src/pages/Habits.tsx** - 283 lines ✅ **UNDER THRESHOLD**
+3. **client/src/utils/compound.ts** - 276 lines ✅ **UNDER THRESHOLD**
+4. **tests/data-flow-integration.test.ts** - 274 lines ✅ **UNDER THRESHOLD**
+5. **client/src/hooks/useHabits.ts** - 274 lines ✅ **UNDER THRESHOLD**
+6. **client/src/components/ui/carousel.tsx** - 260 lines ✅ **UNDER THRESHOLD**
+7. **client/src/components/ui/menubar.tsx** - 256 lines ✅ **UNDER THRESHOLD**
 
 > **CI Integration Note**: Line-count script should run in CI; any file >300 lines fails the build.
 
