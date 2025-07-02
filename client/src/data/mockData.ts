@@ -44,7 +44,7 @@ if (rawJsonData?.logs) {
 }
 
 // Convert the JSON data to proper types with weight mapping
-export const mockHabits: HabitPair[] = rawJsonData.habits?.map((habit: any) => {
+const parsedHabits: HabitPair[] = rawJsonData.habits?.map((habit: any) => {
   // Map JSON weight values to proper HabitWeight enum values
   let mappedWeight: HabitWeight;
   switch (habit.weight) {
@@ -75,7 +75,7 @@ export const mockHabits: HabitPair[] = rawJsonData.habits?.map((habit: any) => {
   };
 }) || [];
 
-export const mockLogs: HabitLog[] = rawJsonData.logs?.map((log: any) => ({
+const parsedLogs: HabitLog[] = rawJsonData.logs?.map((log: any) => ({
   ...log,
   state: log.state as string
 })) || [];
@@ -121,14 +121,14 @@ const filteredLogs = FEATURE_FLAGS.GOALS_V1
   ? parsedLogs.filter(log => log.state !== 'bad') // Remove all bad state logs  
   : parsedLogs;
 
-// Export the filtered data  
+// Export the final filtered data  
 export const mockHabits = parsedHabits;
 export const mockLogs = filteredLogs;
 
 console.log(`🚀 GOALS_V1 flag is ${FEATURE_FLAGS.GOALS_V1 ? 'ON' : 'OFF'}`);
 if (FEATURE_FLAGS.GOALS_V1) {
   console.log(`🔄 Phase 0 Migration: Filtered out bad state logs`);
-  console.log(`📊 Logs: ${parsedLogs.length} → ${filteredLogs.length} (removed bad states)`);
+  console.log(`📊 Logs: ${parsedLogs.length} → ${filteredLogs.length} (removed ${parsedLogs.length - filteredLogs.length} bad logs)`);
 }
 
 export const mockGoals: Goal[] = [
