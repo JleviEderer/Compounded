@@ -80,6 +80,27 @@ const parsedLogs: HabitLog[] = rawJsonData.logs?.map((log: any) => ({
   state: log.state as string
 })) || [];
 
+
+
+// Apply GOALS_V1 feature flag filtering
+import { FEATURE_FLAGS } from '@/utils/featureFlags';
+
+// Filter out bad logs when GOALS_V1 is enabled (Phase 0 migration)
+const filteredLogs = FEATURE_FLAGS.GOALS_V1
+  ? parsedLogs.filter(log => log.state !== 'bad') // Remove all bad state logs  
+  : parsedLogs;
+
+// Export the final filtered data  
+export const mockHabits = parsedHabits;
+export const mockLogs = filteredLogs;
+
+console.log(`🚀 GOALS_V1 flag is ${FEATURE_FLAGS.GOALS_V1 ? 'ON' : 'OFF'}`);
+if (FEATURE_FLAGS.GOALS_V1) {
+  console.log(`🔄 Phase 0 Migration: Filtered out bad state logs`);
+  console.log(`📊 Logs: ${parsedLogs.length} → ${filteredLogs.length} (removed ${parsedLogs.length - filteredLogs.length} bad logs)`);
+}
+
+// Export verification logs (after variables are declared)
 console.log('📊 EXPORT VERIFICATION:');
 console.log('📊 Habits exported:', mockHabits.length);
 console.log('📊 Logs exported:', mockLogs.length);
@@ -111,24 +132,6 @@ if (mockLogs.length > 0) {
   console.log('📊 Last 10 dates:', allUniqueDates.slice(-10));
 } else {
   console.error('❌ CRITICAL: NO LOGS EXPORTED AT ALL!');
-}
-
-// Apply GOALS_V1 feature flag filtering
-import { FEATURE_FLAGS } from '@/utils/featureFlags';
-
-// Filter out bad logs when GOALS_V1 is enabled (Phase 0 migration)
-const filteredLogs = FEATURE_FLAGS.GOALS_V1
-  ? parsedLogs.filter(log => log.state !== 'bad') // Remove all bad state logs  
-  : parsedLogs;
-
-// Export the final filtered data  
-export const mockHabits = parsedHabits;
-export const mockLogs = filteredLogs;
-
-console.log(`🚀 GOALS_V1 flag is ${FEATURE_FLAGS.GOALS_V1 ? 'ON' : 'OFF'}`);
-if (FEATURE_FLAGS.GOALS_V1) {
-  console.log(`🔄 Phase 0 Migration: Filtered out bad state logs`);
-  console.log(`📊 Logs: ${parsedLogs.length} → ${filteredLogs.length} (removed ${parsedLogs.length - filteredLogs.length} bad logs)`);
 }
 
 export const mockGoals: Goal[] = [
