@@ -1,4 +1,3 @@
-
 export const FEATURE_FLAGS = {
   GOALS_V1: import.meta.env.DEV // Only enabled in development for now
 } as const;

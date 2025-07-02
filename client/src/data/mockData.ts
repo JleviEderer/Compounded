@@ -113,8 +113,23 @@ if (mockLogs.length > 0) {
   console.error('❌ CRITICAL: NO LOGS EXPORTED AT ALL!');
 }
 
-// Note: mockHabits and mockLogs are exported above from the dynamic import processing
-// mockGoals will be added when we implement Phase 1 of the Goals feature
+// Apply GOALS_V1 feature flag filtering
+import { FEATURE_FLAGS } from '@/utils/featureFlags';
+
+// Filter out bad logs when GOALS_V1 is enabled (Phase 0 migration)
+const filteredLogs = FEATURE_FLAGS.GOALS_V1
+  ? parsedLogs.filter(log => log.state !== 'bad') // Remove all bad state logs  
+  : parsedLogs;
+
+// Export the filtered data  
+export const mockHabits = parsedHabits;
+export const mockLogs = filteredLogs;
+
+console.log(`🚀 GOALS_V1 flag is ${FEATURE_FLAGS.GOALS_V1 ? 'ON' : 'OFF'}`);
+if (FEATURE_FLAGS.GOALS_V1) {
+  console.log(`🔄 Phase 0 Migration: Filtered out bad state logs`);
+  console.log(`📊 Logs: ${parsedLogs.length} → ${filteredLogs.length} (removed bad states)`);
+}
 
 export const mockGoals: Goal[] = [
   {
