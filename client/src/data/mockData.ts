@@ -1,4 +1,4 @@
-import { HabitPair, HabitLog, HabitWeight } from '../types';
+import { HabitPair, HabitLog, HabitWeight, Goal } from '../types';
 
 // Production-optimized loading: conditionally load mock data
 let rawJsonData: any;
@@ -112,3 +112,58 @@ if (mockLogs.length > 0) {
 } else {
   console.error('❌ CRITICAL: NO LOGS EXPORTED AT ALL!');
 }
+
+export const mockHabits: HabitPair[] = [
+  {
+    id: '1',
+    goodHabit: 'Read for 20 minutes',
+    weight: HabitWeight.MEDIUM,
+    goalIds: ['goal-1', 'goal-2'],
+    createdAt: new Date('2024-01-01')
+  },
+  {
+    id: '2', 
+    goodHabit: 'Drink 8 glasses of water',
+    weight: HabitWeight.SMALL,
+    goalIds: ['goal-2'],
+    createdAt: new Date('2024-01-01')
+  },
+  {
+    id: '3',
+    goodHabit: 'Exercise for 30 minutes', 
+    weight: HabitWeight.LARGE,
+    goalIds: ['goal-3'],
+    createdAt: new Date('2024-01-01')
+  },
+  {
+    id: '4',
+    goodHabit: 'Meditate for 10 minutes',
+    weight: HabitWeight.KEYSTONE,
+    goalIds: ['goal-1'],
+    createdAt: new Date('2024-01-01')
+  }
+];
+
+export const mockGoals: Goal[] = [
+  {
+    id: 'goal-1',
+    title: 'Build Better Learning Habits',
+    description: 'Develop consistent reading and mindfulness practices',
+    targetDate: new Date('2025-12-31'),
+    createdAt: new Date('2024-01-01')
+  },
+  {
+    id: 'goal-2', 
+    title: 'Improve Physical Health',
+    description: 'Stay hydrated and maintain energy levels',
+    targetDate: new Date('2025-06-30'),
+    createdAt: new Date('2024-01-01')
+  },
+  {
+    id: 'goal-3',
+    title: 'Get Fit for Summer',
+    description: 'Build a consistent exercise routine',
+    targetDate: new Date('2025-08-01'),
+    createdAt: new Date('2024-01-01')
+  }
+];

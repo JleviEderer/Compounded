@@ -1,8 +1,16 @@
 export interface HabitPair {
   id: string;
   goodHabit: string;
-  badHabit: string;
   weight: HabitWeight;
+  goalIds?: string[]; // Links to goals
+  createdAt: Date;
+}
+
+export interface Goal {
+  id: string;
+  title: string;
+  description?: string;
+  targetDate?: Date;
   createdAt: Date;
 }
 
@@ -16,7 +24,6 @@ export enum HabitWeight {
 
 export enum HabitLogState {
   GOOD = 'good',     // Did the good habit
-  BAD = 'bad',       // Did the bad habit  
   UNLOGGED = 'unlogged' // No entry for this day
 }
 
@@ -38,6 +45,7 @@ export interface MomentumData {
 export interface AppData {
   habits: HabitPair[];
   logs: HabitLog[];
+  goals: Goal[];
   settings: {
     theme: 'light' | 'dark';
     nerdMode: boolean;
