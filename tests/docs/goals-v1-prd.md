@@ -17,9 +17,8 @@ Everything else (phases, line-count guardrails, UX bullet) stays the same so Rep
 
 | Section          | Requirement                                                                                                                              |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **Objective**    | Add a **Goals** screen so users define goals, then assign existing *good habits* to those goals. Bad-habit replacement logic is removed. |
+| **Objective**    | Add a **Goals** page so users define goals, then assign existing *good habits* to those goals. Bad-habit replacement logic is removed.   |
 | **In-scope**     | *Goals CRUD*, *Habit ↔ Goals linking UI*, **remove** "bad habit", data-model update, bottom-nav entry.                                   |
-| **Out-of-scope** | • Goal-progress charts • Momentum copy change • Weighting tweaks • **Any red/green 'bad habit' visuals or calculations**                 |
 | **Success**      | – Goals page loads < 200 ms<br>– Add / edit / delete goal on mobile<br>– Habit can link to ≥ 1 goal with no regression elsewhere.        |
 
 ---
