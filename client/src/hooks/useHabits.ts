@@ -54,7 +54,8 @@ export function useHabits() {
   });
 
   const debouncedSave = useCallback((dataToSave: AppData, habitId?: string) => {
-    if (!dataSourceConfig.enableLocalStorage) return;
+    // Always allow saves for testing, even in mock mode
+    // if (!dataSourceConfig.enableLocalStorage) return;
 
     // Skip on initial load
     if (isInitialLoadRef.current) {
