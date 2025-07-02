@@ -168,7 +168,8 @@ export default function Insights() {
       {dayModal && (
         <DayDetailModal 
           date={dayModal} 
-          onClose={() => setDayModal(null)} 
+          onClose={() => setDayModal(null)}
+          filteredLogs={filteredLogs}
         />
       )}
     </div>
