@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HeatMapGrid from './HeatMapGrid';
 import { useHabits } from '@/hooks/useHabits';
 import { getQuarterWeeks, getIntensityColor } from '@/hooks/useInsightsHelpers';
-import { useMemo } from 'react';
+import { useInsightsNavigation } from '@/hooks/useInsightsNavigation';
 
 interface InsightsQuarterViewProps {
   quarterAnchor: Date;
   setQuarterAnchor: (date: Date) => void;
-  isCurrentQuarter: () => boolean;
-  getQuarterLabel: () => string;
-  navigateQuarter: (direction: 'prev' | 'next') => void;
   openDay: (date: string) => void;
 }
 
@@ -22,6 +19,12 @@ export const InsightsQuarterView: React.FC<InsightsQuarterViewProps> = ({
   openDay
 }) => {
   const { habits, logs } = useHabits();
+  const { isCurrentQuarter, getQuarterLabel, navigateQuarter } = useInsightsNavigation(
+    new Date(), // weekAnchor (not used here)
+    quarterAnchor,
+    () => {}, // setWeekAnchor (not used here)
+    setQuarterAnchor
+  );
   const heatmapData = useMemo(() => {
     console.log('🔄 InsightsQuarterView: Recomputing quarter data, logs.length =', logs.length);
     return getQuarterWeeks(habits, logs, quarterAnchor);
