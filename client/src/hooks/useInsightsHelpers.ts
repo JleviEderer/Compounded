@@ -45,8 +45,6 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
       const dateStr = date.toLocaleDateString('en-CA');
       const dailyRate = calculateDailyRate(habits, logs, dateStr);
 
-      console.log(`🗓️ Calendar day ${day}: Date object:`, date, 'ISO:', dateStr, 'Display day:', day);
-
       days.push({
         date: dateStr,
         dateISO: dateStr,
