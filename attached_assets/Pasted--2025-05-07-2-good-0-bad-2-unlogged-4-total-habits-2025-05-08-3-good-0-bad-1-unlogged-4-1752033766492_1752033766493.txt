@@ -1,0 +1,203 @@
+  2025-05-07: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-05-08: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-05-09: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-05-10: 1 good, 0 bad, 3 unlogged (4 total habits)
+  2025-05-11: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-05-12: 4 good, 0 bad, 0 unlogged (4 total habits)
+  2025-05-13: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-05-14: 1 good, 0 bad, 3 unlogged (4 total habits)
+  2025-05-15: 1 good, 0 bad, 3 unlogged (4 total habits)
+  2025-05-16: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-05-17: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-05-18: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-05-19: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-05-20: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-05-21: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-05-22: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-05-23: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-05-24: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-05-25: 1 good, 0 bad, 3 unlogged (4 total habits)
+  2025-05-26: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-05-27: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-05-28: 1 good, 0 bad, 3 unlogged (4 total habits)
+  2025-05-29: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-05-30: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-05-31: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-06-01: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-06-02: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-06-03: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-06-04: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-06-05: 4 good, 0 bad, 0 unlogged (4 total habits)
+  2025-06-06: 1 good, 0 bad, 3 unlogged (4 total habits)
+  2025-06-07: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-06-08: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-06-10: 1 good, 0 bad, 3 unlogged (4 total habits)
+  2025-06-11: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-06-12: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-06-13: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-06-14: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-06-15: 1 good, 0 bad, 3 unlogged (4 total habits)
+  2025-06-16: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-06-17: 4 good, 0 bad, 0 unlogged (4 total habits)
+  2025-06-18: 2 good, 0 bad, 2 unlogged (4 total habits)
+  2025-06-19: 3 good, 0 bad, 1 unlogged (4 total habits)
+  2025-06-20: 4 good, 0 bad, 0 unlogged (4 total habits)
+  2025-06-21: 1 good, 0 bad, 3 unlogged (4 total habits)
+
+📊 SUMMARY:
+  Total habits checked: 4
+  Total days analyzed: 376
+  Total possible logs: 1504
+  Total logged (good + bad): 905
+  Total good logs: 905
+  Total bad logs: 0
+  Total unlogged: 599
+  Success Rate: 905/905 = 100%
+  Actual function result: 100%
+  Match: ✅
+============================================================
+Using pre-filtered logs: 5/928 logs
+Generating momentum history for 30 D: 2 days
+Momentum history: 2 days from 2025-06-30 to 2025-07-08
+Recent Avg Rate calc for 30 D: 2 historical days from window of 7
+Latest Rate: Using most recent date with data: 2025-07-02
+🗓️ Calendar day 1: Date object: 
+Date {}
+ ISO: 2025-07-01 Display day: 1
+🗓️ Calendar day 2: Date object: 
+Date {}
+ ISO: 2025-07-02 Display day: 2
+🗓️ Calendar day 3: Date object: 
+Date {}
+ ISO: 2025-07-03 Display day: 3
+🗓️ Calendar day 4: Date object: 
+Date {}
+ ISO: 2025-07-04 Display day: 4
+🗓️ Calendar day 5: Date object: 
+Date {}
+ ISO: 2025-07-05 Display day: 5
+🗓️ Calendar day 6: Date object: 
+Date {}
+ ISO: 2025-07-06 Display day: 6
+🗓️ Calendar day 7: Date object: 
+Date {}
+ ISO: 2025-07-07 Display day: 7
+🗓️ Calendar day 8: Date object: 
+Date {}
+ ISO: 2025-07-08 Display day: 8
+🗓️ Calendar day 9: Date object: 
+Date {}
+ ISO: 2025-07-09 Display day: 9
+🗓️ Calendar day 10: Date object: 
+Date {}
+ ISO: 2025-07-10 Display day: 10
+🗓️ Calendar day 11: Date object: 
+Date {}
+ ISO: 2025-07-11 Display day: 11
+🗓️ Calendar day 12: Date object: 
+Date {}
+ ISO: 2025-07-12 Display day: 12
+🗓️ Calendar day 13: Date object: 
+Date {}
+ ISO: 2025-07-13 Display day: 13
+🗓️ Calendar day 14: Date object: 
+Date {}
+ ISO: 2025-07-14 Display day: 14
+🗓️ Calendar day 15: Date object: 
+Date {}
+ ISO: 2025-07-15 Display day: 15
+🗓️ Calendar day 16: Date object: 
+Date {}
+ ISO: 2025-07-16 Display day: 16
+🗓️ Calendar day 17: Date object: 
+Date {}
+ ISO: 2025-07-17 Display day: 17
+🗓️ Calendar day 18: Date object: 
+Date {}
+ ISO: 2025-07-18 Display day: 18
+🗓️ Calendar day 19: Date object: 
+Date {}
+ ISO: 2025-07-19 Display day: 19
+🗓️ Calendar day 20: Date object: 
+Date {}
+ ISO: 2025-07-20 Display day: 20
+🗓️ Calendar day 21: Date object: 
+Date {}
+ ISO: 2025-07-21 Display day: 21
+🗓️ Calendar day 22: Date object: 
+Date {}
+ ISO: 2025-07-22 Display day: 22
+🗓️ Calendar day 23: Date object: 
+Date {}
+ ISO: 2025-07-23 Display day: 23
+🗓️ Calendar day 24: Date object: 
+Date {}
+ ISO: 2025-07-24 Display day: 24
+🗓️ Calendar day 25: Date object: 
+Date {}
+ ISO: 2025-07-25 Display day: 25
+🗓️ Calendar day 26: Date object: 
+Date {}
+ ISO: 2025-07-26 Display day: 26
+🗓️ Calendar day 27: Date object: 
+Date {}
+ ISO: 2025-07-27 Display day: 27
+🗓️ Calendar day 28: Date object: 
+Date {}
+ ISO: 2025-07-28 Display day: 28
+🗓️ Calendar day 29: Date object: 
+Date {}
+ ISO: 2025-07-29 Display day: 29
+🗓️ Calendar day 30: Date object: 
+Date {}
+ ISO: 2025-07-30 Display day: 30
+🗓️ Calendar day 31: Date object: 
+Date {}
+ ISO: 2025-07-31 Display day: 31
+Using pre-filtered logs: 65/928 logs
+Generating momentum history for 30 D: 28 days
+Momentum history: 28 days from 2025-05-31 to 2025-07-08
+Recent Avg Rate calc for 30 D: 7 historical days from window of 7
+Latest Rate: Using most recent date with data: 2025-06-30
+🗓️ Calendar day 1: Date object: 
+Date {}
+ ISO: 2025-06-01 Display day: 1
+🗓️ Calendar day 2: Date object: 
+Date {}
+ ISO: 2025-06-02 Display day: 2
+🗓️ Calendar day 3: Date object: 
+Date {}
+ ISO: 2025-06-03 Display day: 3
+🗓️ Calendar day 4: Date object: 
+Date {}
+ ISO: 2025-06-04 Display day: 4
+🗓️ Calendar day 5: Date object: 
+Date {}
+ ISO: 2025-06-05 Display day: 5
+🗓️ Calendar day 6: Date object: 
+Date {}
+ ISO: 2025-06-06 Display day: 6
+🗓️ Calendar day 7: Date object: 
+Date {}
+ ISO: 2025-06-07 Display day: 7
+🗓️ Calendar day 8: Date object: 
+Date {}
+ ISO: 2025-06-08 Display day: 8
+🗓️ Calendar day 9: Date object: 
+Date {}
+ ISO: 2025-06-09 Display day: 9
+🗓️ Calendar day 10: Date object: 
+Date {}
+ ISO: 2025-06-10 Display day: 10
+🗓️ Calendar day 11: Date object: 
+Date {}
+ ISO: 2025-06-11 Display day: 11
+🗓️ Calendar day 12: Date object: 
+Date {}
+ ISO: 2025-06-12 Display day: 12
+🗓️ Calendar day 13: Date object: 
+Date {}
+ ISO: 2025-06-13 Display day: 13
+🗓️ Calendar day 14: Date object: 
+Date {}
+ ISO: 2025-06-14 Display day: 14
