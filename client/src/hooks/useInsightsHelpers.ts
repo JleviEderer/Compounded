@@ -38,7 +38,7 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
     for (let i = 0; i < 42; i++) {
       const date = new Date(startOfCalendar);
       date.setDate(startOfCalendar.getDate() + i);
-      const dateString = date.toISOString().split('T')[0];
+      const dateString = date.toLocaleDateString('en-CA');
 
       const dayLogs = logs.filter(log => log.date === dateString);
       const intensity = calculateDailyRate(habits, logs, dateString);

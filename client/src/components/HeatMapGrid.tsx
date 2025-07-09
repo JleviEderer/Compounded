@@ -20,12 +20,6 @@ interface HeatMapGridProps {
 }
 
 export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensityColor, debugDateRef }: HeatMapGridProps) {
-   console.log('[HeatMapGrid] render', cells[0]?.dateISO, Date.now());
-  
-  if (debugDateRef?.current) {
-    const dbg = cells.find(c => c.dateISO === debugDateRef.current);
-    console.log('[DBG] intensity for', debugDateRef.current, dbg?.intensity);
-  }
   const resizeTimeout = useRef<NodeJS.Timeout>();
 
   // Force re-render when cells data changes with debounced resize
@@ -86,11 +80,6 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
         </div>
         <div className="grid grid-cols-7 gap-1 bg-gray-50 dark:bg-gray-800 p-1 rounded">
           {cells.map((cell, index) => {
-            // 🔎 TEMP DEBUG — remove after test
-            if (cell.dateISO === '2025-06-09') {
-              console.log('June 9 intensity', cell.intensity);
-            }
-
             return (
               <motion.div
                 key={`${cell.dateISO}-${cell.intensity}-${index}`}
