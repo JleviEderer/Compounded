@@ -19,6 +19,7 @@ interface HeatMapGridProps {
 }
 
 export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensityColor }: HeatMapGridProps) {
+   console.log('[HeatMapGrid] render', cells[0]?.dateISO, Date.now());
   const resizeTimeout = useRef<NodeJS.Timeout>();
 
   // Force re-render when cells data changes with debounced resize
