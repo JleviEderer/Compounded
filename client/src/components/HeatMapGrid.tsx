@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 interface HeatMapCell {
   date: string;
@@ -18,6 +19,10 @@ interface HeatMapGridProps {
 }
 
 export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensityColor }: HeatMapGridProps) {
+  // Force re-render when cells data changes
+  useEffect(() => {
+    window.dispatchEvent(new Event('resize'));
+  }, [cells]);
   // Normalize weighted daily rates to -1 to +1 range for color intensity
   const normalizeIntensity = (rawIntensity: number): number => {
     // Weighted daily rates typically range from -0.016 to +0.016 (4 habits * 0.004 max weight)

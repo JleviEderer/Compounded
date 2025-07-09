@@ -1,7 +1,7 @@
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useHabits } from './useHabits';
 import { useMomentum } from './useMomentum';
+import { calculateMomentum } from './utils/momentum';
 
 type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
 
@@ -74,9 +74,38 @@ export const useInsightsData = () => {
 
     return logs.filter(log => log.date >= cutoffStr);
   };
+  const filteredLogs = useMemo(() => {
+    return logs.filter(log => {
+      const logDate = new Date(log.date);
+      switch (activeView) {
+        case 'week':
+          const startOfWeek = new Date(weekAnchor);
+          startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
+          const endOfWeek = new Date(startOfWeek);
+          endOfWeek.setDate(startOfWeek.getDate() + 6);
+          return logDate >= startOfWeek && logDate <= endOfWeek;
+        case 'month':
+          const startOfMonth = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
+          const endOfMonth = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
+          return logDate >= startOfMonth && logDate <= endOfMonth;
+        case 'quarter':
+          const startOfQuarter = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
+          const endOfQuarter = new Date(startOfQuarter);
+          endOfQuarter.setMonth(startOfQuarter.getMonth() + 3);
+          endOfQuarter.setDate(endOfQuarter.getDate() - 1);
+          return logDate >= startOfQuarter && logDate <= endOfQuarter;
+        case 'all-time':
+          return true;
+        default:
+          return true;
+      }
+    });
+  }, [logs, habits, activeView, anchor, weekAnchor, quarterAnchor]);
 
-  const filteredLogs = getFilteredLogs();
-  const momentum = useMomentum(habits, logs, currentTimeFilter, filteredLogs);
+  const momentum = useMemo(() => {
+    const momentum = calculateMomentum(habits, filteredLogs);
+    return momentum;
+  }, [habits, filteredLogs, logs]);
 
   return {
     habits,

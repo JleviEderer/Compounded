@@ -1,18 +1,22 @@
-
 import { calculateDailyRate } from '../utils/compound';
+import { useCallback } from 'react';
 
 export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any[]) => {
-  const getCurrentStreak = () => {
+  const getCurrentStreak = useCallback(() => {
+    if (habits.length === 0) return 0;
+
     const today = new Date();
     let streak = 0;
 
-    for (let i = 0; i < 365; i++) {
-      const checkDate = new Date(today);
-      checkDate.setDate(today.getDate() - i);
-      const dateStr = checkDate.toLocaleDateString('en-CA');
+    for (let i = 0; i < 30; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+      const dateString = date.toISOString().split('T')[0];
 
-      const dayLogs = logs.filter(log => log.date === dateStr && log.state === 'good');
-      if (dayLogs.length > 0) {
+      const dayLogs = logs.filter(log => log.date === dateString);
+      const hasGoodHabits = dayLogs.some(log => log.completed);
+
+      if (hasGoodHabits) {
         streak++;
       } else {
         break;
@@ -20,121 +24,101 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
     }
 
     return streak;
-  };
+  }, [habits, logs, filteredLogs]);
 
-  const getCalendarDays = (anchor?: Date) => {
-    const calendarAnchor = anchor || new Date();
-    const today = new Date();
-    const firstDay = new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth(), 1);
-    const lastDay = new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth() + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDayOfWeek = firstDay.getDay();
+  const getCalendarDays = useCallback((anchor: Date) => {
+    const year = anchor.getFullYear();
+    const month = anchor.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startOfCalendar = new Date(firstDay);
+    startOfCalendar.setDate(startOfCalendar.getDate() - firstDay.getDay());
 
     const days = [];
+    for (let i = 0; i < 42; i++) {
+      const date = new Date(startOfCalendar);
+      date.setDate(startOfCalendar.getDate() + i);
+      const dateString = date.toISOString().split('T')[0];
 
-    // Empty cells for days before the first day of the month
-    for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push({
-        date: '',
-        dateISO: '',
-        intensity: 0,
-        day: undefined,
-        isToday: false,
-        isCurrentMonth: false
-      });
-    }
+      const dayLogs = logs.filter(log => log.date === dateString);
+      const intensity = calculateDailyRate(habits, logs, dateString);
 
-    // Days of the month
-    for (let day = 1; day <= daysInMonth; day++) {
-      // Create date in local timezone to avoid UTC conversion issues
-      const date = new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth(), day);
-      
-      // Format as YYYY-MM-DD in local timezone (this matches our log storage format)
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const dayStr = String(date.getDate()).padStart(2, '0');
-      const dateStr = `${year}-${month}-${dayStr}`;
-      
-      const dailyRate = calculateDailyRate(habits, logs, dateStr);
-      const todayStr = today.toLocaleDateString('en-CA');
-      
       days.push({
-        date: day.toString(),
-        dateISO: dateStr, // This ensures the ISO date matches exactly what we use for storage
-        intensity: dailyRate,
-        day: day,
-        isToday: dateStr === todayStr,
-        isCurrentMonth: true
+        date: dateString,
+        dateISO: dateString,
+        intensity,
+        isToday: dateString === new Date().toISOString().split('T')[0],
+        day: date.getMonth() === month ? date.getDate() : null,
+        month: date.toLocaleDateString('en', { month: 'short' }),
+        year: date.getFullYear()
       });
     }
 
     return days;
-  };
+  }, [habits, logs, filteredLogs]);
 
-  const getQuarterWeeks = (quarterAnchor: Date) => {
-    const today = new Date();
-    const quarterStart = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
-    const cells = [];
+  const getQuarterWeeks = useCallback((quarterAnchor: Date) => {
+    const startOfQuarter = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
+    const endOfQuarter = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3 + 3, 0);
 
-    for (let week = 0; week < 13; week++) {
-      for (let day = 0; day < 7; day++) {
-        const date = new Date(quarterStart);
-        date.setDate(quarterStart.getDate() + (week * 7) + day);
-        const dateStr = date.toLocaleDateString('en-CA');
-        const dailyRate = calculateDailyRate(habits, filteredLogs, dateStr);
+    const weeks = [];
+    const currentDate = new Date(startOfQuarter);
+    currentDate.setDate(currentDate.getDate() - currentDate.getDay());
 
-        cells.push({
-          date: dateStr,
-          dateISO: dateStr,
+    while (currentDate <= endOfQuarter) {
+      const week = [];
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(currentDate);
+        date.setDate(currentDate.getDate() + i);
+        const dateString = date.toLocaleDateString('en-CA');
+        const dailyRate = calculateDailyRate(habits, filteredLogs, dateString);
+
+        week.push({
+          date: dateString,
+          dateISO: dateString,
           intensity: dailyRate,
-          isToday: date.toDateString() === today.toDateString()
+          isToday: dateString === new Date().toLocaleDateString('en-CA'),
+          day: date.getDate(),
+          month: date.toLocaleDateString('en', { month: 'short' }),
+          year: date.getFullYear()
         });
       }
+      weeks.push(...week);
+      currentDate.setDate(currentDate.getDate() + 7);
     }
 
-    return cells;
-  };
+    return weeks;
+  }, [habits, logs, filteredLogs]);
 
-  const getAllTimeYears = () => {
+  const getAllTimeYears = useCallback(() => {
+    const years = [];
     const currentYear = new Date().getFullYear();
-    const cells = [];
 
     for (let year = currentYear - 2; year <= currentYear; year++) {
       for (let month = 0; month < 12; month++) {
         const monthStart = new Date(year, month, 1);
         const monthEnd = new Date(year, month + 1, 0);
-        const daysInMonth = monthEnd.getDate();
 
-        let totalDailyRate = 0;
-        let daysWithData = 0;
+        const monthLogs = logs.filter(log => {
+          const logDate = new Date(log.date);
+          return logDate >= monthStart && logDate <= monthEnd;
+        });
 
-        for (let day = 1; day <= daysInMonth; day++) {
-          const date = new Date(year, month, day);
-          const dateStr = date.toLocaleDateString('en-CA');
-          const dailyRate = calculateDailyRate(habits, filteredLogs, dateStr);
+        const monthStartString = monthStart.toLocaleDateString('en-CA');
+        const intensity = calculateDailyRate(habits, filteredLogs, monthStartString);
 
-          const dayLogs = filteredLogs.filter(log => log.date === dateStr);
-          if (dayLogs.length > 0) {
-            totalDailyRate += dailyRate;
-            daysWithData++;
-          }
-        }
-
-        const avgDailyRate = daysWithData > 0 ? totalDailyRate / daysWithData : 0;
-        const monthISO = `${year}-${String(month + 1).padStart(2, '0')}`;
-
-        cells.push({
-          date: monthStart.toLocaleDateString('en-CA'),
-          dateISO: monthISO,
-          intensity: avgDailyRate,
+        years.push({
+          date: `${year}-${String(month + 1).padStart(2, '0')}`,
+          dateISO: `${year}-${String(month + 1).padStart(2, '0')}`,
+          intensity,
           year,
-          month: String(month + 1).padStart(2, '0')
+          month: month + 1
         });
       }
     }
 
-    return cells;
-  };
+    return years;
+  }, [habits, logs, filteredLogs]);
 
   const getIntensityColor = (intensity: number) => {
     if (intensity === 0) return 'bg-gray-100 dark:bg-gray-700';
