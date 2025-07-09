@@ -4,6 +4,10 @@ import { dataService } from '../services/dataService';
 import { dataSourceConfig } from '../services/dataSourceConfig';
 import { toast } from './use-toast';
 
+function cloneLogs(logs: HabitLog[]): HabitLog[] {
+  return logs.map(l => ({ ...l }));
+}
+
 // Use different storage buckets for mock vs user mode
 const STORAGE_KEY = dataSourceConfig.source === 'mock' 
   ? 'compounded-data-mock' 
@@ -160,10 +164,11 @@ export function useHabits() {
 
   const deleteHabit = (id: string) => {
     setData(prev => {
+      const newLogs = prev.logs.filter(log => log.habitId !== id);
       const newData = {
         ...prev,
         habits: prev.habits.filter(habit => habit.id !== id),
-        logs: prev.logs.filter(log => log.habitId !== id)
+        logs: cloneLogs(newLogs)
       };
       setLogsUpdatedAt(Date.now());
       return newData;
@@ -186,7 +191,7 @@ export function useHabits() {
 
       const newData = {
         ...prev,
-        logs: newLogs
+        logs: cloneLogs(newLogs)
       };
 
       console.log('🔄 Habit logged:', { habitId, date, state, totalLogs: newData.logs.length });
@@ -239,7 +244,7 @@ export function useHabits() {
 
       setData({
         habits: importedData.habits,
-        logs: importedData.logs || [],
+        logs: cloneLogs(importedData.logs || []),
         settings: {
           theme: 'light',
           nerdMode: false,
@@ -262,7 +267,7 @@ export function useHabits() {
 
     setData({
       habits: [],
-      logs: [],
+      logs: cloneLogs([]),
       settings: { theme: 'light', nerdMode: false }
     });
 

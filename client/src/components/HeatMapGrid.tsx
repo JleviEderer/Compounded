@@ -82,7 +82,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
           {cells.map((cell, index) => {
             return (
               <motion.div
-                key={`${cell.dateISO}-${cell.intensity}-${index}`}
+                key={`${cell.dateISO}-${cell.intensity}`}
                 className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium cursor-pointer hover:scale-105 active:scale-95 transition-transform ${
                   cell.day ? getColor(cell.intensity) : 'bg-gray-100 dark:bg-gray-600'
                 } ${cell.isToday ? 'ring-2 ring-coral ring-offset-2' : ''}`}
