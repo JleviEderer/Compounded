@@ -105,7 +105,7 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
         });
 
         const monthStartString = monthStart.toLocaleDateString('en-CA');
-        const intensity = calculateDailyRate(habits, logs, dateString);
+        const intensity = calculateDailyRate(habits, logs, monthStartString);
 
         years.push({
           date: `${year}-${String(month + 1).padStart(2, '0')}`,

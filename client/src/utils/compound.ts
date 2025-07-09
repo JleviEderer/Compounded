@@ -41,20 +41,15 @@ export function calculateDailyRate(
   logs: HabitLog[],
   date: string
 ): number {
-  const dayLogs = logs.filter(log => log.date === date);
+  // Only GOOD logs for this date
+  const dayLogs = logs.filter(l => l.date === date && l.state === 'good');
 
-  let totalWeight = 0;
-
-  for (const habit of habits) {
-    const log = dayLogs.find(l => l.habitId === habit.id);
-    if (log) {
-      const multiplier = log.state === 'good' ? 1 : -1;
-      const weightContribution = habit.weight * multiplier;
-      totalWeight += weightContribution;
-    }
+  let rate = 0;
+  for (const log of dayLogs) {
+    const habit = habits.find(h => h.id === log.habitId);
+    if (habit) rate += habit.weight;   // weight is numeric (e.g. 0.0006)
   }
-
-  return totalWeight;
+  return rate;     // already weighted sum per day
 }
 
 export function generateMomentumHistory(
