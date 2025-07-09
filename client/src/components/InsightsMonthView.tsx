@@ -58,12 +58,19 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
         </div>
       </div>
 
-      <HeatMapGrid
-        cells={getCalendarDays()}
-        gridType="month"
-        onCellClick={openDay}
-        getIntensityColor={() => ''}
-      />
+      {(() => {
+        const heatmapData = getCalendarDays();
+        const intensityHash = heatmapData.reduce((s, c) => s + c.intensity, 0);
+        return (
+          <HeatMapGrid
+            key={`month-${heatmapData.length}-${intensityHash}`}
+            cells={heatmapData}
+            gridType="month"
+            onCellClick={openDay}
+            getIntensityColor={() => ''}
+          />
+        );
+      })()}
 
       <div className="flex items-center justify-between">
         <div className="text-sm text-gray-600 dark:text-gray-400">

@@ -24,12 +24,19 @@ export const InsightsAllTimeView: React.FC<InsightsAllTimeViewProps> = ({
         All Time Overview
       </h3>
 
-      <HeatMapGrid
-        cells={getAllTimeYears()}
-        gridType="all-time"
-        onCellClick={openMonth}
-        getIntensityColor={getIntensityColor}
-      />
+      {(() => {
+        const heatmapData = getAllTimeYears();
+        const intensityHash = heatmapData.reduce((s, c) => s + c.intensity, 0);
+        return (
+          <HeatMapGrid
+            key={`all-time-${heatmapData.length}-${intensityHash}`}
+            cells={heatmapData}
+            gridType="all-time"
+            onCellClick={openMonth}
+            getIntensityColor={getIntensityColor}
+          />
+        );
+      })()}
 
       <div className="flex items-center justify-between">
         <div className="text-sm text-gray-600 dark:text-gray-400">
