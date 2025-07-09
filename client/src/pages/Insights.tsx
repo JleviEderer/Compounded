@@ -167,7 +167,6 @@ export default function Insights() {
 
       {dayModal && (
         <DayDetailModal 
-          key={`${dayModal}-${logs.length}`}
           date={dayModal} 
           onClose={() => setDayModal(null)} 
         />
