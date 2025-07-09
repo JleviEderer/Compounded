@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface HeatMapCell {
   date: string;
@@ -19,9 +19,14 @@ interface HeatMapGridProps {
 }
 
 export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensityColor }: HeatMapGridProps) {
-  // Force re-render when cells data changes
+  const resizeTimeout = useRef<NodeJS.Timeout>();
+
+  // Force re-render when cells data changes with debounced resize
   useEffect(() => {
-    window.dispatchEvent(new Event('resize'));
+    clearTimeout(resizeTimeout.current);
+    resizeTimeout.current = setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 60);
   }, [cells]);
   // Normalize weighted daily rates to -1 to +1 range for color intensity
   const normalizeIntensity = (rawIntensity: number): number => {
