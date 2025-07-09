@@ -1,0 +1,74 @@
+We already:
+• turned enableLocalStorage on in all modes,
+• introduced compounded-data-mock for dev/mock saves,
+• switched useHabits to write that key.
+
+Remaining gap
+dataService.getHabits() / getLogs() still return hard-coded demo arrays in mock mode, so other screens never see the edits we just saved.
+
+Task
+Patch those two methods to prefer the persisted mock bucket when it exists, then fall back to demo data.
+
+1 · client/src/services/dataService.ts
+Replace the bodies of getHabits() and getLogs() with the versions below (the rest of the file stays unchanged).
+
+ts
+Copy
+Edit
+getHabits(): HabitPair[] {
+  const src = dataSourceConfig.source;
+
+  if (src === 'user') {
+    return this.getUserDataFromStorage().habits;
+  }
+
+  // --- mock mode ---
+  if (typeof window !== 'undefined') {
+    const stored = localStorage.getItem('compounded-data-mock');
+    if (stored) {
+      const { habits = [] } = JSON.parse(stored);
+      if (this.debug) {
+        console.log('🔍 DataService.getHabits() (MOCK-STORAGE) →', habits.length, 'habits');
+      }
+      return habits;
+    }
+  }
+
+  // Fallback to pristine demo data
+  if (this.debug) {
+    console.log('🔍 DataService.getHabits() (MOCK-DEMO) →', mockHabits.length, 'habits');
+  }
+  return mockHabits;
+}
+
+getLogs(): HabitLog[] {
+  const src = dataSourceConfig.source;
+
+  if (src === 'user') {
+    return this.getUserDataFromStorage().logs;
+  }
+
+  // --- mock mode ---
+  if (typeof window !== 'undefined') {
+    const stored = localStorage.getItem('compounded-data-mock');
+    if (stored) {
+      const { logs = [] } = JSON.parse(stored);
+      if (this.debug) {
+        console.log('🔍 DataService.getLogs() (MOCK-STORAGE) →', logs.length, 'logs');
+      }
+      return logs;
+    }
+  }
+
+  // Fallback to pristine demo data
+  if (this.debug) {
+    console.log('🔍 DataService.getLogs() (MOCK-DEMO) →', mockLogs.length, 'logs');
+  }
+  return mockLogs;
+}
+Notes
+
+Keep the typeof window !== 'undefined' guard to avoid errors in headless tests / SSR.
+
+Leave all existing debug logs—only their messages/branches changed.
+

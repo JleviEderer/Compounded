@@ -1,0 +1,103 @@
+Below is a **ready-to-paste Replit AI prompt** that layers the *last, missing tweak* on top of the diff you already merged.
+Just drop it into the chat with Replit AI, review the proposed patch, and accept.
+
+---
+
+## 📝 Replit prompt — “Finish mock-mode persistence read path”
+
+> **Context**
+> We already:
+> • turned `enableLocalStorage` **on** in all modes,
+> • introduced `compounded-data-mock` for dev/mock saves,
+> • switched `useHabits` to write that key.
+>
+> **Remaining gap**
+> `dataService.getHabits()` / `getLogs()` still return hard-coded demo arrays in mock mode, so other screens never see the edits we just saved.
+>
+> **Task**
+> Patch those two methods to prefer the persisted mock bucket when it exists, then fall back to demo data.
+
+---
+
+### 1 · `client/src/services/dataService.ts`
+
+Replace the bodies of **`getHabits()`** and **`getLogs()`** with the versions below (the rest of the file stays unchanged).
+
+```ts
+getHabits(): HabitPair[] {
+  const src = dataSourceConfig.source;
+
+  if (src === 'user') {
+    return this.getUserDataFromStorage().habits;
+  }
+
+  // --- mock mode ---
+  if (typeof window !== 'undefined') {
+    const stored = localStorage.getItem('compounded-data-mock');
+    if (stored) {
+      const { habits = [] } = JSON.parse(stored);
+      if (this.debug) {
+        console.log('🔍 DataService.getHabits() (MOCK-STORAGE) →', habits.length, 'habits');
+      }
+      return habits;
+    }
+  }
+
+  // Fallback to pristine demo data
+  if (this.debug) {
+    console.log('🔍 DataService.getHabits() (MOCK-DEMO) →', mockHabits.length, 'habits');
+  }
+  return mockHabits;
+}
+
+getLogs(): HabitLog[] {
+  const src = dataSourceConfig.source;
+
+  if (src === 'user') {
+    return this.getUserDataFromStorage().logs;
+  }
+
+  // --- mock mode ---
+  if (typeof window !== 'undefined') {
+    const stored = localStorage.getItem('compounded-data-mock');
+    if (stored) {
+      const { logs = [] } = JSON.parse(stored);
+      if (this.debug) {
+        console.log('🔍 DataService.getLogs() (MOCK-STORAGE) →', logs.length, 'logs');
+      }
+      return logs;
+    }
+  }
+
+  // Fallback to pristine demo data
+  if (this.debug) {
+    console.log('🔍 DataService.getLogs() (MOCK-DEMO) →', mockLogs.length, 'logs');
+  }
+  return mockLogs;
+}
+```
+
+*Notes*
+
+* Keep the `typeof window !== 'undefined'` guard to avoid errors in headless tests / SSR.
+* Leave all existing debug logs—only their messages/branches changed.
+
+---
+
+### 2 · Quick manual smoke-test
+
+1. `npm run dev` → demo habits appear.
+2. Add a habit, tick a day → toast shows.
+3. Hard-refresh → your edits persist.
+4. Go to Insights (or any view that re-queries `dataService`) → your edits are reflected.
+5. **Reset All Data** → list empties; refresh → pristine demo data is back.
+6. Append `?source=user` → loads the real `compounded-data` bucket, mock edits untouched.
+
+If all good, commit with:
+
+```bash
+git add .
+git commit -m "fix: read persisted mock bucket in dataService"
+```
+
+That’s it—mock mode now *reads & writes* its own localStorage bucket. 🎉
