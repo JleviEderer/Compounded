@@ -1,0 +1,108 @@
+Below is a **turn-key Replit AI prompt** you can paste straight into the chat.
+It guides the assistant to make the heat-map repaint the moment you change a log—no tab-switch required.
+
+---
+
+## 📝 Replit prompt — “Live-update the heat-map squares”
+
+> **Problem**
+> On the Insights screen the calendar grid doesn’t update until you leave the page and come back. That means the component rendering the grid isn’t reacting to the new `logs`/`habits` arrays coming from `useHabits()`.
+>
+> **Goal**
+> Whenever `logs` or `habits` change (e.g. you tick/untick a habit in the modal) the grid should re-aggregate and repaint immediately—no manual navigation or page refresh.
+>
+> **Key files**
+>
+> 1. `client/src/pages/Insights.tsx` *(or wherever the heat-map page lives)*
+> 2. `client/src/components/HeatmapGrid.tsx` *(the calendar grid itself)*
+> 3. Any helper like `utils/buildHeatmap.ts` or `hooks/useHeatmapData.ts` if they exist.
+>
+> ---
+>
+> ### 1 · Insights page
+>
+> 1. Find the code that derives `heatmapData`—often a `useMemo` or `useEffect`:
+>
+> ```tsx
+> const heatmapData = useMemo(() => buildHeatmap(logs), []); // ← stale
+> ```
+>
+> 2. **Add all reactive inputs to the dependency list**:
+>
+> ```tsx
+> const heatmapData = useMemo(() => buildHeatmap(logs, habits), [logs, habits]);
+> ```
+>
+> *If `habits` isn’t needed for aggregation, leave it out.*
+>
+> 3. Pass the result as a **regular prop** named `data`, not `initialData`:
+>
+> ```tsx
+> <HeatmapGrid data={heatmapData} />
+> ```
+>
+> ---
+>
+> ### 2 · HeatmapGrid component
+>
+> 1. Ensure it receives an **updating** `data` prop:
+>
+> ```tsx
+> interface Props { data: HeatmapDay[][] }
+> export function HeatmapGrid({ data }: Props) {
+>   // No `useState(initialData)`; just render from `data`
+>   …
+> }
+> ```
+>
+> 2. Remove any internal cache like:
+>
+> ```tsx
+> const [grid, setGrid] = useState(initialData); // ❌
+> ```
+>
+> Render straight from props or move this to `useMemo` with `[data]` deps.
+>
+> 3. If you’re using **Recharts** and the chart sometimes sticks, add:
+>
+> ```tsx
+> useEffect(() => {
+>   window.dispatchEvent(new Event('resize'));
+> }, [data]);
+> ```
+>
+> or give the chart a `key={data.length}` prop to force a re-mount.
+>
+> ---
+>
+> ### 3 · Optional helper hook
+>
+> If you have something like `useHeatmapData(logs, habits)`, make sure its `useMemo`/`useEffect` also includes `[logs, habits]`.
+>
+> ---
+>
+> ### 4 · Acceptance steps
+>
+> 1. Run `npm run dev`.
+> 2. Go to **Insights → Month** view.
+> 3. Click any day, un-select or add a habit in the modal.
+> 4. **Expectation:** the square’s colour updates instantly—no nav away/back.
+> 5. Hard-refresh: grid still matches latest logs (proves persistence path unaffected).
+>
+> ---
+>
+> Notes:
+>
+> * Keep memoisation to avoid expensive recalcs, just make the dependency lists complete.
+> * Don’t use a ref or stale snapshot for `logs`; consume the fresh array from context/state each render.
+
+---
+
+### How to use
+
+1. Copy everything in the grey box above.
+2. Paste into Replit AI chat.
+3. Review its diff; confirm it touches only the files/components listed.
+4. Accept, run dev server, test.
+
+That’s it—your heat-map should now be fully reactive. 🎉
