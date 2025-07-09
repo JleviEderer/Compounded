@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useHabits } from './useHabits';
 import { useMomentum } from './useMomentum';
-import { calculateMomentum } from './utils/momentum';
+import { calculateMomentumIndex } from '../utils/compound';
 
 type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
 
@@ -103,8 +103,7 @@ export const useInsightsData = () => {
   }, [logs, habits, activeView, anchor, weekAnchor, quarterAnchor]);
 
   const momentum = useMemo(() => {
-    const momentum = calculateMomentum(habits, filteredLogs);
-    return momentum;
+    return calculateMomentumIndex(habits, filteredLogs, new Date());
   }, [habits, filteredLogs, logs]);
 
   return {
