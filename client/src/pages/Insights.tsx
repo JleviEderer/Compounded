@@ -28,9 +28,7 @@ export default function Insights() {
     quarterAnchor,
     setQuarterAnchor,
     filteredLogs,
-    momentum,
-    refreshData,
-    refreshKey
+    momentum
   } = useInsightsData();
 
   const {
@@ -138,7 +136,6 @@ export default function Insights() {
 
         {activeView === 'month' && (
           <InsightsMonthView
-            key={`month-${refreshKey}`}
             anchor={anchor}
             setAnchor={setAnchor}
             getCalendarDays={() => getCalendarDays(anchor)}
@@ -171,8 +168,7 @@ export default function Insights() {
       {dayModal && (
         <DayDetailModal 
           date={dayModal} 
-          onClose={() => setDayModal(null)}
-          onDataChange={refreshData}
+          onClose={() => setDayModal(null)} 
         />
       )}
     </div>
