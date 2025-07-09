@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useHabits } from './useHabits';
 import { useMomentum } from './useMomentum';
 
@@ -75,7 +75,12 @@ export const useInsightsData = () => {
     return logs.filter(log => log.date >= cutoffStr);
   };
 
-  const filteredLogs = getFilteredLogs();
+  // Use useMemo to ensure filteredLogs recalculates when logs or view parameters change
+  const filteredLogs = useMemo(() => {
+    console.log('🔄 Recalculating filteredLogs due to dependency change');
+    return getFilteredLogs();
+  }, [logs, activeView, anchor, weekAnchor, quarterAnchor, currentTimeFilter]);
+  
   const momentum = useMomentum(habits, logs, currentTimeFilter, filteredLogs);
 
   return {
