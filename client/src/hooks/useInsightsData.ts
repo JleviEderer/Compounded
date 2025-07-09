@@ -100,27 +100,27 @@ export const useInsightsData = () => {
           return true;
       }
     });
-  }, [logs, habits, activeView, anchor, weekAnchor, quarterAnchor]);
+  }, [logs, activeView, anchor, weekAnchor, quarterAnchor]);
 
   const momentum = useMemo(() => {
     const momentumIndex = calculateMomentumIndex(habits, filteredLogs, new Date());
-    
+
     // Calculate success rate based on current time filter
     const days = currentTimeFilter.days || 365; // Use 365 for all-time
     const successRate = calculateSuccessRate(habits, filteredLogs, days);
-    
+
     // Calculate recent average rate from momentum history
     const history = generateMomentumHistory(habits, logs, 7);
     const recentAvgRate = history.length > 0 
       ? history.reduce((sum, day) => sum + day.dailyRate, 0) / history.length
       : 0;
-    
+
     return {
       momentumIndex,
       successRate,
       recentAvgRate
     };
-  }, [habits, filteredLogs, logs, currentTimeFilter]);
+  }, [habits, filteredLogs, currentTimeFilter, logs]);
 
   return {
     habits,

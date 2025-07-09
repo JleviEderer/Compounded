@@ -24,7 +24,7 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
     }
 
     return streak;
-  }, [habits, logs, filteredLogs]);
+  }, [habits, logs]);
 
   const getCalendarDays = useCallback((anchor: Date) => {
     const year = anchor.getFullYear();
@@ -55,7 +55,7 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
     }
 
     return days;
-  }, [habits, logs, filteredLogs]);
+  }, [habits, logs]);
 
   const getQuarterWeeks = useCallback((quarterAnchor: Date) => {
     const startOfQuarter = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
@@ -71,7 +71,7 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
         const date = new Date(currentDate);
         date.setDate(currentDate.getDate() + i);
         const dateString = date.toLocaleDateString('en-CA');
-        const dailyRate = calculateDailyRate(habits, filteredLogs, dateString);
+        const dailyRate = calculateDailyRate(habits, logs, dateString);
 
         week.push({
           date: dateString,
@@ -88,7 +88,7 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
     }
 
     return weeks;
-  }, [habits, logs, filteredLogs]);
+  }, [habits, logs]);
 
   const getAllTimeYears = useCallback(() => {
     const years = [];
@@ -105,7 +105,7 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
         });
 
         const monthStartString = monthStart.toLocaleDateString('en-CA');
-        const intensity = calculateDailyRate(habits, filteredLogs, monthStartString);
+        const intensity = calculateDailyRate(habits, logs, dateString);
 
         years.push({
           date: `${year}-${String(month + 1).padStart(2, '0')}`,
@@ -118,7 +118,7 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
     }
 
     return years;
-  }, [habits, logs, filteredLogs]);
+  }, [habits, logs]);
 
   const getIntensityColor = (intensity: number) => {
     if (intensity === 0) return 'bg-gray-100 dark:bg-gray-700';
