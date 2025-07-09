@@ -13,7 +13,9 @@ export default function DayDetailModal({ date, onClose }: DayDetailModalProps) {
   const { habits, logs, logHabit } = useHabits();
 
   const formatDate = (isoDate: string) => {
-    const date = new Date(isoDate);
+    // Parse YYYY-MM-DD manually to avoid UTC timezone issues
+    const [year, month, day] = isoDate.split('-').map(Number);
+    const date = new Date(year, month - 1, day); // month is 0-indexed
     return date.toLocaleDateString('en', { 
       weekday: 'short', 
       day: 'numeric', 
