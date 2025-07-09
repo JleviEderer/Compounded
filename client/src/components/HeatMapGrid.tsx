@@ -20,6 +20,13 @@ interface HeatMapGridProps {
 }
 
 export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensityColor, debugDateRef }: HeatMapGridProps) {
+  // 🔎 One-time probe — remove after test
+  if (cells.length) {
+    const debugISO = '2025-06-11';                    // change to the date you'll click
+    const probe = cells.find(c => c.dateISO === debugISO);
+    console.log('[PROBE]', debugISO, probe?.intensity, Date.now());
+  }
+
   const resizeTimeout = useRef<NodeJS.Timeout>();
 
   // Force re-render when cells data changes with debounced resize
