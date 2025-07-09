@@ -7,7 +7,12 @@ class DataService {
   private debug = true;
 
   private getUserDataFromStorage(): { habits: HabitPair[], logs: HabitLog[] } {
-    const stored = localStorage.getItem('compounded-data');
+    // Use different storage buckets for mock vs user mode
+    const key = dataSourceConfig.source === 'mock'
+      ? 'compounded-data-mock'
+      : 'compounded-data';
+    
+    const stored = localStorage.getItem(key);
     if (!stored) {
       console.log('📱 No user data found in localStorage, starting fresh');
       return { habits: [], logs: [] };

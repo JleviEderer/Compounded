@@ -10,7 +10,7 @@ const isProduction = import.meta.env.PROD;
 
 export const dataSourceConfig: DataSourceConfig = {
   source: isProduction ? 'user' : 'mock',
-  enableLocalStorage: isProduction
+  enableLocalStorage: true  // ✅ Always persist in dev + prod
 };
 
 export function setDataSource(source: DataSource) {

@@ -4,7 +4,10 @@ import { dataService } from '../services/dataService';
 import { dataSourceConfig } from '../services/dataSourceConfig';
 import { toast } from './use-toast';
 
-const STORAGE_KEY = 'compounded-data';
+// Use different storage buckets for mock vs user mode
+const STORAGE_KEY = dataSourceConfig.source === 'mock' 
+  ? 'compounded-data-mock' 
+  : 'compounded-data';
 
 interface AppData {
   habits: HabitPair[];
