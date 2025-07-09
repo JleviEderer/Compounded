@@ -4,26 +4,30 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HeatMapGrid from './HeatMapGrid';
+import { useHabits } from '@/hooks/useHabits';
+import { getCalendarDays, getIntensityColor } from '@/hooks/useInsightsHelpers';
 
 interface InsightsMonthViewProps {
   anchor: Date;
   setAnchor: (date: Date) => void;
-  getCalendarDays: () => any[];
   openDay: (date: string) => void;
 }
 
 export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
   anchor,
   setAnchor,
-  getCalendarDays,
   openDay
 }) => {
   const selectedDateRef = useRef<string>('');
+  const { habits, logs } = useHabits();
 
   const handleOpenDay = (isoDate: string) => {
     selectedDateRef.current = isoDate;
     openDay(isoDate);
   };
+
+  const heatmapData = getCalendarDays(habits, logs, anchor);
+
   return (
     <motion.div 
       className="space-y-6"
@@ -65,7 +69,6 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
       </div>
 
       {(() => {
-        const heatmapData = getCalendarDays();
         const intensityHash = heatmapData.reduce((s, c) => s + c.intensity, 0);
         return (
           <HeatMapGrid
@@ -73,7 +76,7 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
             cells={heatmapData}
             gridType="month"
             onCellClick={handleOpenDay}
-            getIntensityColor={() => ''}
+            getIntensityColor={getIntensityColor}
             debugDateRef={selectedDateRef}
           />
         );

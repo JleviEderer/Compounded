@@ -10,7 +10,7 @@ import { InsightsQuarterView } from '../components/InsightsQuarterView';
 import { InsightsAllTimeView } from '../components/InsightsAllTimeView';
 import { useInsightsData } from '../hooks/useInsightsData';
 import { useInsightsNavigation } from '../hooks/useInsightsNavigation';
-import { useInsightsHelpers } from '../hooks/useInsightsHelpers';
+import { getCurrentStreak } from '../hooks/useInsightsHelpers';
 
 type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
 
@@ -39,14 +39,6 @@ export default function Insights() {
     getWeekLabel,
     getQuarterLabel
   } = useInsightsNavigation(weekAnchor, quarterAnchor, setWeekAnchor, setQuarterAnchor);
-
-  const {
-    getCurrentStreak,
-    getCalendarDays,
-    getQuarterWeeks,
-    getAllTimeYears,
-    getIntensityColor
-  } = useInsightsHelpers(habits, logs, filteredLogs);
 
   const [dayModal, setDayModal] = useState<string | null>(null);
   const [popoverHabit, setPopoverHabit] = useState<{ id: string; name: string } | null>(null);
@@ -116,7 +108,7 @@ export default function Insights() {
         <InsightsQuickStats
           successRate={successRate}
           recentAvgRate={recentAvgRate}
-          currentStreak={getCurrentStreak()}
+          currentStreak={getCurrentStreak(habits, logs)}
           totalHabits={habits.length}
         />
 
@@ -138,7 +130,6 @@ export default function Insights() {
           <InsightsMonthView
             anchor={anchor}
             setAnchor={setAnchor}
-            getCalendarDays={() => getCalendarDays(anchor)}
             openDay={openDay}
           />
         )}
@@ -150,16 +141,12 @@ export default function Insights() {
             isCurrentQuarter={isCurrentQuarter}
             getQuarterLabel={getQuarterLabel}
             navigateQuarter={navigateQuarter}
-            getQuarterWeeks={() => getQuarterWeeks(quarterAnchor)}
-            getIntensityColor={getIntensityColor}
             openDay={openDay}
           />
         )}
 
         {activeView === 'all-time' && (
           <InsightsAllTimeView
-            getAllTimeYears={getAllTimeYears}
-            getIntensityColor={getIntensityColor}
             openMonth={openMonth}
           />
         )}

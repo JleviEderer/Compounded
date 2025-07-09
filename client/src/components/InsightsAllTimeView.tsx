@@ -2,18 +2,19 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import HeatMapGrid from './HeatMapGrid';
+import { useHabits } from '@/hooks/useHabits';
+import { getAllTimeYears, getIntensityColor } from '@/hooks/useInsightsHelpers';
 
 interface InsightsAllTimeViewProps {
-  getAllTimeYears: () => any[];
-  getIntensityColor: (intensity: number) => string;
   openMonth: (month: string) => void;
 }
 
 export const InsightsAllTimeView: React.FC<InsightsAllTimeViewProps> = ({
-  getAllTimeYears,
-  getIntensityColor,
   openMonth
 }) => {
+  const { habits, logs } = useHabits();
+  const heatmapData = getAllTimeYears(habits, logs);
+
   return (
     <motion.div 
       className="space-y-6 overflow-x-hidden px-2 sm:px-0"
@@ -25,7 +26,6 @@ export const InsightsAllTimeView: React.FC<InsightsAllTimeViewProps> = ({
       </h3>
 
       {(() => {
-        const heatmapData = getAllTimeYears();
         const intensityHash = heatmapData.reduce((s, c) => s + c.intensity, 0);
         return (
           <HeatMapGrid

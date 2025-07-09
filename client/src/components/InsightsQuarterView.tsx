@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HeatMapGrid from './HeatMapGrid';
+import { useHabits } from '@/hooks/useHabits';
+import { getQuarterWeeks, getIntensityColor } from '@/hooks/useInsightsHelpers';
 
 interface InsightsQuarterViewProps {
   quarterAnchor: Date;
@@ -11,8 +13,6 @@ interface InsightsQuarterViewProps {
   isCurrentQuarter: () => boolean;
   getQuarterLabel: () => string;
   navigateQuarter: (direction: 'prev' | 'next') => void;
-  getQuarterWeeks: () => any[];
-  getIntensityColor: (intensity: number) => string;
   openDay: (date: string) => void;
 }
 
@@ -22,10 +22,11 @@ export const InsightsQuarterView: React.FC<InsightsQuarterViewProps> = ({
   isCurrentQuarter,
   getQuarterLabel,
   navigateQuarter,
-  getQuarterWeeks,
-  getIntensityColor,
   openDay
 }) => {
+  const { habits, logs } = useHabits();
+  const heatmapData = getQuarterWeeks(habits, logs, quarterAnchor);
+
   return (
     <motion.div 
       className="space-y-6"
@@ -67,7 +68,6 @@ export const InsightsQuarterView: React.FC<InsightsQuarterViewProps> = ({
       </div>
 
       {(() => {
-        const heatmapData = getQuarterWeeks();
         const intensityHash = heatmapData.reduce((s, c) => s + c.intensity, 0);
         return (
           <HeatMapGrid
