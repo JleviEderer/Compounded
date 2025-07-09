@@ -41,8 +41,8 @@ export function calculateDailyRate(
   logs: HabitLog[],
   date: string
 ): number {
-  // Only GOOD logs for this date
-  const dayLogs = logs.filter(l => l.date === date && l.state === 'good');
+  // Only logs marked completed (GOOD) for this date
+  const dayLogs = logs.filter(l => l.date === date && l.completed);
 
   let rate = 0;
   for (const log of dayLogs) {

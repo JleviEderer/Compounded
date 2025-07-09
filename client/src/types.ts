@@ -32,6 +32,7 @@ export interface HabitLog {
   habitId: string;
   date: string; // YYYY-MM-DD format
   state: HabitLogState;
+  completed: boolean; // True when habit is marked as completed
 }
 
 export interface MomentumData {
