@@ -167,6 +167,7 @@ export default function Insights() {
 
       {dayModal && (
         <DayDetailModal 
+          key={`${dayModal}-${JSON.stringify(logs.filter(l => l.date === dayModal))}`}
           date={dayModal} 
           onClose={() => setDayModal(null)} 
         />
