@@ -79,20 +79,27 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
           ))}
         </div>
         <div className="grid grid-cols-7 gap-1 bg-gray-50 dark:bg-gray-800 p-1 rounded">
-          {cells.map((cell, index) => (
-            <motion.div
-              key={`${cell.dateISO}-${cell.intensity}-${index}`}
-              className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium cursor-pointer hover:scale-105 active:scale-95 transition-transform ${
-                cell.day ? getColor(cell.intensity) : 'bg-gray-100 dark:bg-gray-600'
-              } ${cell.isToday ? 'ring-2 ring-coral ring-offset-2' : ''}`}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: index * 0.01 }}
-              onClick={() => cell.day && onCellClick?.(cell.dateISO)}
-            >
-              {cell.day}
-            </motion.div>
-          ))}
+          {cells.map((cell, index) => {
+            // 🔎 TEMP DEBUG — remove after test
+            if (cell.dateISO === '2025-06-09') {
+              console.log('June 9 intensity', cell.intensity);
+            }
+
+            return (
+              <motion.div
+                key={`${cell.dateISO}-${cell.intensity}-${index}`}
+                className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium cursor-pointer hover:scale-105 active:scale-95 transition-transform ${
+                  cell.day ? getColor(cell.intensity) : 'bg-gray-100 dark:bg-gray-600'
+                } ${cell.isToday ? 'ring-2 ring-coral ring-offset-2' : ''}`}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: index * 0.01 }}
+                onClick={() => cell.day && onCellClick?.(cell.dateISO)}
+              >
+                {cell.day}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     );
