@@ -16,10 +16,16 @@ interface HeatMapGridProps {
   gridType: 'month' | 'quarter' | 'all-time';
   onCellClick?: (isoDate: string) => void;
   getIntensityColor: (intensity: number) => string;
+  debugDateRef?: React.MutableRefObject<string>;
 }
 
-export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensityColor }: HeatMapGridProps) {
+export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensityColor, debugDateRef }: HeatMapGridProps) {
    console.log('[HeatMapGrid] render', cells[0]?.dateISO, Date.now());
+  
+  if (debugDateRef?.current) {
+    const dbg = cells.find(c => c.dateISO === debugDateRef.current);
+    console.log('[DBG] intensity for', debugDateRef.current, dbg?.intensity);
+  }
   const resizeTimeout = useRef<NodeJS.Timeout>();
 
   // Force re-render when cells data changes with debounced resize

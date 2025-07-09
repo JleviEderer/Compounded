@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -18,6 +18,12 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
   getCalendarDays,
   openDay
 }) => {
+  const selectedDateRef = useRef<string>('');
+
+  const handleOpenDay = (isoDate: string) => {
+    selectedDateRef.current = isoDate;
+    openDay(isoDate);
+  };
   return (
     <motion.div 
       className="space-y-6"
@@ -66,8 +72,9 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
             key={`month-${heatmapData.length}-${intensityHash}`}
             cells={heatmapData}
             gridType="month"
-            onCellClick={openDay}
+            onCellClick={handleOpenDay}
             getIntensityColor={() => ''}
+            debugDateRef={selectedDateRef}
           />
         );
       })()}
