@@ -1,0 +1,104 @@
+### You can have **both**: start in mock-data mode *and* keep everything you do cached in `localStorage`, without ever flipping the whole app to “user” mode.
+
+Below is a **drop-in Replit prompt** that does exactly that.
+It keeps **two independent localStorage buckets**:
+
+* **`compounded-data`**    ← “user” mode
+* **`compounded-data-mock`** ← “mock” mode (new)
+
+That means you can:
+
+* Spin up the dev server → see pristine demo data.
+* Check off habits, add new ones → the changes persist across navigation / refresh.
+* Hit *Reset All Data* → the *mock* bucket is wiped, demo data comes back.
+* Switch to production or `?source=user` → the real `compounded-data` bucket loads, untouched.
+
+---
+
+## 📝 Replit prompt — “Persist inside mock mode”
+
+> **Goal**
+> Make dev/mock runs save & reload their own edits while **staying** in mock mode. Keep the original “user” bucket for prod builds.
+>
+> **Key files**
+> `services/dataSourceConfig.ts`, `hooks/useHabits.ts`, `services/dataService.ts`
+>
+> ---
+>
+> ### 1 · `services/dataSourceConfig.ts`
+>
+> 1. **Decouple** the “can we write to storage?” flag from the chosen source:
+>
+> ```ts
+> export const dataSourceConfig: DataSourceConfig = {
+>   source: import.meta.env.PROD ? 'user' : 'mock',
+>   enableLocalStorage: true      // ✅ always persist in dev + prod
+> };
+> ```
+>
+> 2. Keep your existing `setDataSource()` helper.
+>    **Do *not* auto-switch** to `'user'` based on stored data anymore—that’s handled by the query-param override we added earlier (`?source=user`) and by prod builds.
+>
+> ---
+>
+> ### 2 · `hooks/useHabits.ts`
+>
+> **A. Replace the storage key constant** with a mode-aware version:
+>
+> ```ts
+> const STORAGE_KEY =
+>   dataSourceConfig.source === 'mock'
+>     ? 'compounded-data-mock'
+>     : 'compounded-data';
+> ```
+>
+> **B. In the state initializer and `debouncedSave`** leave the old logic—`enableLocalStorage` is now `true`, so reads & writes just work.
+>
+> **C. `resetData()`** – wipe the *current* bucket only:
+>
+> ```ts
+> if (dataSourceConfig.enableLocalStorage) {
+>   localStorage.removeItem(STORAGE_KEY);
+> }
+> ```
+>
+> ---
+>
+> ### 3 · `services/dataService.ts`
+>
+> Same deal—make it pick the right bucket:
+>
+> ```ts
+> private getUserDataFromStorage() {
+>   const key = dataSourceConfig.source === 'mock'
+>     ? 'compounded-data-mock'
+>     : 'compounded-data';
+>
+>   const stored = localStorage.getItem(key);
+>   …
+> }
+> ```
+>
+> *(Do the same key choice in any `setItem` you add later.)*
+>
+> ---
+>
+> ### ✅ Manual acceptance steps
+>
+> 1. `npm run dev` → app shows demo habits.
+> 2. Tick a habit, add one more.
+> 3. Hard-refresh → your edits are still there.
+> 4. Settings → **Reset All Data** → list is empty, refresh → demo data is back (because the mock bucket is now gone).
+> 5. Add `?source=user` to the URL → loads the *production* bucket (`compounded-data`) if it exists, otherwise blank slate.
+>
+> All other behaviour (auto-save toast, inline flashes, etc.) remains unchanged.
+
+---
+
+### Why this works
+
+* **Two buckets** keep dev experiments from polluting real user data.
+* `enableLocalStorage: true` lets the hook read/write whatever bucket is active.
+* Query-param or build-time flags still let you jump into “user” mode whenever you want, without touching the mock bucket.
+
+Copy-paste that prompt into Replit AI, let it patch the three files, and you’re set. Happy testing!
