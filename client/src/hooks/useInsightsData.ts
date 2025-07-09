@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useHabits } from './useHabits';
 import { useMomentum } from './useMomentum';
-import { calculateMomentumIndex } from '../utils/compound';
+import { calculateMomentumIndex, calculateSuccessRate, generateMomentumHistory } from '../utils/compound';
 
 type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
 
@@ -103,8 +103,24 @@ export const useInsightsData = () => {
   }, [logs, habits, activeView, anchor, weekAnchor, quarterAnchor]);
 
   const momentum = useMemo(() => {
-    return calculateMomentumIndex(habits, filteredLogs, new Date());
-  }, [habits, filteredLogs, logs]);
+    const momentumIndex = calculateMomentumIndex(habits, filteredLogs, new Date());
+    
+    // Calculate success rate based on current time filter
+    const days = currentTimeFilter.days || 365; // Use 365 for all-time
+    const successRate = calculateSuccessRate(habits, filteredLogs, days);
+    
+    // Calculate recent average rate from momentum history
+    const history = generateMomentumHistory(habits, logs, 7);
+    const recentAvgRate = history.length > 0 
+      ? history.reduce((sum, day) => sum + day.dailyRate, 0) / history.length
+      : 0;
+    
+    return {
+      momentumIndex,
+      successRate,
+      recentAvgRate
+    };
+  }, [habits, filteredLogs, logs, currentTimeFilter]);
 
   return {
     habits,
