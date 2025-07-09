@@ -7,10 +7,9 @@ import { Button } from './ui/button';
 interface DayDetailModalProps {
   date: string; // ISO date string (YYYY-MM-DD)
   onClose: () => void;
-  onDataChange?: () => void;
 }
 
-export default function DayDetailModal({ date, onClose, onDataChange }: DayDetailModalProps) {
+export default function DayDetailModal({ date, onClose }: DayDetailModalProps) {
   const { habits, logs, logHabit } = useHabits();
 
   const formatDate = (isoDate: string) => {
@@ -36,7 +35,6 @@ export default function DayDetailModal({ date, onClose, onDataChange }: DayDetai
 
   const handleStateChange = (habitId: string, newState: HabitLogState) => {
     logHabit(habitId, date, newState);
-    onDataChange?.();
   };
 
   const dayLogs = getDayLogs();

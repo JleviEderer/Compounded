@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useHabits } from './useHabits';
 import { useMomentum } from './useMomentum';
 
@@ -7,7 +7,6 @@ type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
 
 export const useInsightsData = () => {
   const { habits, logs, settings } = useHabits();
-  const [refreshKey, setRefreshKey] = useState(0);
   const [activeView, setActiveView] = useState<InsightsViewMode>('week');
   const [anchor, setAnchor] = useState<Date>(new Date());
   const [weekAnchor, setWeekAnchor] = useState<Date>(new Date());
@@ -79,10 +78,6 @@ export const useInsightsData = () => {
   const filteredLogs = getFilteredLogs();
   const momentum = useMomentum(habits, logs, currentTimeFilter, filteredLogs);
 
-  const refreshData = useCallback(() => {
-    setRefreshKey(prev => prev + 1);
-  }, []);
-
   return {
     habits,
     logs,
@@ -97,8 +92,6 @@ export const useInsightsData = () => {
     setQuarterAnchor,
     currentTimeFilter,
     filteredLogs,
-    momentum,
-    refreshData,
-    refreshKey
+    momentum
   };
 };
