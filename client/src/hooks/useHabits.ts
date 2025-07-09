@@ -24,28 +24,28 @@ export function useHabits() {
 
   // Initialize data state
   const [data, setData] = useState<AppData>(() => {
-    if (dataSourceConfig.enableLocalStorage) {
-      try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          console.log('🏠 useHabits: Loaded from localStorage:', parsed.habits?.length || 0, 'habits,', parsed.logs?.length || 0, 'logs');
-          return {
-            habits: parsed.habits || [],
-            logs: parsed.logs || [],
-            settings: {
-              theme: 'light',
-              nerdMode: false,
-              ...parsed.settings
-            }
-          };
-        }
-      } catch (error) {
-        console.error('Failed to load from localStorage:', error);
+    // Try localStorage first (even in mock mode for persistence)
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        console.log('🏠 useHabits: Loaded from localStorage (PERSISTENT):', parsed.habits?.length || 0, 'habits,', parsed.logs?.length || 0, 'logs');
+        return {
+          habits: parsed.habits || [],
+          logs: parsed.logs || [],
+          settings: {
+            theme: 'light',
+            nerdMode: false,
+            ...parsed.settings
+          }
+        };
       }
+    } catch (error) {
+      console.error('Failed to load from localStorage:', error);
     }
 
-    // Fallback to dataService
+    // Fallback to dataService (fresh mock data)
+    console.log('🏠 useHabits: No localStorage found, loading fresh data from dataService');
     return {
       habits: dataService.getHabits(),
       logs: dataService.getLogs(),
@@ -54,8 +54,7 @@ export function useHabits() {
   });
 
   const debouncedSave = useCallback((dataToSave: AppData, habitId?: string) => {
-    // Always allow saves for testing, even in mock mode
-    // if (!dataSourceConfig.enableLocalStorage) return;
+    // Always save to localStorage for persistence, regardless of mode
 
     // Skip on initial load
     if (isInitialLoadRef.current) {
