@@ -22,49 +22,35 @@ export const useInsightsHelpers = (habits: any[], logs: any[], filteredLogs: any
     return streak;
   };
 
-  const getCalendarDays = (anchor?: Date) => {
-    const calendarAnchor = anchor || new Date();
+  const getCalendarDays = (anchor: Date) => {
     const today = new Date();
-    const firstDay = new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth(), 1);
-    const lastDay = new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth() + 1, 0);
+    const firstDay = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
+    const lastDay = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
     const daysInMonth = lastDay.getDate();
     const startingDayOfWeek = firstDay.getDay();
 
     const days = [];
 
-    // Empty cells for days before the first day of the month
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.push({
         date: '',
         dateISO: '',
         intensity: 0,
-        day: undefined,
-        isToday: false,
-        isCurrentMonth: false
+        day: undefined
       });
     }
 
-    // Days of the month
     for (let day = 1; day <= daysInMonth; day++) {
-      // Create date in local timezone to avoid UTC conversion issues
-      const date = new Date(calendarAnchor.getFullYear(), calendarAnchor.getMonth(), day);
-      
-      // Format as YYYY-MM-DD in local timezone (this matches our log storage format)
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const dayStr = String(date.getDate()).padStart(2, '0');
-      const dateStr = `${year}-${month}-${dayStr}`;
-      
+      const date = new Date(anchor.getFullYear(), anchor.getMonth(), day);
+      const dateStr = date.toLocaleDateString('en-CA');
       const dailyRate = calculateDailyRate(habits, logs, dateStr);
-      const todayStr = today.toLocaleDateString('en-CA');
-      
+
       days.push({
-        date: day.toString(),
-        dateISO: dateStr, // This ensures the ISO date matches exactly what we use for storage
+        date: dateStr,
+        dateISO: dateStr,
         intensity: dailyRate,
-        day: day,
-        isToday: dateStr === todayStr,
-        isCurrentMonth: true
+        day,
+        isToday: dateStr === today.toLocaleDateString('en-CA')
       });
     }
 
