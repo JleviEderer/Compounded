@@ -89,6 +89,7 @@ export default function Insights() {
   };
 
   const openDay = (isoDate: string) => {
+    console.log('🔍 openDay called with isoDate:', isoDate);
     setDayModal(isoDate);
   };
 
