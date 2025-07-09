@@ -37,38 +37,53 @@ class DataService {
   }
 
   getHabits(): HabitPair[] {
-    const source = dataSourceConfig.source;
+    const src = dataSourceConfig.source;
 
-    if (source === 'user') {
-      const userData = this.getUserDataFromStorage();
-      if (this.debug) {
-        console.log('🔍 DataService.getHabits() called (USER DATA), returning:', userData.habits.length, 'habits');
-      }
-      return userData.habits;
+    if (src === 'user') {
+      return this.getUserDataFromStorage().habits;
     }
 
-    // Default to mock data
+    // --- mock mode ---
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('compounded-data-mock');
+      if (stored) {
+        const { habits = [] } = JSON.parse(stored);
+        if (this.debug) {
+          console.log('🔍 DataService.getHabits() (MOCK-STORAGE) →', habits.length, 'habits');
+        }
+        return habits;
+      }
+    }
+
+    // Fallback to pristine demo data
     if (this.debug) {
-      console.log('🔍 DataService.getHabits() called (MOCK DATA), returning:', mockHabits.length, 'habits');
+      console.log('🔍 DataService.getHabits() (MOCK-DEMO) →', mockHabits.length, 'habits');
     }
     return mockHabits;
   }
 
   getLogs(): HabitLog[] {
-    const source = dataSourceConfig.source;
+    const src = dataSourceConfig.source;
 
-    if (source === 'user') {
-      const userData = this.getUserDataFromStorage();
-      if (this.debug) {
-        console.log('🔍 DataService.getLogs() called (USER DATA), returning:', userData.logs.length, 'logs');
-        console.log('🔍 Log date range:', userData.logs.length > 0 ? `${userData.logs[0].date} to ${userData.logs[userData.logs.length-1].date}` : 'No logs');
-      }
-      return userData.logs;
+    if (src === 'user') {
+      return this.getUserDataFromStorage().logs;
     }
 
-    // Default to mock data
+    // --- mock mode ---
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('compounded-data-mock');
+      if (stored) {
+        const { logs = [] } = JSON.parse(stored);
+        if (this.debug) {
+          console.log('🔍 DataService.getLogs() (MOCK-STORAGE) →', logs.length, 'logs');
+        }
+        return logs;
+      }
+    }
+
+    // Fallback to pristine demo data
     if (this.debug) {
-      console.log('🔍 DataService.getLogs() called (MOCK DATA), returning:', mockLogs.length, 'logs');
+      console.log('🔍 DataService.getLogs() (MOCK-DEMO) →', mockLogs.length, 'logs');
       console.log('🔍 Log date range:', mockLogs.length > 0 ? `${mockLogs[0].date} to ${mockLogs[mockLogs.length-1].date}` : 'No logs');
     }
     return mockLogs;
