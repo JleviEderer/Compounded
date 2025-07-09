@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -6,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import HeatMapGrid from './HeatMapGrid';
 import { useHabits } from '@/hooks/useHabits';
 import { getQuarterWeeks, getIntensityColor } from '@/hooks/useInsightsHelpers';
+import { useMemo } from 'react';
 
 interface InsightsQuarterViewProps {
   quarterAnchor: Date;
@@ -19,13 +19,13 @@ interface InsightsQuarterViewProps {
 export const InsightsQuarterView: React.FC<InsightsQuarterViewProps> = ({
   quarterAnchor,
   setQuarterAnchor,
-  isCurrentQuarter,
-  getQuarterLabel,
-  navigateQuarter,
   openDay
 }) => {
   const { habits, logs } = useHabits();
-  const heatmapData = getQuarterWeeks(habits, logs, quarterAnchor);
+  const heatmapData = useMemo(() => {
+    console.log('🔄 InsightsQuarterView: Recomputing quarter data, logs.length =', logs.length);
+    return getQuarterWeeks(habits, logs, quarterAnchor);
+  }, [habits, logs, quarterAnchor]);
 
   return (
     <motion.div 

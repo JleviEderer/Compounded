@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import HeatMapGrid from './HeatMapGrid';
 import { useHabits } from '@/hooks/useHabits';
@@ -13,7 +12,10 @@ export const InsightsAllTimeView: React.FC<InsightsAllTimeViewProps> = ({
   openMonth
 }) => {
   const { habits, logs } = useHabits();
-  const heatmapData = getAllTimeYears(habits, logs);
+  const heatmapData = useMemo(() => {
+    console.log('🔄 InsightsAllTimeView: Recomputing all-time data, logs.length =', logs.length);
+    return getAllTimeYears(habits, logs);
+  }, [habits, logs]);
 
   return (
     <motion.div 

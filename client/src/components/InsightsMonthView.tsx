@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,10 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
     openDay(isoDate);
   };
 
-  const heatmapData = getCalendarDays(habits, logs, anchor);
+  const heatmapData = useMemo(() => {
+    console.log('🔄 InsightsMonthView: Recomputing calendar data, logs.length =', logs.length);
+    return getCalendarDays(habits, logs, anchor);
+  }, [habits, logs, anchor]);
 
   return (
     <motion.div 
