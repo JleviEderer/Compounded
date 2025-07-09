@@ -1,0 +1,46 @@
+Below is a **concise, end-to-end bug report** you can paste into Replit AI.
+It gives enough context for the assistant to investigate the *root* cause instead of applying more band-aids.
+
+---
+
+### Replit prompt — *“Heat-map doesn’t live-update after logging habits”*
+
+> **Problem summary**
+>
+> * When I tick / untick habits in the day modal, the square’s colour in **Insights → Month / Quarter / All-Time** doesn’t change until I navigate away and return.
+> * Autosave works (localStorage updates). `HeatMapGrid` *does* rerender (console confirms).
+> * But the computed `intensity` for the edited date never changes during the same mount.
+>
+> **Observed clues**
+>
+> 1. `calculateDailyRate` is now a pure function (in `utils/compound.ts`).
+> 2. `useHabits` returns fresh `logs`; autosave increments the length count.
+> 3. Yet `getCalendarDays` (and sibling helpers) still deliver the *old* intensity.
+> 4. We removed most memoisation (`useCallback`) but the issue persists.
+>
+> **Key files**
+>
+> * `client/src/hooks/useHabits.ts` – state + autosave logic
+> * `client/src/utils/compound.ts` – `calculateDailyRate`
+> * `client/src/hooks/useInsightsHelpers.ts` – `getCalendarDays`, `getQuarterWeeks`, `getAllTimeYears`
+> * `client/src/components/HeatMapGrid.tsx` – renders the grid
+> * `client/src/components/Insights*View.tsx` – call helpers & pass data to grid
+>
+> **Request**
+>
+> 1. Trace how `logs` flows from `useHabits` → helper functions → grid.
+> 2. Identify *why* `intensity` for the edited date isn’t recomputed in the same render:
+>
+>    * stale `logs` reference?
+>    * helper mutates in place?
+>    * accidental caching (`useMemo`, global var, etc.)?
+> 3. Provide a minimal code change that makes the square recolour immediately after `logHabit` runs (no page navigation), without brute-force remounting every grid.
+>
+> **Acceptance test**
+>
+> * Insights → Month.
+> * Click any day, toggle a habit, close modal.
+> * The square’s colour updates *instantly*.
+> * Git build passes; no regression in persistence.
+>
+> Feel free to add temporary console traces or React DevTools hints to pinpoint the stale layer, then deliver the clean fix.
