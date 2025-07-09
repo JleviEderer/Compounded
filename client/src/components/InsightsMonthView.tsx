@@ -59,7 +59,7 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
       </div>
 
       <HeatMapGrid
-        cells={getCalendarDays(anchor)}
+        cells={getCalendarDays()}
         gridType="month"
         onCellClick={openDay}
         getIntensityColor={() => ''}
