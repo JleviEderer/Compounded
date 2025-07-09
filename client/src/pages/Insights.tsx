@@ -88,8 +88,11 @@ export default function Insights() {
     setActiveView('month');
   };
 
-  const openDay = (isoDate: string) => {
-    setDayModal(isoDate);
+  const openDay = (date: string) => {
+    console.log('📅 Insights: Opening day modal for date:', date);
+    console.log('📅 Date type:', typeof date);
+    console.log('📅 Date as Date object:', new Date(date));
+    setDayModal(date);
   };
 
   return (

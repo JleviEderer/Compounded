@@ -12,6 +12,16 @@ interface DayDetailModalProps {
 export default function DayDetailModal({ date, onClose }: DayDetailModalProps) {
   const { habits, logs, logHabit } = useHabits();
 
+  // Debug logging to track date conversion
+  console.log('🗓️ DayDetailModal received date:', date);
+  console.log('🗓️ Date object created:', new Date(date));
+  console.log('🗓️ Formatted display:', new Date(date).toLocaleDateString('en', { 
+    weekday: 'short', 
+    day: 'numeric', 
+    month: 'short', 
+    year: 'numeric' 
+  }));
+
   const formatDate = (isoDate: string) => {
     const date = new Date(isoDate);
     return date.toLocaleDateString('en', { 
@@ -34,6 +44,7 @@ export default function DayDetailModal({ date, onClose }: DayDetailModalProps) {
   };
 
   const handleStateChange = (habitId: string, newState: HabitLogState) => {
+    console.log('🎯 DayDetailModal: Logging habit', habitId, 'for date', date, 'with state', newState);
     logHabit(habitId, date, newState);
   };
 
