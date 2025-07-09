@@ -167,6 +167,7 @@ export default function Insights() {
 
       {dayModal && (
         <DayDetailModal 
+          key={dayModal}
           date={dayModal} 
           onClose={() => setDayModal(null)} 
         />
