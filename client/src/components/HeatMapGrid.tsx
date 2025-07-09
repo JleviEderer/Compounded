@@ -80,7 +80,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
         <div className="grid grid-cols-7 gap-1 bg-gray-50 dark:bg-gray-800 p-1 rounded">
           {cells.map((cell, index) => (
             <motion.div
-              key={index}
+              key={`${cell.dateISO}-${cell.intensity}-${index}`}
               className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium cursor-pointer hover:scale-105 active:scale-95 transition-transform ${
                 cell.day ? getColor(cell.intensity) : 'bg-gray-100 dark:bg-gray-600'
               } ${cell.isToday ? 'ring-2 ring-coral ring-offset-2' : ''}`}
@@ -129,7 +129,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
               </motion.div>,
               ...week.map((cell, dayIndex) => (
                 <motion.div
-                  key={`${weekIndex}-${dayIndex}`}
+                  key={`${cell.dateISO}-${cell.intensity}-${weekIndex}-${dayIndex}`}
                   className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium cursor-pointer hover:scale-105 active:scale-95 transition-transform ${getColor(cell.intensity)} ${
                     cell.isToday ? 'ring-2 ring-coral ring-offset-2' : ''
                   }`}
@@ -177,7 +177,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
               </motion.div>,
               ...(months as HeatMapCell[]).map((cell, monthIndex) => (
                 <motion.div
-                  key={`${year}-${monthIndex}`}
+                  key={`${cell.dateISO}-${cell.intensity}-${year}-${monthIndex}`}
                   className={`w-11 h-11 rounded cursor-pointer hover:scale-110 active:bg-neutral-700 active:scale-95 transition-all touch-manipulation ${getColor(cell.intensity)}`}
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
