@@ -29,55 +29,56 @@ export const useInsightsData = () => {
 
   const currentTimeFilter = getTimeFilterForView(activeView);
 
-  const getFilteredLogs = () => {
-    if (!currentTimeFilter.days) {
-      return logs;
-    }
-
-    if (activeView === 'week') {
-      const startOfWeek = new Date(weekAnchor);
-      startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
-      const endOfWeek = new Date(startOfWeek);
-      endOfWeek.setDate(startOfWeek.getDate() + 6);
-
-      const startStr = startOfWeek.toLocaleDateString('en-CA');
-      const endStr = endOfWeek.toLocaleDateString('en-CA');
-
-      return logs.filter(log => log.date >= startStr && log.date <= endStr);
-    }
-
-    if (activeView === 'month') {
-      const monthStart = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
-      const monthEnd = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
-
-      const startStr = monthStart.toLocaleDateString('en-CA');
-      const endStr = monthEnd.toLocaleDateString('en-CA');
-
-      return logs.filter(log => log.date >= startStr && log.date <= endStr);
-    }
-
-    if (activeView === 'quarter') {
-      const quarterStart = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
-      const quarterEnd = new Date(quarterStart);
-      quarterEnd.setMonth(quarterStart.getMonth() + 3);
-      quarterEnd.setDate(quarterEnd.getDate() - 1);
-
-      const startStr = quarterStart.toLocaleDateString('en-CA');
-      const endStr = quarterEnd.toLocaleDateString('en-CA');
-
-      return logs.filter(log => log.date >= startStr && log.date <= endStr);
-    }
-
-    const cutoffDate = new Date();
-    cutoffDate.setDate(cutoffDate.getDate() - currentTimeFilter.days);
-    const cutoffStr = cutoffDate.toLocaleDateString('en-CA');
-
-    return logs.filter(log => log.date >= cutoffStr);
-  };
-
   // Use useMemo to ensure filteredLogs recalculates when logs or view parameters change
   const filteredLogs = useMemo(() => {
     console.log('🔄 Recalculating filteredLogs due to dependency change');
+    
+    const getFilteredLogs = () => {
+      if (!currentTimeFilter.days) {
+        return logs;
+      }
+
+      if (activeView === 'week') {
+        const startOfWeek = new Date(weekAnchor);
+        startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+        const startStr = startOfWeek.toLocaleDateString('en-CA');
+        const endStr = endOfWeek.toLocaleDateString('en-CA');
+
+        return logs.filter(log => log.date >= startStr && log.date <= endStr);
+      }
+
+      if (activeView === 'month') {
+        const monthStart = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
+        const monthEnd = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
+
+        const startStr = monthStart.toLocaleDateString('en-CA');
+        const endStr = monthEnd.toLocaleDateString('en-CA');
+
+        return logs.filter(log => log.date >= startStr && log.date <= endStr);
+      }
+
+      if (activeView === 'quarter') {
+        const quarterStart = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
+        const quarterEnd = new Date(quarterStart);
+        quarterEnd.setMonth(quarterStart.getMonth() + 3);
+        quarterEnd.setDate(quarterEnd.getDate() - 1);
+
+        const startStr = quarterStart.toLocaleDateString('en-CA');
+        const endStr = quarterEnd.toLocaleDateString('en-CA');
+
+        return logs.filter(log => log.date >= startStr && log.date <= endStr);
+      }
+
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - currentTimeFilter.days);
+      const cutoffStr = cutoffDate.toLocaleDateString('en-CA');
+
+      return logs.filter(log => log.date >= cutoffStr);
+    };
+
     return getFilteredLogs();
   }, [logs, activeView, anchor, weekAnchor, quarterAnchor, currentTimeFilter]);
   
