@@ -24,6 +24,7 @@ export function useHabits() {
   const hasShownFirstEditToastRef = useRef(false);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSavedHabitId, setLastSavedHabitId] = useState<string | null>(null);
+  const [logsUpdatedAt, setLogsUpdatedAt] = useState(0);
 
   // Initialize data state
   const [data, setData] = useState<AppData>(() => {
@@ -158,11 +159,15 @@ export function useHabits() {
   };
 
   const deleteHabit = (id: string) => {
-    setData(prev => ({
-      ...prev,
-      habits: prev.habits.filter(habit => habit.id !== id),
-      logs: prev.logs.filter(log => log.habitId !== id)
-    }));
+    setData(prev => {
+      const newData = {
+        ...prev,
+        habits: prev.habits.filter(habit => habit.id !== id),
+        logs: prev.logs.filter(log => log.habitId !== id)
+      };
+      setLogsUpdatedAt(Date.now());
+      return newData;
+    });
   };
 
   const logHabit = (habitId: string, date: string, state: HabitLogState) => {
@@ -189,6 +194,7 @@ export function useHabits() {
       // Trigger save with habit ID for targeted feedback
       setTimeout(() => debouncedSave(newData, habitId), 0);
 
+      setLogsUpdatedAt(Date.now());
       return newData;
     });
   };
@@ -241,6 +247,7 @@ export function useHabits() {
         }
       });
 
+      setLogsUpdatedAt(Date.now());
       return true;
     } catch {
       return false;
@@ -258,6 +265,8 @@ export function useHabits() {
       logs: [],
       settings: { theme: 'light', nerdMode: false }
     });
+
+    setLogsUpdatedAt(Date.now());
   };
 
   return {
@@ -266,6 +275,7 @@ export function useHabits() {
     settings: data.settings,
     isSaving,
     lastSavedHabitId,
+    logsUpdatedAt,
     addHabit,
     updateHabit,
     deleteHabit,

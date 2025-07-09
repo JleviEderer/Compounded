@@ -19,7 +19,7 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
   openDay
 }) => {
   const selectedDateRef = useRef<string>('');
-  const { habits, logs } = useHabits();
+  const { habits, logs, logsUpdatedAt } = useHabits();
 
   const handleOpenDay = (isoDate: string) => {
     selectedDateRef.current = isoDate;
@@ -71,19 +71,14 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
         </div>
       </div>
 
-      {(() => {
-        const intensityHash = heatmapData.reduce((s, c) => s + c.intensity, 0);
-        return (
-          <HeatMapGrid
-            key={`month-${heatmapData.length}-${intensityHash}`}
-            cells={heatmapData}
-            gridType="month"
-            onCellClick={handleOpenDay}
-            getIntensityColor={getIntensityColor}
-            debugDateRef={selectedDateRef}
-          />
-        );
-      })()}
+      <HeatMapGrid
+        key={`month-${logsUpdatedAt}`}
+        cells={heatmapData}
+        gridType="month"
+        onCellClick={handleOpenDay}
+        getIntensityColor={getIntensityColor}
+        debugDateRef={selectedDateRef}
+      />
 
       <div className="flex items-center justify-between">
         <div className="text-sm text-gray-600 dark:text-gray-400">

@@ -18,7 +18,7 @@ export const InsightsQuarterView: React.FC<InsightsQuarterViewProps> = ({
   setQuarterAnchor,
   openDay
 }) => {
-  const { habits, logs } = useHabits();
+  const { habits, logs, logsUpdatedAt } = useHabits();
   const { isCurrentQuarter, getQuarterLabel, navigateQuarter } = useInsightsNavigation(
     new Date(), // weekAnchor (not used here)
     quarterAnchor,
@@ -70,18 +70,13 @@ export const InsightsQuarterView: React.FC<InsightsQuarterViewProps> = ({
         </div>
       </div>
 
-      {(() => {
-        const intensityHash = heatmapData.reduce((s, c) => s + c.intensity, 0);
-        return (
-          <HeatMapGrid
-            key={`quarter-${heatmapData.length}-${intensityHash}`}
-            cells={heatmapData}
-            gridType="quarter"
-            onCellClick={openDay}
-            getIntensityColor={getIntensityColor}
-          />
-        );
-      })()}
+      <HeatMapGrid
+        key={`quarter-${logsUpdatedAt}`}
+        cells={heatmapData}
+        gridType="quarter"
+        onCellClick={openDay}
+        getIntensityColor={getIntensityColor}
+      />
 
       <div className="flex items-center justify-between">
         <div className="text-sm text-gray-600 dark:text-gray-400">
