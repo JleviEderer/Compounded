@@ -44,11 +44,11 @@ export function calculateDailyRate(
   if (import.meta.env.DEV && date === '2025-06-11') {
     console.log('[DRATE]', date,
       logs.filter(l => l.date === date).length,
-      logs.filter(l => l.date === date && l.completed).length
+      logs.filter(l => l.date === date && (l.completed || l.state === 'good')).length
     );
   }
-  // Only logs marked completed (GOOD) for this date
-  const dayLogs = logs.filter(l => l.date === date && l.completed);
+  // Count logs that are completed OR have state 'good'
+  const dayLogs = logs.filter(l => l.date === date && (l.completed || l.state === 'good'));
 
   let rate = 0;
   for (const log of dayLogs) {
