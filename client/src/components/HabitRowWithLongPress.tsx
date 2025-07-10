@@ -27,6 +27,8 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
   });
 
   const [isMobile, setIsMobile] = React.useState(false);
+  const [isLongSingleWord, setIsLongSingleWord] = React.useState(false);
+  const textRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 640);
@@ -35,10 +37,34 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  /* ---------- dynamic width/ellipsis ---------- */
-  const namePx       = habit.goodHabit.length * 8;            // ≈ 8 px per char
-  const colWidth     = Math.min(Math.max(namePx, 76), 120);    // clamp 76-120 px
-  const isTruncated  = namePx > colWidth;                      // will we clip?
+  React.useEffect(() => {
+    // Check if we have a single long word that exceeds column width
+    const words = habit.goodHabit.trim().split(/\s+/);
+    const singleWord = words.length === 1;
+    
+    if (singleWord && textRef.current) {
+      // Create a temporary element to measure the single word
+      const measureEl = document.createElement('div');
+      measureEl.style.position = 'absolute';
+      measureEl.style.visibility = 'hidden';
+      measureEl.style.width = 'auto';
+      measureEl.style.whiteSpace = 'nowrap';
+      measureEl.style.fontFamily = getComputedStyle(textRef.current).fontFamily;
+      measureEl.style.fontSize = getComputedStyle(textRef.current).fontSize;
+      measureEl.style.fontWeight = getComputedStyle(textRef.current).fontWeight;
+      measureEl.textContent = habit.goodHabit;
+      
+      document.body.appendChild(measureEl);
+      const textWidth = measureEl.offsetWidth;
+      document.body.removeChild(measureEl);
+      
+      // Column width is 140px, minus padding (3 * 0.75rem * 2 = 36px)
+      const availableWidth = 140 - 24; // 24px total padding (12px each side)
+      setIsLongSingleWord(textWidth > availableWidth);
+    } else {
+      setIsLongSingleWord(false);
+    }
+  }, [habit.goodHabit]);
 
   return (
     <React.Fragment>
@@ -48,8 +74,12 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div
-            className="p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto leading-tight
-                       break-words line-clamp-2"
+            ref={textRef}
+            className={`p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto leading-tight overflow-hidden ${
+              isLongSingleWord 
+                ? 'whitespace-nowrap truncate' 
+                : 'break-words line-clamp-2'
+            }`}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
