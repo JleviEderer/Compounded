@@ -1,0 +1,50 @@
++  /* ---------- dynamic width/ellipsis ---------- */
++  const namePx       = habit.goodHabit.length * 8;            // ≈ 8 px per char
++  const colWidth     = Math.min(Math.max(namePx, 76), 120);    // clamp 76-120 px
++  const isTruncated  = namePx > colWidth;                      // will we clip?
++
++  return (
++    <>
++      <Popover
++        open={popoverHabit?.id === habit.id}
++        onOpenChange={(open) => !open && setPopoverHabit(null)}
++      >
++        <PopoverTrigger asChild>
++          <motion.div
++            className={`p-3 font-medium text-gray-800 dark:text-white text-left 
++                       cursor-default sm:cursor-auto leading-tight
++                       ${isTruncated ? 'truncate whitespace-nowrap' : ''}`}
++            style={{ width: colWidth + 'px' }}
+             initial={{ opacity: 0, x: -20 }}
+             animate={{ opacity: 1, x: 0 }}
+             transition={{ delay: habitIndex * 0.1 }}
+             {...(isMobile ? longPressHandlers : {})}
+           >
+             {habit.goodHabit}
+           </motion.div>
+         </PopoverTrigger>
+-        <PopoverContent 
+-          className="w-64 p-3 text-sm sm:hidden" 
+-          side="right"
+-          align="start"
+-        >
++        {/* show on long-press *or* hover if truncated */}
++        <PopoverContent
++          className="w-64 p-3 text-sm"
++          side="right"
++          align="start"
++        >
+           <div className="font-medium text-gray-800 dark:text-white">
+             {habit.goodHabit}
+           </div>
+         </PopoverContent>
+       </Popover>
+Key points
+
+colWidth grows with the habit name but tops out at 120 px, so short labels don’t waste space and long labels don’t force a scrollbar.
+
+The truncate whitespace-nowrap combo keeps text to a single line and shows … when clipped.
+
+The pop-over is always rendered; on desktop it opens on hover (because the Trigger is a regular element), on mobile it still opens via your existing long-press logic.
+
+No other files or styles are touched.
