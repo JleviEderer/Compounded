@@ -191,14 +191,21 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
           <div className="text-left text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
             Habit
           </div>
-          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((label) => (
-            <div
-              key={label}
-              className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 px-2 p-3"
-            >
-              {label}
-            </div>
-          ))}
+          {/* 1-letter labels on mobile, 3-letter on ≥ sm */}
+          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(full => {
+            const short = full[0]        // "M", "T", etc.
+            return (
+              <div
+                key={full}
+                title={full}              // tooltip / long-press name
+                className="text-center font-medium text-gray-600 dark:text-gray-400 p-3
+                           text-xs sm:text-sm"             /* size switch */
+              >
+                <span className="block sm:hidden">{short}</span>
+                <span className="hidden sm:block">{full}</span>
+              </div>
+            )
+          })}
 
           {/* habit rows (each outputs exactly 8 cells) */}
           <div className="contents">
