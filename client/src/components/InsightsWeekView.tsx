@@ -44,8 +44,7 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
         <PopoverTrigger asChild>
           <motion.div
             className="p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto
-                       leading-tight break-words line-clamp-2 min-h-[3rem] flex items-center
-                       [word-break:break-word] [overflow-wrap:break-word]"
+                       leading-tight break-words line-clamp-3 min-h-[3rem] flex items-center"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
