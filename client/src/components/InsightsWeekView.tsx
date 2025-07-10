@@ -43,7 +43,7 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div
-            className="p-3 font-medium text-gray-800 dark:text-white truncate whitespace-nowrap text-left cursor-default sm:cursor-auto"
+            className="p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto leading-tight break-words"
             style={{
               width: Math.min(Math.max(habit.goodHabit.length * 8 + 24, 80), 140) + 'px'
             }}
