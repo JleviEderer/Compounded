@@ -48,9 +48,9 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div
-            className={`p-3 font-medium text-gray-800 dark:text-white text-left 
+            className={`p-3 font-medium text-gray-800 dark:text-white text-left
                        cursor-default sm:cursor-auto leading-tight
-                       ${isTruncated ? 'truncate whitespace-nowrap' : ''}`}
+                       ${isTruncated ? 'min-w-0 overflow-hidden truncate whitespace-nowrap' : ''}`}
             style={{ width: colWidth + 'px' }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
