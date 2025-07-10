@@ -45,7 +45,7 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
           <motion.div
             className="p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto leading-tight break-words"
             style={{
-              width: Math.min(Math.max(habit.goodHabit.length * 8 + 24, 80), 140) + 'px'
+              width: Math.min(Math.max(habit.goodHabit.length * 6 + 20, 70), 100) + 'px'
             }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
