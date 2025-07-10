@@ -28,12 +28,24 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
   });
 
   const [isMobile, setIsMobile] = React.useState(false);
+  const [overflows, setOverflows] = React.useState(false); // NEW: overflow state
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 640);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // NEW: useEffect to detect single-word overflow after mount
+  React.useEffect(() => {
+    const el = document.getElementById(`habit-label-${habit.id}`);
+    if (el) {
+      // Check if scrollHeight > clientHeight AND there are no spaces (single word)
+      if (el.scrollHeight > el.clientHeight && habit.goodHabit.indexOf(' ') === -1) {
+        setOverflows(true);
+      }
+    }
+  }, [habit.goodHabit, habit.id]);
 
   return (
     <>
@@ -43,9 +55,10 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div
-            className="p-2 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto
-                       text-sm leading-tight break-words overflow-hidden
-                       max-h-10 line-clamp-2"
+            id={`habit-label-${habit.id}`}
+            className={`p-2 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto
+                       text-sm leading-tight overflow-hidden break-words whitespace-normal line-clamp-2
+                       max-w-[100px] sm:max-w-[140px] ${overflows ? 'whitespace-nowrap truncate' : ''}`}
             style={{
               display: '-webkit-box',
               WebkitLineClamp: 2,
@@ -185,16 +198,15 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
       </div>
 
       <div className="w-full overflow-x-hidden sm:overflow-x-auto">
-        {/* 8-column grid: auto-sized habit + 7 × 44-px day cells (40px on mobile) */}
+        {/* 8-column grid: auto-sized habit + 7 × minmax day cells */}
         <div
           className="
             grid
-            sm:grid-cols-[auto_repeat(7,44px)]
-            grid-cols-[auto_repeat(7,40px)]
-            gap-y-3
+            grid-cols-[minmax(0,1fr)_repeat(7,minmax(36px,1fr))]
+            gap-y-1.5
           ">
           {/* header row */}
-          <div className="text-left text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 p-3 flex items-center">
+          <div className="text-left text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 p-2 flex items-center">
             Habits
           </div>
           {/* 1-letter labels on mobile, 3-letter on ≥ sm */}
@@ -204,7 +216,7 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
               <div
                 key={full}
                 title={full}              // tooltip / long-press name
-                className="text-center font-medium text-gray-600 dark:text-gray-400 p-3
+                className="text-center font-medium text-gray-600 dark:text-gray-400 p-2
                            text-xs sm:text-sm"             /* size switch */
               >
                 <span className="block sm:hidden">{short}</span>
