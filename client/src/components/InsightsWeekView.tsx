@@ -81,7 +81,7 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
         return (
           <div key={day.date} className="p-3 flex items-center justify-center">
             <motion.div
-              className={`w-5 h-5 rounded ${squareStyle}`}
+              className={`w-4 h-4 sm:w-5 sm:h-5 rounded ${squareStyle}`}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{
@@ -179,16 +179,22 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
       </div>
 
       <div className="w-full overflow-x-auto">
-        {/* 8-column grid: auto-sized habit + 7 × 44-px day cells */}
-        <div className="grid grid-cols-[auto_repeat(7,44px)] gap-y-3">
+        {/* 8-column grid: auto-sized habit + 7 × 44-px day cells (40px on mobile) */}
+        <div
+          className="
+            grid
+            sm:grid-cols-[auto_repeat(7,44px)]
+            grid-cols-[auto_repeat(7,40px)]
+            gap-y-3
+          ">
           {/* header row */}
-          <div className="text-left text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
+          <div className="text-left text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
             Habit
           </div>
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((label) => (
             <div
               key={label}
-              className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-3"
+              className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 px-2 p-3"
             >
               {label}
             </div>
