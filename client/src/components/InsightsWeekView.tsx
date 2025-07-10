@@ -181,8 +181,8 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
         <div
           className="
             grid
-            sm:grid-cols-[140px_repeat(7,44px)]
-            grid-cols-[140px_repeat(7,40px)]
+            sm:grid-cols-[auto_repeat(7,44px)]
+            grid-cols-[auto_repeat(7,40px)]
             gap-y-3
           ">
           {/* header row */}
