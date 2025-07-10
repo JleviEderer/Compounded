@@ -4,6 +4,10 @@ import { dataService } from '../services/dataService';
 import { dataSourceConfig } from '../services/dataSourceConfig';
 import { toast } from './use-toast';
 
+function clone<T>(arr: T[]): T[] {
+  return [...arr];
+}
+
 function cloneLogs(logs: HabitLog[]): HabitLog[] {
   return logs.map(l => ({ ...l }));
 }
@@ -168,7 +172,7 @@ export function useHabits() {
       const newData = {
         ...prev,
         habits: prev.habits.filter(habit => habit.id !== id),
-        logs: cloneLogs(newLogs)
+        logs: clone(newLogs)
       };
       setLogsUpdatedAt(Date.now());
       return newData;
@@ -191,7 +195,7 @@ export function useHabits() {
 
       const newData = {
         ...prev,
-        logs: cloneLogs(newLogs)
+        logs: clone(newLogs)
       };
 
       console.log('🔄 Habit logged:', { habitId, date, state, totalLogs: newData.logs.length });
@@ -250,7 +254,7 @@ export function useHabits() {
 
       setData({
         habits: importedData.habits,
-        logs: cloneLogs(importedData.logs || []),
+        logs: clone(importedData.logs || []),
         settings: {
           theme: 'light',
           nerdMode: false,
@@ -273,7 +277,7 @@ export function useHabits() {
 
     setData({
       habits: [],
-      logs: cloneLogs([]),
+      logs: clone([]),
       settings: { theme: 'light', nerdMode: false }
     });
 
