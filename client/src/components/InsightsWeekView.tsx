@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -29,7 +28,6 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
   });
 
   const [isMobile, setIsMobile] = React.useState(false);
-
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 640);
     checkMobile();
@@ -38,15 +36,13 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
   }, []);
 
   return (
-    <React.Fragment>
-      <Popover 
-        open={popoverHabit?.id === habit.id} 
-        onOpenChange={(open) => {
-          if (!open) setPopoverHabit(null);
-        }}
+    <>
+      <Popover
+        open={popoverHabit?.id === habit.id}
+        onOpenChange={(open) => !open && setPopoverHabit(null)}
       >
         <PopoverTrigger asChild>
-          <motion.div 
+          <motion.div
             className="p-3 font-medium text-gray-800 dark:text-white w-[112px] line-clamp-2 break-words leading-tight text-left cursor-default sm:cursor-auto"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -56,8 +52,8 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
             {habit.goodHabit}
           </motion.div>
         </PopoverTrigger>
-        <PopoverContent 
-          className="w-64 p-3 text-sm sm:hidden" 
+        <PopoverContent
+          className="w-64 p-3 text-sm sm:hidden"
           side="right"
           align="start"
         >
@@ -66,31 +62,33 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
           </div>
         </PopoverContent>
       </Popover>
-      {getLast7Days().map((day, dayIndex) => {
-        const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
 
-        const getSquareStyle = () => {
-          if (log?.state === 'good') {
-            return 'bg-teal-500';
-          } else if (log?.state === 'bad') {
-            return 'bg-red-400';
-          } else {
-            return 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500';
-          }
-        };
+      {getLast7Days().map((day, dayIndex) => {
+        const log = filteredLogs.find(
+          (l) => l.habitId === habit.id && l.date === day.date
+        );
+
+        const squareStyle =
+          log?.state === 'good'
+            ? 'bg-teal-500'
+            : log?.state === 'bad'
+            ? 'bg-red-400'
+            : 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500';
 
         return (
           <div key={day.date} className="p-3 flex items-center justify-center">
-            <motion.div 
-              className={`w-6 h-6 rounded ${getSquareStyle()}`}
+            <motion.div
+              className={`w-6 h-6 rounded ${squareStyle}`}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
+              transition={{
+                delay: habitIndex * 0.1 + dayIndex * 0.02
+              }}
             />
           </div>
         );
       })}
-    </React.Fragment>
+    </>
   );
 };
 
@@ -118,32 +116,27 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
   setPopoverHabit
 }) => {
   const getLast7Days = () => {
-    const labels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-
-    // offset so Monday is column 0
-    const offset = (weekAnchor.getDay() + 6) % 7; // 0 = Monday
-    const monday   = new Date(weekAnchor);
+    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const offset = (weekAnchor.getDay() + 6) % 7; // Monday = 0
+    const monday = new Date(weekAnchor);
     monday.setDate(weekAnchor.getDate() - offset);
 
     return [...Array(7)].map((_, i) => {
       const d = new Date(monday);
       d.setDate(monday.getDate() + i);
       return {
-        date : d.toLocaleDateString('en-CA'), // YYYY-MM-DD
+        date: d.toLocaleDateString('en-CA'),
         label: labels[i]
       };
     });
   };
 
-  // --- TEMP DEBUG: expose helper in console ---
   if (typeof window !== 'undefined') {
-    // attach once so it doesn't get overwritten each render
     (window as any).getLast7Days ??= getLast7Days;
   }
-  // --------------------------------------------
 
   return (
-    <motion.div 
+    <motion.div
       className="space-y-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -154,8 +147,8 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
         </h3>
         <div className="flex space-x-2">
           {!isCurrentWeek() && (
-            <Button 
-              variant="default" 
+            <Button
+              variant="default"
               size="sm"
               onClick={() => setWeekAnchor(new Date())}
               className="bg-teal-600 hover:bg-teal-700 text-white"
@@ -163,16 +156,16 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
               Current Week
             </Button>
           )}
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="sm"
             onClick={() => navigateWeek('prev')}
             className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <ChevronLeft className="w-4 h-4" />
           </Button>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="sm"
             onClick={() => navigateWeek('next')}
             className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -181,24 +174,30 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
           </Button>
         </div>
       </div>
+
       <div className="w-full overflow-x-hidden">
+        {/* 8-column grid: 112-px habit + 7 × 44-px day cells */}
         <div className="grid grid-cols-[112px_repeat(7,44px)] gap-y-3">
+          {/* header row */}
           <div className="text-left text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
             Habit
           </div>
-          <div></div>
-          {['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((label) => (
-            <div key={label} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
+          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((label) => (
+            <div
+              key={label}
+              className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-3"
+            >
               {label}
             </div>
           ))}
-          
+
+          {/* habit rows (each outputs exactly 8 cells) */}
           <div className="contents">
-            {habits.map((habit, habitIndex) => (
+            {habits.map((habit, idx) => (
               <HabitRowWithLongPress
                 key={habit.id}
                 habit={habit}
-                habitIndex={habitIndex}
+                habitIndex={idx}
                 filteredLogs={filteredLogs}
                 getLast7Days={getLast7Days}
                 popoverHabit={popoverHabit}
