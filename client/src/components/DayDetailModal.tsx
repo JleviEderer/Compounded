@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { X, Check } from 'lucide-react';
-import { useHabits } from '../hooks/useHabits';
+import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 import { HabitLogState } from '../types';
 import { Button } from './ui/button';
 

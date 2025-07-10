@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import HeatMapGrid from './HeatMapGrid';
-import { useHabits } from '@/hooks/useHabits';
+import { useHabitsContext } from '../contexts/HabitsContext';
 import { getAllTimeYears, getIntensityColor } from '@/hooks/useInsightsHelpers';
 
 interface InsightsAllTimeViewProps {
@@ -11,7 +11,7 @@ interface InsightsAllTimeViewProps {
 export const InsightsAllTimeView: React.FC<InsightsAllTimeViewProps> = ({
   openMonth
 }) => {
-  const { habits, logs, logsUpdatedAt } = useHabits();
+  const { habits, logs, logsUpdatedAt } = useHabitsContext();
   const heatmapData = useMemo(() => {
     console.log('🔄 InsightsAllTimeView: Recomputing all-time data, logs.length =', logs.length);
     return getAllTimeYears(habits, logs);

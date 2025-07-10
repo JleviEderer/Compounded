@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HeatMapGrid from './HeatMapGrid';
-import { useHabits } from '@/hooks/useHabits';
+import { useHabitsContext } from '../contexts/HabitsContext';
 import { getQuarterWeeks, getIntensityColor } from '@/hooks/useInsightsHelpers';
 import { useInsightsNavigation } from '@/hooks/useInsightsNavigation';
 
@@ -18,7 +18,7 @@ export const InsightsQuarterView: React.FC<InsightsQuarterViewProps> = ({
   setQuarterAnchor,
   openDay
 }) => {
-  const { habits, logs, logsUpdatedAt } = useHabits();
+  const { habits, logs, logsUpdatedAt } = useHabitsContext();
   const { isCurrentQuarter, getQuarterLabel, navigateQuarter } = useInsightsNavigation(
     new Date(), // weekAnchor (not used here)
     quarterAnchor,
