@@ -184,13 +184,15 @@ export function useHabits() {
       const newLogs = prev.logs.filter(log => !(log.habitId === habitId && log.date === date));
 
       if (state !== HabitLogState.UNLOGGED) {
-        newLogs.push({
+        const newLog = {
           id: `${habitId}-${date}`,
           habitId,
           date,
           state,
           completed: state === HabitLogState.GOOD || state === 'good'
-        });
+        };
+        if (import.meta.env.DEV) console.log('[PUSH]', newLog);
+        newLogs.push(newLog);
       }
 
       const newData = {

@@ -24,6 +24,7 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
   if (typeof window !== 'undefined') {
     // DEV-only: make logs visible in the browser console
     (window as any).logs = logs;
+    (window as any).logsUpdatedAt = logsUpdatedAt;  // for easy polling
   }
 
   // ─── DEBUG: show current anchor month ───
