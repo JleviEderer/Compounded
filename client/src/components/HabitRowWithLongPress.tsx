@@ -35,17 +35,23 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  /* ---------- dynamic width/ellipsis ---------- */
+  const namePx       = habit.goodHabit.length * 8;            // ≈ 8 px per char
+  const colWidth     = Math.min(Math.max(namePx, 76), 120);    // clamp 76-120 px
+  const isTruncated  = namePx > colWidth;                      // will we clip?
+
   return (
     <React.Fragment>
-      <Popover 
-        open={popoverHabit?.id === habit.id} 
-        onOpenChange={(open) => {
-          if (!open) setPopoverHabit(null);
-        }}
+      <Popover
+        open={popoverHabit?.id === habit.id}
+        onOpenChange={(open) => !open && setPopoverHabit(null)}
       >
         <PopoverTrigger asChild>
-          <motion.div 
-            className= "p-3 font-medium text-gray-800 dark:text-white truncate whitespace-nowrap overflow-hidden text-ellipsis w-[112px] sm:w-[128px] md:w-[152px] text-left cursor-default sm:cursor-auto"
+          <motion.div
+            className={`p-3 font-medium text-gray-800 dark:text-white text-left 
+                       cursor-default sm:cursor-auto leading-tight
+                       ${isTruncated ? 'truncate whitespace-nowrap' : ''}`}
+            style={{ width: colWidth + 'px' }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
@@ -54,8 +60,9 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
             {habit.goodHabit}
           </motion.div>
         </PopoverTrigger>
-        <PopoverContent 
-          className="w-64 p-3 text-sm sm:hidden" 
+        {/* show on long-press *or* hover if truncated */}
+        <PopoverContent
+          className="w-64 p-3 text-sm"
           side="right"
           align="start"
         >
