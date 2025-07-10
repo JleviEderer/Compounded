@@ -135,6 +135,13 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
     });
   };
 
+  // --- TEMP DEBUG: expose helper in console ---
+  if (typeof window !== 'undefined') {
+    // attach once so it doesn't get overwritten each render
+    (window as any).getLast7Days ??= getLast7Days;
+  }
+  // --------------------------------------------
+
   return (
     <motion.div 
       className="space-y-6"
