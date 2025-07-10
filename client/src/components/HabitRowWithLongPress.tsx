@@ -27,8 +27,6 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
   });
 
   const [isMobile, setIsMobile] = React.useState(false);
-  const [useEllipsis, setUseEllipsis] = React.useState(false);
-  const labelRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 640);
@@ -37,17 +35,10 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  React.useEffect(() => {
-    if (labelRef.current) {
-      // Check if scrollHeight is greater than clientHeight AND there are no spaces in the text
-      if (labelRef.current.scrollHeight > labelRef.current.clientHeight && !habit.goodHabit.includes(' ')) {
-        setUseEllipsis(true);
-      } else {
-        setUseEllipsis(false);
-      }
-    }
-  }, [habit.goodHabit]);
-
+  /* ---------- dynamic width/ellipsis ---------- */
+  const namePx       = habit.goodHabit.length * 8;            // ≈ 8 px per char
+  const colWidth     = Math.min(Math.max(namePx, 76), 120);    // clamp 76-120 px
+  const isTruncated  = namePx > colWidth;                      // will we clip?
 
   return (
     <React.Fragment>
@@ -57,13 +48,8 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div
-            ref={labelRef}
-            className={`p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto
-                       text-sm overflow-hidden max-w-[100px] sm:max-w-[140px] ${
-                         useEllipsis 
-                           ? 'whitespace-nowrap truncate' 
-                           : 'break-words whitespace-normal line-clamp-2'
-                       }`}
+            className="p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto leading-tight
+                       break-words line-clamp-2"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
