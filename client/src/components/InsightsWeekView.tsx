@@ -35,6 +35,17 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  /* ---------- check if text is truncated ---------- */
+  const [isTruncated, setIsTruncated] = React.useState(false);
+  const textRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (textRef.current) {
+      const isOverflowing = textRef.current.scrollHeight > textRef.current.clientHeight;
+      setIsTruncated(isOverflowing);
+    }
+  }, [habit.goodHabit]);
+
   return (
     <>
       <Popover
@@ -43,8 +54,10 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div
-            className="p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto
-                       min-w-0 overflow-hidden whitespace-nowrap truncate"
+            ref={textRef}
+            className={`p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto
+                       max-w-full break-words line-clamp-2 overflow-hidden text-ellipsis leading-tight
+                       ${isTruncated ? 'border-b border-dotted border-gray-400 dark:border-gray-500' : ''}`}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
@@ -182,7 +195,7 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
           className="
             grid
             sm:grid-cols-[auto_repeat(7,44px)]
-            grid-cols-[auto_repeat(7,40px)]
+            grid-cols-[minmax(160px,auto)_repeat(7,40px)]
             gap-y-3
           ">
           {/* header row */}
