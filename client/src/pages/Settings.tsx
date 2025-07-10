@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Download, Upload, Trash2 } from 'lucide-react';
-import { useHabits } from '../hooks/useHabits';
+import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 import { useTheme } from '../hooks/useTheme';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';

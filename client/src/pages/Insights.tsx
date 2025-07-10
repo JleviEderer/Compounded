@@ -11,12 +11,12 @@ import { InsightsAllTimeView } from '../components/InsightsAllTimeView';
 import { useInsightsData } from '../hooks/useInsightsData';
 import { useInsightsNavigation } from '../hooks/useInsightsNavigation';
 import { getCurrentStreak } from '../hooks/useInsightsHelpers';
+import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 
 type InsightsViewMode = 'week' | 'month' | 'quarter' | 'all-time';
 
 export default function Insights() {
   const {
-    habits,
     logs,
     settings,
     activeView,
@@ -43,6 +43,7 @@ export default function Insights() {
   const [dayModal, setDayModal] = useState<string | null>(null);
   const [popoverHabit, setPopoverHabit] = useState<{ id: string; name: string } | null>(null);
   const popoverTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const { habits } = useHabits();
 
   const { 
     successRate, 

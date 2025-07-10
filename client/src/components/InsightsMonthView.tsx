@@ -1,10 +1,9 @@
-
 import React, { useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HeatMapGrid from './HeatMapGrid';
-import { useHabits } from '@/hooks/useHabits';
+import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 import { getCalendarDays, getIntensityColor } from '@/hooks/useInsightsHelpers';
 
 interface InsightsMonthViewProps {

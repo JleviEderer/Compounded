@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useHabits } from './useHabits';
+import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 import { useMomentum } from './useMomentum';
 import { calculateMomentumIndex, calculateSuccessRate, generateMomentumHistory } from '../utils/compound';
 

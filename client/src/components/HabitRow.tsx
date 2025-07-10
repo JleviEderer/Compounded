@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Check, X, Minus } from 'lucide-react';
 import { HabitPair, HabitLog, HabitLogState, WEIGHT_LABELS } from '../types';
 import { cn } from '../lib/utils';
+import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 
 interface HabitRowProps {
   habit: HabitPair;

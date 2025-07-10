@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit2, Trash2, GripVertical, X, Check } from 'lucide-react';
-import { useHabits } from '../hooks/useHabits';
+import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 import { HabitWeight, WEIGHT_LABELS } from '../types';
 import WeightSlider from '../components/WeightSlider';
 import { Button } from '@/components/ui/button';

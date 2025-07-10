@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Plus, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import { useLocation } from 'wouter';
-import { useHabits } from '../hooks/useHabits';
+import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 import { useMomentum } from '../hooks/useMomentum';
 import MomentumChart from '../components/MomentumChart';
 import HabitRow from '../components/HabitRow';

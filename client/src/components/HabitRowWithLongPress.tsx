@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useLongPress } from '../hooks/useLongPress';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 
 interface HabitRowWithLongPressProps {
   habit: any;
