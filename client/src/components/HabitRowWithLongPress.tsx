@@ -50,8 +50,7 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
           <motion.div
             className={`p-3 font-medium text-gray-800 dark:text-white text-left
                        cursor-default sm:cursor-auto leading-tight
-                       ${isTruncated ? 'min-w-0 overflow-hidden truncate whitespace-nowrap' : ''}`}
-            style={{ width: colWidth + 'px' }}
+                       min-w-0 ${isTruncated ? 'overflow-hidden truncate whitespace-nowrap' : ''}`}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
