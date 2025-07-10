@@ -1,0 +1,16 @@
+Based on analyzing your codebase (including components like HeatMapGrid.tsx, DayDetailModal.tsx, and Insights views; hooks like useHabits.ts and useInsightsHelpers.ts; utilities like date.ts and compound.ts; and types.ts), the issue with heatmaps showing mostly grey before July (likely July 2024, given your logs start in June 2024 and the current date is July 2025) stems from how daily intensity is calculated for aggregate views (month, quarter, all-time).
+
+Key Code Insights
+The heatmaps in aggregate views (e.g., InsightsMonthView.tsx, InsightsQuarterView.tsx, InsightsAllTimeView.tsx) rely on data from getCalendarDays, getQuarterWeeks, and similar functions in useInsightsHelpers.ts. These generate date strings in a standardized padded format ('2024-06-01') and compute an "intensity" value for each cell using calculateDailyRate from utils/compound.ts.
+
+The calculateDailyRate function filters logs by date and determines the daily rate as the proportion of good habits completed (good logs count / total active habits). Crucially, it appears to filter habits to only those that existed at the time (based on habit.createdAt <= the date being evaluated), which is a common design choice to prevent distorting past performance with newly added habits. This means:
+
+habitCount is the number of habits where createdAt <= date.
+goodLogs only counts logs for those filtered habits.
+Date formatting is consistent across saving (in DayDetailModal.tsx and useHabits.ts, using date-fns format 'yyyy-MM-dd' for padded strings like '2024-06-01') and filtering (toLocaleDateString('en-CA') in heatmaps, which matches), so that's not the cause.
+
+Why This Causes Grey Cells Before July
+If your habits were created around or after July 2024, then for dates in June 2024 (or earlier), the filtered habitCount = 0.
+Even if you backlogged habit logs for those earlier dates (possible via the modal, which allows selecting any past date), the intensity calculation ignores them or treats the rate as 0 because no habits "existed" yet.
+Result: intensity = 0, which maps to grey (no activity) in the color scale (getIntensityColor in useInsightsHelpers.ts). The legend shows red-to-green for net positive/negative, but grey specifically for zero/no data.
+This affects aggregate views (month, quarter, all-time), where cells represent net daily/weekly/monthly intensity across all habits.
