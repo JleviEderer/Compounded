@@ -38,7 +38,7 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
   /* ---------- dynamic width/ellipsis ---------- */
   const namePx       = habit.goodHabit.length * 8;            // ≈ 8 px per char
   const colWidth     = Math.min(Math.max(namePx, 76), 120);    // clamp 76-120 px
-  const isTruncated  = namePx > colWidth;                      // will we clip?
+  const isTruncated  = habit.goodHabit.length > 15;           // truncate if >15 chars
 
   return (
     <React.Fragment>
