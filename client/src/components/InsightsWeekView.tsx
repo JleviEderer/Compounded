@@ -120,7 +120,8 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
   const getLast7Days = () => {
     const days = [];
     const startOfWeek = new Date(weekAnchor);
-    startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
+    const offset = (weekAnchor.getDay() + 6) % 7;  // Monday-index
+    startOfWeek.setDate(weekAnchor.getDate() - offset);
 
     for (let i = 0; i < 7; i++) {
       const date = new Date(startOfWeek);

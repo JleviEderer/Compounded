@@ -31,7 +31,8 @@ export function getCalendarDays(habits: HabitPair[], logs: HabitLog[], anchor: D
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
   const startOfCalendar = new Date(firstDay);
-  startOfCalendar.setDate(startOfCalendar.getDate() - firstDay.getDay());
+  const offset = (firstDay.getDay() + 6) % 7;  // Monday-index
+  startOfCalendar.setDate(startOfCalendar.getDate() - offset);
 
   const days = [];
   for (let i = 0; i < 42; i++) {
@@ -62,7 +63,8 @@ export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAn
 
   const weeks = [];
   const currentDate = new Date(startOfQuarter);
-  currentDate.setDate(currentDate.getDate() - currentDate.getDay());
+  const offset = (currentDate.getDay() + 6) % 7;  // Monday-index
+  currentDate.setDate(currentDate.getDate() - offset);
 
   while (currentDate <= endOfQuarter) {
     const week = [];

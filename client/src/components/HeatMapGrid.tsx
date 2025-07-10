@@ -74,7 +74,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
     return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // #E5E7EB
   };
   const renderMonthGrid = () => {
-    const daysInWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const daysInWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     return (
       <div className="space-y-2">
@@ -117,7 +117,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
       <div className="space-y-2">
         <div className="grid grid-cols-8 gap-1 text-xs text-gray-600 dark:text-gray-400">
           <div></div>
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => (
+          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, i) => (
             <div key={i} className="text-center font-medium p-2">{day}</div>
           ))}
         </div>
