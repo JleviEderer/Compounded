@@ -205,9 +205,11 @@ export function useHabits() {
       };
       setTimeout(() => debouncedSave(newData, habitId), 0);
 
-      setLogsUpdatedAt(Date.now());
       return newData;
     });
+
+    // bump timestamp AFTER React has new data
+    setLogsUpdatedAt(Date.now());
 
     // ─── DEBUG: confirm save & clone ───
     if (import.meta.env.DEV) {
