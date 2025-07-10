@@ -43,7 +43,7 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div
-            className="p-3 font-medium text-gray-800 dark:text-white w-[112px] line-clamp-2 break-words leading-tight text-left cursor-default sm:cursor-auto"
+            className="p-3 font-medium text-gray-800 dark:text-white w-[96px] line-clamp-2 break-words leading-tight text-left cursor-default sm:cursor-auto"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
@@ -78,7 +78,7 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
         return (
           <div key={day.date} className="p-3 flex items-center justify-center">
             <motion.div
-              className={`w-6 h-6 rounded ${squareStyle}`}
+              className={`w-5 h-5 rounded ${squareStyle}`}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{
@@ -175,9 +175,9 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
         </div>
       </div>
 
-      <div className="w-full overflow-x-hidden">
-        {/* 8-column grid: 112-px habit + 7 × 44-px day cells */}
-        <div className="grid grid-cols-[112px_repeat(7,44px)] gap-y-3">
+      <div className="w-full">
+        {/* 8-column grid: 96-px habit + 7 × 40-px day cells */}
+        <div className="grid grid-cols-[96px_repeat(7,40px)] gap-y-3">
           {/* header row */}
           <div className="text-left text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
             Habit

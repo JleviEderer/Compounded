@@ -45,7 +45,7 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div 
-            className="p-3 font-medium text-gray-800 dark:text-white w-[112px] line-clamp-2 break-words leading-tight text-left cursor-default sm:cursor-auto"
+            className="p-3 font-medium text-gray-800 dark:text-white w-[96px] line-clamp-2 break-words leading-tight text-left cursor-default sm:cursor-auto"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
@@ -80,7 +80,7 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
         return (
           <div key={day.date} className="p-3 flex items-center justify-center">
             <motion.div 
-              className={`w-6 h-6 rounded ${getSquareStyle()}`}
+              className={`w-5 h-5 rounded ${getSquareStyle()}`}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
