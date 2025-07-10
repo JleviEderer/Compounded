@@ -118,19 +118,21 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
   setPopoverHabit
 }) => {
   const getLast7Days = () => {
-    // Build Monday-first week (Mon → Sun)
-    const offset = (weekAnchor.getDay() + 6) % 7;      // 0 = Monday
-    const monday = new Date(weekAnchor);
+    const labels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+    // offset so Monday is column 0
+    const offset = (weekAnchor.getDay() + 6) % 7; // 0 = Monday
+    const monday   = new Date(weekAnchor);
     monday.setDate(weekAnchor.getDate() - offset);
-    const days = [...Array(7)].map((_, i) => {
+
+    return [...Array(7)].map((_, i) => {
       const d = new Date(monday);
       d.setDate(monday.getDate() + i);
       return {
-        date: d.toLocaleDateString('en-CA'),            // 'YYYY-MM-DD'
-        label: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i]
+        date : d.toLocaleDateString('en-CA'), // YYYY-MM-DD
+        label: labels[i]
       };
     });
-    return days;
   };
 
   return (
