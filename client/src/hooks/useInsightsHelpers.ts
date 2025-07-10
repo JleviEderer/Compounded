@@ -90,28 +90,42 @@ export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAn
 }
 
 export function getAllTimeYears(habits: HabitPair[], logs: HabitLog[]) {
-  const years = [];
-  const currentYear = new Date().getFullYear();
+  const years: {
+    date: string;
+    dateISO: string;
+    intensity: number;
+    year: number;
+    month: number;
+  }[] = [];
 
-  for (let year = currentYear - 2; year <= currentYear; year++) {
+  const today = new Date();
+  const firstYear = 2023;                                // or compute min year from logs
+  const lastYear  = today.getFullYear();
+
+  for (let year = firstYear; year <= lastYear; year++) {
     for (let month = 0; month < 12; month++) {
-      const monthStart = new Date(year, month, 1);
-      const monthEnd = new Date(year, month + 1, 0);
+      const monthEnd = new Date(year, month + 1, 0).getDate();
 
-      const monthLogs = logs.filter(log => {
-        const logDate = new Date(log.date);
-        return logDate >= monthStart && logDate <= monthEnd;
-      });
+      let sum = 0;
+      let daysWithLogs = 0;
 
-      const monthStartString = monthStart.toLocaleDateString('en-CA');
-      const intensity = calculateDailyRate(habits, logs, monthStartString);
+      for (let d = 1; d <= monthEnd; d++) {
+        const dateStr = new Date(year, month, d).toLocaleDateString('en-CA'); // YYYY-MM-DD
+        const daily = calculateDailyRate(habits, logs, dateStr);
+        if (daily !== 0) {
+          sum += daily;
+          daysWithLogs++;
+        }
+      }
+
+      const avg = daysWithLogs ? sum / daysWithLogs : 0;
 
       years.push({
         date: `${year}-${String(month + 1).padStart(2, '0')}`,
         dateISO: `${year}-${String(month + 1).padStart(2, '0')}`,
-        intensity,
+        intensity: avg,
         year,
-        month: month + 1
+        month: month + 1,
       });
     }
   }
