@@ -21,6 +21,11 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
   const selectedDateRef = useRef<string>('');
   const { habits, logs, logsUpdatedAt } = useHabits();
 
+  if (typeof window !== 'undefined') {
+    // DEV-only: make logs visible in the browser console
+    (window as any).logs = logs;
+  }
+
   // ─── DEBUG: show current anchor month ───
   if (import.meta.env.DEV) {
     console.log('[ANCHOR]', anchor.toISOString());
