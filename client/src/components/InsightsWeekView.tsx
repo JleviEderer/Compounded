@@ -38,7 +38,7 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
   }, []);
 
   return (
-    <>
+    <React.Fragment>
       <Popover 
         open={popoverHabit?.id === habit.id} 
         onOpenChange={(open) => {
@@ -90,7 +90,7 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
           </div>
         );
       })}
-    </>
+    </React.Fragment>
   );
 };
 
