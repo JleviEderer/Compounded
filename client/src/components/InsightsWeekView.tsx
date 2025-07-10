@@ -180,7 +180,7 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
 
       <div className="w-full overflow-x-auto">
         {/* 8-column grid: auto-sized habit + 7 × 44-px day cells */}
-        <div className="grid grid-cols-[auto_repeat(7,44px)] gap-y-3"></div>
+        <div className="grid grid-cols-[auto_repeat(7,44px)] gap-y-3">
           {/* header row */}
           <div className="text-left text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
             Habit
