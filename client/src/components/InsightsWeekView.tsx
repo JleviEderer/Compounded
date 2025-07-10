@@ -188,7 +188,7 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
             gap-y-3
           ">
           {/* header row */}
-          <div className="text-center font-medium text-gray-600 dark:text-gray-400 p-3 text-xs sm:text-sm">
+          <div className="text-left text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 p-3 flex items-center">
             Habits
           </div>
           {/* 1-letter labels on mobile, 3-letter on ≥ sm */}
