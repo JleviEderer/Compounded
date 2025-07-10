@@ -195,14 +195,14 @@ export function useHabits() {
         newLogs.push(newLog);
       }
 
-      const newData = {
-        ...prev,
-        logs: clone(newLogs)
-      };
-
-      console.log('🔄 Habit logged:', { habitId, date, state, totalLogs: newData.logs.length });
+      console.log('🔄 Habit logged:', { habitId, date, state, totalLogs: newLogs.length });
 
       // Trigger save with habit ID for targeted feedback
+      const newData = {
+        habits: prev.habits,       // keep same habits ref (fine)
+        logs: [...newLogs],        // ← force fresh array every time
+        settings: { ...prev.settings }
+      };
       setTimeout(() => debouncedSave(newData, habitId), 0);
 
       setLogsUpdatedAt(Date.now());
