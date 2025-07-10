@@ -43,7 +43,10 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div
-            className="p-3 font-medium text-gray-800 dark:text-white w-[96px] line-clamp-2 break-words leading-tight text-left cursor-default sm:cursor-auto"
+            className="p-3 font-medium text-gray-800 dark:text-white truncate whitespace-nowrap text-left cursor-default sm:cursor-auto"
+            style={{
+              width: Math.min(Math.max(habit.goodHabit.length * 8 + 24, 80), 140) + 'px'
+            }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
@@ -176,8 +179,8 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
       </div>
 
       <div className="w-full overflow-x-auto">
-        {/* 8-column grid: 140-px habit + 7 × 44-px day cells */}
-        <div className="grid grid-cols-[140px_repeat(7,44px)] gap-y-3">
+        {/* 8-column grid: auto-sized habit + 7 × 44-px day cells */}
+        <div className="grid grid-cols-[auto_repeat(7,44px)] gap-y-3"></div>
           {/* header row */}
           <div className="text-left text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
             Habit
