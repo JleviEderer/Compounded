@@ -120,18 +120,24 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
   const getLast7Days = () => {
     const days = [];
     const startOfWeek = new Date(weekAnchor);
-    const offset = (weekAnchor.getDay() + 6) % 7;  // Monday-index
+    // Build Monday-first week (Mon → Sun)
+    const offset = (weekAnchor.getDay() + 6) % 7;
     startOfWeek.setDate(weekAnchor.getDate() - offset);
 
+    const weekDays: Date[] = [];
     for (let i = 0; i < 7; i++) {
-      const date = new Date(startOfWeek);
-      date.setDate(startOfWeek.getDate() + i);
-      days.push({
-        date: date.toLocaleDateString('en-CA'),
-        label: date.toLocaleDateString('en', { weekday: 'short' })
-      });
+      weekDays.push(new Date(startOfWeek.getFullYear(),
+                             startOfWeek.getMonth(),
+                             startOfWeek.getDate() + i));
     }
-    return days;
+
+    // Headers in the same order
+    const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    return weekDays.map((date, idx) => ({
+      date: date.toLocaleDateString('en-CA'),
+      label: dayLabels[idx]
+    }));
   };
 
   return (
@@ -174,26 +180,76 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
         </div>
       </div>
       <div className="w-full overflow-x-hidden">
-        <div className="grid grid-cols-[112px_repeat(7,44px)] gap-y-3">
-          <div className="text-left text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
+        <div className="grid grid-cols-9 gap-1 text-sm text-gray-600 dark:text-gray-400">
+          <div className="text-left font-medium p-3">
             Habit
           </div>
           {getLast7Days().map((day) => (
-            <div key={day.date} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
+            <div key={day.date} className="text-center font-medium p-3">
               {day.label}
             </div>
           ))}
+        </div>
+        <div className="space-y-3 mt-3">
           
           {habits.map((habit, habitIndex) => (
-            <HabitRowWithLongPress
-              key={habit.id}
-              habit={habit}
-              habitIndex={habitIndex}
-              filteredLogs={filteredLogs}
-              getLast7Days={getLast7Days}
-              popoverHabit={popoverHabit}
-              setPopoverHabit={setPopoverHabit}
-            />
+            <div key={habit.id} className="grid grid-cols-9 gap-1 items-center">
+              <Popover 
+                open={popoverHabit?.id === habit.id} 
+                onOpenChange={(open) => {
+                  if (!open) setPopoverHabit(null);
+                }}
+              >
+                <PopoverTrigger asChild>
+                  <motion.div 
+                    className="truncate pr-1 p-3 font-medium text-gray-800 dark:text-white cursor-default sm:cursor-auto"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: habitIndex * 0.1 }}
+                    {...{
+                      onTouchStart: () => setPopoverHabit({ id: habit.id, name: habit.goodHabit }),
+                      onTouchEnd: () => setTimeout(() => setPopoverHabit(null), 2000)
+                    }}
+                  >
+                    {habit.goodHabit}
+                  </motion.div>
+                </PopoverTrigger>
+                <PopoverContent 
+                  className="w-64 p-3 text-sm sm:hidden" 
+                  side="right"
+                  align="start"
+                >
+                  <div className="font-medium text-gray-800 dark:text-white">
+                    {habit.goodHabit}
+                  </div>
+                </PopoverContent>
+              </Popover>
+              
+              {getLast7Days().map((day, dayIndex) => {
+                const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
+
+                const getSquareStyle = () => {
+                  if (log?.state === 'good') {
+                    return 'bg-teal-500';
+                  } else if (log?.state === 'bad') {
+                    return 'bg-red-400';
+                  } else {
+                    return 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500';
+                  }
+                };
+
+                return (
+                  <div key={day.date} className="p-3 flex items-center justify-center">
+                    <motion.div 
+                      className={`w-6 h-6 rounded ${getSquareStyle()}`}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           ))}
         </div>
       </div>
