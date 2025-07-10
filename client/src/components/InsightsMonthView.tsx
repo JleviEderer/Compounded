@@ -21,6 +21,12 @@ export const InsightsMonthView: React.FC<InsightsMonthViewProps> = ({
   const selectedDateRef = useRef<string>('');
   const { habits, logs, logsUpdatedAt } = useHabits();
 
+  // ─── DEBUG: show current anchor month ───
+  if (import.meta.env.DEV) {
+    console.log('[ANCHOR]', anchor.toISOString());
+  }
+  // ───────────────────────────────────────
+
   const handleOpenDay = (isoDate: string) => {
     selectedDateRef.current = isoDate;
     openDay(isoDate);

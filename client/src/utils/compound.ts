@@ -41,6 +41,12 @@ export function calculateDailyRate(
   logs: HabitLog[],
   date: string
 ): number {
+  if (import.meta.env.DEV && date === '2025-06-11') {
+    console.log('[DRATE]', date,
+      logs.filter(l => l.date === date).length,
+      logs.filter(l => l.date === date && l.completed).length
+    );
+  }
   // Only logs marked completed (GOOD) for this date
   const dayLogs = logs.filter(l => l.date === date && l.completed);
 

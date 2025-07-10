@@ -138,10 +138,10 @@ export function useHabits() {
         ...prev,
         habits: [...prev.habits, newHabit]
       };
-      
+
       // Trigger flash feedback for new habit
       setTimeout(() => debouncedSave(newData, newHabit.id), 0);
-      
+
       return newData;
     });
   };
@@ -154,10 +154,10 @@ export function useHabits() {
           habit.id === id ? { ...habit, ...updates } : habit
         )
       };
-      
+
       // Trigger flash feedback for updated habit
       setTimeout(() => debouncedSave(newData, id), 0);
-      
+
       return newData;
     });
   };
@@ -202,6 +202,12 @@ export function useHabits() {
       setLogsUpdatedAt(Date.now());
       return newData;
     });
+
+    // ─── DEBUG: confirm save & clone ───
+    if (import.meta.env.DEV) {
+      console.log('[SAVE]', date, state, 'len', data.logs.length, 'isArray', Array.isArray(data.logs));
+    }
+    // ────────────────────────────────────
   };
 
   const getHabitLog = (habitId: string, date: string): HabitLog | undefined => {
