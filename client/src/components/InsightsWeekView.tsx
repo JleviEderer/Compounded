@@ -44,14 +44,12 @@ const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
         <PopoverTrigger asChild>
           <motion.div
             className="p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto
-                       text-sm leading-snug break-words overflow-hidden
-                       line-clamp-3"
+                       text-sm leading-relaxed break-words overflow-hidden
+                       min-h-[3rem]"
             style={{
-              display: '-webkit-box',
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: 'vertical',
               wordBreak: 'break-word',
-              hyphens: 'auto'
+              hyphens: 'auto',
+              overflowWrap: 'break-word'
             }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
