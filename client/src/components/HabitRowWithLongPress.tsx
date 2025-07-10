@@ -35,16 +35,10 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  /* ---------- check if text is truncated ---------- */
-  const [isTruncated, setIsTruncated] = React.useState(false);
-  const textRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    if (textRef.current) {
-      const isOverflowing = textRef.current.scrollHeight > textRef.current.clientHeight;
-      setIsTruncated(isOverflowing);
-    }
-  }, [habit.goodHabit]);
+  /* ---------- dynamic width/ellipsis ---------- */
+  const namePx       = habit.goodHabit.length * 8;            // ≈ 8 px per char
+  const colWidth     = Math.min(Math.max(namePx, 76), 120);    // clamp 76-120 px
+  const isTruncated  = namePx > colWidth;                      // will we clip?
 
   return (
     <React.Fragment>
@@ -54,10 +48,8 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div
-            ref={textRef}
-            className={`p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto leading-tight
-                       max-w-full break-words line-clamp-2 overflow-hidden text-ellipsis
-                       ${isTruncated ? 'border-b border-dotted border-gray-400 dark:border-gray-500' : ''}`}
+            className="p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto leading-tight
+                       break-words line-clamp-2"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
