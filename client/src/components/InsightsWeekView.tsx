@@ -192,17 +192,19 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
             </div>
           ))}
           
-          {habits.map((habit, habitIndex) => (
-            <HabitRowWithLongPress
-              key={habit.id}
-              habit={habit}
-              habitIndex={habitIndex}
-              filteredLogs={filteredLogs}
-              getLast7Days={getLast7Days}
-              popoverHabit={popoverHabit}
-              setPopoverHabit={setPopoverHabit}
-            />
-          ))}
+          <div className="contents">
+            {habits.map((habit, habitIndex) => (
+              <HabitRowWithLongPress
+                key={habit.id}
+                habit={habit}
+                habitIndex={habitIndex}
+                filteredLogs={filteredLogs}
+                getLast7Days={getLast7Days}
+                popoverHabit={popoverHabit}
+                setPopoverHabit={setPopoverHabit}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </motion.div>
