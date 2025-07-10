@@ -178,7 +178,7 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
         </div>
       </div>
 
-      <div className="w-full overflow-x-auto">
+      <div className="w-full overflow-x-hidden sm:overflow-x-auto">
         {/* 8-column grid: auto-sized habit + 7 × 44-px day cells (40px on mobile) */}
         <div
           className="
