@@ -189,7 +189,7 @@ export function useHabits() {
           habitId,
           date,
           state,
-          completed: state === HabitLogState.GOOD
+          completed: state === HabitLogState.GOOD || state === 'good'
         });
       }
 
