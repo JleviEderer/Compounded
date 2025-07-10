@@ -186,6 +186,7 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
           <div className="text-left text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
             Habit
           </div>
+          <div></div>
           {['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((label) => (
             <div key={label} className="text-center text-sm font-medium text-gray-600 dark:text-gray-400 p-3">
               {label}
