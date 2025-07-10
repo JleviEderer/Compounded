@@ -64,7 +64,8 @@ export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAn
   const currentDate = new Date(startOfQuarter);
   currentDate.setDate(currentDate.getDate() - currentDate.getDay());
 
-  while (currentDate <= endOfQuarter) {
+  // Continue until we've covered the entire quarter plus any partial weeks
+  while (currentDate <= endOfQuarter || weeks.length === 0) {
     const week = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date(currentDate);
@@ -84,6 +85,11 @@ export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAn
     }
     weeks.push(...week);
     currentDate.setDate(currentDate.getDate() + 7);
+    
+    // Break if we've gone too far past the quarter
+    if (currentDate > new Date(endOfQuarter.getTime() + 14 * 24 * 60 * 60 * 1000)) {
+      break;
+    }
   }
 
   return weeks;
@@ -98,13 +104,27 @@ export function getAllTimeYears(habits: HabitPair[], logs: HabitLog[]) {
       const monthStart = new Date(year, month, 1);
       const monthEnd = new Date(year, month + 1, 0);
 
+      // Get all logs for this month
       const monthLogs = logs.filter(log => {
         const logDate = new Date(log.date);
         return logDate >= monthStart && logDate <= monthEnd;
       });
 
-      const monthStartString = monthStart.toLocaleDateString('en-CA');
-      const intensity = calculateDailyRate(habits, logs, monthStartString);
+      // Calculate average intensity for the month
+      let totalIntensity = 0;
+      let daysWithLogs = 0;
+      
+      // Get unique dates in this month that have logs
+      const uniqueDates = [...new Set(monthLogs.map(log => log.date))];
+      
+      for (const date of uniqueDates) {
+        const dayIntensity = calculateDailyRate(habits, logs, date);
+        totalIntensity += dayIntensity;
+        daysWithLogs++;
+      }
+      
+      // Average intensity for the month (0 if no logs)
+      const intensity = daysWithLogs > 0 ? totalIntensity / daysWithLogs : 0;
 
       years.push({
         date: `${year}-${String(month + 1).padStart(2, '0')}`,
