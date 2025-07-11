@@ -55,4 +55,49 @@ Everything else (phases, line-count guardrails, UX bullet) stays the same so Rep
 
 ---
 
+## 🚀 Future Roadmap
+
+### Future Feature Idea – Smarter Success Rate with Target Frequency
+
+In Goals v1, the success rate metric is postponed due to potential UX complexity around expected habit frequency.
+
+🧮 **Challenge:**
+Not all habits are meant to be done daily — users may want to track goals like:
+
+- "Meditate 3× per week"
+- "Go to the gym Mon/Wed/Fri"  
+- "Journal every weekday"
+
+A naive daily success rate unfairly penalizes users for habits they never intended to do daily.
+
+✅ **Proposed Solution: Define Target Frequency per Habit**
+Allow users to specify an expected frequency, such as:
+
+- 3 times per week
+- Every weekday
+- Custom days: Mon / Wed / Fri
+
+Then compute:
+
+```ts
+successRate = (completedLogs / expectedLogs) * 100
+```
+
+**Pros:**
+✅ Feels fair and personalized
+
+✅ Aligns with real-world habit planning
+
+✅ Unlocks smarter insights (e.g. consistency vs. intent)
+
+**Cons:**
+❗ Adds complexity to habit setup UI
+
+❗ Requires reworking log analysis and reporting
+
+**Verdict:**
+Strong candidate for post-Goals v1 release. Consider including in a future "Habit Frequency Settings" feature that unlocks smarter analytics across goals.
+
+---
+
 *You can drop this block directly into your Replit docs or issue—devs have everything they need, and no one will accidentally resurrect the "bad habit" logic.*
