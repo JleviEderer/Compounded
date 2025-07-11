@@ -2,104 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useLongPress } from '../hooks/useLongPress';
-
-interface HabitRowWithLongPressProps {
-  habit: any;
-  habitIndex: number;
-  filteredLogs: any[];
-  getLast7Days: () => any[];
-  popoverHabit: { id: string; name: string } | null;
-  setPopoverHabit: (habit: { id: string; name: string } | null) => void;
-}
-
-const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
-  habit,
-  habitIndex,
-  filteredLogs,
-  getLast7Days,
-  popoverHabit,
-  setPopoverHabit
-}) => {
-  const longPressHandlers = useLongPress({
-    onLongPress: () => setPopoverHabit({ id: habit.id, name: habit.goodHabit }),
-    delay: 300
-  });
-
-  const [isMobile, setIsMobile] = React.useState(false);
-  React.useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 640);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  return (
-    <>
-      <Popover
-        open={popoverHabit?.id === habit.id}
-        onOpenChange={(open) => !open && setPopoverHabit(null)}
-      >
-        <PopoverTrigger asChild>
-          <motion.div
-            className="p-2 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto
-                       text-sm leading-tight break-words overflow-hidden
-                       max-h-10 line-clamp-2"
-            style={{
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              wordBreak: 'break-word',
-              hyphens: 'auto'
-            }}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: habitIndex * 0.1 }}
-            {...(isMobile ? longPressHandlers : {})}
-          >
-            {habit.goodHabit}
-          </motion.div>
-        </PopoverTrigger>
-        <PopoverContent
-          className="w-64 p-3 text-sm sm:hidden"
-          side="right"
-          align="start"
-        >
-          <div className="font-medium text-gray-800 dark:text-white">
-            {habit.goodHabit}
-          </div>
-        </PopoverContent>
-      </Popover>
-
-      {getLast7Days().map((day, dayIndex) => {
-        const log = filteredLogs.find(
-          (l) => l.habitId === habit.id && l.date === day.date
-        );
-
-        const squareStyle =
-          log?.state === 'good'
-            ? 'bg-teal-500'
-            : log?.state === 'bad'
-            ? 'bg-red-400'
-            : 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500';
-
-        return (
-          <div key={day.date} className="p-3 flex items-center justify-center">
-            <motion.div
-              className={`w-4 h-4 sm:w-5 sm:h-5 rounded ${squareStyle}`}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{
-                delay: habitIndex * 0.1 + dayIndex * 0.02
-              }}
-            />
-          </div>
-        );
-      })}
-    </>
-  );
-};
+import { HabitRowWithLongPress } from './HabitRowWithLongPress';
 
 interface InsightsWeekViewProps {
   habits: any[];
@@ -146,15 +49,15 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
 
   return (
     <motion.div
-      className="space-y-6"
+      className="space-y-4 flex flex-col h-full"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+      <div className="flex items-center justify-between flex-wrap gap-y-2">
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-white truncate min-w-0 flex-1 pr-2">
           {getWeekLabel()}
         </h3>
-        <div className="flex space-x-2">
+        <div className="flex space-x-1">
           {!isCurrentWeek() && (
             <Button
               variant="default"
@@ -162,7 +65,7 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
               onClick={() => setWeekAnchor(new Date())}
               className="bg-teal-600 hover:bg-teal-700 text-white"
             >
-              Current Week
+              Current
             </Button>
           )}
           <Button
@@ -184,36 +87,35 @@ export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
         </div>
       </div>
 
-      <div className="w-full overflow-x-hidden sm:overflow-x-auto">
-        {/* 8-column grid: auto-sized habit + 7 × 44-px day cells (40px on mobile) */}
+      <div className="w-full overflow-hidden flex-1 min-h-0">
+        {/* Optimized grid for better balance and vertical space usage */}
         <div
           className="
-            grid
-            sm:grid-cols-[auto_repeat(7,44px)]
-            grid-cols-[auto_repeat(7,40px)]
-            gap-y-3
+            grid gap-y-1 w-full h-full content-start
+            sm:grid-cols-[120px_repeat(7,minmax(40px,1fr))]
+            grid-cols-[100px_repeat(7,minmax(35px,1fr))]
           ">
           {/* header row */}
-          <div className="text-left text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 p-3 flex items-center">
+          <div className="text-left text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 py-3 px-2 flex items-center">
             Habits
           </div>
-          {/* 1-letter labels on mobile, 3-letter on ≥ sm */}
+          {/* Day headers */}
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(full => {
-            const short = full[0]        // "M", "T", etc.
+            const short = full[0]
             return (
               <div
                 key={full}
-                title={full}              // tooltip / long-press name
-                className="text-center font-medium text-gray-600 dark:text-gray-400 p-3
-                           text-xs sm:text-sm"             /* size switch */
+                title={full}
+                className="text-center font-medium text-gray-600 dark:text-gray-400 py-3 px-1
+                           text-xs sm:text-sm flex items-center justify-center min-w-0"
               >
                 <span className="block sm:hidden">{short}</span>
-                <span className="hidden sm:block">{full}</span>
+                <span className="hidden sm:block truncate">{full}</span>
               </div>
             )
           })}
 
-          {/* habit rows (each outputs exactly 8 cells) */}
+          {/* habit rows */}
           <div className="contents">
             {habits.map((habit, idx) => (
               <HabitRowWithLongPress

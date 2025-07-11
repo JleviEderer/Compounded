@@ -27,7 +27,6 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
   });
 
   const [isMobile, setIsMobile] = React.useState(false);
-
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 640);
     checkMobile();
@@ -35,10 +34,8 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  /* ---------- dynamic width/ellipsis ---------- */
-  const namePx       = habit.goodHabit.length * 8;            // ≈ 8 px per char
-  const colWidth     = Math.min(Math.max(namePx, 76), 120);    // clamp 76-120 px
-  const isTruncated  = namePx > colWidth;                      // will we clip?
+  // Natural text wrapping - let CSS handle it properly
+  const displayText = habit.goodHabit;
 
   return (
     <React.Fragment>
@@ -48,27 +45,35 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
       >
         <PopoverTrigger asChild>
           <motion.div
-            className="p-3 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto leading-tight
-                       break-words line-clamp-2"
+            className="py-3 px-2 font-medium text-gray-800 dark:text-white text-left cursor-default sm:cursor-auto
+                       text-sm leading-tight overflow-hidden
+                       w-full h-12 flex items-start"
+            style={{
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical'
+            }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: habitIndex * 0.1 }}
             {...(isMobile ? longPressHandlers : {})}
           >
-            {habit.goodHabit}
+            {displayText}
           </motion.div>
         </PopoverTrigger>
-        {/* show on long-press *or* hover if truncated */}
+        {/* Show popover on mobile long-press or hover for desktop */}
         <PopoverContent
-          className="w-64 p-3 text-sm"
+          className="w-40 p-2 text-xs sm:hidden"
           side="right"
           align="start"
+          sideOffset={4}
         >
-          <div className="font-medium text-gray-800 dark:text-white">
+          <div className="font-normal text-gray-700 dark:text-gray-300 leading-tight text-xs">
             {habit.goodHabit}
           </div>
         </PopoverContent>
       </Popover>
+
       {getLast7Days().map((day, dayIndex) => {
         const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
 
@@ -83,9 +88,9 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
         };
 
         return (
-          <div key={day.date} className="p-3 flex items-center justify-center">
+          <div key={day.date} className="py-3 px-1 flex items-center justify-center min-w-0">
             <motion.div 
-              className={`w-5 h-5 rounded ${getSquareStyle()}`}
+              className={`w-5 h-5 sm:w-6 sm:h-6 rounded ${getSquareStyle()}`}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: habitIndex * 0.1 + dayIndex * 0.02 }}
