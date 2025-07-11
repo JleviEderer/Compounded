@@ -134,7 +134,9 @@ if (mockLogs.length > 0) {
   console.error('❌ CRITICAL: NO LOGS EXPORTED AT ALL!');
 }
 
-export const mockGoals: Goal[] = [
+import { ensureDefaultGoalExists } from '@/utils/migration';
+
+const rawGoals: Goal[] = [
   {
     id: 'goal-1',
     title: 'Build Better Learning Habits',
@@ -157,3 +159,8 @@ export const mockGoals: Goal[] = [
     createdAt: new Date('2024-01-01')
   }
 ];
+
+// Apply migration to ensure default goal exists
+export const mockGoals = ensureDefaultGoalExists(rawGoals);
+
+console.log(`🔄 Migration: Ensured default goal exists. Total goals: ${mockGoals.length}`);

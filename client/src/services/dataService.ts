@@ -129,14 +129,64 @@ class DataService {
     return logs;
   }
 
-  async getGoals(): Promise<Goal[]> {
-    if (dataSourceConfig.source === 'mock') {
-      console.log('🔍 DataService.getGoals() called (MOCK DATA), returning:', mockGoals.length, 'goals');
-      return mockGoals;
+  getGoals(): Goal[] {
+    const src = dataSourceConfig.source;
+
+    if (src === 'user') {
+      const stored = localStorage.getItem('compounded-data');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          return parsed.goals || [];
+        } catch (error) {
+          console.error('❌ Failed to parse goals from localStorage:', error);
+          return [];
+        }
+      }
+      return [];
     }
 
-    // TODO: Real API implementation
-    return [];
+    // --- mock mode ---
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('compounded-data-mock');
+      if (stored) {
+        const { goals = [] } = JSON.parse(stored);
+        if (this.debug) {
+          console.log('🔍 DataService.getGoals() (MOCK-STORAGE) →', goals.length, 'goals');
+        }
+        return goals;
+      }
+    }
+
+    // Fallback to pristine demo data
+    if (this.debug) {
+      console.log('🔍 DataService.getGoals() (MOCK-DEMO) →', mockGoals.length, 'goals');
+    }
+    return mockGoals;
+  }
+
+  saveGoals(goals: Goal[]): void {
+    const key = dataSourceConfig.source === 'mock'
+      ? 'compounded-data-mock'
+      : 'compounded-data';
+    
+    const stored = localStorage.getItem(key);
+    let data = { habits: [], logs: [], goals: [] };
+    
+    if (stored) {
+      try {
+        data = JSON.parse(stored);
+      } catch (error) {
+        console.error('❌ Failed to parse existing data:', error);
+      }
+    }
+    
+    data.goals = goals;
+    localStorage.setItem(key, JSON.stringify(data));
+    
+    if (this.debug) {
+      console.log('🔍 DataService.saveGoals() saved', goals.length, 'goals');
+    }
   }
 }
 

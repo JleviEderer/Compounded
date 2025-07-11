@@ -1,33 +1,25 @@
 
 import { useState, useEffect } from 'react';
 import { Goal } from '@/types';
-
-const GOALS_STORAGE_KEY = 'compounded-goals';
+import { dataService } from '@/services/dataService';
 
 export function useGoals() {
   const [goals, setGoals] = useState<Goal[]>([]);
 
-  // Load goals from localStorage
+  // Load goals from dataService
   useEffect(() => {
-    const stored = localStorage.getItem(GOALS_STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setGoals(parsed.map((g: any) => ({
-          ...g,
-          createdAt: new Date(g.createdAt),
-          targetDate: g.targetDate ? new Date(g.targetDate) : undefined
-        })));
-      } catch (error) {
-        console.warn('Failed to parse stored goals:', error);
-      }
-    }
+    const loadedGoals = dataService.getGoals();
+    setGoals(loadedGoals.map((g: any) => ({
+      ...g,
+      createdAt: new Date(g.createdAt),
+      targetDate: g.targetDate ? new Date(g.targetDate) : undefined
+    })));
   }, []);
 
-  // Save goals to localStorage
+  // Save goals through dataService
   const saveGoals = (newGoals: Goal[]) => {
     setGoals(newGoals);
-    localStorage.setItem(GOALS_STORAGE_KEY, JSON.stringify(newGoals));
+    dataService.saveGoals(newGoals);
   };
 
   const addGoal = (title: string, description?: string, targetDate?: Date) => {
