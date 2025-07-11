@@ -53,7 +53,24 @@ export function calculateDailyRate(
   let rate = 0;
   for (const log of dayLogs) {
     const habit = habits.find(h => h.id === log.habitId);
-    if (habit) rate += habit.weight;   // weight is numeric (e.g. 0.0006)
+    if (habit) {
+      // Ensure weight is a valid HabitWeight enum value
+      const validWeights = Object.values(HabitWeight) as number[];
+      let weight = habit.weight;
+      
+      // Check if weight is close to any valid enum value (handle floating point precision)
+      const tolerance = 0.000001;
+      const matchingWeight = validWeights.find(w => Math.abs(w - weight) < tolerance);
+      
+      if (matchingWeight !== undefined) {
+        weight = matchingWeight;
+      } else if (import.meta.env.DEV) {
+        console.warn(`Unknown weight value ${weight}, defaulting to MEDIUM`);
+        weight = HabitWeight.MEDIUM;
+      }
+      
+      rate += weight;
+    }
   }
   return rate;     // already weighted sum per day
 }
