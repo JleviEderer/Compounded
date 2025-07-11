@@ -30,7 +30,6 @@ myMockData.json → mockData.ts → dataService.ts → useHabits.ts → UI Compo
     {
       "id": "1",
       "goodHabit": "Read articles", 
-      "badHabit": "Endless scrolling",
       "weight": 0.001,
       "createdAt": "2024-06-01T00:00:00.000Z"
     }
