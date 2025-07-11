@@ -128,11 +128,10 @@ export function useHabits() {
     };
   }, []);
 
-  const addHabit = (goodHabit: string, badHabit: string, weight: HabitWeight) => {
+  const addHabit = useCallback((goodHabit: string, weight: HabitWeight) => {
     const newHabit: HabitPair = {
       id: Date.now().toString(),
       goodHabit,
-      badHabit,
       weight,
       createdAt: new Date()
     };
@@ -148,7 +147,7 @@ export function useHabits() {
 
       return newData;
     });
-  };
+  }, [debouncedSave]);
 
   const updateHabit = useCallback((id: string, updates: Partial<HabitPair>) => {
     setData(prev => {

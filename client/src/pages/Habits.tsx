@@ -18,20 +18,18 @@ export default function Habits() {
   
   // Form state
   const [goodHabit, setGoodHabit] = useState('');
-  const [badHabit, setBadHabit] = useState('');
   const [weightIndex, setWeightIndex] = useState<number>(2); // Default to MEDIUM (index 2)
 
   const resetForm = () => {
     setGoodHabit('');
-    setBadHabit('');
     setWeightIndex(2); // MEDIUM
     setEditingId(null);
   };
 
   const handleAdd = () => {
-    if (goodHabit.trim() && badHabit.trim()) {
+    if (goodHabit.trim()) {
       const weight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][weightIndex];
-      addHabit(goodHabit.trim(), badHabit.trim(), weight);
+      addHabit(goodHabit.trim(), weight);
       setIsAddModalOpen(false);
       resetForm();
     }
@@ -41,7 +39,6 @@ export default function Habits() {
     const habit = habits.find(h => h.id === habitId);
     if (habit) {
       setGoodHabit(habit.goodHabit);
-      setBadHabit(habit.badHabit);
       const weightValues = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE];
       setWeightIndex(weightValues.indexOf(habit.weight));
       setEditingId(habitId);
@@ -50,11 +47,10 @@ export default function Habits() {
   };
 
   const handleUpdate = () => {
-    if (editingId && goodHabit.trim() && badHabit.trim()) {
-      const weight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][weightIndex];
+    if (editingId && goodHabit.trim()) {
+      const weight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE];
       updateHabit(editingId, {
         goodHabit: goodHabit.trim(),
-        badHabit: badHabit.trim(),
         weight
       });
       setIsAddModalOpen(false);
@@ -97,26 +93,13 @@ export default function Habits() {
               <div className="space-y-6 pb-4">
                 <div>
                   <Label htmlFor="good-habit" className="text-gray-700 dark:text-gray-300 font-medium">
-                    Good Habit (What you want to do)
+                    Habit Description
                   </Label>
                   <Input
                     id="good-habit"
                     value={goodHabit}
                     onChange={(e) => setGoodHabit(e.target.value)}
                     placeholder="e.g., Read for 15 minutes"
-                    className="mt-2 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 min-h-[44px] text-base"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="bad-habit" className="text-gray-700 dark:text-gray-300 font-medium">
-                    Bad Habit (What you want to replace)
-                  </Label>
-                  <Input
-                    id="bad-habit"
-                    value={badHabit}
-                    onChange={(e) => setBadHabit(e.target.value)}
-                    placeholder="e.g., Mindless phone scrolling"
                     className="mt-2 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 min-h-[44px] text-base"
                   />
                 </div>
@@ -140,7 +123,7 @@ export default function Habits() {
                   <Button
                     onClick={editingId ? handleUpdate : handleAdd}
                     className="flex-1 btn-coral min-h-[48px] text-base font-medium touch-manipulation"
-                    disabled={!goodHabit.trim() || !badHabit.trim()}
+                    disabled={!goodHabit.trim()}
                   >
                     {editingId ? 'Update' : 'Add'} Habit
                   </Button>
@@ -193,7 +176,7 @@ export default function Habits() {
                       </IconButton>
                       <div>
                         <div className="font-semibold text-gray-800 dark:text-white relative">
-                          {habit.goodHabit} → Replace {habit.badHabit}
+                          {habit.goodHabit}
                           <Check 
                             className={`absolute -right-7 sm:-right-6 w-5 h-5 text-emerald-500 transition-opacity duration-1000 ${
                               lastSavedHabitId === habit.id ? 'opacity-100' : 'opacity-0'

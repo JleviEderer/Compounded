@@ -43,17 +43,10 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
     onLogHabit(habit.id, today, newState);
   };
 
-  const handleBadHabit = () => {
-    const newState = todayLog?.state === HabitLogState.BAD ? HabitLogState.UNLOGGED : HabitLogState.BAD;
-    onLogHabit(habit.id, today, newState);
-  };
-
   const getDayIcon = (state: HabitLogState) => {
     switch (state) {
       case HabitLogState.GOOD:
         return <Check className="w-4 h-4 text-white" />;
-      case HabitLogState.BAD:
-        return <X className="w-4 h-4 text-white" />;
       default:
         return <Minus className="w-4 h-4 text-gray-500" />;
     }
@@ -63,8 +56,6 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
     switch (state) {
       case HabitLogState.GOOD:
         return 'bg-emerald-500';
-      case HabitLogState.BAD:
-        return 'bg-red-500';
       default:
         return 'bg-gray-300 dark:bg-gray-600';
     }
@@ -101,24 +92,11 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
               >
                 <Check className="h-4 w-4" />
               </button>
-              <button
-                onClick={() => onLogHabit(habit.id, today, 'bad')}
-                className={cn(
-                  "p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center",
-                  todayLog?.state === 'bad' 
-                    ? "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400" 
-                    : "hover:bg-red-50 text-gray-400 dark:hover:bg-red-900/20 dark:text-gray-500 active:bg-red-100 dark:active:bg-red-900/30"
-                )}
-                aria-label={`Mark ${habit.badHabit} as not completed`}
-              >
-                <X className="h-4 w-4" />
-              </button>
             </div>
 
             <div className="flex-1 min-w-0">
               <div className={`font-semibold text-gray-800 dark:text-white relative truncate ${
-                todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' : 
-                todayLog?.state === HabitLogState.BAD ? 'text-red-600 line-through' : ''
+                todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' : ''
               }`}>
                 {habit.goodHabit}
                 <Check 
@@ -127,11 +105,8 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
                   }`}
                 />
               </div>
-              <div className={`text-sm text-gray-500 truncate ${
-                todayLog?.state === HabitLogState.BAD ? 'text-red-500 font-medium' : 
-                todayLog?.state === HabitLogState.GOOD ? 'line-through' : ''
-              }`}>
-                {habit.badHabit}
+              <div className="text-sm text-gray-500 truncate">
+                Track daily progress
               </div>
             </div>
           </div>
@@ -144,14 +119,9 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
                 +{(habit.weight * 100).toFixed(2)}%
               </div>
             )}
-            {todayLog?.state === HabitLogState.BAD && (
-              <div className="text-sm font-medium text-red-600">
-                -{(habit.weight * 100).toFixed(2)}%
-              </div>
-            )}
             {todayLog?.state === HabitLogState.UNLOGGED && (
               <div className="text-sm font-medium text-gray-400">
-                ±{(habit.weight * 100).toFixed(2)}%
+                +{(habit.weight * 100).toFixed(2)}%
               </div>
             )}
             <div className="text-xs text-gray-500">
