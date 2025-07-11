@@ -34,7 +34,6 @@ describe('Data Flow Integration Tests', () => {
       const firstHabit = rawData.habits[0];
       expect(firstHabit).toHaveProperty('id');
       expect(firstHabit).toHaveProperty('goodHabit');
-      expect(firstHabit).toHaveProperty('badHabit');
       expect(firstHabit).toHaveProperty('weight');
       expect(firstHabit).toHaveProperty('createdAt');
       
@@ -150,13 +149,12 @@ describe('Data Flow Integration Tests', () => {
       const initialCount = result.current.habits.length;
       
       act(() => {
-        result.current.addHabit('Test Good', 'Test Bad', HabitWeight.LOW);
+        result.current.addHabit('Test Good', HabitWeight.LOW);
       });
       
       expect(result.current.habits.length).toBe(initialCount + 1);
       const newHabit = result.current.habits[result.current.habits.length - 1];
       expect(newHabit.goodHabit).toBe('Test Good');
-      expect(newHabit.badHabit).toBe('Test Bad');
       expect(newHabit.weight).toBe(HabitWeight.LOW);
     });
 
@@ -219,7 +217,7 @@ describe('Data Flow Integration Tests', () => {
         expect(log).toHaveProperty('habitId');
         expect(log).toHaveProperty('date');
         expect(log).toHaveProperty('state');
-        expect(['good', 'bad']).toContain(log.state);
+        expect(['good', 'unlogged']).toContain(log.state);
       });
       
       // Test specific dates that we know exist (from console logs)

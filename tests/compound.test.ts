@@ -14,14 +14,12 @@ describe('Compound Growth Calculations', () => {
     {
       id: '1',
       goodHabit: 'Read',
-      badHabit: 'Scroll',
       weight: HabitWeight.MEDIUM, // 0.0025
       createdAt: new Date('2024-01-01')
     },
     {
       id: '2',
       goodHabit: 'Exercise',
-      badHabit: 'Sit',
       weight: HabitWeight.LOW, // 0.001
       createdAt: new Date('2024-01-01')
     }
@@ -30,7 +28,6 @@ describe('Compound Growth Calculations', () => {
   const mockLogs: HabitLog[] = [
     { id: '1-2024-01-01', habitId: '1', date: '2024-01-01', state: HabitLogState.GOOD },
     { id: '1-2024-01-02', habitId: '1', date: '2024-01-02', state: HabitLogState.GOOD },
-    { id: '2-2024-01-01', habitId: '2', date: '2024-01-01', state: HabitLogState.BAD },
     { id: '2-2024-01-02', habitId: '2', date: '2024-01-02', state: HabitLogState.GOOD },
   ];
 
@@ -43,9 +40,9 @@ describe('Compound Growth Calculations', () => {
   });
 
   it('should calculate daily rate correctly', () => {
-    // Day 1: habit 1 good (+0.0025), habit 2 bad (-0.001) = 0.0015
+    // Day 1: habit 1 good (+0.0025), habit 2 unlogged (0) = 0.0025
     const rate1 = calculateDailyRate(mockHabits, mockLogs, '2024-01-01');
-    expect(rate1).toBe(0.0015);
+    expect(rate1).toBe(0.0025);
 
     // Day 2: both habits good (0.0025 + 0.001 = 0.0035)
     const rate2 = calculateDailyRate(mockHabits, mockLogs, '2024-01-02');
@@ -62,9 +59,9 @@ describe('Compound Growth Calculations', () => {
     
     const momentum = calculateMomentumIndex(mockHabits, mockLogs, endDate);
     
-    // Expected: 1.0 * (1 + 0.0015) * (1 + 0.0035) = 1.0050052500000002
-    // Calculation: 1.0015 * 1.0035 = 1.0050052500000002
-    expect(momentum).toBeCloseTo(1.005005, 5);
+    // Expected: 1.0 * (1 + 0.0025) * (1 + 0.0035) = 1.0060087500000001
+    // Calculation: 1.0025 * 1.0035 = 1.0060087500000001
+    expect(momentum).toBeCloseTo(1.006009, 5);
   });
 
   it('should clamp momentum index to >= 0', () => {
@@ -99,9 +96,9 @@ describe('Compound Growth Calculations', () => {
   });
 
   it('should calculate success rate', () => {
-    // 3 good out of 4 total logged entries = 75%
+    // 3 good out of 3 total logged entries = 100%
     const successRate = calculateSuccessRate(mockHabits, mockLogs, 2);
-    expect(successRate).toBe(75);
+    expect(successRate).toBe(100);
     
     // No logs should give 0%
     const zeroRate = calculateSuccessRate(mockHabits, [], 1);
@@ -124,7 +121,6 @@ describe('Compound Growth Calculations', () => {
     const smallHabits: HabitPair[] = [{
       id: 'small',
       goodHabit: 'Small habit',
-      badHabit: 'Small bad',
       weight: HabitWeight.SMALL, // 0.0005
       createdAt: new Date('2024-01-01')
     }];

@@ -18,7 +18,7 @@ interface HabitsContextValue {
   isSaving: boolean;
   lastSavedHabitId: string | null;
   logsUpdatedAt: number;
-  addHabit: (goodHabit: string, badHabit: string, weight: HabitWeight) => void;
+  addHabit: (goodHabit: string, weight: HabitWeight) => void;
   updateHabit: (id: string, updates: Partial<HabitPair>) => void;
   deleteHabit: (id: string) => void;
   logHabit: (habitId: string, date: string, state: HabitLogState) => void;

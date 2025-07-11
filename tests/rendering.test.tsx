@@ -48,7 +48,6 @@ describe('Component Rendering', () => {
     const mockHabit = {
       id: '1',
       goodHabit: 'Read articles',
-      badHabit: 'Endless scrolling',
       weight: HabitWeight.MEDIUM,
       createdAt: new Date()
     };
@@ -74,8 +73,7 @@ describe('Component Rendering', () => {
       { wrapper: createTestWrapper() }
     );
 
-    expect(screen.getByText('Read articles instead of')).toBeInTheDocument();
-    expect(screen.getByText('Endless scrolling')).toBeInTheDocument();
+    expect(screen.getByText('Read articles')).toBeInTheDocument();
     expect(screen.getByText('+0.25%')).toBeInTheDocument();
     expect(screen.getByText('Medium impact')).toBeInTheDocument();
   });
@@ -84,7 +82,6 @@ describe('Component Rendering', () => {
     const mockHabit = {
       id: '1',
       goodHabit: 'Test habit',
-      badHabit: 'Test bad habit',
       weight: HabitWeight.LOW,
       createdAt: new Date()
     };
@@ -149,7 +146,6 @@ describe('Component Rendering', () => {
     const mockHabit = {
       id: '1',
       goodHabit: 'Test habit',
-      badHabit: 'Test bad habit', 
       weight: HabitWeight.MEDIUM,
       createdAt: new Date()
     };
