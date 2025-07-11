@@ -6,6 +6,7 @@ import { generateId } from '../utils/date';
 import { OfflineFirstDebouncer } from '../utils/debouncer';
 import { GoalsProvider } from './GoalsContext';
 import { FEATURE_FLAGS } from '../utils/featureFlags';
+import { useHabits } from '../hooks/useHabits';
 
 interface HabitsProviderProps {
   children: ReactNode;
