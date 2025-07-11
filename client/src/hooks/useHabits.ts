@@ -85,7 +85,7 @@ export function useHabits() {
       try {
         setIsSaving(true);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
-        console.log('💾 Auto-saved:', dataToSave.habits.length, 'habits,', dataToSave.logs.length, 'logs');
+        console.log('💾 Auto-saved:', dataToSave.habits.length, 'habits,', dataToSave.logs.length);
 
         // Show one-time micro-toast on first edit
         if (!hasShownFirstEditToastRef.current) {
@@ -150,7 +150,7 @@ export function useHabits() {
     });
   };
 
-  const updateHabit = (id: string, updates: Partial<HabitPair>) => {
+  const updateHabit = useCallback((id: string, updates: Partial<HabitPair>) => {
     setData(prev => {
       const newData = {
         ...prev,
@@ -164,7 +164,7 @@ export function useHabits() {
 
       return newData;
     });
-  };
+  }, [debouncedSave]);
 
   const deleteHabit = (id: string) => {
     setData(prev => {
