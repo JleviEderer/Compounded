@@ -1,4 +1,4 @@
-import { HabitPair, HabitLog, MomentumData } from '../types';
+import { HabitPair, HabitLog, MomentumData, HabitWeight } from '../types';
 import { getTodayString } from './date';
 
 // Helper to parse date strings as local midnight instead of UTC
