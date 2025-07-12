@@ -1,17 +1,18 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { GoalsProvider } from '@/contexts/GoalsContext';
-import Goals from '@/pages/Goals';
-import { GoalDialog } from '@/components/GoalDialog';
 
-// Mock dataService
+// Mock dataService at top level for test isolation
 vi.mock('@/services/dataService', () => ({
   dataService: {
     getGoals: vi.fn(() => []),
     saveGoals: vi.fn()
   }
 }));
+
+import { GoalsProvider } from '@/contexts/GoalsContext';
+import Goals from '@/pages/Goals';
+import { GoalDialog } from '@/components/GoalDialog';
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <GoalsProvider>{children}</GoalsProvider>
@@ -68,12 +69,8 @@ describe('Goals Integration', () => {
       }
     ];
 
-    vi.doMock('@/services/dataService', () => ({
-      dataService: {
-        getGoals: () => mockGoals,
-        saveGoals: vi.fn()
-      }
-    }));
+    // Update mock before rendering
+    vi.mocked(require('@/services/dataService').dataService.getGoals).mockReturnValue(mockGoals);
 
     render(
       <TestWrapper>
@@ -122,5 +119,40 @@ describe('Goals Integration', () => {
 
     // Dialog should still be open
     expect(screen.getByRole('dialog')).toBeInTheDocument();
+  });
+
+  it('hides FAB when list is empty and shows when goals exist', async () => {
+    const { rerender } = render(
+      <TestWrapper>
+        <Goals />
+      </TestWrapper>
+    );
+
+    // FAB should be hidden when no goals (empty state present)
+    expect(screen.queryByRole('button', { name: /new goal/i })).not.toBeInTheDocument();
+    expect(screen.getByText('Create your first goal')).toBeInTheDocument();
+
+    // Mock goals data for rerender
+    vi.doMock('@/services/dataService', () => ({
+      dataService: {
+        getGoals: () => [{ id: '1', title: 'Test Goal', createdAt: new Date() }],
+        saveGoals: vi.fn()
+      }
+    }));
+
+    // Rerender with goals present
+    rerender(
+      <TestWrapper>
+        <Goals />
+      </TestWrapper>
+    );
+
+    // FAB should be visible when goals exist
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /new goal/i })).toBeInTheDocument();
+    });
+
+    // Empty state should be gone
+    expect(screen.queryByText('Create your first goal')).not.toBeInTheDocument();
   });
 });

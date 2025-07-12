@@ -1,12 +1,9 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 import { Goal } from '@/types';
 import { HorizonChip } from './HorizonChip';
-
-// Using easeOutQuart to match Habit rows animation
-const easeOutQuart = [0.25, 1, 0.5, 1];
+import { easeOutQuart } from '@/utils/motionConfig';
 
 interface GoalRowProps {
   goal: Goal;
@@ -40,7 +37,7 @@ export function GoalRow({ goal, isExpanded, onToggle }: GoalRowProps) {
             {goal.title}
           </span>
         </div>
-        
+
         <div className="flex-shrink-0 ml-2">
           <HorizonChip targetDate={goal.targetDate} />
         </div>

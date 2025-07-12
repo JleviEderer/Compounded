@@ -1,4 +1,5 @@
 
+// GoalDialog: add/edit only – delete lives in GoalCard
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -58,7 +59,11 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
     const goalData = {
       title: title.trim(),
       description: description.trim() || undefined,
-      targetDate: targetDate ? new Date(targetDate) : undefined
+      targetDate: targetDate ? (() => {
+        const date = new Date(targetDate);
+        date.setHours(0, 0, 0, 0);
+        return date;
+      })() : undefined
     };
 
     if (isEditing && goal) {

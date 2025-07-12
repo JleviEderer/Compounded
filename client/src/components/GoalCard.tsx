@@ -8,9 +8,7 @@ import { Goal } from '@/types';
 import { useGoalsContext } from '@/contexts/GoalsContext';
 import { useHabits } from '@/hooks/useHabits';
 import { GoalDialog } from './GoalDialog';
-
-// Using easeOutQuart to match Habit rows animation
-const easeOutQuart = [0.25, 1, 0.5, 1];
+import { easeOutQuart } from '@/utils/motionConfig';
 
 interface GoalCardProps {
   goal: Goal;
@@ -59,7 +57,7 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
             <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Success Rate
             </h4>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-gray-400 dark:text-gray-500">
               — %
             </p>
             {/* TODO: Phase 2.5 - Calculate real success rate based on linked habits */}
@@ -102,7 +100,12 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
             
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="text-red-600 hover:text-red-700"
+                  aria-label="Delete goal"
+                >
                   <Trash2 className="w-3 h-3 mr-1" />
                   Delete
                 </Button>
