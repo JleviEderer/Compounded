@@ -89,7 +89,7 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
       
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="text-gray-900 dark:text-gray-100">
             {isEditing ? 'Edit Goal' : 'Add New Goal'}
           </DialogTitle>
         </DialogHeader>
@@ -140,7 +140,7 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
               type="button"
               variant="outline"
               onClick={() => setDialogOpen(false)}
-              className="flex-1"
+              className="flex-1 text-gray-900 dark:text-gray-100"
             >
               Cancel
             </Button>
