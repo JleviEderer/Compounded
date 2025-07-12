@@ -64,12 +64,14 @@ export default function Insights() {
   }, [popoverHabit]);
 
   React.useEffect(() => {
-    if (habits.length > 0 && logs.length > 0) {
+    if (habits.length > 0 && logs.length > 0 && import.meta.env.DEV) {
       import('../utils/debug-success-rate').then(({ debugSuccessRateCalculation }) => {
         debugSuccessRateCalculation(habits, logs, 7, 'WEEK');
         debugSuccessRateCalculation(habits, logs, 30, 'MONTH');
         debugSuccessRateCalculation(habits, logs, 90, 'QUARTER');
         debugSuccessRateCalculation(habits, logs, 365, 'ALL TIME');
+      }).catch(error => {
+        console.warn('Debug module not available:', error);
       });
     }
   }, [habits, logs]);
