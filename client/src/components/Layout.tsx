@@ -5,6 +5,7 @@ import {
   Home, 
   BarChart2, 
   Repeat, 
+  Target,
   Settings, 
   TrendingUp
 } from 'lucide-react';
@@ -18,8 +19,9 @@ interface LayoutProps {
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
-  { name: 'Insights', href: '/insights', icon: BarChart2 },
+  { name: 'Goals', href: '/goals', icon: Target },
   { name: 'Habits', href: '/habits', icon: Repeat },
+  { name: 'Insights', href: '/insights', icon: BarChart2 },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 
