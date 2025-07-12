@@ -15,6 +15,7 @@ export default function Habits() {
   const { habits, addHabit, updateHabit, deleteHabit, lastSavedHabitId } = useHabits();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [expandedHabits, setExpandedHabits] = useState<Set<string>>(new Set());
   
   // Form state
   const [goodHabit, setGoodHabit] = useState('');
@@ -60,6 +61,18 @@ export default function Habits() {
 
   const handleDelete = (habitId: string) => {
     deleteHabit(habitId);
+  };
+
+  const toggleExpanded = (habitId: string) => {
+    setExpandedHabits(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(habitId)) {
+        newSet.delete(habitId);
+      } else {
+        newSet.add(habitId);
+      }
+      return newSet;
+    });
   };
 
   
@@ -154,109 +167,152 @@ export default function Habits() {
         ) : (
           <div className="space-y-4">
             <AnimatePresence>
-              {habits.map((habit, index) => (
-                <motion.div
-                  key={habit.id}
-                  layout
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <IconButton
-                        variant="ghost"
-                        size="sm"
-                        className="cursor-move text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                        aria-label="Drag to reorder habit"
-                      >
-                        <GripVertical className="w-5 h-5" />
-                      </IconButton>
-                      <div>
-                        <div className="font-semibold text-gray-800 dark:text-white relative">
-                          {habit.goodHabit}
-                          <Check 
-                            className={`absolute -right-7 sm:-right-6 w-5 h-5 text-emerald-500 transition-opacity duration-1000 ${
-                              lastSavedHabitId === habit.id ? 'opacity-100' : 'opacity-0'
-                            }`}
-                          />
+              {habits.map((habit, index) => {
+                const isExpanded = expandedHabits.has(habit.id);
+                return (
+                  <motion.div
+                    key={habit.id}
+                    layout
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden"
+                  >
+                    {/* Collapsed View - Always Visible */}
+                    <div className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4 flex-1 min-w-0">
+                          <IconButton
+                            variant="ghost"
+                            size="sm"
+                            className="cursor-move text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 flex-shrink-0"
+                            aria-label="Drag to reorder habit"
+                          >
+                            <GripVertical className="w-5 h-5" />
+                          </IconButton>
+                          <div className="flex-1 min-w-0">
+                            <div className="font-semibold text-gray-800 dark:text-white relative">
+                              <span className="block truncate pr-8">
+                                {habit.goodHabit}
+                              </span>
+                              <Check 
+                                className={`absolute right-0 top-0 w-5 h-5 text-emerald-500 transition-opacity duration-1000 ${
+                                  lastSavedHabitId === habit.id ? 'opacity-100' : 'opacity-0'
+                                }`}
+                              />
+                            </div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              {WEIGHT_LABELS[habit.weight]?.split(' ')[0] || 'Unknown'} (+{(habit.weight * 100).toFixed(2)}%)
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">
-                          {WEIGHT_LABELS[habit.weight] || 'Unknown weight'}
+                        <div className="flex items-center space-x-1 flex-shrink-0">
+                          <IconButton
+                            onClick={() => toggleExpanded(habit.id)}
+                            variant="ghost"
+                            size="default"
+                            className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                            aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${habit.goodHabit} habit`}
+                          >
+                            <motion.div
+                              animate={{ rotate: isExpanded ? 180 : 0 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <Plus className="w-4 h-4" />
+                            </motion.div>
+                          </IconButton>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <IconButton
-                        onClick={() => handleEdit(habit.id)}
-                        variant="ghost"
-                        size="default"
-                        className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                        aria-label={`Edit ${habit.goodHabit} habit`}
-                        asChild
-                      >
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={{ duration: 0.2 }}
+
+                    {/* Expanded View - Conditionally Visible */}
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
                         >
-                          <Edit2 className="w-4 h-4" />
-                        </motion.button>
-                      </IconButton>
-                      
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <IconButton
-                            variant="ghost"
-                            size="default"
-                            className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
-                            aria-label={`Delete ${habit.goodHabit} habit`}
-                            asChild
-                          >
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              transition={{ duration: 0.2 }}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </motion.button>
-                          </IconButton>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Delete Habit</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Are you sure you want to delete "{habit.goodHabit}"? 
-                              This will also remove all associated logs. This action cannot be undone.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction
-                              onClick={() => handleDelete(habit.id)}
-                              className="bg-red-500 hover:bg-red-600"
-                            >
-                              Delete
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
-                    <WeightSlider
-                      value={[HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE].indexOf(habit.weight)}
-                      onChange={(newIndex) => {
-                        const newWeight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][newIndex];
-                        updateHabit(habit.id, { weight: newWeight });
-                      }}
-                    />
-                  </div>
-                </motion.div>
-              ))}
+                          <div className="px-6 pb-6 pt-0 border-t border-gray-200 dark:border-gray-600">
+                            <div className="flex items-center justify-between mb-4">
+                              <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Habit Controls
+                              </div>
+                              <div className="flex items-center space-x-1">
+                                <IconButton
+                                  onClick={() => handleEdit(habit.id)}
+                                  variant="ghost"
+                                  size="default"
+                                  className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                                  aria-label={`Edit ${habit.goodHabit} habit`}
+                                  asChild
+                                >
+                                  <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    transition={{ duration: 0.2 }}
+                                  >
+                                    <Edit2 className="w-4 h-4" />
+                                  </motion.button>
+                                </IconButton>
+                                
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <IconButton
+                                      variant="ghost"
+                                      size="default"
+                                      className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                      aria-label={`Delete ${habit.goodHabit} habit`}
+                                      asChild
+                                    >
+                                      <motion.button
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        transition={{ duration: 0.2 }}
+                                      >
+                                        <Trash2 className="w-4 h-4" />
+                                      </motion.button>
+                                    </IconButton>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle>Delete Habit</AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        Are you sure you want to delete "{habit.goodHabit}"? 
+                                        This will also remove all associated logs. This action cannot be undone.
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                      <AlertDialogAction
+                                        onClick={() => handleDelete(habit.id)}
+                                        className="bg-red-500 hover:bg-red-600"
+                                      >
+                                        Delete
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </div>
+                            </div>
+                            
+                            <WeightSlider
+                              value={[HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE].indexOf(habit.weight)}
+                              onChange={(newIndex) => {
+                                const newWeight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][newIndex];
+                                updateHabit(habit.id, { weight: newWeight });
+                              }}
+                            />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
             </AnimatePresence>
           </div>
         )}
