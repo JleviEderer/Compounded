@@ -116,7 +116,7 @@ export default function Habits() {
                       setIsAddModalOpen(false);
                       resetForm();
                     }}
-                    className="flex-1 min-h-[48px] text-base font-medium touch-manipulation"
+                    className="flex-1 min-h-[48px] text-base font-medium touch-manipulation text-gray-900 dark:text-gray-100"
                   >
                     Cancel
                   </Button>
