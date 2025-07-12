@@ -72,18 +72,13 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
       }}
     >
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-4">
-            {/* Good Habit Button */}
-
-            {/* Bad Habit Button */}
-
-
-            <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3 min-w-0 flex-1">
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center">
               <button
                 onClick={() => onLogHabit(habit.id, today, 'good')}
                 className={cn(
-                  "p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center",
+                  "p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center flex-shrink-0",
                   todayLog?.state === 'good' 
                     ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400" 
                     : "hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
@@ -94,7 +89,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
               </button>
             </div>
 
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 pr-2">
               <div className={`font-semibold text-gray-800 dark:text-white relative truncate ${
                 todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' : ''
               }`}>
@@ -112,25 +107,25 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <div className="text-right">
+        <div className="flex items-center space-x-3 flex-shrink-0">
+          <div className="text-right min-w-0">
             {todayLog?.state === HabitLogState.GOOD && (
-              <div className="text-sm font-medium text-emerald-600">
+              <div className="text-sm font-medium text-emerald-600 whitespace-nowrap">
                 +{(habit.weight * 100).toFixed(2)}%
               </div>
             )}
             {todayLog?.state === HabitLogState.UNLOGGED && (
-              <div className="text-sm font-medium text-gray-400">
+              <div className="text-sm font-medium text-gray-400 whitespace-nowrap">
                 +{(habit.weight * 100).toFixed(2)}%
               </div>
             )}
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-gray-500 whitespace-nowrap">
               {WEIGHT_LABELS[habit.weight]?.split(' ')[0] || 'Unknown'} impact
             </div>
           </div>
           <motion.button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-2 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors"
+            className="p-2 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
             whileTap={{ scale: 0.95 }}
           >
             <motion.div
