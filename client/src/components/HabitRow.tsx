@@ -71,66 +71,59 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
         duration: window.innerWidth < 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.1 : 0.3 
       }}
     >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-4">
-            {/* Good Habit Button */}
+      <div className="flex items-center justify-between min-w-0">
+        <div className="flex items-center space-x-3 min-w-0 flex-1 pr-4">
+          <div className="flex-shrink-0">
+            <button
+              onClick={() => onLogHabit(habit.id, today, 'good')}
+              className={cn(
+                "p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center",
+                todayLog?.state === 'good' 
+                  ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400" 
+                  : "hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+              )}
+              aria-label={`Mark ${habit.goodHabit} as completed`}
+            >
+              <Check className="h-4 w-4" />
+            </button>
+          </div>
 
-            {/* Bad Habit Button */}
-
-
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => onLogHabit(habit.id, today, 'good')}
-                className={cn(
-                  "p-2 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center",
-                  todayLog?.state === 'good' 
-                    ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400" 
-                    : "hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
-                )}
-                aria-label={`Mark ${habit.goodHabit} as completed`}
-              >
-                <Check className="h-4 w-4" />
-              </button>
+          <div className="flex-1 min-w-0">
+            <div className={`font-semibold text-gray-800 dark:text-white relative truncate pr-6 ${
+              todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' : ''
+            }`}>
+              {habit.goodHabit}
+              <Check 
+                className={`absolute right-0 top-0 w-5 h-5 text-emerald-500 transition-opacity duration-800 ${
+                  showSavedFlash ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
             </div>
-
-            <div className="flex-1 min-w-0">
-              <div className={`font-semibold text-gray-800 dark:text-white relative truncate ${
-                todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' : ''
-              }`}>
-                {habit.goodHabit}
-                <Check 
-                  className={`absolute -right-6 w-5 h-5 text-emerald-500 transition-opacity duration-800 ${
-                    showSavedFlash ? 'opacity-100' : 'opacity-0'
-                  }`}
-                />
-              </div>
-              <div className="text-sm text-gray-500 truncate">
-                Track daily progress
-              </div>
+            <div className="text-sm text-gray-500 truncate">
+              Track daily progress
             </div>
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <div className="text-right">
+        <div className="flex items-center space-x-3 flex-shrink-0">
+          <div className="text-right min-w-[80px]">
             {todayLog?.state === HabitLogState.GOOD && (
-              <div className="text-sm font-medium text-emerald-600">
+              <div className="text-sm font-medium text-emerald-600 whitespace-nowrap">
                 +{(habit.weight * 100).toFixed(2)}%
               </div>
             )}
             {todayLog?.state === HabitLogState.UNLOGGED && (
-              <div className="text-sm font-medium text-gray-400">
+              <div className="text-sm font-medium text-gray-400 whitespace-nowrap">
                 +{(habit.weight * 100).toFixed(2)}%
               </div>
             )}
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-gray-500 whitespace-nowrap">
               {WEIGHT_LABELS[habit.weight]?.split(' ')[0] || 'Unknown'} impact
             </div>
           </div>
           <motion.button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-2 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors"
+            className="p-2 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
             whileTap={{ scale: 0.95 }}
           >
             <motion.div
