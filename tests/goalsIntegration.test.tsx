@@ -133,12 +133,8 @@ describe('Goals Integration', () => {
     expect(screen.getByText('Create your first goal')).toBeInTheDocument();
 
     // Mock goals data for rerender
-    vi.doMock('@/services/dataService', () => ({
-      dataService: {
-        getGoals: () => [{ id: '1', title: 'Test Goal', createdAt: new Date() }],
-        saveGoals: vi.fn()
-      }
-    }));
+    const mockGoals = [{ id: '1', title: 'Test Goal', createdAt: new Date() }];
+    vi.mocked(require('@/services/dataService').dataService.getGoals).mockReturnValueOnce(mockGoals);
 
     // Rerender with goals present
     rerender(

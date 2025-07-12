@@ -12,6 +12,7 @@ export function HorizonChip({ targetDate, className }: HorizonChipProps) {
   if (!targetDate) return null;
 
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
   const durationDays = differenceInDays(targetDate, today);
   
   let horizon: string;
