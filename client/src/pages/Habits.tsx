@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit2, Trash2, GripVertical, X, Check } from 'lucide-react';
+import { Plus, Edit2, Trash2, GripVertical, X, Check, ChevronRight } from 'lucide-react';
 import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 import { HabitWeight, WEIGHT_LABELS } from '../types';
 import WeightSlider from '../components/WeightSlider';
@@ -192,11 +192,11 @@ export default function Habits() {
                           transition={{ duration: 0.2 }}
                           className="flex-shrink-0"
                         >
-                          <Plus className="w-4 h-4 text-gray-500" />
+                          <ChevronRight className="w-4 h-4 text-gray-500" />
                         </motion.div>
                         <div className="flex-1 min-w-0">
                           <div className="font-medium text-gray-900 dark:text-white relative">
-                            <span className="block truncate pr-8">
+                            <span className="block pr-8">
                               {habit.goodHabit}
                             </span>
                             <Check 
