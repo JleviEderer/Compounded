@@ -91,7 +91,7 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
             <GoalDialog
               goal={goal}
               trigger={
-                <Button variant="outline" size="sm" className="flex-1">
+                <Button variant="outline" size="sm" className="flex-1 text-gray-900 dark:text-gray-100">
                   <Edit3 className="w-3 h-3 mr-1" />
                   Edit
                 </Button>
