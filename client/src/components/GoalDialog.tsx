@@ -96,13 +96,13 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Title *</Label>
+            <Label htmlFor="title" className="text-gray-900 dark:text-gray-100">Title *</Label>
             <Input
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter goal title"
-              className={errors.title ? 'border-red-500' : ''}
+              className={`text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 ${errors.title ? 'border-red-500' : ''}`}
             />
             {errors.title && (
               <p className="text-sm text-red-500">{errors.title}</p>
@@ -110,27 +110,28 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description" className="text-gray-900 dark:text-gray-100">Description</Label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="What do you want to achieve?"
               rows={3}
+              className="text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="targetDate">Target Date</Label>
+            <Label htmlFor="targetDate" className="text-gray-900 dark:text-gray-100">Target Date</Label>
             <div className="relative">
               <Input
                 id="targetDate"
                 type="date"
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
-                className="pl-10"
+                className="pl-10 text-gray-900 dark:text-gray-100"
               />
-              <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
             </div>
           </div>
 
