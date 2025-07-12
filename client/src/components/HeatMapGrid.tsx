@@ -44,31 +44,20 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
     return Math.max(-1, Math.min(1, rawIntensity * scaleFactor));
   };
 
-  // Diverging color scale for negative/positive momentum
+  // Good-only color scale: grey to green gradient only
   const getColor = (intensity: number | null) => {
     if (intensity === null || intensity === undefined) {
       return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // no data
     }
 
-    // Normalize the intensity to -1 to +1 range
-    const normalizedIntensity = normalizeIntensity(intensity);
+    // Normalize the intensity to 0 to 1 range (good-only)
+    const normalizedIntensity = Math.max(0, normalizeIntensity(intensity));
 
-    // Negative momentum (bad habits dominate) - coral/rose shades
-    if (normalizedIntensity < 0) {
-      const absValue = Math.abs(normalizedIntensity);
-      if (absValue >= 0.75) return 'bg-rose-500'; // #F43F5E - heavy negative
-      if (absValue >= 0.5) return 'bg-rose-400';  // #FB7185 - mid negative  
-      if (absValue >= 0.25) return 'bg-rose-300'; // #FBC5D2 - light negative
-      return 'bg-rose-200';                       // very light negative
-    }
-
-    // Positive momentum (good habits dominate) - teal/emerald shades
-    if (normalizedIntensity > 0) {
-      if (normalizedIntensity >= 0.75) return 'bg-emerald-600'; // #059669 - heavy positive
-      if (normalizedIntensity >= 0.5) return 'bg-emerald-500';  // #10B981 - mid positive
-      if (normalizedIntensity >= 0.25) return 'bg-emerald-400'; // #6EE7B7 - light positive  
-      return 'bg-emerald-300';                        // very light positive
-    }
+    // Good habits only - grey to green gradient
+    if (normalizedIntensity >= 0.75) return 'bg-emerald-600'; // #059669 - heavy positive
+    if (normalizedIntensity >= 0.5) return 'bg-emerald-500';  // #10B981 - mid positive
+    if (normalizedIntensity >= 0.25) return 'bg-emerald-400'; // #6EE7B7 - light positive  
+    if (normalizedIntensity > 0) return 'bg-emerald-300';     // very light positive
 
     // Exactly zero or no habits logged
     return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // #E5E7EB
@@ -202,17 +191,15 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
 
         {/* Legend */}
         <div className="flex items-center justify-between mt-4 px-2">
-          <span className="text-xs text-gray-500">More negative</span>
+          <span className="text-xs text-gray-500">Less active</span>
           <div className="flex items-center space-x-1">
-            <div className="w-3 h-3 bg-rose-500 rounded"></div>
-            <div className="w-3 h-3 bg-rose-400 rounded"></div>
-            <div className="w-3 h-3 bg-rose-200 rounded"></div>
             <div className="w-3 h-3 bg-gray-200 border border-gray-300 rounded"></div>
             <div className="w-3 h-3 bg-emerald-300 rounded"></div>
+            <div className="w-3 h-3 bg-emerald-400 rounded"></div>
             <div className="w-3 h-3 bg-emerald-500 rounded"></div>
             <div className="w-3 h-3 bg-emerald-600 rounded"></div>
           </div>
-          <span className="text-xs text-gray-500">More positive</span>
+          <span className="text-xs text-gray-500">More active</span>
         </div>
       </div>
     );

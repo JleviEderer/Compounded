@@ -47,7 +47,7 @@ export function calculateDailyRate(
       logs.filter(l => l.date === date && (l.completed || l.state === 'good')).length
     );
   }
-  // Count logs that are completed OR have state 'good'
+  // Count logs that are completed OR have state 'good' (good-only migration)
   const dayLogs = logs.filter(l => l.date === date && (l.completed || l.state === 'good'));
 
   let rate = 0;

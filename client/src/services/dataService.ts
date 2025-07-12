@@ -188,6 +188,30 @@ class DataService {
       console.log('🔍 DataService.saveGoals() saved', goals.length, 'goals');
     }
   }
+
+  saveHabits(habits: HabitPair[]): void {
+    const key = dataSourceConfig.source === 'mock'
+      ? 'compounded-data-mock'
+      : 'compounded-data';
+    
+    const stored = localStorage.getItem(key);
+    let data = { habits: [], logs: [], goals: [] };
+    
+    if (stored) {
+      try {
+        data = JSON.parse(stored);
+      } catch (error) {
+        console.error('❌ Failed to parse existing data:', error);
+      }
+    }
+    
+    data.habits = habits;
+    localStorage.setItem(key, JSON.stringify(data));
+    
+    if (this.debug) {
+      console.log('🔍 DataService.saveHabits() saved', habits.length, 'habits');
+    }
+  }
 }
 
 export const dataService = new DataService();
