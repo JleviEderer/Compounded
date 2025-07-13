@@ -81,7 +81,7 @@ export default function Habits() {
     });
   };
 
-  
+
 
   return (
     <div className="space-y-8">
@@ -201,16 +201,14 @@ export default function Habits() {
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ delay: index * 0.1 }}
                     className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-                    dragListener={false}
-                    style={{ cursor: 'default' }}
                   >
                     {/* Collapsed View - Always Visible */}
                     <div className="w-full px-5 py-4 flex items-center justify-between">
                       <div className="flex items-center gap-4 flex-1 min-w-0">
-                        <Reorder.Item.DragControls className="flex-shrink-0 cursor-grab active:cursor-grabbing">
+                        <div className="flex-shrink-0 cursor-grab active:cursor-grabbing">
                           <GripVertical className="w-4 h-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" />
-                        </Reorder.Item.DragControls>
-                        
+                        </div>
+
                         <button
                           onClick={() => toggleExpanded(habit.id)}
                           className="flex items-center gap-2 text-left hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
@@ -277,7 +275,7 @@ export default function Habits() {
                                 />
                               </div>
 
-                              
+
 
                               {/* Action Buttons */}
                               <div className="flex gap-3">
