@@ -17,28 +17,37 @@ export function GoalRow({ goal, isExpanded, onToggle }: GoalRowProps) {
   return (
     <motion.div
       initial={false}
-      animate={{
-        backgroundColor: isExpanded 
-          ? 'var(--card-hover)' 
-          : 'var(--card-background)'
-      }}
-      transition={{ duration: 0.2, ease: easeOutQuart }}
-      className="card-glass rounded-lg overflow-hidden"
+      className="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
     >
       <button
         onClick={onToggle}
-        className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+        className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
         aria-expanded={isExpanded}
         aria-controls={`goal-card-${goal.id}`}
       >
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          <ChevronIcon className="w-4 h-4 text-gray-500 flex-shrink-0" />
-          <span className="font-medium text-gray-900 dark:text-white truncate">
-            {goal.title}
-          </span>
+        <div className="flex items-center gap-4 flex-1 min-w-0">
+          <motion.div
+            animate={{ rotate: isExpanded ? 90 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex-shrink-0"
+          >
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+          </motion.div>
+          <div className="flex-1 min-w-0">
+            <div 
+              className="font-medium text-white text-base leading-snug"
+              style={{
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden'
+              }}
+            >
+              {goal.title}
+            </div>
+          </div>
         </div>
-
-        <div className="flex-shrink-0 ml-2">
+        <div className="flex-shrink-0 ml-3">
           <HorizonChip targetDate={goal.targetDate} />
         </div>
       </button>
