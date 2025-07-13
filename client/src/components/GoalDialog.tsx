@@ -1,4 +1,3 @@
-
 // GoalDialog: add/edit only – delete lives in GoalCard
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -86,14 +85,14 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       {!trigger && <DialogTrigger asChild>{defaultTrigger}</DialogTrigger>}
-      
+
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-gray-900 dark:text-gray-100">
             {isEditing ? 'Edit Goal' : 'Add New Goal'}
           </DialogTitle>
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="title" className="text-gray-900 dark:text-gray-100">Title *</Label>
@@ -129,9 +128,12 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
                 type="date"
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
-                className="pl-10 text-gray-900 dark:text-gray-100"
+                className="pl-10 text-gray-900 dark:text-gray-100 [color-scheme:dark]"
+                style={{
+                  colorScheme: 'dark'
+                }}
               />
-              <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none z-10" />
+              <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-400 pointer-events-none z-10" />
             </div>
           </div>
 
