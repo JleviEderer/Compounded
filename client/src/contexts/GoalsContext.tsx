@@ -9,6 +9,7 @@ interface GoalsContextValue {
   updateGoal: (id: string, updates: Partial<Omit<Goal, 'id' | 'createdAt'>>) => void;
   deleteGoal: (id: string) => void;
   getGoalById: (id: string) => Goal | undefined;
+  refreshGoals: () => void;
 }
 
 const GoalsContext = createContext<GoalsContextValue | undefined>(undefined);

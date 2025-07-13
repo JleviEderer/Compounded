@@ -130,39 +130,36 @@ class DataService {
   }
 
   getGoals(): Goal[] {
-    const src = dataSourceConfig.source;
+    const key = dataSourceConfig.source === 'mock'
+      ? 'compounded-data-mock'
+      : 'compounded-data';
 
-    if (src === 'user') {
-      const stored = localStorage.getItem('compounded-data');
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem(key);
       if (stored) {
         try {
           const parsed = JSON.parse(stored);
-          return parsed.goals || [];
+          const goals = parsed.goals || [];
+          if (this.debug) {
+            console.log(`🔍 DataService.getGoals() (${dataSourceConfig.source.toUpperCase()}-STORAGE) →`, goals.length, 'goals');
+          }
+          return goals;
         } catch (error) {
           console.error('❌ Failed to parse goals from localStorage:', error);
-          return [];
         }
-      }
-      return [];
-    }
-
-    // --- mock mode ---
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('compounded-data-mock');
-      if (stored) {
-        const { goals = [] } = JSON.parse(stored);
-        if (this.debug) {
-          console.log('🔍 DataService.getGoals() (MOCK-STORAGE) →', goals.length, 'goals');
-        }
-        return goals;
       }
     }
 
-    // Fallback to pristine demo data
-    if (this.debug) {
-      console.log('🔍 DataService.getGoals() (MOCK-DEMO) →', mockGoals.length, 'goals');
+    // Fallback to pristine demo data only in mock mode
+    if (dataSourceConfig.source === 'mock') {
+      if (this.debug) {
+        console.log('🔍 DataService.getGoals() (MOCK-DEMO) →', mockGoals.length, 'goals');
+      }
+      return mockGoals;
     }
-    return mockGoals;
+
+    // User mode with no data - return empty array
+    return [];
   }
 
   saveGoals(goals: Goal[]): void {
