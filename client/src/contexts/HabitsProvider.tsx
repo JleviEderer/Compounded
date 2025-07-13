@@ -5,6 +5,7 @@ import { dataService } from '../services/dataService';
 import { generateId } from '../utils/date';
 import { OfflineFirstDebouncer } from '../utils/debouncer';
 import { GoalsProvider } from './GoalsContext';
+import { useHabits } from '../hooks/useHabits';
 
 interface HabitsProviderProps {
   children: ReactNode;
