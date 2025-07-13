@@ -87,7 +87,7 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       {!trigger && <DialogTrigger asChild>{defaultTrigger}</DialogTrigger>}
 
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
         <DialogHeader>
           <DialogTitle className="text-gray-900 dark:text-gray-100">
             {isEditing ? 'Edit Goal' : 'Add New Goal'}
