@@ -85,20 +85,22 @@ export default function Goals() {
         {goals.length === 0 ? (
           <EmptyState />
         ) : (
-          <div className="space-y-2">
-            {sortedGoals.map((goal) => (
-              <div key={goal.id}>
-                <GoalRow
-                  goal={goal}
-                  isExpanded={expandedGoals.has(goal.id)}
-                  onToggle={() => toggleGoal(goal.id)}
-                />
-                <GoalCard
-                  goal={goal}
-                  isExpanded={expandedGoals.has(goal.id)}
-                />
-              </div>
-            ))}
+          <div className="bg-gray-800 dark:bg-gray-800 rounded-xl p-6 shadow-sm">
+            <div className="space-y-2">
+              {sortedGoals.map((goal) => (
+                <div key={goal.id}>
+                  <GoalRow
+                    goal={goal}
+                    isExpanded={expandedGoals.has(goal.id)}
+                    onToggle={() => toggleGoal(goal.id)}
+                  />
+                  <GoalCard
+                    goal={goal}
+                    isExpanded={expandedGoals.has(goal.id)}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </motion.div>
