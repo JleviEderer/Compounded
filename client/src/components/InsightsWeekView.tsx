@@ -1,136 +1,93 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { HabitRowWithLongPress } from './HabitRowWithLongPress';
+import React, { useState, useRef, useEffect } from 'react';
+import { useLongPress } from 'use-long-press';
+import { CalendarDays, CheckCircle2, Circle, X } from 'lucide-react';
 
-interface InsightsWeekViewProps {
-  habits: any[];
+interface HabitRowProps {
+  habit: any;
+  habitIndex: number;
   filteredLogs: any[];
-  weekAnchor: Date;
-  isCurrentWeek: () => boolean;
-  getWeekLabel: () => string;
-  navigateWeek: (direction: 'prev' | 'next') => void;
-  setWeekAnchor: (date: Date) => void;
+  getLast7Days: () => { date: string; label: string }[];
   popoverHabit: { id: string; name: string } | null;
   setPopoverHabit: (habit: { id: string; name: string } | null) => void;
 }
 
-export const InsightsWeekView: React.FC<InsightsWeekViewProps> = ({
-  habits,
+export const HabitRowWithLongPress: React.FC<HabitRowProps> = ({
+  habit,
+  habitIndex,
   filteredLogs,
-  weekAnchor,
-  isCurrentWeek,
-  getWeekLabel,
-  navigateWeek,
-  setWeekAnchor,
+  getLast7Days,
   popoverHabit,
   setPopoverHabit
 }) => {
-  const getLast7Days = () => {
-    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const offset = (weekAnchor.getDay() + 6) % 7; // Monday = 0
-    const monday = new Date(weekAnchor);
-    monday.setDate(weekAnchor.getDate() - offset);
+  const [isLongPress, setIsLongPress] = useState(false);
+  const longPressTimeout = useRef<ReturnType<typeof setTimeout>>();
 
-    return [...Array(7)].map((_, i) => {
-      const d = new Date(monday);
-      d.setDate(monday.getDate() + i);
-      return {
-        date: d.toLocaleDateString('en-CA'),
-        label: labels[i]
-      };
-    });
+  const getHabitStateForDate = (habitId: string, date: string) => {
+    const log = filteredLogs.find(log => log.habitId === habitId && log.date === date);
+    return log ? log.state : 'unlogged';
   };
 
-  if (typeof window !== 'undefined') {
-    (window as any).getLast7Days ??= getLast7Days;
-  }
+  const onLongPress = () => {
+    setIsLongPress(true);
+    longPressTimeout.current = setTimeout(() => {
+      setPopoverHabit({ id: habit.id, name: habit.name });
+      setIsLongPress(false);
+    }, 500);
+  };
+
+  const onClick = () => {
+    if (isLongPress) {
+      setIsLongPress(false);
+      clearTimeout(longPressTimeout.current);
+      return;
+    }
+    setPopoverHabit({ id: habit.id, name: habit.name });
+  };
+
+  const bind = useLongPress(onLongPress, {
+    onClick,
+    threshold: 500,
+    onCancel: () => setIsLongPress(false)
+  });
 
   return (
-    <motion.div
-      className="space-y-4 flex flex-col h-full"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-    >
-      <div className="flex items-center justify-between flex-wrap gap-y-2">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-white truncate min-w-0 flex-1 pr-2">
-          {getWeekLabel()}
-        </h3>
-        <div className="flex space-x-1">
-          {!isCurrentWeek() && (
-            <Button
-              variant="default"
-              size="sm"
-              onClick={() => setWeekAnchor(new Date())}
-              className="bg-teal-600 hover:bg-teal-700 text-white"
-            >
-              Current
-            </Button>
-          )}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigateWeek('prev')}
-            className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigateWeek('next')}
-            className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </Button>
-        </div>
+    <>
+      <div
+        key={habit.id}
+        className="text-left font-medium text-gray-800 dark:text-gray-200 py-3 px-2 flex items-center hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer truncate"
+        {...bind()}
+      >
+        {habit.name}
       </div>
 
-      <div className="w-full overflow-hidden flex-1 min-h-0">
-        {/* Optimized grid for better balance and vertical space usage */}
-        <div
-          className="
-            grid gap-y-1 w-full h-full content-start
-            sm:grid-cols-[120px_repeat(7,minmax(40px,1fr))]
-            grid-cols-[100px_repeat(7,minmax(35px,1fr))]
-          ">
-          {/* header row */}
-          <div className="text-left text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 py-3 px-2 flex items-center">
-            Habits
-          </div>
-          {/* Day headers */}
-          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(full => {
-            const short = full[0]
-            return (
-              <div
-                key={full}
-                title={full}
-                className="text-center font-medium text-gray-600 dark:text-gray-400 py-3 px-1
-                           text-xs sm:text-sm flex items-center justify-center min-w-0"
-              >
-                <span className="block sm:hidden">{short}</span>
-                <span className="hidden sm:block truncate">{full}</span>
-              </div>
-            )
-          })}
+      {getLast7Days().map(day => {
+        const habitState = getHabitStateForDate(habit.id, day.date);
+        const isLogged = habitState !== 'unlogged';
+        const isGood = habitState === 'good';
 
-          {/* habit rows */}
-          <div className="contents">
-            {habits.map((habit, idx) => (
-              <HabitRowWithLongPress
-                key={habit.id}
-                habit={habit}
-                habitIndex={idx}
-                filteredLogs={filteredLogs}
-                getLast7Days={getLast7Days}
-                popoverHabit={popoverHabit}
-                setPopoverHabit={setPopoverHabit}
-              />
-            ))}
+        let bgColor = 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // unlogged
+        if (isLogged) {
+          bgColor = isGood ? 'bg-emerald-500' : 'bg-rose-500';
+        }
+
+        return (
+          <div
+            key={`${habit.id}-${day.date}`}
+            className={`
+              ${bgColor}
+              w-full h-full flex items-center justify-center
+              rounded-sm shadow-sm
+              hover:opacity-80 transition-opacity
+              cursor-pointer
+            `}
+            onClick={() => setPopoverHabit({ id: habit.id, name: habit.name })}
+          >
+            {isLogged && isGood && <CheckCircle2 className="w-4 h-4 text-white" />}
+            {isLogged && !isGood && <X className="w-4 h-4 text-white" />}
+            {!isLogged && <Circle className="w-4 h-4 text-gray-400 dark:text-gray-600" />}
           </div>
-        </div>
-      </div>
-    </motion.div>
+        );
+      })}
+    </>
   );
 };
