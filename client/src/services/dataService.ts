@@ -11,7 +11,7 @@ class DataService {
     const key = dataSourceConfig.source === 'mock'
       ? 'compounded-data-mock'
       : 'compounded-data';
-    
+
     const stored = localStorage.getItem(key);
     if (!stored) {
       console.log('📱 No user data found in localStorage, starting fresh');
@@ -166,10 +166,10 @@ class DataService {
     const key = dataSourceConfig.source === 'mock'
       ? 'compounded-data-mock'
       : 'compounded-data';
-    
+
     const stored = localStorage.getItem(key);
     let data = { habits: [], logs: [], goals: [] };
-    
+
     if (stored) {
       try {
         data = JSON.parse(stored);
@@ -179,10 +179,10 @@ class DataService {
         }
       }
     }
-    
+
     data.goals = goals;
     localStorage.setItem(key, JSON.stringify(data));
-    
+
     if (this.debug) {
       console.log('🔍 DataService.saveGoals() saved', goals.length, 'goals');
     }
@@ -192,10 +192,10 @@ class DataService {
     const key = dataSourceConfig.source === 'mock'
       ? 'compounded-data-mock'
       : 'compounded-data';
-    
+
     const stored = localStorage.getItem(key);
     let data = { habits: [], logs: [], goals: [] };
-    
+
     if (stored) {
       try {
         data = JSON.parse(stored);
@@ -205,10 +205,10 @@ class DataService {
         }
       }
     }
-    
+
     data.habits = habits;
     localStorage.setItem(key, JSON.stringify(data));
-    
+
     if (this.debug) {
       console.log('🔍 DataService.saveHabits() saved', habits.length, 'habits');
     }
