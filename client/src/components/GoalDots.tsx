@@ -23,11 +23,12 @@ export function GoalDots({ goalIds, maxVisible = 3, className }: GoalDotsProps) 
 
   const getGoalDotColor = (targetDate?: Date) => {
     const horizon = getGoalHorizon(targetDate);
-    return {
-      'short-term': 'bg-green-500',
-      'mid-term': 'bg-yellow-500 border border-yellow-600', 
-      'long-term': 'bg-blue-500'
-    }[horizon] || 'bg-gray-500';
+    switch (horizon) {
+      case 'short': return 'bg-green-500';
+      case 'mid':   return 'bg-yellow-500 border border-yellow-600';
+      case 'long':  return 'bg-blue-500';
+      default:      return 'bg-gray-500';
+    }
   };
 
   const getGoalNames = () => {
