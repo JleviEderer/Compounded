@@ -94,60 +94,75 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="title" className="text-gray-900 dark:text-gray-100">Title *</Label>
+            <Label htmlFor="title" className="text-gray-700 dark:text-gray-300 font-medium text-sm">
+              Title *
+            </Label>
             <Input
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter goal title"
-              className={`text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 ${errors.title ? 'border-red-500' : ''}`}
+              className={`mt-1.5 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 min-h-[44px] text-base focus:ring-2 focus:ring-coral/20 focus:border-coral dark:focus:border-coral transition-colors ${errors.title ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}`}
             />
             {errors.title && (
-              <p className="text-sm text-red-500">{errors.title}</p>
+              <p className="text-sm text-red-500 mt-1">{errors.title}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-gray-900 dark:text-gray-100">Description</Label>
-            <Textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="What do you want to achieve?"
-              rows={3}
-              className="text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400"
-            />
+            <Label htmlFor="description" className="text-gray-700 dark:text-gray-300 font-medium text-sm">
+              Description
+            </Label>
+            <div className="mt-1.5 relative">
+              <Textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="What do you want to achieve?"
+                rows={3}
+                maxLength={250}
+                className="bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 text-base focus:ring-2 focus:ring-coral/20 focus:border-coral dark:focus:border-coral transition-colors resize-none"
+              />
+              <div className="absolute bottom-2 right-3 text-xs text-gray-400 dark:text-gray-500">
+                {description.length}/250
+              </div>
+            </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="targetDate" className="text-gray-900 dark:text-gray-100">Target Date</Label>
-            <div className="relative">
+            <Label htmlFor="targetDate" className="text-gray-700 dark:text-gray-300 font-medium text-sm">
+              Target Date
+            </Label>
+            <div className="mt-1.5 relative">
               <Input
                 id="targetDate"
                 type="date"
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
-                className="pl-10 text-gray-900 dark:text-gray-100 [color-scheme:dark]"
+                className="pl-10 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white min-h-[44px] text-base focus:ring-2 focus:ring-coral/20 focus:border-coral dark:focus:border-coral transition-colors [color-scheme:dark]"
                 style={{
                   colorScheme: 'dark'
                 }}
               />
-              <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-400 pointer-events-none z-10" />
+              <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none z-10" />
             </div>
           </div>
 
-          <div className="flex gap-2 pt-4">
+          <div className="flex gap-3 pt-2">
             <Button
               type="button"
               variant="outline"
               onClick={() => setDialogOpen(false)}
-              className="flex-1 text-gray-900 dark:text-gray-100"
+              className="flex-1 min-h-[44px] text-base font-medium bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               Cancel
             </Button>
-            <Button type="submit" className="bg-coral hover:bg-coral/90 text-white flex-1">
+            <Button 
+              type="submit" 
+              className="bg-coral hover:bg-coral/90 text-white flex-1 min-h-[44px] text-base font-medium transition-colors"
+            >
               {isEditing ? 'Update' : 'Create'} Goal
             </Button>
           </div>
