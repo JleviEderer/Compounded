@@ -59,8 +59,9 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
       title: title.trim(),
       description: description.trim() || undefined,
       targetDate: targetDate ? (() => {
-        const date = new Date(targetDate);
-        date.setHours(0, 0, 0, 0);
+        // Split the date string and create date in local timezone
+        const [year, month, day] = targetDate.split('-').map(Number);
+        const date = new Date(year, month - 1, day); // month is 0-indexed
         return date;
       })() : undefined
     };
