@@ -38,14 +38,10 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
   }, [cells]);
   // Normalize weighted daily rates to -1 to +1 range for color intensity
   const normalizeIntensity = (rawIntensity: number): number => {
-    // For debugging: log the raw intensity values
-    if (import.meta.env.DEV && rawIntensity !== null && rawIntensity !== undefined) {
-      console.log('Raw intensity:', rawIntensity);
-    }
-    
-    // Simple completion rate (0 to 1) - no complex scaling needed
-    // Raw intensity should already be a completion rate between 0 and 1
-    return Math.max(0, Math.min(1, rawIntensity));
+    // Weighted daily rates typically range from -0.016 to +0.016 (4 habits * 0.004 max weight)
+    // We'll use a reasonable scale factor to map this to -1 to +1 range
+    const scaleFactor = 250; // Adjust this if needed based on actual data range
+    return Math.max(-1, Math.min(1, rawIntensity * scaleFactor));
   };
 
   // Good-only color scale: grey to green gradient only
@@ -54,17 +50,8 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
       return 'bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-500'; // no data
     }
 
-    // Debug logging
-    if (import.meta.env.DEV) {
-      console.log('Getting color for intensity:', intensity);
-    }
-
     // Normalize the intensity to 0 to 1 range (good-only)
-    const normalizedIntensity = normalizeIntensity(intensity);
-    
-    if (import.meta.env.DEV) {
-      console.log('Normalized intensity:', normalizedIntensity);
-    }
+    const normalizedIntensity = Math.max(0, normalizeIntensity(intensity));
 
     // Good habits only - grey to green gradient
     if (normalizedIntensity >= 0.75) return 'bg-emerald-600'; // #059669 - heavy positive
