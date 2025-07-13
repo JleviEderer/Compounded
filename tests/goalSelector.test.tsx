@@ -82,6 +82,7 @@ describe('GoalSelector', () => {
     // Select a goal
     fireEvent.click(screen.getByText('Short-term Goal'));
     expect(mockOnChange).toHaveBeenCalledWith(['1']);
+    mockOnChange.mockReset();
 
     // Test with pre-selected goal to deselect
     render(

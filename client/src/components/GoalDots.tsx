@@ -25,7 +25,7 @@ export function GoalDots({ goalIds, maxVisible = 3, className }: GoalDotsProps) 
     const horizon = getGoalHorizon(targetDate);
     return {
       'short-term': 'bg-green-500',
-      'mid-term': 'bg-yellow-500', 
+      'mid-term': 'bg-yellow-500 border border-yellow-600', 
       'long-term': 'bg-blue-500'
     }[horizon] || 'bg-gray-500';
   };
@@ -34,8 +34,13 @@ export function GoalDots({ goalIds, maxVisible = 3, className }: GoalDotsProps) 
     return goals.map(goal => goal!.title).join(', ');
   };
 
+  const shouldShowTooltip = navigator.maxTouchPoints > 0;
+
   return (
-    <div className={cn("flex items-center gap-1", className)} title={getGoalNames()}>
+    <div 
+      className={cn("flex items-center gap-1", className)} 
+      title={shouldShowTooltip ? undefined : getGoalNames()}
+    >
       {visibleGoals.map((goal, index) => (
         <div
           key={goal!.id}
