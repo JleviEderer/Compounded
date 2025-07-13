@@ -12,6 +12,8 @@ interface GoalRowProps {
 }
 
 export function GoalRow({ goal, isExpanded, onToggle }: GoalRowProps) {
+  const ChevronIcon = isExpanded ? ChevronDown : ChevronRight;
+
   return (
     <motion.div
       initial={false}
@@ -21,30 +23,22 @@ export function GoalRow({ goal, isExpanded, onToggle }: GoalRowProps) {
           : 'var(--card-background)'
       }}
       transition={{ duration: 0.2, ease: easeOutQuart }}
-      className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+      className="card-glass rounded-lg overflow-hidden"
     >
       <button
         onClick={onToggle}
-        className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+        className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
         aria-expanded={isExpanded}
         aria-controls={`goal-card-${goal.id}`}
       >
-        <div className="flex items-center gap-4 flex-1 min-w-0">
-          <motion.div
-            animate={{ rotate: isExpanded ? 90 : 0 }}
-            transition={{ duration: 0.2 }}
-            className="flex-shrink-0"
-          >
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-          </motion.div>
-          <div className="flex-1 min-w-0">
-            <div className="font-medium text-gray-900 dark:text-white text-base leading-snug">
-              {goal.title}
-            </div>
-          </div>
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          <ChevronIcon className="w-4 h-4 text-gray-500 flex-shrink-0" />
+          <span className="font-medium text-gray-900 dark:text-white truncate">
+            {goal.title}
+          </span>
         </div>
 
-        <div className="flex-shrink-0 ml-3">
+        <div className="flex-shrink-0 ml-2">
           <HorizonChip targetDate={goal.targetDate} />
         </div>
       </button>
