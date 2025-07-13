@@ -1,6 +1,5 @@
 
 import { Goal, HabitPair } from '@/types';
-import { FEATURE_FLAGS } from './featureFlags';
 
 const DEFAULT_GOAL_ID = 'general-goal';
 
@@ -14,10 +13,6 @@ export function createDefaultGoal(): Goal {
 }
 
 export function migrateHabitsToDefaultGoal(habits: HabitPair[]): HabitPair[] {
-  if (!FEATURE_FLAGS.GOALS_V1) {
-    return habits;
-  }
-
   return habits.map(habit => ({
     ...habit,
     goalIds: habit.goalIds?.length ? habit.goalIds : [DEFAULT_GOAL_ID]
@@ -25,10 +20,6 @@ export function migrateHabitsToDefaultGoal(habits: HabitPair[]): HabitPair[] {
 }
 
 export function ensureDefaultGoalExists(goals: Goal[]): Goal[] {
-  if (!FEATURE_FLAGS.GOALS_V1) {
-    return goals;
-  }
-
   const hasDefaultGoal = goals.some(goal => goal.id === DEFAULT_GOAL_ID);
   if (!hasDefaultGoal) {
     return [createDefaultGoal(), ...goals];
@@ -37,10 +28,24 @@ export function ensureDefaultGoalExists(goals: Goal[]): Goal[] {
   return goals;
 }
 
+// Migration stamp key
+const MIGRATION_STAMP_KEY = '__goodOnlyMigrated';
+
+// Check if migration has already run
+export function hasMigrationRun(): boolean {
+  return localStorage.getItem(MIGRATION_STAMP_KEY) === 'true';
+}
+
+// Mark migration as completed
+function setMigrationStamp(): void {
+  localStorage.setItem(MIGRATION_STAMP_KEY, 'true');
+}
+
 // Main migration function that persists changes
 export function runPhase05Migration() {
-  if (!FEATURE_FLAGS.GOALS_V1) {
-    console.log('🔄 Migration: GOALS_V1 flag is OFF, skipping migration');
+  // Check if already migrated (even after flag removal)
+  if (hasMigrationRun()) {
+    console.log('🔄 Migration: Already completed, skipping');
     return;
   }
 
@@ -68,5 +73,8 @@ export function runPhase05Migration() {
     }
     
     console.log('✅ Migration: Phase 0.5 migration completed');
+    
+    // Mark migration as completed
+    setMigrationStamp();
   });
 }
