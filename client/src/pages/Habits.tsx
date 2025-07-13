@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Reorder } from 'framer-motion';
 import { Plus, Edit2, Trash2, GripVertical, X, Check, ChevronRight } from 'lucide-react';
 import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 import { HabitWeight, WEIGHT_LABELS } from '../types';
@@ -12,11 +12,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 export default function Habits() {
-  const { habits, addHabit, updateHabit, deleteHabit, lastSavedHabitId } = useHabits();
+  const { habits, addHabit, updateHabit, deleteHabit, lastSavedHabitId, reorderHabits } = useHabits();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [expandedHabits, setExpandedHabits] = useState<Set<string>>(new Set());
-  
+  const [orderedHabits, setOrderedHabits] = useState(habits);
+
+  // Update ordered habits when habits change
+  useState(() => {
+    setOrderedHabits(habits);
+  }, [habits]);
+
   // Form state
   const [goodHabit, setGoodHabit] = useState('');
   const [weightIndex, setWeightIndex] = useState<number>(2); // Default to MEDIUM (index 2)
@@ -75,7 +81,13 @@ export default function Habits() {
     });
   };
 
-  
+  const handleReorder = (newOrder: typeof habits) => {
+    setOrderedHabits(newOrder);
+    // Update the context with new order
+    if (reorderHabits) {
+      reorderHabits(newOrder);
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -102,7 +114,7 @@ export default function Habits() {
                   {editingId ? 'Edit Habit Pair' : 'Add New Habit Pair'}
                 </DialogTitle>
               </DialogHeader>
-              
+
               <div className="space-y-6 pb-4">
                 <div>
                   <Label htmlFor="good-habit" className="text-gray-700 dark:text-gray-300 font-medium">
@@ -165,7 +177,7 @@ export default function Habits() {
             </Button>
           </motion.div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <AnimatePresence>
               {habits.map((habit, index) => {
                 const isExpanded = expandedHabits.has(habit.id);
@@ -177,40 +189,44 @@ export default function Habits() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden"
+                    className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                   >
                     {/* Collapsed View - Always Visible */}
                     <button
                       onClick={() => toggleExpanded(habit.id)}
-                      className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                      className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                       aria-expanded={isExpanded}
                       aria-controls={`habit-card-${habit.id}`}
                     >
-                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <div className="flex items-center gap-4 flex-1 min-w-0">
                         <motion.div
                           animate={{ rotate: isExpanded ? 90 : 0 }}
                           transition={{ duration: 0.2 }}
                           className="flex-shrink-0"
                         >
-                          <ChevronRight className="w-4 h-4 text-gray-500" />
+                          <ChevronRight className="w-4 h-4 text-gray-400" />
                         </motion.div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium text-gray-900 dark:text-white relative">
-                            <span className="block pr-8">
-                              {habit.goodHabit}
-                            </span>
-                            <Check 
-                              className={`absolute right-0 top-0 w-4 h-4 text-emerald-500 transition-opacity duration-1000 ${
-                                lastSavedHabitId === habit.id ? 'opacity-100' : 'opacity-0'
-                              }`}
-                            />
+                          <div 
+                            className="font-medium text-gray-900 dark:text-white text-base leading-snug"
+                            style={{
+                              display: '-webkit-box',
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: 'vertical',
+                              overflow: 'hidden'
+                            }}
+                          >
+                            {habit.goodHabit}
                           </div>
                         </div>
                       </div>
-                      <div className="flex-shrink-0 ml-2">
-                        <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {WEIGHT_LABELS[habit.weight]?.split(' ')[0] || 'Unknown'} (+{(habit.weight * 100).toFixed(2)}%)
-                        </span>
+                      <div className="flex-shrink-0 ml-3 text-right">
+                        <div className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                          {WEIGHT_LABELS[habit.weight]?.split(' ')[0] || 'Unknown'}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          +{(habit.weight * 100).toFixed(2)}%
+                        </div>
                       </div>
                     </button>
 
@@ -225,13 +241,13 @@ export default function Habits() {
                           transition={{ duration: 0.3 }}
                           className="overflow-hidden"
                         >
-                          <div className="px-4 pb-4 pt-2 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
-                            <div className="space-y-4">
+                          <div className="px-5 pb-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+                            <div className="space-y-4 pt-4">
                               {/* Habit Weight Control */}
                               <div>
-                                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                                   Impact Weight
-                                </h4>
+                                </div>
                                 <WeightSlider
                                   value={[HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE].indexOf(habit.weight)}
                                   onChange={(newIndex) => {
@@ -242,31 +258,31 @@ export default function Habits() {
                               </div>
 
                               {/* Drag Handle */}
-                              <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                                <GripVertical className="w-4 h-4" />
+                              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 py-1">
+                                <GripVertical className="w-3 h-3" />
                                 <span>Drag to reorder habits</span>
                               </div>
 
                               {/* Action Buttons */}
-                              <div className="flex gap-2 pt-2">
+                              <div className="flex gap-3">
                                 <Button
                                   variant="outline"
                                   size="sm"
                                   onClick={() => handleEdit(habit.id)}
-                                  className="flex-1 text-gray-900 dark:text-gray-100"
+                                  className="flex-1 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
                                 >
-                                  <Edit2 className="w-3 h-3 mr-1" />
+                                  <Edit2 className="w-3 h-3 mr-2" />
                                   Edit
                                 </Button>
-                                
+
                                 <AlertDialog>
                                   <AlertDialogTrigger asChild>
                                     <Button
                                       variant="outline"
                                       size="sm"
-                                      className="text-red-600 hover:text-red-700"
+                                      className="flex-1 text-red-600 border-red-200 hover:bg-red-50 dark:border-red-800 dark:hover:bg-red-900/20 dark:text-red-400"
                                     >
-                                      <Trash2 className="w-3 h-3 mr-1" />
+                                      <Trash2 className="w-3 h-3 mr-2" />
                                       Delete
                                     </Button>
                                   </AlertDialogTrigger>
