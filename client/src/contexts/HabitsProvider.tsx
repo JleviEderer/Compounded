@@ -5,30 +5,17 @@ import { dataService } from '../services/dataService';
 import { generateId } from '../utils/date';
 import { OfflineFirstDebouncer } from '../utils/debouncer';
 import { GoalsProvider } from './GoalsContext';
-import { FEATURE_FLAGS } from '../utils/featureFlags';
-import { useHabits } from '../hooks/useHabits';
 
 interface HabitsProviderProps {
   children: ReactNode;
 }
 
 export const HabitsProvider = ({ children }: HabitsProviderProps) => {
-  const contextValue = useHabits();
-
-  const content = (
-    <HabitsContext.Provider value={contextValue}>
-      {children}
-    </HabitsContext.Provider>
+  return (
+    <GoalsProvider>
+      <HabitsContext.Provider value={useHabits()}>
+        {children}
+      </HabitsContext.Provider>
+    </GoalsProvider>
   );
-
-  // Wrap with GoalsProvider when GOALS_V1 flag is enabled
-  if (FEATURE_FLAGS.GOALS_V1) {
-    return (
-      <GoalsProvider>
-        {content}
-      </GoalsProvider>
-    );
-  }
-
-  return content;
 };
