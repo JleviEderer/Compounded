@@ -96,7 +96,8 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
     };
   }, []);
 
-  const currentWeight = WEIGHTS[value];
+  // Safely access currentWeight with fallback
+  const currentWeight = WEIGHTS[value] || { label: 'Unknown', percentage: '0.000%' };
 
   return (
     <div className="w-full space-y-3">
