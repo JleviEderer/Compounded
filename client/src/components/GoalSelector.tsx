@@ -59,12 +59,12 @@ export function GoalSelector({ selectedGoalIds, onChange, className }: GoalSelec
           placeholder="Search goals..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 pr-10"
+          className="pl-10 pr-10 bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
         />
         {searchTerm && (
           <button
             onClick={() => setSearchTerm('')}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200"
           >
             <X className="w-4 h-4" />
           </button>
@@ -79,7 +79,9 @@ export function GoalSelector({ selectedGoalIds, onChange, className }: GoalSelec
           onClick={handleNoneClick}
           className={cn(
             "text-sm",
-            selectedGoalIds.length === 0 && "bg-gray-600 text-white hover:bg-gray-700"
+            selectedGoalIds.length === 0 
+              ? "bg-gray-700 text-white hover:bg-gray-600 border-gray-600" 
+              : "border-gray-600 text-gray-200 hover:bg-gray-700 hover:text-white"
           )}
         >
           None
