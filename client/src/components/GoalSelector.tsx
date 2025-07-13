@@ -1,7 +1,6 @@
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { Search, X, Check } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import React from 'react';
+import { Check } from 'lucide-react';
 import { useGoalsContext } from '@/contexts/GoalsContext';
 import { cn } from '@/lib/utils';
 
@@ -13,26 +12,6 @@ interface GoalSelectorProps {
 
 export function GoalSelector({ selectedGoalIds, onChange, className }: GoalSelectorProps) {
   const { goals } = useGoalsContext();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-
-  // Debounce search input by 150ms
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 150);
-
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
-
-  // Filter goals based on debounced search term
-  const filteredGoals = useMemo(() => {
-    if (!debouncedSearchTerm) return goals;
-    return goals.filter(goal =>
-      goal.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-      goal.description?.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-    );
-  }, [goals, debouncedSearchTerm]);
 
   const handleNoneClick = () => {
     onChange([]);
@@ -48,29 +27,7 @@ export function GoalSelector({ selectedGoalIds, onChange, className }: GoalSelec
   };
 
   return (
-    <div className={cn("space-y-3", className)}>
-      {/* Compact Search Input */}
-      <div className="relative">
-        <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 w-3.5 h-3.5" />
-        <Input
-          type="text"
-          placeholder="Search goals..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-8 pr-8 py-2 text-sm bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
-        />
-        {searchTerm && (
-          <button
-            onClick={() => setSearchTerm('')}
-            className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
-        )}
-      </div>
-
-      {/* Goal Chips Grid */}
-      <div className="space-y-2">
+    <div className={cn("space-y-2", className)}>
         {/* None Option */}
         <button
           onClick={handleNoneClick}
@@ -91,12 +48,12 @@ export function GoalSelector({ selectedGoalIds, onChange, className }: GoalSelec
 
         {/* Goal Options */}
         <div className="max-h-48 overflow-y-auto space-y-1">
-          {filteredGoals.length === 0 ? (
+          {goals.length === 0 ? (
             <div className="text-center py-3 text-sm text-gray-500 dark:text-gray-400">
-              {goals.length === 0 ? 'No goals created yet' : 'No goals match your search'}
+              No goals created yet
             </div>
           ) : (
-            filteredGoals.map((goal) => {
+            goals.map((goal) => {
               const isSelected = selectedGoalIds.includes(goal.id);
               return (
                 <button
@@ -122,7 +79,6 @@ export function GoalSelector({ selectedGoalIds, onChange, className }: GoalSelec
             })
           )}
         </div>
-      </div>
 
       {/* Compact Selection Summary */}
       {selectedGoalIds.length > 0 && (
