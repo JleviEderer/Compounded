@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { GoalDots } from '../components/GoalDots'; // Import GoalDots component
+import { GoalSelector } from '../components/GoalSelector'; // Import GoalSelector component
 
 export default function Habits() {
   const { habits, addHabit, updateHabit, deleteHabit, lastSavedHabitId, reorderHabits } = useHabits();
@@ -27,17 +28,19 @@ export default function Habits() {
   // Form state
   const [goodHabit, setGoodHabit] = useState('');
   const [weightIndex, setWeightIndex] = useState<number>(2); // Default to MEDIUM (index 2)
+  const [selectedGoalIds, setSelectedGoalIds] = useState<string[]>([]);
 
   const resetForm = () => {
     setGoodHabit('');
     setWeightIndex(2); // MEDIUM
+    setSelectedGoalIds([]);
     setEditingId(null);
   };
 
   const handleAdd = () => {
     if (goodHabit.trim()) {
       const weight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][weightIndex];
-      addHabit(goodHabit.trim(), weight);
+      addHabit(goodHabit.trim(), weight, selectedGoalIds);
       setIsAddModalOpen(false);
       resetForm();
     }
@@ -49,6 +52,7 @@ export default function Habits() {
       setGoodHabit(habit.goodHabit);
       const weightValues = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE];
       setWeightIndex(weightValues.indexOf(habit.weight));
+      setSelectedGoalIds(habit.goalIds || []);
       setEditingId(habitId);
       setIsAddModalOpen(true);
     }
@@ -56,10 +60,11 @@ export default function Habits() {
 
   const handleUpdate = () => {
     if (editingId && goodHabit.trim()) {
-      const weight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE];
+      const weight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][weightIndex];
       updateHabit(editingId, {
         goodHabit: goodHabit.trim(),
-        weight
+        weight,
+        goalIds: selectedGoalIds
       });
       setIsAddModalOpen(false);
       resetForm();
@@ -134,6 +139,18 @@ export default function Habits() {
                   value={weightIndex}
                   onChange={setWeightIndex}
                 />
+
+                <div>
+                  <Label className="text-gray-700 dark:text-gray-300 font-medium">
+                    Goals (Optional)
+                  </Label>
+                  <div className="mt-2">
+                    <GoalSelector 
+                      selectedGoalIds={selectedGoalIds}
+                      onChange={setSelectedGoalIds}
+                    />
+                  </div>
+                </div>
 
                 <div className="flex space-x-4 pt-4">
                   <Button

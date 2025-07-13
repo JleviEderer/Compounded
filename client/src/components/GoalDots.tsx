@@ -24,9 +24,9 @@ export function GoalDots({ goalIds, maxVisible = 3, className }: GoalDotsProps) 
   const getGoalDotColor = (targetDate?: Date) => {
     const horizon = getGoalHorizon(targetDate);
     return {
-      'short': 'bg-green-500',
-      'mid': 'bg-yellow-500',
-      'long': 'bg-blue-500'
+      'short-term': 'bg-green-500',
+      'mid-term': 'bg-yellow-500', 
+      'long-term': 'bg-blue-500'
     }[horizon] || 'bg-gray-500';
   };
 
