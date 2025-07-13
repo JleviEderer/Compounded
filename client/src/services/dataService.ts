@@ -174,7 +174,9 @@ class DataService {
       try {
         data = JSON.parse(stored);
       } catch (error) {
-        console.error('❌ Failed to parse existing data:', error);
+        if (this.debug) {
+          console.error('❌ Failed to parse existing data:', error);
+        }
       }
     }
     
@@ -198,7 +200,9 @@ class DataService {
       try {
         data = JSON.parse(stored);
       } catch (error) {
-        console.error('❌ Failed to parse existing data:', error);
+        if (this.debug) {
+          console.error('❌ Failed to parse existing data:', error);
+        }
       }
     }
     

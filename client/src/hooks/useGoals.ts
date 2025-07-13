@@ -59,11 +59,21 @@ export function useGoals() {
     return goals.find(goal => goal.id === id);
   };
 
+  const refreshGoals = () => {
+    const loadedGoals = dataService.getGoals();
+    setGoals(loadedGoals.map((g: any) => ({
+      ...g,
+      createdAt: new Date(g.createdAt),
+      targetDate: g.targetDate ? new Date(g.targetDate) : undefined
+    })));
+  };
+
   return {
     goals,
     addGoal,
     updateGoal,
     deleteGoal,
-    getGoalById
+    getGoalById,
+    refreshGoals
   };
 }
