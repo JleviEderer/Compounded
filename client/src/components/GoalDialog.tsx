@@ -131,7 +131,7 @@ export function GoalDialog({ goal, open, onOpenChange, trigger }: GoalDialogProp
                 onChange={(e) => setTargetDate(e.target.value)}
                 className="pl-10 text-gray-900 dark:text-gray-100"
               />
-              <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+              <Calendar className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none z-10" />
             </div>
           </div>
 
