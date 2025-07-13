@@ -273,6 +273,13 @@ export function useHabits() {
     }
   };
 
+  const reorderHabits = useCallback((newOrder: HabitPair[]) => {
+    setData(prev => ({
+      ...prev,
+      habits: [...newOrder]
+    }));
+  }, []);
+
   const resetData = () => {
     // Clear localStorage completely for a fresh start
     if (dataSourceConfig.enableLocalStorage) {
@@ -298,6 +305,7 @@ export function useHabits() {
     addHabit,
     updateHabit,
     deleteHabit,
+    reorderHabits,
     logHabit,
     getHabitLog,
     updateSettings,

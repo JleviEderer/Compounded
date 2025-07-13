@@ -18,12 +18,6 @@ export default function Habits() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [expandedHabits, setExpandedHabits] = useState<Set<string>>(new Set());
-  const [orderedHabits, setOrderedHabits] = useState(habits);
-
-  // Update ordered habits when habits change
-  useState(() => {
-    setOrderedHabits(habits);
-  }, [habits]);
 
   // Form state
   const [goodHabit, setGoodHabit] = useState('');
@@ -87,13 +81,7 @@ export default function Habits() {
     });
   };
 
-  const handleReorder = (newOrder: typeof habits) => {
-    setOrderedHabits(newOrder);
-    // Update the context with new order
-    if (reorderHabits) {
-      reorderHabits(newOrder);
-    }
-  };
+  
 
   return (
     <div className="space-y-8">
@@ -195,35 +183,48 @@ export default function Habits() {
             </Button>
           </motion.div>
         ) : (
-          <div className="space-y-3">
+          <Reorder.Group 
+            axis="y" 
+            values={habits} 
+            onReorder={reorderHabits}
+            className="space-y-3"
+          >
             <AnimatePresence>
               {habits.map((habit, index) => {
                 const isExpanded = expandedHabits.has(habit.id);
                 return (
-                  <motion.div
+                  <Reorder.Item
                     key={habit.id}
-                    layout
+                    value={habit}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ delay: index * 0.1 }}
                     className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                    dragListener={false}
+                    style={{ cursor: 'default' }}
                   >
                     {/* Collapsed View - Always Visible */}
-                    <button
-                      onClick={() => toggleExpanded(habit.id)}
-                      className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
-                      aria-expanded={isExpanded}
-                      aria-controls={`habit-card-${habit.id}`}
-                    >
+                    <div className="w-full px-5 py-4 flex items-center justify-between">
                       <div className="flex items-center gap-4 flex-1 min-w-0">
-                        <motion.div
-                          animate={{ rotate: isExpanded ? 90 : 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="flex-shrink-0"
+                        <Reorder.Item.DragControls className="flex-shrink-0 cursor-grab active:cursor-grabbing">
+                          <GripVertical className="w-4 h-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" />
+                        </Reorder.Item.DragControls>
+                        
+                        <button
+                          onClick={() => toggleExpanded(habit.id)}
+                          className="flex items-center gap-2 text-left hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                          aria-expanded={isExpanded}
+                          aria-controls={`habit-card-${habit.id}`}
                         >
-                          <ChevronRight className="w-4 h-4 text-gray-400" />
-                        </motion.div>
+                          <motion.div
+                            animate={{ rotate: isExpanded ? 90 : 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex-shrink-0"
+                          >
+                            <ChevronRight className="w-4 h-4 text-gray-400" />
+                          </motion.div>
+                        </button>
                         <div className="flex-1 min-w-0">
                           <div 
                             className="font-medium text-gray-900 dark:text-white text-base leading-snug"
@@ -247,7 +248,7 @@ export default function Habits() {
                           +{(habit.weight * 100).toFixed(2)}%
                         </div>
                       </div>
-                    </button>
+                    </div>
 
                     {/* Expanded View - Conditionally Visible */}
                     <AnimatePresence>
@@ -276,11 +277,7 @@ export default function Habits() {
                                 />
                               </div>
 
-                              {/* Drag Handle */}
-                              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 py-1">
-                                <GripVertical className="w-3 h-3" />
-                                <span>Drag to reorder habits</span>
-                              </div>
+                              
 
                               {/* Action Buttons */}
                               <div className="flex gap-3">
@@ -330,11 +327,11 @@ export default function Habits() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </motion.div>
+                  </Reorder.Item>
                 );
               })}
             </AnimatePresence>
-          </div>
+          </Reorder.Group>
         )}
       </motion.div>
     </div>

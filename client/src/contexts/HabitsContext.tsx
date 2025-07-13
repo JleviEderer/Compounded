@@ -21,6 +21,7 @@ interface HabitsContextValue {
   addHabit: (goodHabit: string, weight: HabitWeight) => void;
   updateHabit: (id: string, updates: Partial<HabitPair>) => void;
   deleteHabit: (id: string) => void;
+  reorderHabits: (newOrder: HabitPair[]) => void;
   logHabit: (habitId: string, date: string, state: HabitLogState) => void;
   getHabitLog: (habitId: string, date: string) => HabitLog | undefined;
   updateSettings: (updates: Partial<AppData['settings']>) => void;
