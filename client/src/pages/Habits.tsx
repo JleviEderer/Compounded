@@ -109,9 +109,9 @@ export default function Habits() {
                 </DialogTitle>
               </DialogHeader>
 
-              <div className="space-y-6 pb-4">
+              <div className="space-y-4 pb-2">
                 <div>
-                  <Label htmlFor="good-habit" className="text-gray-700 dark:text-gray-300 font-medium">
+                  <Label htmlFor="good-habit" className="text-gray-700 dark:text-gray-300 font-medium text-sm">
                     Habit Description
                   </Label>
                   <Input
@@ -119,20 +119,25 @@ export default function Habits() {
                     value={goodHabit}
                     onChange={(e) => setGoodHabit(e.target.value)}
                     placeholder="e.g., Read for 15 minutes"
-                    className="mt-2 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 min-h-[44px] text-base"
+                    className="mt-1.5 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 min-h-[44px] text-base"
                   />
                 </div>
 
-                <WeightSlider
-                  value={weightIndex}
-                  onChange={setWeightIndex}
-                />
+                <div>
+                  <Label className="text-gray-700 dark:text-gray-300 font-medium text-sm mb-2 block">
+                    Impact Weight
+                  </Label>
+                  <WeightSlider
+                    value={weightIndex}
+                    onChange={setWeightIndex}
+                  />
+                </div>
 
                 <div>
-                  <Label className="text-gray-700 dark:text-gray-300 font-medium">
+                  <Label className="text-gray-700 dark:text-gray-300 font-medium text-sm">
                     Goals (Optional)
                   </Label>
-                  <div className="mt-2">
+                  <div className="mt-1.5">
                     <GoalSelector 
                       selectedGoalIds={selectedGoalIds}
                       onChange={setSelectedGoalIds}
@@ -140,7 +145,7 @@ export default function Habits() {
                   </div>
                 </div>
 
-                <div className="flex space-x-4 pt-4">
+                <div className="flex space-x-3 pt-3">
                   <Button
                     variant="outline"
                     onClick={() => {

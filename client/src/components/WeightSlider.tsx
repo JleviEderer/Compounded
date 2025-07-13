@@ -29,7 +29,7 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
-    
+
     animationFrameRef.current = requestAnimationFrame(() => {
       const position = (currentValue / 4) * 100;
       setPeekPosition(position);
@@ -100,62 +100,94 @@ export default function WeightSlider({ value, onChange }: WeightSliderProps) {
   const currentWeight = WEIGHTS[value] || { label: 'Unknown', percentage: '0.000%' };
 
   return (
-    <div className="w-full space-y-3">
-      <div className="relative py-4 px-2">
-        <input
-          ref={sliderRef}
-          type="range"
-          min={0}
-          max={4}
-          step={1}
-          value={value}
-          onChange={handleChange}
-          onMouseDown={handlePointerDown}
-          onMouseUp={handlePointerUp}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          onKeyDown={handleKeyDown}
-          className="w-full h-4 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer touch-manipulation slider-thumb focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2 dark:focus:ring-offset-gray-800"
-          style={{
-            background: `linear-gradient(to right, #FF6B7D 0%, #FF6B7D ${(value / 4) * 100}%, #e5e7eb ${(value / 4) * 100}%, #e5e7eb 100%)`
-          }}
-          aria-label={`Weight slider: ${currentWeight.label}`}
-          aria-valuemin={0}
-          aria-valuemax={4}
-          aria-valuenow={value}
-          aria-valuetext={currentWeight.label}
+    <div className="space-y-3">
+      {/* Progress indicator */}
+      <div className="relative w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <motion.div
+          className="absolute top-0 left-0 h-full bg-gradient-to-r from-teal-400 to-teal-600 rounded-full"
+          initial={{ width: 0 }}
+          animate={{ width: `${(value / 4) * 100}%` }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         />
+      </div>
 
-        {/* ValuePeek - Live percentage tooltip */}
-        <AnimatePresence>
-          {showPeek && (
-            <motion.div
-              className="absolute pointer-events-none w-14 h-7 rounded-full bg-accent/80 text-white text-xs font-semibold flex items-center justify-center shadow-sm"
-              style={{
-                left: `calc(${peekPosition}% - 28px)`,
-                top: '-32px',
-              }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.15 }}
-            >
-              +{currentWeight.percentage}
-            </motion.div>
-          )}
-        </AnimatePresence>
-        
+      {/* Hidden native slider for accessibility */}
+      <input
+        ref={sliderRef}
+        type="range"
+        min={0}
+        max={4}
+        step={1}
+        value={value}
+        onChange={handleChange}
+        onMouseDown={() => setIsDragging(true)}
+        onMouseUp={() => setIsDragging(false)}
+        onTouchStart={() => {
+          setIsDragging(true);
+          setShowPeek(true);
+          updatePeekPosition(value);
+        }}
+        onTouchEnd={() => {
+          setIsDragging(false);
+          setShowPeek(false);
+        }}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        onKeyDown={(e) => {
+          const step = e.shiftKey ? 2 : 1;
+          if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            onChange(Math.max(0, value - step));
+          } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            onChange(Math.min(4, value + step));
+          }
+        }}
+        className="sr-only"
+        aria-label="Habit weight selector"
+        aria-valuetext={`${WEIGHTS[value].label} impact: ${WEIGHTS[value].percentage}`}
+      />
+
+      {/* Peek tooltip for mobile */}
+      <AnimatePresence>
+        {showPeek && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="absolute top-0 bg-gray-900 text-white px-3 py-2 rounded-lg text-sm font-medium shadow-lg z-10"
+            style={{
+              left: `${peekPosition}%`,
+              transform: 'translateX(-50%)',
+              marginTop: '-3rem'
+            }}
+          >
+            <div className="text-center">
+              <div>{WEIGHTS[value].label}</div>
+              <div className="text-xs text-gray-300">{WEIGHTS[value].percentage}</div>
+            </div>
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Compact current selection display */}
+      <div className="text-center py-1">
+        <div className="text-base font-medium text-gray-900 dark:text-white">
+          {WEIGHTS[value].label}
+        </div>
+        <div className="text-xs text-gray-500 dark:text-gray-400">
+          +{WEIGHTS[value].percentage} impact
+        </div>
       </div>
 
       {/* Clickable labels */}
-      <div className="flex justify-between items-center gap-0.5 px-2">
+      <div className="flex justify-between items-center gap-0.5">
         {WEIGHTS.map((weight, index) => (
           <motion.button
             key={index}
             onClick={() => onChange(index)}
-            className={`text-xs px-1.5 py-2.5 rounded-lg min-h-[44px] flex-1 touch-manipulation transition-all duration-200 flex items-center justify-center font-medium ${
+            className={`text-xs px-1.5 py-2 rounded-lg min-h-[40px] flex-1 touch-manipulation transition-all duration-200 flex items-center justify-center font-medium ${
               value === index 
                 ? 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20 shadow-sm' 
                 : 'text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
