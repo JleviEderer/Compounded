@@ -128,11 +128,12 @@ export function useHabits() {
     };
   }, []);
 
-  const addHabit = useCallback((goodHabit: string, weight: HabitWeight) => {
+  const addHabit = useCallback((goodHabit: string, weight: HabitWeight, goalIds: string[] = []) => {
     const newHabit: HabitPair = {
       id: Date.now().toString(),
       goodHabit,
       weight,
+      goalIds,
       createdAt: new Date()
     };
 

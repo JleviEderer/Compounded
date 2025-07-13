@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Goal } from '@/types';
 import { dataService } from '@/services/dataService';
+import { useHabits } from './useHabits';
 
 export function useGoals() {
   const [goals, setGoals] = useState<Goal[]>([]);
@@ -42,8 +43,17 @@ export function useGoals() {
   };
 
   const deleteGoal = (id: string) => {
+    // Remove goal from list
     const filtered = goals.filter(goal => goal.id !== id);
     saveGoals(filtered);
+    
+    // Cascade: remove goal ID from all habits in a single batch update
+    const allHabits = dataService.getHabits();
+    const updatedHabits = allHabits.map(habit => ({
+      ...habit,
+      goalIds: habit.goalIds?.filter(goalId => goalId !== id) || []
+    }));
+    dataService.saveHabits(updatedHabits);
   };
 
   const getGoalById = (id: string) => {
