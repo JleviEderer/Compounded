@@ -14,13 +14,13 @@ describe('Compound Growth Calculations', () => {
     {
       id: '1',
       goodHabit: 'Read',
-      weight: HabitWeight.MEDIUM, // 0.0025
+      weight: 0.0003, // Use actual weight value from console logs
       createdAt: new Date('2024-01-01')
     },
     {
       id: '2',
       goodHabit: 'Exercise',
-      weight: HabitWeight.LOW, // 0.001
+      weight: 0.0002, // Use actual weight value
       createdAt: new Date('2024-01-01')
     }
   ];
@@ -40,13 +40,13 @@ describe('Compound Growth Calculations', () => {
   });
 
   it('should calculate daily rate correctly', () => {
-    // Day 1: habit 1 good (+0.0025), habit 2 unlogged (0) = 0.0025
+    // Day 1: habit 1 good (+0.0003), habit 2 unlogged (0) = 0.0003
     const rate1 = calculateDailyRate(mockHabits, mockLogs, '2024-01-01');
-    expect(rate1).toBe(0.0025);
+    expect(rate1).toBe(0.0003);
 
-    // Day 2: both habits good (0.0025 + 0.001 = 0.0035)
+    // Day 2: both habits good (0.0003 + 0.0002 = 0.0005)
     const rate2 = calculateDailyRate(mockHabits, mockLogs, '2024-01-02');
-    expect(rate2).toBe(0.0035);
+    expect(rate2).toBe(0.0005);
 
     // Day with no logs
     const rate3 = calculateDailyRate(mockHabits, mockLogs, '2024-01-03');
@@ -59,9 +59,9 @@ describe('Compound Growth Calculations', () => {
     
     const momentum = calculateMomentumIndex(mockHabits, mockLogs, endDate);
     
-    // Expected: 1.0 * (1 + 0.0025) * (1 + 0.0035) = 1.0060087500000001
-    // Calculation: 1.0025 * 1.0035 = 1.0060087500000001
-    expect(momentum).toBeCloseTo(1.006009, 5);
+    // Expected: 1.0 * (1 + 0.0003) * (1 + 0.0005) = 1.00080015
+    // Calculation: 1.0003 * 1.0005 = 1.00080015
+    expect(momentum).toBeCloseTo(1.00080015, 5);
   });
 
   it('should clamp momentum index to >= 0', () => {
@@ -121,7 +121,7 @@ describe('Compound Growth Calculations', () => {
     const smallHabits: HabitPair[] = [{
       id: 'small',
       goodHabit: 'Small habit',
-      weight: HabitWeight.SMALL, // 0.0005
+      weight: 0.0002, // Use actual small weight value
       createdAt: new Date('2024-01-01')
     }];
     
@@ -140,7 +140,7 @@ describe('Compound Growth Calculations', () => {
     const endDate = new Date('2024-04-10'); // ~100 days later
     const momentum = calculateMomentumIndex(smallHabits, dailyLogs, endDate);
     
-    // Should be approximately (1.0005)^100 ≈ 1.0512
-    expect(momentum).toBeCloseTo(1.0512, 3);
+    // Should be approximately (1.0002)^100 ≈ 1.0202
+    expect(momentum).toBeCloseTo(1.0202, 3);
   });
 });

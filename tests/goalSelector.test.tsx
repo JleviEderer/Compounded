@@ -91,7 +91,9 @@ describe('GoalSelector', () => {
       </TestWrapper>
     );
 
-    fireEvent.click(screen.getByText('Short-term Goal'));
+    // Use getAllByText and click the first occurrence (unselected state)
+    const shortTermGoals = screen.getAllByText('Short-term Goal');
+    fireEvent.click(shortTermGoals[0]);
     expect(mockOnChange).toHaveBeenCalledWith([]);
   });
 
@@ -108,10 +110,12 @@ describe('GoalSelector', () => {
     // Wait for debounce
     await waitFor(() => {
       expect(screen.getByText('Short-term Goal')).toBeInTheDocument();
-    }, { timeout: 200 });
+    }, { timeout: 600 }); // Increase timeout for debounce
 
-    expect(screen.queryByText('Mid-term Goal')).not.toBeInTheDocument();
-    expect(screen.queryByText('Long-term Goal')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText('Mid-term Goal')).not.toBeInTheDocument();
+      expect(screen.queryByText('Long-term Goal')).not.toBeInTheDocument();
+    }, { timeout: 600 });
   });
 
   it('shows selection summary when goals are selected', () => {

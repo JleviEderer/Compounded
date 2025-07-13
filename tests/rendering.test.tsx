@@ -1,11 +1,29 @@
 import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Home from '../client/src/pages/Home';
 import HabitRow from '../client/src/components/HabitRow';
 import WeightSlider from '../client/src/components/WeightSlider';
-import { HabitWeight } from '../client/src/types';
+import Home from '../client/src/pages/Home';
+import { HabitPair, HabitWeight } from '../client/src/types';
+import { HabitsProvider } from '../client/src/contexts/HabitsProvider';
+
+const TestWrapper = ({ children }: { children: React.ReactNode }) => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+      mutations: { retry: false },
+    },
+  });
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <HabitsProvider>
+        {children}
+      </HabitsProvider>
+    </QueryClientProvider>
+  );
+};
 
 // Mock Recharts components
 vi.mock('recharts', () => ({
@@ -133,7 +151,7 @@ describe('Component Rendering', () => {
     );
 
     const slider = screen.getByRole('slider');
-    
+
     // Simulate slider change
     fireEvent.change(slider, { target: { value: '2' } });
 

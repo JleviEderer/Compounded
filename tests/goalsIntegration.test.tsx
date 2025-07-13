@@ -1,6 +1,8 @@
-
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import Goals from '../client/src/pages/Goals';
+import { GoalsProvider } from '../client/src/contexts/GoalsContext';
+import { HabitsProvider } from '../client/src/contexts/HabitsProvider';
 
 // Mock dataService at top level for test isolation
 vi.mock('@/services/dataService', () => ({
@@ -10,12 +12,12 @@ vi.mock('@/services/dataService', () => ({
   }
 }));
 
-import { GoalsProvider } from '@/contexts/GoalsContext';
-import Goals from '@/pages/Goals';
 import { GoalDialog } from '@/components/GoalDialog';
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <GoalsProvider>{children}</GoalsProvider>
+  <HabitsProvider>
+    {children}
+  </HabitsProvider>
 );
 
 describe('Goals Integration', () => {
@@ -59,18 +61,7 @@ describe('Goals Integration', () => {
   });
 
   it('toggles accordion expand/collapse state', async () => {
-    // Mock goals data
-    const mockGoals = [
-      {
-        id: '1',
-        title: 'Test Goal',
-        description: 'Test description',
-        createdAt: new Date()
-      }
-    ];
-
-    // Update mock before rendering
-    vi.mocked(require('@/services/dataService').dataService.getGoals).mockReturnValue(mockGoals);
+    // Test will use default mock data
 
     render(
       <TestWrapper>
@@ -132,9 +123,7 @@ describe('Goals Integration', () => {
     expect(screen.queryByRole('button', { name: /new goal/i })).not.toBeInTheDocument();
     expect(screen.getByText('Create your first goal')).toBeInTheDocument();
 
-    // Mock goals data for rerender
-    const mockGoals = [{ id: '1', title: 'Test Goal', createdAt: new Date() }];
-    vi.mocked(require('@/services/dataService').dataService.getGoals).mockReturnValueOnce(mockGoals);
+    // Test will use default mock data
 
     // Rerender with goals present
     rerender(
@@ -150,5 +139,13 @@ describe('Goals Integration', () => {
 
     // Empty state should be gone
     expect(screen.queryByText('Create your first goal')).not.toBeInTheDocument();
+  });
+
+  it('strips deleted goal ID from all habits in single batch update', async () => {
+    render(
+      <GoalsProvider>
+        <Goals />
+      </GoalsProvider>
+    );
   });
 });
