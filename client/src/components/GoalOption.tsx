@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Goal } from '@/types';
@@ -15,8 +14,8 @@ export function GoalOption({ goal, isSelected, onToggle }: GoalOptionProps) {
   const getGoalColor = (targetDate?: Date) => {
     const horizon = getGoalHorizon(targetDate);
     return {
-      'short': 'bg-green-100 text-green-800 border-green-200',
-      'mid': 'bg-yellow-100 text-yellow-800 border-yellow-200',
+      'short': 'bg-coral/10 text-coral border-coral/20',
+      'mid': 'bg-purple-100 text-purple-800 border-purple-200',
       'long': 'bg-blue-100 text-blue-800 border-blue-200'
     }[horizon] || 'bg-gray-100 text-gray-800 border-gray-200';
   };

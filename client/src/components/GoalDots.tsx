@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useGoalsContext } from '@/contexts/GoalsContext';
 import { getGoalHorizon } from '@/utils/goalUtils';
@@ -24,8 +23,8 @@ export function GoalDots({ goalIds, maxVisible = 3, className }: GoalDotsProps) 
   const getGoalDotColor = (targetDate?: Date) => {
     const horizon = getGoalHorizon(targetDate);
     switch (horizon) {
-      case 'short': return 'bg-green-500';
-      case 'mid':   return 'bg-yellow-500 border border-yellow-600';
+      case 'short': return 'bg-coral';
+      case 'mid':   return 'bg-purple-500';
       case 'long':  return 'bg-blue-500';
       default:      return 'bg-gray-500';
     }

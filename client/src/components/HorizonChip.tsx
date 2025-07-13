@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { differenceInDays, format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
@@ -14,19 +13,19 @@ export function HorizonChip({ targetDate, className }: HorizonChipProps) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const durationDays = differenceInDays(targetDate, today);
-  
+
   let horizon: string;
   let colorClass: string;
-  
+
   if (durationDays <= 90) {
     horizon = 'Short-term';
-    colorClass = 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+    colorClass = 'bg-coral/10 text-coral dark:bg-coral/20 dark:text-coral-light';
   } else if (durationDays <= 365) {
     horizon = 'Mid-term';
-    colorClass = 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+    colorClass = 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300';
   } else {
     horizon = 'Long-term';
-    colorClass = 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+    colorClass = 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300';
   }
 
   const formattedDate = format(targetDate, 'd MMM yyyy');
