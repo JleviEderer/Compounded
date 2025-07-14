@@ -1,0 +1,55 @@
+
+> rest-express@1.0.0 test
+> vitest run frequencyHelpers.test.ts --reporter=verbose
+
+
+ RUN  v3.2.3 /home/runner/workspace
+
+ ❯ tests/frequencyHelpers.test.ts (16 tests | 1 failed) 18ms
+   ✓ expectedForRange (9)
+     ✓ calculates expected logs for weekly frequency 2ms
+     ✓ calculates expected logs for daily frequency (7 times per week) 0ms
+     ✓ calculates expected logs for partial week 0ms
+     ✓ calculates expected logs for monthly frequency 0ms
+     ✓ calculates expected logs for yearly frequency 0ms
+     ✓ handles single day range 0ms
+     ✓ uses defaults for habits without frequency 0ms
+     ✓ handles leap year correctly 0ms
+     ✓ guards against very low frequency returning 0 0ms
+   ✓ calculateHabitSuccessRate (4)
+     ✓ calculates 100% success rate when completed equals expected 0ms
+     ✓ calculates 50% success rate when completed is half of expected 0ms
+     ✓ caps success rate at 100% even when over-performing 0ms
+     ✓ returns 0% for no completed logs 0ms
+   ❯ calculateAggregatedSuccessRate (3)
+     × calculates weighted success rate across multiple habits 10ms
+     ✓ returns 0 for empty habits array 0ms
+     ✓ handles habits with no logs 0ms
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/frequencyHelpers.test.ts > calculateAggregatedSuccessRate > calculates weighted success rate across multiple habits
+AssertionError: expected 20 to be 80 // Object.is equality
+
+- Expected
++ Received
+
+- 80
++ 20
+
+ ❯ tests/frequencyHelpers.test.ts:158:18
+    156|     const rate = calculateAggregatedSuccessRate(habits, habitLogs, start, end);
+    157|     // Weighted: (7 + 1) / (7 + 3) = 8/10 = 80%
+    158|     expect(rate).toBe(80);
+       |                  ^
+    159|   });
+    160| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 15 passed (16)
+   Start at  03:29:16
+   Duration  2.99s (transform 114ms, setup 389ms, collect 330ms, tests 18ms, environment 970ms, prepare 515ms)
+
