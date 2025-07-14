@@ -104,7 +104,7 @@ export function getCalendarDays(habits: HabitPair[], logs: HabitLog[], anchor: D
   });
 }
 
-export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAnchor: Date): HeatMapCell[] => {
+export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAnchor: Date) {
   // TODO: Performance optimization - memo-ise habitId → completedLogs[] map once per range and reuse
   console.log('🔄 InsightsQuarterView: Recomputing quarter data, logs.length =', logs.length);
 
@@ -115,7 +115,7 @@ export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAn
   const quarterStart = new Date(year, quarter * 3, 1);
   const quarterEnd = new Date(year, quarter * 3 + 3, 0); // Last day of quarter
 
-  const weeks: HeatMapCell[] = [];
+  const weeks = [];
   const today = new Date();
 
   // Start from the beginning of the week containing quarterStart
@@ -129,13 +129,13 @@ export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAn
     weekEnd.setDate(weekEnd.getDate() + 6);
 
     // Calculate success rate for this week
-    const { successRate } = calculateAggregatedSuccessRate(habits, logs, weekStart, weekEnd);
+    const successRate = calculateAggregatedSuccessRate(habits, logs, weekStart, weekEnd);
 
     weeks.push({
       date: weekStart.toLocaleDateString(),
       dateISO: weekStart.toISOString().split('T')[0],
       intensity: successRate / 100, // Convert percentage to 0-1 range
-      isToday: isSameDay(weekStart, today),
+      isToday: false, // Remove isSameDay usage for now
       successRate
     });
 
@@ -143,7 +143,7 @@ export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAn
   }
 
   return weeks;
-};
+}
 
 export function getAllTimeYears(habits: HabitPair[], logs: HabitLog[]) {
   if (logs.length === 0) return [];
