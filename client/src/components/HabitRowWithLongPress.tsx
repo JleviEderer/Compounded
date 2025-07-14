@@ -38,7 +38,7 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
   const displayText = habit.goodHabit;
 
   return (
-    <React.Fragment>
+    <>
       <Popover
         open={popoverHabit?.id === habit.id}
         onOpenChange={(open) => !open && setPopoverHabit(null)}
@@ -76,11 +76,26 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
 
       {getLast7Days().map((day, dayIndex) => {
         const log = filteredLogs.find(l => l.habitId === habit.id && l.date === day.date);
+        
+        // Debug log to see what we're getting
+        if (day.date === '2025-06-11' && habit.id === '1') {
+          console.log('[HABIT ROW DEBUG]', {
+            habitId: habit.id,
+            date: day.date,
+            log: log,
+            logState: log?.state,
+            logCompleted: log?.completed
+          });
+        }
 
         const getSquareStyle = () => {
-          if (log?.state === 'good') {
-            return 'bg-teal-500'; // #10b981 - good habit completed
-          } else if (log?.state === 'bad') {
+          // Handle both 'state' and 'completed' properties for backward compatibility
+          const isCompleted = log?.state === 'good' || log?.completed === true;
+          const isBad = log?.state === 'bad';
+          
+          if (isCompleted) {
+            return 'bg-teal-500'; // #14b8a6 - good habit completed
+          } else if (isBad) {
             return 'bg-red-400'; // #f87171 (coral) - bad habit completed
           } else {
             return 'bg-gray-200 dark:bg-gray-600 border-2 border-gray-300 dark:border-gray-500'; // #e5e7eb - not logged
@@ -98,6 +113,6 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
           </div>
         );
       })}
-    </React.Fragment>
+    </>
   );
 };
