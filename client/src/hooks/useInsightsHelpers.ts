@@ -105,44 +105,51 @@ export function getCalendarDays(habits: HabitPair[], logs: HabitLog[], anchor: D
 }
 
 export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAnchor: Date) {
-  // TODO: Performance optimization - memo-ise habitId → completedLogs[] map once per range and reuse
-  console.log('🔄 InsightsQuarterView: Recomputing quarter data, logs.length =', logs.length);
+  const quarterStart = startOfQuarter(quarterAnchor);
+  const quarterEnd = endOfQuarter(quarterAnchor);
 
-  const quarter = Math.floor(quarterAnchor.getMonth() / 3);
-  const year = quarterAnchor.getFullYear();
+  // Get all weeks in the quarter
+  const weeks = eachWeekOfInterval(
+    { start: quarterStart, end: quarterEnd },
+    { weekStartsOn: 1 } // Monday
+  );
 
-  // Calculate quarter start and end dates
-  const quarterStart = new Date(year, quarter * 3, 1);
-  const quarterEnd = new Date(year, quarter * 3 + 3, 0); // Last day of quarter
+  return weeks.map(weekStart => {
+    const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
+    const weekLogs = logs.filter(log => 
+      log.date >= format(weekStart, 'yyyy-MM-dd') && 
+      log.date <= format(weekEnd, 'yyyy-MM-dd')
+    );
 
-  const weeks = [];
-  const today = new Date();
+    // Calculate average daily rate for the week
+    const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
+    const weekRates = weekDays.map(day => 
+      calculateDailyRate(habits, logs, format(day, 'yyyy-MM-dd'))
+    );
+    const avgRate = weekRates.reduce((sum, rate) => sum + rate, 0) / weekRates.length;
 
-  // Start from the beginning of the week containing quarterStart
-  const current = new Date(quarterStart);
-  current.setDate(current.getDate() - current.getDay()); // Move to Sunday
-
-  // Generate exactly 13 weeks for a full quarter view
-  for (let weekIndex = 0; weekIndex < 13; weekIndex++) {
-    const weekStart = new Date(current);
-    const weekEnd = new Date(current);
-    weekEnd.setDate(weekEnd.getDate() + 6);
-
-    // Calculate success rate for this week
-    const successRate = calculateAggregatedSuccessRate(habits, logs, weekStart, weekEnd);
-
-    weeks.push({
-      date: weekStart.toLocaleDateString(),
-      dateISO: weekStart.toISOString().split('T')[0],
-      intensity: successRate / 100, // Convert percentage to 0-1 range
-      isToday: false, // Remove isSameDay usage for now
-      successRate
+    // Calculate frequency-aware success rate for the week
+    const habitLogs: { [habitId: string]: number } = {};
+    habits.forEach(habit => {
+      const completedCount = weekLogs.filter(l => 
+        l.habitId === habit.id && l.state === 'good'
+      ).length;
+      habitLogs[habit.id] = completedCount;
     });
+    const successRate = calculateAggregatedSuccessRate(habits, habitLogs, weekStart, weekEnd);
 
-    current.setDate(current.getDate() + 7); // Move to next week
-  }
+    const isToday = weekDays.some(day => 
+      format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')
+    );
 
-  return weeks;
+    return {
+      date: format(weekStart, 'MMM d'),
+      dateISO: format(weekStart, 'yyyy-MM-dd'),
+      intensity: avgRate,
+      isToday,
+      successRate
+    };
+  });
 }
 
 export function getAllTimeYears(habits: HabitPair[], logs: HabitLog[]) {
