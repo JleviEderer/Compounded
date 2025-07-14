@@ -141,13 +141,13 @@ describe('calculateHabitSuccessRate', () => {
 describe('calculateAggregatedSuccessRate', () => {
   it('calculates weighted success rate across multiple habits', () => {
     const habits = [
-      mockHabit(7, 'week'),  // 7 expected
-      mockHabit(3, 'week')   // 3 expected
+      mockHabit(7, 'week'),  // 7 expected for 7 days
+      mockHabit(3, 'week')   // 3 expected for 7 days
     ];
     
     const habitLogs = {
-      [habits[0].id]: 7, // 7/7 completed
-      [habits[1].id]: 1  // 1/3 completed
+      [habits[0].id]: 7, // 7/7 completed = 100%
+      [habits[1].id]: 1  // 1/3 completed = 33%
     };
     
     const start = new Date('2025-01-01');

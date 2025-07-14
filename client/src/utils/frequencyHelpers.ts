@@ -79,7 +79,10 @@ export function calculateAggregatedSuccessRate(
     { completedSum: 0, expectedSum: 0 }
   );
   
-  return expectedSum > 0 ? (completedSum / expectedSum) * 100 : 0;
+  if (expectedSum === 0) return 0;
+  
+  const rate = (completedSum / expectedSum) * 100;
+  return Math.min(100, Math.max(0, Math.round(rate))); // Cap at 100% and round to nearest integer
 }
 
 /**
