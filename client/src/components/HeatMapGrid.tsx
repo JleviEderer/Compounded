@@ -88,6 +88,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
                 transition={{ delay: index * 0.01 }}
                 onClick={() => cell.day && onCellClick?.(cell.dateISO)}
                 title={cell.day && cell.successRate !== undefined ? `${cell.date}: ${Math.round(cell.successRate)}% success rate` : undefined}
+                aria-label={cell.day && cell.successRate !== undefined ? `${cell.date}: ${Math.round(cell.successRate)}% success rate` : cell.day ? `${cell.date}: No data` : undefined}
               >
                 {cell.day}
               </motion.div>
@@ -139,6 +140,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
                   transition={{ delay: weekIndex * 0.05 + dayIndex * 0.01 }}
                   onClick={() => onCellClick?.(cell.dateISO)}
                   title={cell.successRate !== undefined ? `${cell.dateISO}: ${Math.round(cell.successRate)}% success rate` : undefined}
+                  aria-label={cell.successRate !== undefined ? `${cell.dateISO}: ${Math.round(cell.successRate)}% success rate` : `${cell.dateISO}: No data`}
                 />
               ))
             ];
@@ -185,6 +187,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
                   animate={{ scale: 1 }}
                   transition={{ delay: yearIndex * 0.1 + monthIndex * 0.02 }}
                   title={cell.successRate !== undefined ? `${year}-${monthIndex + 1}: ${Math.round(cell.successRate)}% success rate` : `${year}-${monthIndex + 1}: No data`}
+                  aria-label={cell.successRate !== undefined ? `${year}-${monthIndex + 1}: ${Math.round(cell.successRate)}% success rate` : `${year}-${monthIndex + 1}: No data`}
                   onClick={() => onCellClick?.(cell.dateISO)}
                 />
               ))

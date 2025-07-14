@@ -1,3 +1,21 @@
+import { useMemo } from 'react';
+import { HabitPair, HabitLog } from '../types';
+import { calculateDailyRate, calculateDynamicSuccessRate } from '../utils/compound';
+import { differenceInDays, format, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, endOfYear, subDays, addDays } from 'date-fns';
+
+interface InsightsHelpersReturn {
+  calculateDailySuccessRate: (date: string) => number;
+  calculateWeeklySuccessRate: (date: string) => number;
+  calculateMonthlySuccessRate: (date: string) => number;
+  calculateQuarterlySuccessRate: (date: string) => number;
+  calculateYearlySuccessRate: (date: string) => number;
+  getSuccessRateForPeriod: (startDate: Date, endDate: Date) => number;
+}
+
+// TODO: Performance optimization - consider memoizing habitLogs map per date range
+// Micro-benchmark: If heat-map rendering becomes sluggish with >100 habits or >1000 logs,
+// pre-compute a `habitId → completedLogs[]` map once per requested time range
+// and reuse it across all grid cells to avoid repeated filtering operations.
 import { HabitPair, HabitLog } from '../types';
 import { calculateDailyRate } from '../utils/compound';
 import { calculateAggregatedSuccessRate, expectedForRange } from '../utils/frequencyHelpers';

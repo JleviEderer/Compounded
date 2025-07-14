@@ -12,6 +12,9 @@ import { easeOutQuart } from '@/utils/motionConfig';
 import { calculateAggregatedSuccessRate } from '@/utils/frequencyHelpers';
 import { useHabitsContext } from '@/contexts/HabitsContext';
 
+// Consistent timeframe for success rate calculations
+const DEFAULT_SUCCESS_WINDOW_DAYS = 30;
+
 interface GoalCardProps {
   goal: Goal;
   isExpanded: boolean;
@@ -27,13 +30,13 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
     habit.goalIds?.includes(goal.id)
   );
 
-  // Calculate success rate for last 30 days
+  // Calculate success rate for configurable window
   const calculateGoalSuccessRate = () => {
     if (linkedHabits.length === 0) return null;
     
     const endDate = new Date();
     const startDate = new Date();
-    startDate.setDate(endDate.getDate() - 30);
+    startDate.setDate(endDate.getDate() - DEFAULT_SUCCESS_WINDOW_DAYS);
     
     // Create habit logs map from completed logs in the period
     const habitLogs: { [habitId: string]: number } = {};
@@ -85,7 +88,7 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
           {/* Success Rate */}
           <div>
             <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Success Rate (30 days)
+              Success Rate ({DEFAULT_SUCCESS_WINDOW_DAYS} days)
             </h4>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               {successRate !== null ? `${Math.round(successRate)}%` : '– %'}
