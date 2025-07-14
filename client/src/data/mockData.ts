@@ -155,8 +155,4 @@ const rawGoals: Goal[] = [
 // Apply migration to ensure default goal exists
 export const mockGoals = ensureDefaultGoalExists(rawGoals);
 
-// Trigger Phase 0.5 migration on load
-import { runPhase05Migration } from '@/utils/migration';
-runPhase05Migration();
-
 console.log(`🔄 Migration: Ensured default goal exists. Total goals: ${mockGoals.length}`);

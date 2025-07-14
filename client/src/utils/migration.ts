@@ -54,20 +54,18 @@ export function runPhase05Migration() {
     const currentGoals = dataService.getGoals();
     const currentHabits = dataService.getHabits();
     
-    // Ensure default goal exists and save
-    const migratedGoals = ensureDefaultGoalExists(currentGoals);
-    if (migratedGoals.length !== currentGoals.length) {
+    // Only run migration if there's actually old data to migrate
+    // Don't overwrite existing goals unless they're empty
+    if (currentGoals.length === 0) {
+      const migratedGoals = ensureDefaultGoalExists(currentGoals);
       dataService.saveGoals(migratedGoals);
-      console.log('🔄 Migration: Created default goal and saved to storage');
+      console.log('🔄 Migration: Created default goal for empty goals list');
     }
     
-    // Migrate habits to have goalIds and save
-    const migratedHabits = migrateHabitsToDefaultGoal(currentHabits);
-    const needsHabitUpdate = migratedHabits.some((habit, index) => 
-      JSON.stringify(habit.goalIds) !== JSON.stringify(currentHabits[index]?.goalIds)
-    );
-    
-    if (needsHabitUpdate) {
+    // Only migrate habits that don't have goalIds
+    const habitsNeedingMigration = currentHabits.filter(habit => !habit.goalIds || habit.goalIds.length === 0);
+    if (habitsNeedingMigration.length > 0) {
+      const migratedHabits = migrateHabitsToDefaultGoal(currentHabits);
       dataService.saveHabits(migratedHabits);
       console.log('🔄 Migration: Updated habits with default goal assignments');
     }
