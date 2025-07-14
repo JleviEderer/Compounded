@@ -3,8 +3,8 @@ import { describe, it, expect } from 'vitest';
 import { expectedForRange, calculateHabitSuccessRate, calculateAggregatedSuccessRate } from '../client/src/utils/frequencyHelpers';
 import { HabitPair, HabitWeight } from '../client/src/types';
 
-const mockHabit = (targetCount: number, targetUnit: 'week' | 'month' | 'year'): HabitPair => ({
-  id: 'test-habit',
+const mockHabit = (targetCount: number, targetUnit: 'week' | 'month' | 'year', id?: string): HabitPair => ({
+  id: id || 'test-habit',
   goodHabit: 'Test Habit',
   weight: HabitWeight.MEDIUM,
   targetCount,
@@ -141,8 +141,8 @@ describe('calculateHabitSuccessRate', () => {
 describe('calculateAggregatedSuccessRate', () => {
   it('calculates weighted success rate across multiple habits', () => {
     const habits = [
-      mockHabit(7, 'week'),  // 7 expected for 7 days
-      mockHabit(3, 'week')   // 3 expected for 7 days
+      mockHabit(7, 'week', 'habit-1'),  // 7 expected for 7 days
+      mockHabit(3, 'week', 'habit-2')   // 3 expected for 7 days
     ];
     
     const habitLogs = {
