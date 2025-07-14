@@ -35,13 +35,16 @@ export const useInsightsData = () => {
     }
 
     if (activeView === 'week') {
-      const startOfWeek = new Date(weekAnchor);
-      startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
-      const endOfWeek = new Date(startOfWeek);
-      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      // Match the exact logic from getLast7Days in InsightsWeekView
+      const offset = (weekAnchor.getDay() + 6) % 7; // Monday = 0
+      const monday = new Date(weekAnchor);
+      monday.setDate(weekAnchor.getDate() - offset);
+      
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
 
-      const startStr = startOfWeek.toLocaleDateString('en-CA');
-      const endStr = endOfWeek.toLocaleDateString('en-CA');
+      const startStr = monday.toLocaleDateString('en-CA');
+      const endStr = sunday.toLocaleDateString('en-CA');
 
       return logs.filter(log => log.date >= startStr && log.date <= endStr);
     }
@@ -79,11 +82,15 @@ export const useInsightsData = () => {
       const logDate = new Date(log.date);
       switch (activeView) {
         case 'week':
-          const startOfWeek = new Date(weekAnchor);
-          startOfWeek.setDate(weekAnchor.getDate() - weekAnchor.getDay());
-          const endOfWeek = new Date(startOfWeek);
-          endOfWeek.setDate(startOfWeek.getDate() + 6);
-          return logDate >= startOfWeek && logDate <= endOfWeek;
+          // Match the exact logic from getLast7Days in InsightsWeekView
+          const offset = (weekAnchor.getDay() + 6) % 7; // Monday = 0
+          const monday = new Date(weekAnchor);
+          monday.setDate(weekAnchor.getDate() - offset);
+          
+          const sunday = new Date(monday);
+          sunday.setDate(monday.getDate() + 6);
+          
+          return logDate >= monday && logDate <= sunday;
         case 'month':
           const startOfMonth = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
           const endOfMonth = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
