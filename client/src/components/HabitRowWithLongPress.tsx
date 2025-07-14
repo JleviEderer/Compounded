@@ -84,7 +84,11 @@ export const HabitRowWithLongPress: React.FC<HabitRowWithLongPressProps> = ({
             date: day.date,
             log: log,
             logState: log?.state,
-            logCompleted: log?.completed
+            logCompleted: log?.completed,
+            filteredLogsCount: filteredLogs.length,
+            filteredLogsForThisHabit: filteredLogs.filter(l => l.habitId === habit.id),
+            allFilteredLogDates: filteredLogs.map(l => l.date),
+            lookingForDate: day.date
           });
         }
 
