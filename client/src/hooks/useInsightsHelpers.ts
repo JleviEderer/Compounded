@@ -114,42 +114,39 @@ export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAn
     { weekStartsOn: 1 } // Monday
   );
 
-  return weeks.map(weekStart => {
+  const result = [];
+
+  for (const weekStart of weeks) {
     const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
-    const weekLogs = logs.filter(log => 
-      log.date >= format(weekStart, 'yyyy-MM-dd') && 
-      log.date <= format(weekEnd, 'yyyy-MM-dd')
-    );
-
-    // Calculate average daily rate for the week
     const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
-    const weekRates = weekDays.map(day => 
-      calculateDailyRate(habits, logs, format(day, 'yyyy-MM-dd'))
-    );
-    const avgRate = weekRates.reduce((sum, rate) => sum + rate, 0) / weekRates.length;
+    
+    // Create a cell for each day of the week
+    for (const day of weekDays) {
+      const dateStr = format(day, 'yyyy-MM-dd');
+      const isToday = dateStr === format(new Date(), 'yyyy-MM-dd');
+      
+      // Calculate daily rate and success rate
+      const dailyRate = calculateDailyRate(habits, logs, dateStr);
+      
+      // Calculate frequency-aware success rate for this day
+      const habitLogs: { [habitId: string]: number } = {};
+      habits.forEach(habit => {
+        const dayLog = logs.find(l => l.habitId === habit.id && l.date === dateStr);
+        habitLogs[habit.id] = dayLog?.state === 'good' ? 1 : 0;
+      });
+      const successRate = calculateAggregatedSuccessRate(habits, habitLogs, day, day);
 
-    // Calculate frequency-aware success rate for the week
-    const habitLogs: { [habitId: string]: number } = {};
-    habits.forEach(habit => {
-      const completedCount = weekLogs.filter(l => 
-        l.habitId === habit.id && l.state === 'good'
-      ).length;
-      habitLogs[habit.id] = completedCount;
-    });
-    const successRate = calculateAggregatedSuccessRate(habits, habitLogs, weekStart, weekEnd);
+      result.push({
+        date: format(day, 'MMM d'),
+        dateISO: dateStr,
+        intensity: dailyRate,
+        isToday,
+        successRate
+      });
+    }
+  }
 
-    const isToday = weekDays.some(day => 
-      format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')
-    );
-
-    return {
-      date: format(weekStart, 'MMM d'),
-      dateISO: format(weekStart, 'yyyy-MM-dd'),
-      intensity: avgRate,
-      isToday,
-      successRate
-    };
-  });
+  return result;
 }
 
 export function getAllTimeYears(habits: HabitPair[], logs: HabitLog[]) {
