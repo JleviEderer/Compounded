@@ -1,0 +1,105 @@
+
+> rest-express@1.0.0 test
+> vitest run frequency-success-rate-integration.test.ts
+
+
+ RUN  v3.2.3 /home/runner/workspace
+
+stderr | tests/frequency-success-rate-integration.test.ts > Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in calendar data
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+
+stderr | tests/frequency-success-rate-integration.test.ts > Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in quarter data
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+
+stdout | tests/frequency-success-rate-integration.test.ts > Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in all-time data
+[DRATE] 2025-06-11 0 0
+
+stderr | tests/frequency-success-rate-integration.test.ts > Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in all-time data
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+
+ ❯ tests/frequency-success-rate-integration.test.ts (11 tests | 1 failed) 88ms
+   ✓ Frequency-Aware Success Rate Integration > expectedForRange calculations > calculates correct expected counts for different frequencies 2ms
+   ✓ Frequency-Aware Success Rate Integration > calculateHabitSuccessRate > calculates 100% success rate for perfect compliance 19ms
+   ✓ Frequency-Aware Success Rate Integration > calculateHabitSuccessRate > calculates ~50% success rate for half compliance 1ms
+   × Frequency-Aware Success Rate Integration > calculateAggregatedSuccessRate > calculates weighted success rate across multiple habits 14ms
+     → expected 102.17391304347827 to be 100 // Object.is equality
+   ✓ Frequency-Aware Success Rate Integration > calculateAggregatedSuccessRate > handles mixed performance correctly 1ms
+   ✓ Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in calendar data 9ms
+   ✓ Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in quarter data 14ms
+   ✓ Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in all-time data 23ms
+   ✓ Frequency-Aware Success Rate Integration > Edge cases > handles zero expected logs gracefully 1ms
+   ✓ Frequency-Aware Success Rate Integration > Edge cases > caps success rate at 100% for over-performance 0ms
+   ✓ Frequency-Aware Success Rate Integration > Edge cases > shows "– %" for undefined success rate 0ms
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/frequency-success-rate-integration.test.ts > Frequency-Aware Success Rate Integration > calculateAggregatedSuccessRate > calculates weighted success rate across multiple habits
+AssertionError: expected 102.17391304347827 to be 100 // Object.is equality
+
+- Expected
++ Received
+
+- 100
++ 102.17391304347827
+
+ ❯ tests/frequency-success-rate-integration.test.ts:225:30
+    223|       
+    224|       // Expected: (31 + 13 + 2) / (31 + 13 + 2) = 46/46 = 100%
+    225|       expect(aggregatedRate).toBe(100);
+       |                              ^
+    226|     });
+    227| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 passed (11)
+   Start at  03:23:04
+   Duration  4.78s (transform 316ms, setup 686ms, collect 723ms, tests 88ms, environment 1.60s, prepare 554ms)
+

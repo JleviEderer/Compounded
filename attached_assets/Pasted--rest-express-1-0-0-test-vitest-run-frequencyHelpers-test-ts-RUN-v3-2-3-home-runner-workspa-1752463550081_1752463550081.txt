@@ -1,0 +1,53 @@
+
+> rest-express@1.0.0 test
+> vitest run frequencyHelpers.test.ts
+
+
+ RUN  v3.2.3 /home/runner/workspace
+
+ ❯ tests/frequencyHelpers.test.ts (16 tests | 1 failed) 24ms
+   ✓ expectedForRange > calculates expected logs for weekly frequency 2ms
+   ✓ expectedForRange > calculates expected logs for daily frequency (7 times per week) 0ms
+   ✓ expectedForRange > calculates expected logs for partial week 0ms
+   ✓ expectedForRange > calculates expected logs for monthly frequency 0ms
+   ✓ expectedForRange > calculates expected logs for yearly frequency 0ms
+   ✓ expectedForRange > handles single day range 0ms
+   ✓ expectedForRange > uses defaults for habits without frequency 0ms
+   ✓ expectedForRange > handles leap year correctly 0ms
+   ✓ expectedForRange > guards against very low frequency returning 0 0ms
+   ✓ calculateHabitSuccessRate > calculates 100% success rate when completed equals expected 0ms
+   ✓ calculateHabitSuccessRate > calculates 50% success rate when completed is half of expected 0ms
+   ✓ calculateHabitSuccessRate > caps success rate at 100% even when over-performing 0ms
+   ✓ calculateHabitSuccessRate > returns 0% for no completed logs 0ms
+   × calculateAggregatedSuccessRate > calculates weighted success rate across multiple habits 16ms
+     → expected 20 to be 80 // Object.is equality
+   ✓ calculateAggregatedSuccessRate > returns 0 for empty habits array 1ms
+   ✓ calculateAggregatedSuccessRate > handles habits with no logs 0ms
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/frequencyHelpers.test.ts > calculateAggregatedSuccessRate > calculates weighted success rate across multiple habits
+AssertionError: expected 20 to be 80 // Object.is equality
+
+- Expected
++ Received
+
+- 80
++ 20
+
+ ❯ tests/frequencyHelpers.test.ts:158:18
+    156|     const rate = calculateAggregatedSuccessRate(habits, habitLogs, start, end);
+    157|     // Weighted: (7 + 1) / (7 + 3) = 8/10 = 80%
+    158|     expect(rate).toBe(80);
+       |                  ^
+    159|   });
+    160| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 15 passed (16)
+   Start at  03:25:07
+   Duration  2.49s (transform 104ms, setup 332ms, collect 288ms, tests 24ms, environment 838ms, prepare 376ms)
+
