@@ -1,5 +1,22 @@
-import { calculateDailyRate } from '../utils/compound';
 import { HabitPair, HabitLog } from '../types';
+import { calculateDailyRate } from '../utils/compound';
+import { calculateAggregatedSuccessRate, expectedForRange } from '../utils/frequencyHelpers';
+import { 
+  startOfMonth, 
+  endOfMonth, 
+  eachDayOfInterval, 
+  format, 
+  getYear, 
+  getMonth,
+  startOfQuarter,
+  endOfQuarter,
+  eachWeekOfInterval,
+  startOfWeek,
+  endOfWeek,
+  eachMonthOfInterval,
+  startOfYear,
+  endOfYear
+} from 'date-fns';
 
 export function getCurrentStreak(habits: HabitPair[], logs: HabitLog[]) {
   if (habits.length === 0) return 0;
@@ -26,113 +43,158 @@ export function getCurrentStreak(habits: HabitPair[], logs: HabitLog[]) {
 }
 
 export function getCalendarDays(habits: HabitPair[], logs: HabitLog[], anchor: Date) {
-  const year = anchor.getFullYear();
-  const month = anchor.getMonth();
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
-  const startOfCalendar = new Date(firstDay);
-  const offset = (firstDay.getDay() + 6) % 7;  // Monday-index
-  startOfCalendar.setDate(startOfCalendar.getDate() - offset);
+  const monthStart = startOfMonth(anchor);
+  const monthEnd = endOfMonth(anchor);
 
-  const days = [];
-  for (let i = 0; i < 42; i++) {
-    const date = new Date(startOfCalendar);
-    date.setDate(startOfCalendar.getDate() + i);
-    const dateString = date.toLocaleDateString('en-CA');
+  // Get all days in the month
+  const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
 
-    const dayLogs = logs.filter(log => log.date === dateString);
-    const intensity = calculateDailyRate(habits, logs, dateString);
+  // Create calendar grid with leading/trailing days for complete weeks
+  const firstDay = days[0];
+  const lastDay = days[days.length - 1];
 
-    days.push({
-      date: dateString,
-      dateISO: dateString,
-      intensity,
-      isToday: dateString === new Date().toLocaleDateString('en-CA'),
-      day: date.getMonth() === month ? date.getDate() : null,
-      month: date.toLocaleDateString('en', { month: 'short' }),
-      year: date.getFullYear()
-    });
-  }
+  // Get start of week for first day (Monday = 1, Sunday = 0)
+  const gridStart = startOfWeek(firstDay, { weekStartsOn: 1 });
+  const gridEnd = endOfWeek(lastDay, { weekStartsOn: 1 });
 
-  return days;
+  const allDays = eachDayOfInterval({ start: gridStart, end: gridEnd });
+
+  return allDays.map(day => {
+    const dateStr = format(day, 'yyyy-MM-dd');
+    const isCurrentMonth = getMonth(day) === getMonth(anchor);
+    const isToday = format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd');
+
+    // Calculate frequency-aware success rate for the day
+    let successRate: number | undefined;
+    if (isCurrentMonth) {
+      const habitLogs: { [habitId: string]: number } = {};
+      habits.forEach(habit => {
+        const dayLog = logs.find(l => l.habitId === habit.id && l.date === dateStr);
+        habitLogs[habit.id] = dayLog?.state === 'good' ? 1 : 0;
+      });
+      successRate = calculateAggregatedSuccessRate(habits, habitLogs, day, day);
+    }
+
+    return {
+      date: format(day, 'MMM d'),
+      dateISO: dateStr,
+      intensity: isCurrentMonth ? calculateDailyRate(habits, logs, dateStr) : null,
+      day: isCurrentMonth ? day.getDate() : null,
+      isToday,
+      successRate
+    };
+  });
 }
 
 export function getQuarterWeeks(habits: HabitPair[], logs: HabitLog[], quarterAnchor: Date) {
-  const startOfQuarter = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
-  const endOfQuarter = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3 + 3, 0);
+  const quarterStart = startOfQuarter(quarterAnchor);
+  const quarterEnd = endOfQuarter(quarterAnchor);
 
-  const weeks = [];
-  const currentDate = new Date(startOfQuarter);
-  const offset = (currentDate.getDay() + 6) % 7;  // Monday-index
-  currentDate.setDate(currentDate.getDate() - offset);
+  // Get all weeks in the quarter
+  const weeks = eachWeekOfInterval(
+    { start: quarterStart, end: quarterEnd },
+    { weekStartsOn: 1 } // Monday
+  );
 
-  while (currentDate <= endOfQuarter) {
-    const week = [];
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(currentDate);
-      date.setDate(currentDate.getDate() + i);
-      const dateString = date.toLocaleDateString('en-CA');
-      const dailyRate = calculateDailyRate(habits, logs, dateString);
+  return weeks.map(weekStart => {
+    const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
+    const weekLogs = logs.filter(log => 
+      log.date >= format(weekStart, 'yyyy-MM-dd') && 
+      log.date <= format(weekEnd, 'yyyy-MM-dd')
+    );
 
-      week.push({
-        date: dateString,
-        dateISO: dateString,
-        intensity: dailyRate,
-        isToday: dateString === new Date().toLocaleDateString('en-CA'),
-        day: date.getDate(),
-        month: date.toLocaleDateString('en', { month: 'short' }),
-        year: date.getFullYear()
-      });
-    }
-    weeks.push(...week);
-    currentDate.setDate(currentDate.getDate() + 7);
-  }
+    // Calculate average daily rate for the week
+    const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
+    const weekRates = weekDays.map(day => 
+      calculateDailyRate(habits, logs, format(day, 'yyyy-MM-dd'))
+    );
+    const avgRate = weekRates.reduce((sum, rate) => sum + rate, 0) / weekRates.length;
 
-  return weeks;
+    // Calculate frequency-aware success rate for the week
+    const habitLogs: { [habitId: string]: number } = {};
+    habits.forEach(habit => {
+      const completedCount = weekLogs.filter(l => 
+        l.habitId === habit.id && l.state === 'good'
+      ).length;
+      habitLogs[habit.id] = completedCount;
+    });
+    const successRate = calculateAggregatedSuccessRate(habits, habitLogs, weekStart, weekEnd);
+
+    const isToday = weekDays.some(day => 
+      format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')
+    );
+
+    return {
+      date: format(weekStart, 'MMM d'),
+      dateISO: format(weekStart, 'yyyy-MM-dd'),
+      intensity: avgRate,
+      isToday,
+      successRate
+    };
+  });
 }
 
 export function getAllTimeYears(habits: HabitPair[], logs: HabitLog[]) {
-  const years: {
-    date: string;
-    dateISO: string;
-    intensity: number;
-    year: number;
-    month: number;
-  }[] = [];
+  if (logs.length === 0) return [];
 
-  const today = new Date();
-  const firstYear = 2023;                                // or compute min year from logs
-  const lastYear  = today.getFullYear();
+  // Get date range from logs
+  const sortedLogs = [...logs].sort((a, b) => a.date.localeCompare(b.date));
+  const firstLogDate = new Date(sortedLogs[0].date);
+  const lastLogDate = new Date(sortedLogs[sortedLogs.length - 1].date);
 
-  for (let year = firstYear; year <= lastYear; year++) {
-    for (let month = 0; month < 12; month++) {
-      const monthEnd = new Date(year, month + 1, 0).getDate();
+  // Get all years from first log to current year
+  const currentYear = new Date().getFullYear();
+  const startYear = firstLogDate.getFullYear();
+  const endYear = Math.max(lastLogDate.getFullYear(), currentYear);
 
-      let sum = 0;
-      let daysWithLogs = 0;
+  const result = [];
 
-      for (let d = 1; d <= monthEnd; d++) {
-        const dateStr = new Date(year, month, d).toLocaleDateString('en-CA'); // YYYY-MM-DD
-        const daily = calculateDailyRate(habits, logs, dateStr);
-        if (daily !== 0) {
-          sum += daily;
-          daysWithLogs++;
-        }
-      }
+  for (let year = startYear; year <= endYear; year++) {
+    const yearStart = startOfYear(new Date(year, 0, 1));
+    const yearEnd = endOfYear(new Date(year, 0, 1));
 
-      const avg = daysWithLogs ? sum / daysWithLogs : 0;
+    // Get all months in the year
+    const months = eachMonthOfInterval({ start: yearStart, end: yearEnd });
 
-      years.push({
-        date: `${year}-${String(month + 1).padStart(2, '0')}`,
-        dateISO: `${year}-${String(month + 1).padStart(2, '0')}`,
-        intensity: avg,
-        year,
-        month: month + 1,
+    months.forEach(month => {
+      const monthStart = startOfMonth(month);
+      const monthEnd = endOfMonth(month);
+
+      // Get logs for this month
+      const monthLogs = logs.filter(log => 
+        log.date >= format(monthStart, 'yyyy-MM-dd') && 
+        log.date <= format(monthEnd, 'yyyy-MM-dd')
+      );
+
+      // Calculate average daily rate for the month
+      const monthDays = eachDayOfInterval({ start: monthStart, end: monthEnd });
+      const monthRates = monthDays.map(day => 
+        calculateDailyRate(habits, logs, format(day, 'yyyy-MM-dd'))
+      );
+      const avgRate = monthRates.reduce((sum, rate) => sum + rate, 0) / monthRates.length;
+
+      // Calculate frequency-aware success rate for the month
+      const habitLogs: { [habitId: string]: number } = {};
+      habits.forEach(habit => {
+        const completedCount = monthLogs.filter(l => 
+          l.habitId === habit.id && l.state === 'good'
+        ).length;
+        habitLogs[habit.id] = completedCount;
       });
-    }
+      const successRate = calculateAggregatedSuccessRate(habits, habitLogs, monthStart, monthEnd);
+
+      result.push({
+        date: format(month, 'yyyy-MM'),
+        dateISO: format(monthStart, 'yyyy-MM-dd'),
+        intensity: avgRate,
+        month: format(month, 'MMM'),
+        year: year,
+        successRate
+      });
+    });
   }
 
-  return years;
+  return result;
 }
 
 export function getIntensityColor(intensity: number) {

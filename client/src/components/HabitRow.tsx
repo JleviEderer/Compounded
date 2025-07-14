@@ -159,12 +159,12 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
           <div className="text-right min-w-[70px]">
             {todayLog?.state === HabitLogState.GOOD && (
               <div className="text-sm font-medium text-emerald-600 whitespace-nowrap leading-tight">
-                +{(habit.weight * 100).toFixed(2)}%
+                Completed
               </div>
             )}
             {todayLog?.state === HabitLogState.UNLOGGED && (
               <div className="text-sm font-medium text-gray-400 whitespace-nowrap leading-tight">
-                +{(habit.weight * 100).toFixed(2)}%
+                Not logged
               </div>
             )}
             <div className="text-xs text-gray-500 whitespace-nowrap leading-tight mt-0.5">

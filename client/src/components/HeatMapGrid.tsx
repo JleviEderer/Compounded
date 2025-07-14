@@ -9,6 +9,7 @@ interface HeatMapCell {
   day?: number;
   month?: string;
   year?: number;
+  successRate?: number; // Add success rate for tooltips
 }
 
 interface HeatMapGridProps {
@@ -86,6 +87,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
                 animate={{ scale: 1 }}
                 transition={{ delay: index * 0.01 }}
                 onClick={() => cell.day && onCellClick?.(cell.dateISO)}
+                title={cell.day && cell.successRate !== undefined ? `${cell.date}: ${Math.round(cell.successRate)}% success rate` : undefined}
               >
                 {cell.day}
               </motion.div>
@@ -136,6 +138,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
                   animate={{ scale: 1 }}
                   transition={{ delay: weekIndex * 0.05 + dayIndex * 0.01 }}
                   onClick={() => onCellClick?.(cell.dateISO)}
+                  title={cell.successRate !== undefined ? `${cell.dateISO}: ${Math.round(cell.successRate)}% success rate` : undefined}
                 />
               ))
             ];
@@ -181,7 +184,7 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: yearIndex * 0.1 + monthIndex * 0.02 }}
-                  title={`${year}-${monthIndex + 1}: ${(cell.intensity * 100).toFixed(1)}% completion`}
+                  title={cell.successRate !== undefined ? `${year}-${monthIndex + 1}: ${Math.round(cell.successRate)}% success rate` : `${year}-${monthIndex + 1}: No data`}
                   onClick={() => onCellClick?.(cell.dateISO)}
                 />
               ))

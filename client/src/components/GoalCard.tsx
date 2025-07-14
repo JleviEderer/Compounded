@@ -9,6 +9,8 @@ import { useGoalsContext } from '@/contexts/GoalsContext';
 import { useHabits } from '@/hooks/useHabits';
 import { GoalDialog } from './GoalDialog';
 import { easeOutQuart } from '@/utils/motionConfig';
+import { calculateAggregatedSuccessRate } from '@/utils/frequencyHelpers';
+import { useHabitsContext } from '@/contexts/HabitsContext';
 
 interface GoalCardProps {
   goal: Goal;
@@ -18,11 +20,39 @@ interface GoalCardProps {
 export function GoalCard({ goal, isExpanded }: GoalCardProps) {
   const { deleteGoal } = useGoalsContext();
   const { habits } = useHabits();
+  const { logs } = useHabitsContext();
 
   // Find habits linked to this goal
   const linkedHabits = habits.filter(habit => 
     habit.goalIds?.includes(goal.id)
   );
+
+  // Calculate success rate for last 30 days
+  const calculateGoalSuccessRate = () => {
+    if (linkedHabits.length === 0) return null;
+    
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - 30);
+    
+    // Create habit logs map from completed logs in the period
+    const habitLogs: { [habitId: string]: number } = {};
+    
+    linkedHabits.forEach(habit => {
+      const completedCount = logs.filter(log => 
+        log.habitId === habit.id && 
+        log.date >= startDate.toLocaleDateString('en-CA') &&
+        log.date <= endDate.toLocaleDateString('en-CA') &&
+        log.state === 'good'
+      ).length;
+      
+      habitLogs[habit.id] = completedCount;
+    });
+    
+    return calculateAggregatedSuccessRate(linkedHabits, habitLogs, startDate, endDate);
+  };
+
+  const successRate = calculateGoalSuccessRate();
 
   const handleDelete = () => {
     deleteGoal(goal.id);
@@ -52,15 +82,14 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
             </p>
           </div>
 
-          {/* Success Rate - Placeholder for Phase 2.5 */}
+          {/* Success Rate */}
           <div>
             <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Success Rate
+              Success Rate (30 days)
             </h4>
-            <p className="text-sm text-gray-400 dark:text-gray-500">
-              — %
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {successRate !== null ? `${Math.round(successRate)}%` : '– %'}
             </p>
-            {/* TODO: Phase 2.5 - Calculate real success rate based on linked habits */}
           </div>
 
           {/* Linked Habits */}

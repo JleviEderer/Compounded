@@ -34,7 +34,7 @@ export const InsightsQuickStats: React.FC<InsightsQuickStatsProps> = ({
                 <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
               </TooltipTrigger>
               <TooltipContent className="max-w-48 text-xs p-2">
-                <p>Good Habits / Habits Logged</p>
+                <p>Completed logs vs expected frequency-based targets</p>
               </TooltipContent>
             </Tooltip>
           </div>
