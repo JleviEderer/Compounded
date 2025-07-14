@@ -19,23 +19,23 @@ export function expectedForRange(habit: HabitPair, startDate: Date, endDate: Dat
     case 'week': {
       const totalDays = differenceInDays(end, start) + 1; // +1 to include both start and end dates
       const expectedPerDay = targetCount / 7;
-      return Math.round(expectedPerDay * totalDays);
+      return Math.max(1, Math.round(expectedPerDay * totalDays));
     }
     
     case 'month': {
       const totalDays = differenceInDays(end, start) + 1;
       const expectedPerDay = targetCount / 30; // Approximate month as 30 days
-      return Math.round(expectedPerDay * totalDays);
+      return Math.max(1, Math.round(expectedPerDay * totalDays));
     }
     
     case 'year': {
       const totalDays = differenceInDays(end, start) + 1;
       const expectedPerDay = targetCount / 365; // Approximate year as 365 days
-      return Math.round(expectedPerDay * totalDays);
+      return Math.max(1, Math.round(expectedPerDay * totalDays));
     }
     
     default:
-      return 0;
+      return 1; // Guard against 0 expected
   }
 }
 
@@ -57,6 +57,7 @@ export function calculateHabitSuccessRate(
 
 /**
  * Calculate aggregated success rate for multiple habits (used for goal-level success)
+ * Weighted by each habit's expected count, so daily habits count more than infrequent ones
  */
 export function calculateAggregatedSuccessRate(
   habits: HabitPair[],
@@ -66,13 +67,19 @@ export function calculateAggregatedSuccessRate(
 ): number {
   if (habits.length === 0) return 0;
   
-  const rates = habits.map(habit => {
-    const completedLogs = habitLogs[habit.id] || 0;
-    return calculateHabitSuccessRate(habit, completedLogs, startDate, endDate);
-  });
+  const { completedSum, expectedSum } = habits.reduce(
+    (acc, habit) => {
+      const expected = expectedForRange(habit, startDate, endDate);
+      const completed = habitLogs[habit.id] || 0;
+      return {
+        completedSum: acc.completedSum + completed,
+        expectedSum: acc.expectedSum + expected
+      };
+    },
+    { completedSum: 0, expectedSum: 0 }
+  );
   
-  // Return average success rate across all habits
-  return rates.reduce((sum, rate) => sum + rate, 0) / rates.length;
+  return expectedSum > 0 ? (completedSum / expectedSum) * 100 : 0;
 }
 
 /**

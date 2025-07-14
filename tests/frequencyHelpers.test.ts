@@ -54,7 +54,7 @@ describe('expectedForRange', () => {
     const start = new Date('2025-01-01');
     const end = new Date('2025-01-31');   // 31 days
     
-    // 12 times per year over 31 days = 1 log expected (12/365 * 31 ≈ 1.02)
+    // 12 times per year over 31 days = 1 log expected (12/365 * 31 ≈ 1.02, Math.max ensures >= 1)
     expect(expectedForRange(habit, start, end)).toBe(1);
   });
 
@@ -87,6 +87,15 @@ describe('expectedForRange', () => {
     const end = new Date('2024-12-31');   // 366 days
     
     // 1 time per year over 366 days = 1 log expected (1/365 * 366 ≈ 1.00)
+    expect(expectedForRange(habit, start, end)).toBe(1);
+  });
+
+  it('guards against very low frequency returning 0', () => {
+    const habit = mockHabit(1, 'year'); // Very infrequent
+    const start = new Date('2025-01-01');
+    const end = new Date('2025-01-01');   // Single day
+    
+    // Even for single day with very low frequency, should return at least 1
     expect(expectedForRange(habit, start, end)).toBe(1);
   });
 });
@@ -130,22 +139,23 @@ describe('calculateHabitSuccessRate', () => {
 });
 
 describe('calculateAggregatedSuccessRate', () => {
-  it('calculates average success rate across multiple habits', () => {
+  it('calculates weighted success rate across multiple habits', () => {
     const habits = [
-      mockHabit(7, 'week'),
-      mockHabit(3, 'week')
+      mockHabit(7, 'week'),  // 7 expected
+      mockHabit(3, 'week')   // 3 expected
     ];
     
     const habitLogs = {
-      [habits[0].id]: 7, // 100% success (7/7)
-      [habits[1].id]: 1  // ~33% success (1/3)
+      [habits[0].id]: 7, // 7/7 completed
+      [habits[1].id]: 1  // 1/3 completed
     };
     
     const start = new Date('2025-01-01');
     const end = new Date('2025-01-07');
     
     const rate = calculateAggregatedSuccessRate(habits, habitLogs, start, end);
-    expect(Math.round(rate)).toBe(67); // (100 + 33) / 2 ≈ 67%
+    // Weighted: (7 + 1) / (7 + 3) = 8/10 = 80%
+    expect(rate).toBe(80);
   });
 
   it('returns 0 for empty habits array', () => {
