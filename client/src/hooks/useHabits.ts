@@ -128,12 +128,14 @@ export function useHabits() {
     };
   }, []);
 
-  const addHabit = useCallback((goodHabit: string, weight: HabitWeight, goalIds: string[] = []) => {
+  const addHabit = useCallback((goodHabit: string, weight: HabitWeight, goalIds: string[] = [], targetCount: number = 7, targetUnit: 'week' | 'month' | 'year' = 'week') => {
     const newHabit: HabitPair = {
       id: Date.now().toString(),
       goodHabit,
       weight,
       goalIds,
+      targetCount,
+      targetUnit,
       createdAt: new Date()
     };
 

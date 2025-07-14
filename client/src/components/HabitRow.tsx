@@ -146,7 +146,11 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
             </Popover>
 
             <div className="text-xs text-gray-500 mt-1 leading-tight">
-              Track daily progress
+              {habit.targetCount && habit.targetUnit ? (
+                `${habit.targetCount} × / ${habit.targetUnit === 'week' ? 'wk' : habit.targetUnit === 'month' ? 'mo' : 'yr'}`
+              ) : (
+                'Track daily progress'
+              )}
             </div>
           </div>
         </div>

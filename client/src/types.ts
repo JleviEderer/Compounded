@@ -3,6 +3,8 @@ export interface HabitPair {
   goodHabit: string;
   weight: HabitWeight;
   goalIds?: string[]; // Links to goals
+  targetCount?: number; // default 7
+  targetUnit?: 'week' | 'month' | 'year'; // default 'week'
   createdAt: Date;
 }
 

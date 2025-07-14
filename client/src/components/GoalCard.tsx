@@ -69,14 +69,23 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
               Linked Habits ({linkedHabits.length})
             </h4>
             {linkedHabits.length > 0 ? (
-              <div className="flex flex-wrap gap-1">
+              <div className="space-y-1">
                 {linkedHabits.map(habit => (
-                  <span
+                  <div
                     key={habit.id}
-                    className="inline-block px-2 py-1 text-xs bg-coral/10 text-coral rounded-md"
+                    className="flex items-center justify-between p-2 bg-gray-100 dark:bg-gray-700 rounded-md"
                   >
-                    {habit.goodHabit}
-                  </span>
+                    <span className="text-sm text-gray-900 dark:text-gray-100 truncate">
+                      {habit.goodHabit}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 flex-shrink-0">
+                      {habit.targetCount && habit.targetUnit ? (
+                        `${habit.targetCount} × / ${habit.targetUnit === 'week' ? 'wk' : habit.targetUnit === 'month' ? 'mo' : 'yr'}`
+                      ) : (
+                        '7 × / wk'
+                      )}
+                    </span>
+                  </div>
                 ))}
               </div>
             ) : (
