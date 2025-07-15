@@ -30,7 +30,7 @@ export function dailyReturn(
 /**
  * MOMENTUM V2 STEP FUNCTION
  * M_t = max(0, (1 + R_t) * β * M_{t-1})
- * With safety clamps to prevent extreme values
+ * With safety clamps to prevent extreme values and zero trap
  */
 export function momentumStep(
   prevMomentum: number, 
@@ -38,6 +38,11 @@ export function momentumStep(
   decayFactor: number
 ): number {
   const rawStep = (1 + dailyReturn) * decayFactor * prevMomentum;
+
+  // Prevent zero trap: if momentum is 0 but we have positive return, restart from small base
+  if (prevMomentum === 0 && dailyReturn > 0) {
+    return Math.max(0.001, dailyReturn);
+  }
 
   // Clamp: M_t = Math.max(0, Math.min(prev * 1.5, rawStep))
   const maxAllowed = prevMomentum * 1.5;
