@@ -40,7 +40,7 @@ VITE_MOMENTUM_PRESET=default   # lenient|default|hard
 #### Formulas (v2):
 
 ```
-Daily Return: R_t = logged ? (S_t + σ × misses) : B
+Daily Return: R_t = logged ? (S_t + (σ × misses)) : B
 Momentum Step: M_t = max(0, min(M_{t-1} × 1.5, (1 + R_t) × β × M_{t-1}))
 ```
 

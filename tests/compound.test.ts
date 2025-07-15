@@ -160,7 +160,11 @@ describe('Momentum Index v2 (Decay Model)', () => {
 
   afterEach(() => {
     // Restore original env
-    import.meta.env.VITE_MOMENTUM_V2 = originalEnv;
+    if (originalEnv === undefined) {
+      delete import.meta.env.VITE_MOMENTUM_V2;
+    } else {
+      import.meta.env.VITE_MOMENTUM_V2 = originalEnv;
+    }
   });
 
   const mockHabitsV2: HabitPair[] = [

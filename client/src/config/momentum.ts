@@ -9,8 +9,8 @@ export interface MomentumParams {
 
 export const MOMENTUM_PRESETS: Record<MomentumPreset, MomentumParams> = {
   lenient: { σ: -0.20, B: -0.40, β: 0.998 },
-  default: { σ: -0.25, B: -0.50, β: 0.995 }, // B = σ * 2
-  hard: { σ: -0.35, B: -0.70, β: 0.992 }     // B = σ * 2
+  default: { σ: -0.25, B: -0.25 * 2, β: 0.995 }, // B = σ * 2
+  hard: { σ: -0.35, B: -0.35 * 2, β: 0.992 }     // B = σ * 2
 };
 
 /**
@@ -33,5 +33,5 @@ export function getMomentumParams(): MomentumParams {
  * Check if Momentum v2 (decay model) is enabled
  */
 export function isMomentumV2Enabled(): boolean {
-  return import.meta.env.VITE_MOMENTUM_V2 === 'true';
+  return String(import.meta.env.VITE_MOMENTUM_V2) === 'true';
 }

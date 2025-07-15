@@ -22,44 +22,7 @@ export function dailyReturn(
   logsForDay: HabitLog[]
 ): number {
   const { σ, B } = getMomentumParams();
-  
-  // If no logs at all, return baseline drift
-  if (logsForDay.length === 0) {
-    return B;
-  }
-  
-  let completedWeight = 0;  // S_t
-  let missedWeight = 0;     // misses from enabled habits only
-  
-  // Only consider habits that were enabled/available on this day
-  for (const habit of habitsForDay) {
-    const log = logsForDay.find(l => l.habitId === habit.id);
-    
-    // Ensure weight is valid
-    const validWeights = Object.values(HabitWeight) as number[];
-    let weight = habit.weight;
-    const tolerance = 0.000001;
-    const matchingWeight = validWeights.find(w => Math.abs(w - weight) < tolerance);
-    
-    if (matchingWeight !== undefined) {
-      weight = matchingWeight;
-    } else if (import.meta.env.DEV) {
-      console.warn(`Unknown weight value ${weight}, defaulting to MEDIUM`);
-      weight = HabitWeight.MEDIUM;
-    }
-    
-    if (log && (log.completed || log.state === 'good')) {
-      completedWeight += weight;
-    } else {
-      // Habit was enabled but not completed = miss
-      missedWeight += weight;
-    }
-  }
-  
-  // P_t = S_t − σ * misses
-  const P_t = completedWeight + (σ * missedWeight); // σ is negative, so this subtracts
-  
-  return P_t;
+  return dailyReturnWithParams(habitsForDay, logsForDay, σ, B);
 }
 
 /**
@@ -73,11 +36,11 @@ export function momentumStep(
   decayFactor: number
 ): number {
   const rawStep = (1 + dailyReturn) * decayFactor * prevMomentum;
-  
+
   // Clamp: M_t = Math.max(0, Math.min(prev * 1.5, rawStep))
   const maxAllowed = prevMomentum * 1.5;
   const clamped = Math.max(0, Math.min(maxAllowed, rawStep));
-  
+
   return clamped;
 }
 
@@ -128,7 +91,7 @@ export function calculateMomentumIndexV2(
   if (habits.length === 0) return 1.0;
 
   const { β } = getMomentumParams();
-  
+
   // Convert targetDate to epoch if it's a Date
   const targetEpoch = typeof targetDate === 'number' ? targetDate : targetDate.getTime();
 
@@ -143,19 +106,19 @@ export function calculateMomentumIndexV2(
   while (currentDate.getTime() <= targetEpoch) {
     // Use local date instead of UTC slice
     const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-    
+
     // Get habits that existed on this date
     const habitsForDay = habits.filter(h => new Date(h.createdAt) <= currentDate);
-    
+
     // Get logs for this specific date
     const logsForDay = logs.filter(l => l.date === dateStr);
-    
+
     // Calculate daily return using v2 formula
     const R_t = dailyReturn(habitsForDay, logsForDay);
-    
+
     // Apply momentum step with decay
     momentum = momentumStep(momentum, R_t, β);
-    
+
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
@@ -192,18 +155,18 @@ export function calculateDailyRate(
       // Ensure weight is a valid HabitWeight enum value
       const validWeights = Object.values(HabitWeight) as number[];
       let weight = habit.weight;
-      
+
       // Check if weight is close to any valid enum value (handle floating point precision)
       const tolerance = 0.000001;
       const matchingWeight = validWeights.find(w => Math.abs(w - weight) < tolerance);
-      
+
       if (matchingWeight !== undefined) {
         weight = matchingWeight;
       } else if (import.meta.env.DEV) {
         console.warn(`Unknown weight value ${weight}, defaulting to MEDIUM`);
         weight = HabitWeight.MEDIUM;
       }
-      
+
       rate += weight;
     }
   }
@@ -427,4 +390,58 @@ export function validateCompoundFormula(): boolean {
   const tolerance = 0.001; // More reasonable tolerance for floating point
 
   return Math.abs(result - expected) < tolerance;
+}
+
+/**
+ * MOMENTUM V2 DECAY MODEL
+ * 
+ * Calculates daily return R_t using slip penalty and baseline drift:
+ * S_t = Σ (w_i * d_i)                // completed weight
+ * misses = Σ (w_i * (1−d_i))         // missed weight from enabled habits only
+ * P_t = S_t − σ * misses             // slip penalty
+ * R_t = logged ? P_t : B             // baseline drift if nothing logged
+ */
+export function dailyReturnWithParams(
+  habitsForDay: HabitPair[], 
+  logsForDay: HabitLog[],
+  σ: number,
+  B: number
+): number {
+  // If no logs at all, return baseline drift
+  if (logsForDay.length === 0) {
+    return B;
+  }
+
+  let completedWeight = 0;  // S_t
+  let missedWeight = 0;     // misses from enabled habits only
+
+  // Only consider habits that were enabled/available on this day
+  for (const habit of habitsForDay) {
+    const log = logsForDay.find(l => l.habitId === habit.id);
+
+    // Ensure weight is valid
+    const validWeights = Object.values(HabitWeight) as number[];
+    let weight = habit.weight;
+    const tolerance = 0.000001;
+    const matchingWeight = validWeights.find(w => Math.abs(w - weight) < tolerance);
+
+    if (matchingWeight !== undefined) {
+      weight = matchingWeight;
+    } else if (import.meta.env.DEV) {
+      console.warn(`Unknown weight value ${weight}, defaulting to MEDIUM`);
+      weight = HabitWeight.MEDIUM;
+    }
+
+    if (log && (log.completed || log.state === 'good')) {
+      completedWeight += weight;
+    } else {
+      // Habit was enabled but not completed = miss
+      missedWeight += weight;
+    }
+  }
+
+  // P_t = S_t − σ * misses
+  const P_t = completedWeight + (σ * missedWeight); // σ is negative, so this subtracts
+
+  return P_t;
 }
