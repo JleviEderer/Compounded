@@ -99,7 +99,6 @@ export default function Layout({ children }: LayoutProps) {
             {children}
           </motion.div>
         </main>
-        {/* TODO: Add DevBanner here */}
       </div>
 
       {/* Mobile/Tablet Layout */}

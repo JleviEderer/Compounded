@@ -6,27 +6,28 @@ class DataService {
   // Debug flag for data flow tracking - can be controlled globally
   private debug = true;
 
-  private getUserDataFromStorage(): { habits: HabitPair[], logs: HabitLog[], goals: Goal[] } {
-    // Single storage key for all data
-    const key = 'compounded-data';
+  private getUserDataFromStorage(): { habits: HabitPair[], logs: HabitLog[] } {
+    // Use different storage buckets for mock vs user mode
+    const key = dataSourceConfig.source === 'mock'
+      ? 'compounded-data-mock'
+      : 'compounded-data';
 
     const stored = localStorage.getItem(key);
     if (!stored) {
       console.log('📱 No user data found in localStorage, starting fresh');
-      return { habits: [], logs: [], goals: [] };
+      return { habits: [], logs: [] };
     }
 
     try {
       const parsed = JSON.parse(stored);
-      console.log('📱 Loaded user data from localStorage:', parsed.habits?.length || 0, 'habits,', parsed.logs?.length || 0, 'logs,', parsed.goals?.length || 0, 'goals');
+      console.log('📱 Loaded user data from localStorage:', parsed.habits?.length || 0, 'habits,', parsed.logs?.length || 0, 'logs');
       return {
         habits: parsed.habits || [],
-        logs: parsed.logs || [],
-        goals: parsed.goals || []
+        logs: parsed.logs || []
       };
     } catch (error) {
       console.error('❌ Failed to parse user data from localStorage:', error);
-      return { habits: [], logs: [], goals: [] };
+      return { habits: [], logs: [] };
     }
   }
 
@@ -36,40 +37,56 @@ class DataService {
   }
 
   getHabits(): HabitPair[] {
-    const stored = this.getUserDataFromStorage();
-    
-    // If no habits and in mock mode, seed with mock data
-    if (stored.habits.length === 0 && dataSourceConfig.source === 'mock') {
-      if (this.debug) {
-        console.log('🔍 DataService.getHabits() (SEEDING MOCK) →', mockHabits.length, 'habits');
-      }
-      return mockHabits;
+    const src = dataSourceConfig.source;
+
+    if (src === 'user') {
+      return this.getUserDataFromStorage().habits;
     }
 
-    if (this.debug) {
-      const mode = dataSourceConfig.source === 'mock' ? 'MOCK-STORED' : 'USER';
-      console.log(`🔍 DataService.getHabits() (${mode}) →`, stored.habits.length, 'habits');
+    // --- mock mode ---
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('compounded-data-mock');
+      if (stored) {
+        const { habits = [] } = JSON.parse(stored);
+        if (this.debug) {
+          console.log('🔍 DataService.getHabits() (MOCK-STORAGE) →', habits.length, 'habits');
+        }
+        return habits;
+      }
     }
-    return stored.habits;
+
+    // Fallback to pristine demo data
+    if (this.debug) {
+      console.log('🔍 DataService.getHabits() (MOCK-DEMO) →', mockHabits.length, 'habits');
+    }
+    return mockHabits;
   }
 
   getLogs(): HabitLog[] {
-    const stored = this.getUserDataFromStorage();
-    
-    // If no logs and in mock mode, seed with mock data
-    if (stored.logs.length === 0 && dataSourceConfig.source === 'mock') {
-      if (this.debug) {
-        console.log('🔍 DataService.getLogs() (SEEDING MOCK) →', mockLogs.length, 'logs');
-        console.log('🔍 Log date range:', mockLogs.length > 0 ? `${mockLogs[0].date} to ${mockLogs[mockLogs.length-1].date}` : 'No logs');
-      }
-      return mockLogs;
+    const src = dataSourceConfig.source;
+
+    if (src === 'user') {
+      return this.getUserDataFromStorage().logs;
     }
 
-    if (this.debug) {
-      const mode = dataSourceConfig.source === 'mock' ? 'MOCK-STORED' : 'USER';
-      console.log(`🔍 DataService.getLogs() (${mode}) →`, stored.logs.length, 'logs');
+    // --- mock mode ---
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('compounded-data-mock');
+      if (stored) {
+        const { logs = [] } = JSON.parse(stored);
+        if (this.debug) {
+          console.log('🔍 DataService.getLogs() (MOCK-STORAGE) →', logs.length, 'logs');
+        }
+        return logs;
+      }
     }
-    return stored.logs;
+
+    // Fallback to pristine demo data
+    if (this.debug) {
+      console.log('🔍 DataService.getLogs() (MOCK-DEMO) →', mockLogs.length, 'logs');
+      console.log('🔍 Log date range:', mockLogs.length > 0 ? `${mockLogs[0].date} to ${mockLogs[mockLogs.length-1].date}` : 'No logs');
+    }
+    return mockLogs;
   }
 
   getLogsForDate(date: string): HabitLog[] {
@@ -113,25 +130,43 @@ class DataService {
   }
 
   getGoals(): Goal[] {
-    const stored = this.getUserDataFromStorage();
-    
-    // If no goals and in mock mode, seed with mock data
-    if (stored.goals.length === 0 && dataSourceConfig.source === 'mock') {
+    const key = dataSourceConfig.source === 'mock'
+      ? 'compounded-data-mock'
+      : 'compounded-data';
+
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem(key);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          const goals = parsed.goals || [];
+          if (this.debug) {
+            console.log(`🔍 DataService.getGoals() (${dataSourceConfig.source.toUpperCase()}-STORAGE) →`, goals.length, 'goals');
+          }
+          return goals;
+        } catch (error) {
+          console.error('❌ Failed to parse goals from localStorage:', error);
+        }
+      }
+    }
+
+    // Fallback to pristine demo data only in mock mode
+    if (dataSourceConfig.source === 'mock') {
       if (this.debug) {
-        console.log('🔍 DataService.getGoals() (SEEDING MOCK) →', mockGoals.length, 'goals');
+        console.log('🔍 DataService.getGoals() (MOCK-DEMO) →', mockGoals.length, 'goals');
       }
       return mockGoals;
     }
 
-    if (this.debug) {
-      const mode = dataSourceConfig.source === 'mock' ? 'MOCK-STORED' : 'USER';
-      console.log(`🔍 DataService.getGoals() (${mode}) →`, stored.goals.length, 'goals');
-    }
-    return stored.goals;
+    // User mode with no data - return empty array
+    return [];
   }
 
   saveGoals(goals: Goal[]): void {
-    const key = 'compounded-data';
+    const key = dataSourceConfig.source === 'mock'
+      ? 'compounded-data-mock'
+      : 'compounded-data';
+
     const stored = localStorage.getItem(key);
     let data = { habits: [], logs: [], goals: [] };
 
@@ -149,13 +184,15 @@ class DataService {
     localStorage.setItem(key, JSON.stringify(data));
 
     if (this.debug) {
-      console.log('🔍 DataService.saveGoals() saved', goals.length, 'goals to key:', key);
-      console.log('🔍 Goals saved:', goals.map(g => ({ id: g.id, title: g.title })));
+      console.log('🔍 DataService.saveGoals() saved', goals.length, 'goals');
     }
   }
 
   saveHabits(habits: HabitPair[]): void {
-    const key = 'compounded-data';
+    const key = dataSourceConfig.source === 'mock'
+      ? 'compounded-data-mock'
+      : 'compounded-data';
+
     const stored = localStorage.getItem(key);
     let data = { habits: [], logs: [], goals: [] };
 
@@ -173,108 +210,7 @@ class DataService {
     localStorage.setItem(key, JSON.stringify(data));
 
     if (this.debug) {
-      console.log('🔍 DataService.saveHabits() saved', habits.length, 'habits to key:', key);
-    }
-  }
-
-  saveLogs(logs: HabitLog[]): void {
-    const key = 'compounded-data';
-    const stored = localStorage.getItem(key);
-    let data = { habits: [], logs: [], goals: [] };
-
-    if (stored) {
-      try {
-        data = JSON.parse(stored);
-      } catch (error) {
-        if (this.debug) {
-          console.error('❌ Failed to parse existing data:', error);
-        }
-      }
-    }
-
-    data.logs = logs;
-    localStorage.setItem(key, JSON.stringify(data));
-
-    if (this.debug) {
-      console.log('🔍 DataService.saveLogs() saved', logs.length, 'logs to key:', key);
-    }
-  }
-
-  // One-time migration to merge old split buckets
-  migrateSplitBuckets(): void {
-    const mainKey = 'compounded-data';
-    const mockKey = 'compounded-data-mock';
-    
-    const mainData = localStorage.getItem(mainKey);
-    const mockData = localStorage.getItem(mockKey);
-    
-    if (!mainData && !mockData) {
-      if (this.debug) {
-        console.log('🔄 Bucket Migration: No existing data found, skipping');
-      }
-      return;
-    }
-
-    let mergedData = { habits: [], logs: [], goals: [] };
-
-    try {
-      // Parse main bucket if exists
-      if (mainData) {
-        const parsed = JSON.parse(mainData);
-        mergedData = {
-          habits: parsed.habits || [],
-          logs: parsed.logs || [],
-          goals: parsed.goals || []
-        };
-        if (this.debug) {
-          console.log('🔄 Bucket Migration: Loaded main bucket -', mergedData.habits.length, 'habits,', mergedData.logs.length, 'logs,', mergedData.goals.length, 'goals');
-        }
-      }
-
-      // Merge mock bucket if exists
-      if (mockData) {
-        const mockParsed = JSON.parse(mockData);
-        const mockHabits = mockParsed.habits || [];
-        const mockLogs = mockParsed.logs || [];
-        const mockGoals = mockParsed.goals || [];
-
-        // Dedupe by id, prefer newer data
-        const habitMap = new Map(mergedData.habits.map(h => [h.id, h]));
-        mockHabits.forEach(h => habitMap.set(h.id, h));
-        
-        const logMap = new Map(mergedData.logs.map(l => [l.id, l]));
-        mockLogs.forEach(l => logMap.set(l.id, l));
-        
-        const goalMap = new Map(mergedData.goals.map(g => [g.id, g]));
-        mockGoals.forEach(g => goalMap.set(g.id, g));
-
-        mergedData = {
-          habits: Array.from(habitMap.values()),
-          logs: Array.from(logMap.values()),
-          goals: Array.from(goalMap.values())
-        };
-
-        if (this.debug) {
-          console.log('🔄 Bucket Migration: Merged mock bucket -', mockHabits.length, 'habits,', mockLogs.length, 'logs,', mockGoals.length, 'goals');
-          console.log('🔄 Bucket Migration: Final merged -', mergedData.habits.length, 'habits,', mergedData.logs.length, 'logs,', mergedData.goals.length, 'goals');
-        }
-      }
-
-      // Save merged result
-      localStorage.setItem(mainKey, JSON.stringify(mergedData));
-
-      // Remove old mock bucket
-      if (mockData) {
-        localStorage.removeItem(mockKey);
-        if (this.debug) {
-          console.log('🔄 Bucket Migration: Removed old mock bucket');
-        }
-      }
-
-      console.log('✅ Bucket Migration: Successfully unified storage buckets');
-
-    } catch (error) {
-      console.error('❌ Bucket Migration: Failed to migrate split buckets:', error);
+      console.log('🔍 DataService.saveHabits() saved', habits.length, 'habits');
     }
   }
 }

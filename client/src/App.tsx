@@ -1,58 +1,51 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import Habits from './pages/Habits';
-import Goals from './pages/Goals';
-import Insights from './pages/Insights';
-import Settings from './pages/Settings';
-import NotFound from './pages/not-found';
-import { HabitsProvider } from './contexts/HabitsProvider';
-import { GoalsProvider } from './contexts/GoalsContext';
-import { ThemeProvider } from './hooks/useTheme';
-import { TooltipProvider } from './components/ui/tooltip';
-import { runPhase05Migration, runFrequencyMigration } from './utils/migration';
-import { dataService } from './services/dataService';
+import React, { Suspense } from "react";
+import { Switch, Route } from "wouter";
+import { queryClient } from "./lib/queryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "./hooks/useTheme";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import Insights from "./pages/Insights";
+import Habits from "./pages/Habits";
+import Settings from "./pages/Settings";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+// Lazy load Goals page for smaller initial bundle
+const Goals = React.lazy(() => import("./pages/Goals"));
+
+function Router() {
+  return (
+    <Layout>
+      <Switch>
+        <Route path="/" component={Home} />
+        
+          <Route path="/goals">
+            <Suspense fallback={
+              <div className="flex items-center justify-center min-h-[50vh]">
+                <div className="animate-pulse text-gray-500">Loading Goals...</div>
+              </div>
+            }>
+              <Goals />
+            </Suspense>
+          </Route>
+        
+        <Route path="/insights" component={Insights} />
+        <Route path="/habits" component={Habits} />
+        <Route path="/settings" component={Settings} />
+        <Route component={Home} />
+      </Switch>
+    </Layout>
+  );
+}
 
 function App() {
-  useEffect(() => {
-    // Run bucket migration first
-    dataService.migrateSplitBuckets();
-    // Then run data migrations
-    runPhase05Migration();
-    runFrequencyMigration();
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <TooltipProvider>
-          <HabitsProvider>
-            <GoalsProvider>
-              <Router>
-                <Layout>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/habits" element={<Habits />} />
-                    <Route path="/goals" element={<Goals />} />
-                    <Route path="/insights" element={<Insights />} />
-                    <Route path="/settings" element={<Settings />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Layout>
-              </Router>
-            </GoalsProvider>
-          </HabitsProvider>
+          <Router />
+          <Toaster />
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>

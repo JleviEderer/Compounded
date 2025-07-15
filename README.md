@@ -119,40 +119,6 @@ npm test
 npm run build
 ```
 
-### Development Data Modes
-
-The app supports two data modes:
-
-#### Mock Data Mode (Default in Development)
-```typescript
-// client/src/services/dataSourceConfig.ts
-export const dataSourceConfig = {
-  source: 'mock',           // Use demo data with pre-filled habits/logs
-  enableLocalStorage: true  // Cache changes to localStorage
-};
-```
-- Pre-loaded with 4 sample habits and 90+ days of mock data
-- Perfect for development, testing, and demos
-- Shows "📊 Mock data mode" banner in top-right corner
-- Changes are cached so you don't lose modifications during development
-
-#### User Data Mode (Production)
-```typescript
-// client/src/services/dataSourceConfig.ts
-export const dataSourceConfig = {
-  source: 'user',          // Use real user data
-  enableLocalStorage: true // Persist to localStorage
-};
-```
-- Starts with empty state for real user data entry
-- All data persists in browser localStorage
-- No demo data interference
-
-#### Storage Architecture
-- **Single localStorage key**: `compounded-data` (unified storage)
-- **Automatic migration**: Old split buckets are merged on first load
-- **Data persistence**: Both modes save changes to localStorage
-
 ### Key Development Commands
 ```bash
 npm run dev          # Start development server
