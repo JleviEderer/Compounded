@@ -71,6 +71,8 @@ export function runPhase05Migration() {
 
   // Import dataService dynamically to avoid circular dependency
   import('@/services/dataService').then(({ dataService }) => {
+    // First, migrate split buckets to unified storage
+    dataService.migrateSplitBuckets();
     const currentGoals = dataService.getGoals();
     const currentHabits = dataService.getHabits();
     
