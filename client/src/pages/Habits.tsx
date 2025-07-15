@@ -24,21 +24,20 @@ export default function Habits() {
   const [weightIndex, setWeightIndex] = useState<number>(2); // Default to MEDIUM (index 2)
   const [selectedGoalIds, setSelectedGoalIds] = useState<string[]>([]);
   const [targetCount, setTargetCount] = useState<number>(7);
-  const [targetUnit, setTargetUnit] = useState<'week' | 'month' | 'year'>('week');
+  const targetUnit: 'week' = 'week';
 
   const resetForm = () => {
     setGoodHabit('');
     setWeightIndex(2); // MEDIUM
     setSelectedGoalIds([]);
     setTargetCount(7);
-    setTargetUnit('week');
     setEditingId(null);
   };
 
   const handleAdd = () => {
     if (goodHabit.trim() && targetCount > 0) {
       const weight = [HabitWeight.MICRO, HabitWeight.SMALL, HabitWeight.MEDIUM, HabitWeight.LARGE, HabitWeight.KEYSTONE][weightIndex];
-      addHabit(goodHabit.trim(), weight, selectedGoalIds, targetCount, targetUnit);
+      addHabit(goodHabit.trim(), weight, selectedGoalIds, targetCount, 'week');
       setIsAddModalOpen(false);
       resetForm();
     }
@@ -52,7 +51,6 @@ export default function Habits() {
       setWeightIndex(weightValues.indexOf(habit.weight));
       setSelectedGoalIds(habit.goalIds || []);
       setTargetCount(habit.targetCount || 7);
-      setTargetUnit(habit.targetUnit || 'week');
       setEditingId(habitId);
       setIsAddModalOpen(true);
     }
@@ -66,7 +64,7 @@ export default function Habits() {
         weight,
         goalIds: selectedGoalIds,
         targetCount,
-        targetUnit
+        targetUnit: 'week'
       });
       setIsAddModalOpen(false);
       resetForm();
@@ -154,16 +152,7 @@ export default function Habits() {
                       onChange={(e) => setTargetCount(Math.max(1, parseInt(e.target.value) || 1))}
                       className="w-20 bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-center"
                     />
-                    <span className="text-gray-600 dark:text-gray-400 text-sm">× per</span>
-                    <select
-                      value={targetUnit}
-                      onChange={(e) => setTargetUnit(e.target.value as 'week' | 'month' | 'year')}
-                      className="px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md text-gray-900 dark:text-white text-sm"
-                    >
-                      <option value="week">week</option>
-                      <option value="month">month</option>
-                      <option value="year">year</option>
-                    </select>
+                    <span className="text-gray-600 dark:text-gray-400 text-sm">× per <strong>week</strong></span>
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                     e.g., 3 × per week
