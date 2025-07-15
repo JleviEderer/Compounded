@@ -6,6 +6,9 @@ import { HabitPair, HabitLog, HabitLogState, WEIGHT_LABELS } from '../types';
 import { cn } from '../lib/utils';
 import { useHabitsContext as useHabits } from '../contexts/HabitsContext';
 import { useLongPress } from '../hooks/useLongPress';
+import { rateToColour, colourClass } from '@/constants/successRate';
+import { calculateHabitSuccessRate } from '../utils/frequencyHelpers';
+import { subDays } from 'date-fns';
 
 interface HabitRowProps {
   habit: HabitPair;
@@ -35,6 +38,17 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
 
   const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
   const todayLog = logs.find(log => log.habitId === habit.id && log.date === today);
+
+  // Calculate 30-day success rate
+  const endDate = new Date();
+  const startDate = subDays(endDate, 29); // 30 days including today
+  const completedLogs = logs.filter(log => 
+    log.habitId === habit.id && 
+    log.date >= startDate.toLocaleDateString('en-CA') && 
+    log.date <= endDate.toLocaleDateString('en-CA') &&
+    (log.state === 'good' || log.completed)
+  ).length;
+  const successRate = calculateHabitSuccessRate(habit, completedLogs, startDate, endDate);
 
   // Check if text is truncated
   const isTextTruncated = habit.goodHabit.length > 25; // Approximate truncation point
@@ -167,8 +181,13 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
                 Not logged
               </div>
             )}
-            <div className="text-xs text-gray-500 whitespace-nowrap leading-tight mt-0.5">
-              {WEIGHT_LABELS[habit.weight]?.split(' ')[0] || 'Unknown'} impact
+            <div className="flex items-center justify-end gap-2 mt-0.5">
+              <span className={`text-xs font-medium min-w-[35px] text-right ${colourClass(rateToColour(successRate))}`}>
+                {Math.round(successRate)}%
+              </span>
+              <div className="text-xs text-gray-500 whitespace-nowrap leading-tight">
+                {WEIGHT_LABELS[habit.weight]?.split(' ')[0] || 'Unknown'} impact
+              </div>
             </div>
           </div>
           <motion.button
