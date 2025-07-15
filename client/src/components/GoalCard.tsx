@@ -14,6 +14,7 @@ import { calculateAggregatedSuccessRate, calculateHabitSuccessRate, getFrequency
 import { useHabitsContext } from '@/contexts/HabitsContext';
 import { TIME_WINDOWS, TimeWindowKey, getWindowRange, humanLabel } from '@/utils/timeWindows';
 import { expectedForRange } from '@/utils/frequencyHelpers';
+import { rateToColour, colourClass, SUCCESS_RATE_LEGEND } from '@/constants/successRate';
 
 interface GoalCardProps {
   goal: Goal;
@@ -135,9 +136,18 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
                 </SelectContent>
               </Select>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              {goalSuccessRate !== null ? `${Math.round(goalSuccessRate)}%` : '– %'}
-            </p>
+            <div className="flex items-center gap-2">
+              <p className={`text-sm font-medium ${
+                goalSuccessRate !== null 
+                  ? colourClass(rateToColour(goalSuccessRate))
+                  : 'text-gray-600 dark:text-gray-400'
+              }`}>
+                {goalSuccessRate !== null ? `${Math.round(goalSuccessRate)}%` : '– %'}
+              </p>
+              {goalSuccessRate !== null && (
+                <div className={`w-2 h-2 rounded-full ring-2 ${colourClass(rateToColour(goalSuccessRate), 'ring')}`} />
+              )}
+            </div>
           </div>
 
           {/* Habit Breakdown */}
@@ -161,7 +171,7 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {getFrequencyDisplayString(habit)}
                       </span>
-                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300 min-w-[35px] text-right">
+                      <span className={`text-xs font-medium min-w-[35px] text-right ${colourClass(rateToColour(habitSuccessRates[habit.id] || 0))}`}>
                         {Math.round(habitSuccessRates[habit.id] || 0)}%
                       </span>
                     </div>
@@ -211,6 +221,9 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
                 <span className="font-medium text-gray-900 dark:text-gray-100 ml-2">
                   {humanLabel(timeWindow)}
                 </span>
+              </div>
+              <div className="text-xs text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-200 dark:border-gray-600">
+                {SUCCESS_RATE_LEGEND}
               </div>
             </div>
           </details>
