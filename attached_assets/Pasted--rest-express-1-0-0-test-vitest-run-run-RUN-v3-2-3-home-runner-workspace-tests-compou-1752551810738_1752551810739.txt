@@ -1,0 +1,3496 @@
+
+> rest-express@1.0.0 test
+> vitest run --run
+ RUN  v3.2.3 /home/runner/workspace
+
+
+
+ ❯ tests/compound.test.ts [queued]
+
+ ❯ tests/compound.test.ts [queued]
+ ❯ tests/goals.test.tsx [queued]
+
+ ❯ tests/compound.test.ts 0/9
+ ❯ tests/goals.test.tsx [queued]
+stdout | tests/compound.test.ts > Compound Growth Calculations > should generate momentum history
+Momentum history: 3 days from 2024-01-01 to 2025-07-15
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+
+stdout | tests/compound.test.ts > Compound Growth Calculations > should generate 30-day projection
+[DRATE] 2025-06-11 0 0
+
+ ❯ tests/compound.test.ts (9 tests | 1 failed) 61ms
+   ✓ Compound Growth Calculations > should validate the compound formula: 1.001^365 ≈ 1.440194 2ms
+   ✓ Compound Growth Calculations > should calculate daily rate correctly 1ms
+   ✓ Compound Growth Calculations > should calculate momentum index with compound growth 1ms
+   ✓ Compound Growth Calculations > should clamp momentum index to >= 0 1ms
+   ✓ Compound Growth Calculations > should generate momentum history 33ms
+   × Compound Growth Calculations > should generate 30-day projection 18ms
+     → expected [ { date: '2025-07-16', …(4) }, …(6) ] to have a length of 30 but got 7
+   ✓ Compound Growth Calculations > should calculate success rate 1ms
+   ✓ Compound Growth Calculations > should handle edge cases 1ms
+   ✓ Compound Growth Calculations > should maintain precision in compound calculations 1ms
+
+ ❯ tests/compound.test.ts 9/9
+ ❯ tests/goals.test.tsx [queued]
+
+ ❯ tests/compound.test.ts 9/9
+ ❯ tests/goals.test.tsx [queued]
+ ❯ tests/goalSelector.test.tsx (6 tests | 2 failed) 167ms
+   ✓ GoalSelector > renders none pill and goal options 72ms
+   ✓ GoalSelector > calls onChange with empty array when None is clicked 18ms
+   × GoalSelector > toggles goal selection correctly 36ms
+     → expected "spy" to be called with arguments: [ [] ]
+
+Received: 
+
+  1st spy call:
+
+  [
+-   [],
++   [
++     "1",
++   ],
+  ]
+
+
+Number of calls: 1
+
+   × GoalSelector > filters goals based on search term with debounce 20ms
+     → Unable to find an element with the placeholder text of: Search goals...
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-2"
+    >
+      <button
+        class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-700 text-teal-700 dark:text-teal-300"
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <span
+            class="font-medium"
+          >
+            None
+          </span>
+          <svg
+            class="lucide lucide-check w-4 h-4 text-teal-600 dark:text-teal-400"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 6 9 17l-5-5"
+            />
+          </svg>
+        </div>
+      </button>
+      <div
+        class="max-h-48 overflow-y-auto space-y-1"
+      >
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Short-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Mid-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Long-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+   ✓ GoalSelector > shows selection summary when goals are selected 10ms
+   ✓ GoalSelector > ensures goalIds array reflects final selections 8ms
+
+ ❯ tests/compound.test.ts 9/9
+ ❯ tests/goals.test.tsx [queued]
+stdout | tests/goals.test.tsx
+🚀 MOCK DATA: Loaded full dataset for development/demo
+🚀 STARTING mockData.ts with dynamic import...
+📋 Raw JSON data loaded: { habitsCount: 4, logsCount: 928 }
+🔍 RAW JSON - Total logs: 928
+🔍 RAW JSON - Date range: 2024-06-01 → 2025-07-02
+🔍 RAW JSON - Unique dates: 386
+🔍 RAW JSON - First 5 dates: [
+  '2024-06-01',
+  '2024-06-02',
+  '2024-06-03',
+  '2024-06-04',
+  '2024-06-05'
+]
+🔍 RAW JSON - Last 5 dates: [
+  '2025-06-27',
+  '2025-06-28',
+  '2025-06-30',
+  '2025-07-01',
+  '2025-07-02'
+]
+🔍 RAW JSON - 2025 logs found: 426
+🔍 RAW JSON - Sample 2025 logs: [
+  {
+    id: '1-2025-01-02',
+    habitId: '1',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-01-02',
+    habitId: '4',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '1-2025-01-03',
+    habitId: '1',
+    date: '2025-01-03',
+    state: 'good'
+  }
+]
+🔄 Phase 0 Migration: Filtered out bad state logs
+📊 Logs: 928 → 928 (removed 0 bad logs)
+📊 EXPORT VERIFICATION:
+📊 Habits exported: 4
+📊 Logs exported: 928
+📊 Full date range: 2024-06-01 → 2025-07-02
+📊 2025 logs found: 426
+📊 2025 date range: 2025-01-02 → 2025-07-02
+✅ SUCCESS: 2025 data loaded successfully!
+📊 Sample June 2025 logs: [
+  '2025-06-01: habit 2 = good',
+  '2025-06-01: habit 3 = good',
+  '2025-06-01: habit 4 = good',
+  '2025-06-02: habit 1 = good',
+  '2025-06-02: habit 2 = good'
+]
+📊 All unique dates count: 386
+📊 First 10 dates: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+📊 Last 10 dates: [
+  '2025-06-22', '2025-06-23',
+  '2025-06-24', '2025-06-25',
+  '2025-06-26', '2025-06-27',
+  '2025-06-28', '2025-06-30',
+  '2025-07-01', '2025-07-02'
+]
+🔄 Migration: Ensured default goal exists. Total goals: 4
+
+
+stderr | tests/goals.test.tsx
+Unknown weight value 0.0003, defaulting to MEDIUM
+Unknown weight value 0.0003, defaulting to MEDIUM
+
+
+
+ ❯ tests/goals.test.tsx [queued]
+
+ ❯ tests/goals.test.tsx [queued]
+stderr | tests/goalsIntegration.test.tsx > Goals Integration > creates a goal via GoalDialog and adds it to the list
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <HabitsProvider> component:
+
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:9:27)
+    at TestWrapper (/home/runner/workspace/tests/goalsIntegration.test.tsx:21:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+stderr | tests/goalsIntegration.test.tsx > Goals Integration > toggles accordion expand/collapse state
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <HabitsProvider> component:
+
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:9:27)
+    at TestWrapper (/home/runner/workspace/tests/goalsIntegration.test.tsx:21:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+
+ ❯ tests/goals.test.tsx 0/1
+stderr | tests/goalsIntegration.test.tsx > Goals Integration > validates required title field
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <HabitsProvider> component:
+
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:9:27)
+    at TestWrapper (/home/runner/workspace/tests/goalsIntegration.test.tsx:21:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+
+ ❯ tests/goals.test.tsx 1/1
+stdout | tests/rendering.test.tsx
+🚀 MOCK DATA: Loaded full dataset for development/demo
+🚀 STARTING mockData.ts with dynamic import...
+📋 Raw JSON data loaded: { habitsCount: 4, logsCount: 928 }
+🔍 RAW JSON - Total logs: 928
+🔍 RAW JSON - Date range: 2024-06-01 → 2025-07-02
+🔍 RAW JSON - Unique dates: 386
+🔍 RAW JSON - First 5 dates: [
+  '2024-06-01',
+  '2024-06-02',
+  '2024-06-03',
+  '2024-06-04',
+  '2024-06-05'
+]
+🔍 RAW JSON - Last 5 dates: [
+  '2025-06-27',
+  '2025-06-28',
+  '2025-06-30',
+  '2025-07-01',
+  '2025-07-02'
+]
+🔍 RAW JSON - 2025 logs found: 426
+🔍 RAW JSON - Sample 2025 logs: [
+  {
+    id: '1-2025-01-02',
+    habitId: '1',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-01-02',
+    habitId: '4',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '1-2025-01-03',
+    habitId: '1',
+    date: '2025-01-03',
+    state: 'good'
+  }
+]
+🔄 Phase 0 Migration: Filtered out bad state logs
+📊 Logs: 928 → 928 (removed 0 bad logs)
+📊 EXPORT VERIFICATION:
+📊 Habits exported: 4
+📊 Logs exported: 928
+📊 Full date range: 2024-06-01 → 2025-07-02
+📊 2025 logs found: 426
+📊 2025 date range: 2025-01-02 → 2025-07-02
+✅ SUCCESS: 2025 data loaded successfully!
+📊 Sample June 2025 logs: [
+  '2025-06-01: habit 2 = good',
+  '2025-06-01: habit 3 = good',
+  '2025-06-01: habit 4 = good',
+  '2025-06-02: habit 1 = good',
+  '2025-06-02: habit 2 = good'
+]
+📊 All unique dates count: 386
+📊 First 10 dates: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+📊 Last 10 dates: [
+  '2025-06-22', '2025-06-23',
+  '2025-06-24', '2025-06-25',
+  '2025-06-26', '2025-06-27',
+  '2025-06-28', '2025-06-30',
+  '2025-07-01', '2025-07-02'
+]
+🔄 Migration: Ensured default goal exists. Total goals: 4
+
+
+ ❯ tests/goals.test.tsx 1/1
+stderr | tests/rendering.test.tsx
+Unknown weight value 0.0003, defaulting to MEDIUM
+Unknown weight value 0.0003, defaulting to MEDIUM
+
+stderr | tests/goalsIntegration.test.tsx > Goals Integration > hides FAB when list is empty and shows when goals exist
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <HabitsProvider> component:
+
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:9:27)
+    at TestWrapper (/home/runner/workspace/tests/goalsIntegration.test.tsx:21:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+
+ ❯ tests/goals.test.tsx 1/1
+stdout | tests/goals.test.tsx > Goals Page > renders empty state with CTA when no goals exist
+🔍 DataService.getHabits() (MOCK-DEMO) → 4 habits
+🔍 DataService.getLogs() (MOCK-DEMO) → 928 logs
+🔍 Log date range: 2024-06-01 to 2025-07-02
+🔍 DataService.getGoals() (MOCK-DEMO) → 4 goals
+🔍 DataService.getHabits() (MOCK-DEMO) → 4 habits
+🔍 DataService.getLogs() (MOCK-DEMO) → 928 logs
+🔍 Log date range: 2024-06-01 to 2025-07-02
+🔍 DataService.getHabits() (MOCK-DEMO) → 4 habits
+🔍 DataService.getLogs() (MOCK-DEMO) → 928 logs
+🔍 Log date range: 2024-06-01 to 2025-07-02
+🔍 DataService.getHabits() (MOCK-DEMO) → 4 habits
+🔍 DataService.getLogs() (MOCK-DEMO) → 928 logs
+🔍 Log date range: 2024-06-01 to 2025-07-02
+🔍 DataService.getHabits() (MOCK-DEMO) → 4 habits
+🔍 DataService.getLogs() (MOCK-DEMO) → 928 logs
+🔍 Log date range: 2024-06-01 to 2025-07-02
+
+
+ ❯ tests/goals.test.tsx 1/1
+ ❯ tests/goals.test.tsx (1 test | 1 failed) 195ms
+   × Goals Page > renders empty state with CTA when no goals exist 193ms
+     → Unable to find an element with the text: Create your first goal. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-8"
+    >
+      <div
+        class="card-glass p-8"
+        style="opacity: 0; transform: translateY(20px);"
+      >
+        <div
+          class="flex items-center justify-between mb-6"
+        >
+          <h2
+            class="text-2xl font-bold text-gray-800 dark:text-white"
+          >
+            Goals
+          </h2>
+          <button
+            aria-controls="radix-:r3:"
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 bg-coral hover:bg-coral/90 text-white min-h-[44px] min-w-[44px] px-4 py-3 text-base font-medium touch-manipulation"
+            data-state="closed"
+            type="button"
+          >
+            <svg
+              class="lucide lucide-plus w-5 h-5 mr-2 flex-shrink-0"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12h14"
+              />
+              <path
+                d="M12 5v14"
+              />
+            </svg>
+            <span
+              class="hidden sm:inline"
+            >
+              New Goal
+            </span>
+            <span
+              class="sm:hidden"
+            >
+              Add
+            </span>
+          </button>
+        </div>
+        <div
+          class="text-gray-600 dark:text-gray-400 mb-6"
+        >
+          Define your objectives and connect them to your daily habits
+        </div>
+        <div
+          class="space-y-3"
+        >
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-2"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Improve Physical Health
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-coral/10 text-coral dark:bg-coral/20 dark:text-coral-light"
+                  >
+                    Short-term
+                     › 
+                    30 Jun 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-3"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Get Fit for Summer
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-coral/10 text-coral dark:bg-coral/20 dark:text-coral-light"
+                  >
+                    Short-term
+                     › 
+                    1 Aug 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-1"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Build Better Learning Habits
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300"
+                  >
+                    Mid-term
+                     › 
+                    31 Dec 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-general-goal"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      General Health
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ tests/goalsIntegration.test.tsx (5 tests | 4 failed) 243ms
+   × Goals Integration > creates a goal via GoalDialog and adds it to the list 77ms
+     → dataService.getHabits is not a function
+   × Goals Integration > toggles accordion expand/collapse state 8ms
+     → dataService.getHabits is not a function
+   × Goals Integration > validates required title field 40ms
+     → dataService.getHabits is not a function
+   × Goals Integration > hides FAB when list is empty and shows when goals exist 13ms
+     → dataService.getHabits is not a function
+   ✓ Goals Integration > strips deleted goal ID from all habits in single batch update 103ms
+
+ ❯ tests/frequency-success-rate-integration.test.ts [queued]
+stderr | tests/rendering.test.tsx > Component Rendering > should render HabitRow with correct habit information
+Warning: React does not recognize the `whileTap` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `whiletap` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+    at button
+    at button (/home/runner/workspace/tests/rendering.test.tsx:46:16)
+    at div
+    at div
+    at div
+    at div (/home/runner/workspace/tests/rendering.test.tsx:41:13)
+    at HabitRow (/home/runner/workspace/client/src/components/HabitRow.tsx:17:21)
+    at QueryClientProvider (file:///home/runner/workspace/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:20:3)
+    at /home/runner/workspace/tests/rendering.test.tsx:100:13
+Warning: Received `true` for a non-boolean attribute `layout`.
+
+If you want to write it to the DOM, pass a string instead: layout="true" or layout={value.toString()}.
+    at div
+    at div (/home/runner/workspace/tests/rendering.test.tsx:41:13)
+    at HabitRow (/home/runner/workspace/client/src/components/HabitRow.tsx:17:21)
+    at QueryClientProvider (file:///home/runner/workspace/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:20:3)
+    at /home/runner/workspace/tests/rendering.test.tsx:100:13
+
+
+ ❯ tests/frequency-success-rate-integration.test.ts [queued]
+stderr | tests/rendering.test.tsx > Component Rendering > should render WeightSlider with correct weight
+Error: Uncaught [TypeError: Cannot read properties of undefined (reading 'label')]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: Cannot read properties of undefined (reading 'label')
+    at WeightSlider (/home/runner/workspace/client/src/components/WeightSlider.tsx:148:43)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [TypeError: Cannot read properties of undefined (reading 'label')]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: Cannot read properties of undefined (reading 'label')
+    at WeightSlider (/home/runner/workspace/client/src/components/WeightSlider.tsx:148:43)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+The above error occurred in the <WeightSlider> component:
+
+    at WeightSlider (/home/runner/workspace/client/src/components/WeightSlider.tsx:18:25)
+    at QueryClientProvider (file:///home/runner/workspace/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:20:3)
+    at /home/runner/workspace/tests/rendering.test.tsx:100:13
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+stderr | tests/rendering.test.tsx > Component Rendering > should handle weight slider changes
+Error: Uncaught [TypeError: Cannot read properties of undefined (reading 'label')]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: Cannot read properties of undefined (reading 'label')
+    at WeightSlider (/home/runner/workspace/client/src/components/WeightSlider.tsx:148:43)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [TypeError: Cannot read properties of undefined (reading 'label')]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: Cannot read properties of undefined (reading 'label')
+    at WeightSlider (/home/runner/workspace/client/src/components/WeightSlider.tsx:148:43)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+The above error occurred in the <WeightSlider> component:
+
+    at WeightSlider (/home/runner/workspace/client/src/components/WeightSlider.tsx:18:25)
+    at QueryClientProvider (file:///home/runner/workspace/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:20:3)
+    at /home/runner/workspace/tests/rendering.test.tsx:100:13
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+
+ ❯ tests/frequency-success-rate-integration.test.ts [queued]
+stdout | tests/momentum-calculation-flow.test.ts
+🚀 MOCK DATA: Loaded full dataset for development/demo
+🚀 STARTING mockData.ts with dynamic import...
+📋 Raw JSON data loaded: { habitsCount: 4, logsCount: 928 }
+🔍 RAW JSON - Total logs: 928
+🔍 RAW JSON - Date range: 2024-06-01 → 2025-07-02
+🔍 RAW JSON - Unique dates: 386
+🔍 RAW JSON - First 5 dates: [
+  '2024-06-01',
+  '2024-06-02',
+  '2024-06-03',
+  '2024-06-04',
+  '2024-06-05'
+]
+🔍 RAW JSON - Last 5 dates: [
+  '2025-06-27',
+  '2025-06-28',
+  '2025-06-30',
+  '2025-07-01',
+  '2025-07-02'
+]
+🔍 RAW JSON - 2025 logs found: 426
+🔍 RAW JSON - Sample 2025 logs: [
+  {
+    id: '1-2025-01-02',
+    habitId: '1',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-01-02',
+    habitId: '4',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '1-2025-01-03',
+    habitId: '1',
+    date: '2025-01-03',
+    state: 'good'
+  }
+]
+🔄 Phase 0 Migration: Filtered out bad state logs
+📊 Logs: 928 → 928 (removed 0 bad logs)
+📊 EXPORT VERIFICATION:
+📊 Habits exported: 4
+📊 Logs exported: 928
+📊 Full date range: 2024-06-01 → 2025-07-02
+📊 2025 logs found: 426
+📊 2025 date range: 2025-01-02 → 2025-07-02
+✅ SUCCESS: 2025 data loaded successfully!
+📊 Sample June 2025 logs: [
+  '2025-06-01: habit 2 = good',
+  '2025-06-01: habit 3 = good',
+  '2025-06-01: habit 4 = good',
+  '2025-06-02: habit 1 = good',
+  '2025-06-02: habit 2 = good'
+]
+📊 All unique dates count: 386
+📊 First 10 dates: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+📊 Last 10 dates: [
+  '2025-06-22', '2025-06-23',
+  '2025-06-24', '2025-06-25',
+  '2025-06-26', '2025-06-27',
+  '2025-06-28', '2025-06-30',
+  '2025-07-01', '2025-07-02'
+]
+🔄 Migration: Ensured default goal exists. Total goals: 4
+
+
+ ❯ tests/frequency-success-rate-integration.test.ts [queued]
+stderr | tests/momentum-calculation-flow.test.ts
+Unknown weight value 0.0003, defaulting to MEDIUM
+Unknown weight value 0.0003, defaulting to MEDIUM
+
+
+ ❯ tests/frequency-success-rate-integration.test.ts [queued]
+stderr | tests/rendering.test.tsx > Component Rendering > should render momentum chart components
+Error: Uncaught [Error: useHabitsContext must be used within a HabitsProvider]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: useHabitsContext must be used within a HabitsProvider
+    at Module.useHabitsContext (/home/runner/workspace/client/src/contexts/HabitsContext.tsx:38:11)
+    at Home (/home/runner/workspace/client/src/pages/Home.tsx:25:56)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+Error: Uncaught [Error: useHabitsContext must be used within a HabitsProvider]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: useHabitsContext must be used within a HabitsProvider
+    at Module.useHabitsContext (/home/runner/workspace/client/src/contexts/HabitsContext.tsx:38:11)
+    at Home (/home/runner/workspace/client/src/pages/Home.tsx:25:56)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+The above error occurred in the <Home> component:
+
+    at Home (/home/runner/workspace/client/src/pages/Home.tsx:24:77)
+    at QueryClientProvider (file:///home/runner/workspace/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:20:3)
+    at /home/runner/workspace/tests/rendering.test.tsx:100:13
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+
+ ❯ tests/frequency-success-rate-integration.test.ts [queued]
+ ❯ tests/rendering.test.tsx (6 tests | 6 failed) 460ms
+   × Component Rendering > should render HabitRow with correct habit information 192ms
+     → Unable to find an element with the text: +0.25%. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      animate="[object Object]"
+      class="card-glass p-4 transition-all duration-300 hover:shadow-lg relative"
+      initial="[object Object]"
+      transition="[object Object]"
+    >
+      <div
+        class="flex items-start justify-between min-w-0 gap-3"
+      >
+        <div
+          class="flex items-start space-x-3 min-w-0 flex-1"
+        >
+          <div
+            class="flex-shrink-0 mt-1"
+          >
+            <button
+              aria-label="Mark Read articles as completed"
+              class="p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+            >
+              <svg
+                class="lucide lucide-check h-4 w-4"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 6 9 17l-5-5"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="flex-1 min-w-0 py-1"
+          >
+            <div
+              aria-controls="radix-:r0:"
+              aria-expanded="false"
+              aria-haspopup="dialog"
+              class="font-semibold text-gray-800 dark:text-white relative cursor-default
+                    
+                    "
+              data-state="closed"
+              style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.3; max-height: 2.6em;"
+              type="button"
+            >
+              Read articles
+            </div>
+            <div
+              class="text-xs text-gray-500 mt-1 leading-tight"
+            >
+              Track daily progress
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-start space-x-2 flex-shrink-0 mt-1"
+        >
+          <div
+            class="text-right min-w-[70px]"
+          >
+            <div
+              class="text-xs text-gray-500 whitespace-nowrap leading-tight mt-0.5"
+            >
+              Medium
+               impact
+            </div>
+          </div>
+          <button
+            class="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
+            whiletap="[object Object]"
+          >
+            <div
+              animate="[object Object]"
+              transition="[object Object]"
+            >
+              <svg
+                class="lucide lucide-chevron-down w-4 h-4 text-gray-500"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m6 9 6 6 6-6"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+   × Component Rendering > should handle habit toggle interaction 197ms
+     → Unable to find an accessible element with the role "checkbox"
+
+Here are the accessible roles:
+
+  button:
+
+  Name "Mark Test habit as completed":
+  <button
+    aria-label="Mark Test habit as completed"
+    class="p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+  />
+
+  Name "":
+  <button
+    class="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
+    whiletap="[object Object]"
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      animate="[object Object]"
+      class="card-glass p-4 transition-all duration-300 hover:shadow-lg relative"
+      initial="[object Object]"
+      transition="[object Object]"
+    >
+      <div
+        class="flex items-start justify-between min-w-0 gap-3"
+      >
+        <div
+          class="flex items-start space-x-3 min-w-0 flex-1"
+        >
+          <div
+            class="flex-shrink-0 mt-1"
+          >
+            <button
+              aria-label="Mark Test habit as completed"
+              class="p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+            >
+              <svg
+                class="lucide lucide-check h-4 w-4"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 6 9 17l-5-5"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="flex-1 min-w-0 py-1"
+          >
+            <div
+              aria-controls="radix-:r1:"
+              aria-expanded="false"
+              aria-haspopup="dialog"
+              class="font-semibold text-gray-800 dark:text-white relative cursor-default
+                    
+                    "
+              data-state="closed"
+              style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.3; max-height: 2.6em;"
+              type="button"
+            >
+              Test habit
+            </div>
+            <div
+              class="text-xs text-gray-500 mt-1 leading-tight"
+            >
+              Track daily progress
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-start space-x-2 flex-shrink-0 mt-1"
+        >
+          <div
+            class="text-right min-w-[70px]"
+          >
+            <div
+              class="text-xs text-gray-500 whitespace-nowrap leading-tight mt-0.5"
+            >
+              Unknown
+               impact
+            </div>
+          </div>
+          <button
+            class="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
+            whiletap="[object Object]"
+          >
+            <div
+              animate="[object Object]"
+              transition="[object Object]"
+            >
+              <svg
+                class="lucide lucide-chevron-down w-4 h-4 text-gray-500"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m6 9 6 6 6-6"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+   × Component Rendering > should render WeightSlider with correct weight 34ms
+     → Cannot read properties of undefined (reading 'label')
+   × Component Rendering > should handle weight slider changes 8ms
+     → Cannot read properties of undefined (reading 'label')
+   × Component Rendering > should expand habit row to show weekly view 20ms
+     → Found multiple elements with the role "button"
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+<button
+  aria-label="Mark Test habit as completed"
+  class="p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+>
+  <svg
+    class="lucide lucide-check h-4 w-4"
+    fill="none"
+    height="24"
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    viewBox="0 0 24 24"
+    width="24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M20 6 9 17l-5-5"
+    />
+  </svg>
+</button>
+
+Ignored nodes: comments, script, style
+<button
+  class="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
+  whiletap="[object Object]"
+>
+  <div
+    animate="[object Object]"
+    transition="[object Object]"
+  >
+    <svg
+      class="lucide lucide-chevron-down w-4 h-4 text-gray-500"
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="m6 9 6 6 6-6"
+      />
+    </svg>
+  </div>
+</button>
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      animate="[object Object]"
+      class="card-glass p-4 transition-all duration-300 hover:shadow-lg relative"
+      initial="[object Object]"
+      transition="[object Object]"
+    >
+      <div
+        class="flex items-start justify-between min-w-0 gap-3"
+      >
+        <div
+          class="flex items-start space-x-3 min-w-0 flex-1"
+        >
+          <div
+            class="flex-shrink-0 mt-1"
+          >
+            <button
+              aria-label="Mark Test habit as completed"
+              class="p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+            >
+              <svg
+                class="lucide lucide-check h-4 w-4"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 6 9 17l-5-5"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="flex-1 min-w-0 py-1"
+          >
+            <div
+              aria-controls="radix-:r2:"
+              aria-expanded="false"
+              aria-haspopup="dialog"
+              class="font-semibold text-gray-800 dark:text-white relative cursor-default
+                    
+                    "
+              data-state="closed"
+              style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.3; max-height: 2.6em;"
+              type="button"
+            >
+              Test habit
+            </div>
+            <div
+              class="text-xs text-gray-500 mt-1 leading-tight"
+            >
+              Track daily progress
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-start space-x-2 flex-shrink-0 mt-1"
+        >
+          <div
+            class="text-right min-w-[70px]"
+          >
+            <div
+              class="text-xs text-gray-500 whitespace-nowrap leading-tight mt-0.5"
+            >
+              Medium
+               impact
+            </div>
+          </div>
+          <button
+            class="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
+            whiletap="[object Object]"
+          >
+            <div
+              animate="[object Object]"
+              transition="[object Object]"
+            >
+              <svg
+                class="lucide lucide-chevron-down w-4 h-4 text-gray-500"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m6 9 6 6 6-6"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+   × Component Rendering > should render momentum chart components 7ms
+     → useHabitsContext must be used within a HabitsProvider
+
+ ❯ tests/frequency-success-rate-integration.test.ts [queued]
+ ❯ tests/momentum-calculation-flow.test.ts (6 tests | 2 failed) 105ms
+   ✓ Momentum Calculation Data Flow > should calculate daily rates for available dates 3ms
+   × Momentum Calculation Data Flow > should have valid habit weights 22ms
+     → expected [ Array(5) ] to include 0.0002
+   ✓ Momentum Calculation Data Flow > should find logs for specific dates as shown in console 2ms
+   × Momentum Calculation Data Flow > should handle dates with no logs correctly 5ms
+     → expected [ { id: '2-2025-06-12', …(3) }, …(2) ] to have a length of +0 but got 3
+   ✓ Momentum Calculation Data Flow > should calculate momentum index correctly with real data 12ms
+   ✓ Momentum Calculation Data Flow > should verify data flow produces valid data patterns 41ms
+
+ ❯ tests/frequency-success-rate-integration.test.ts [queued]
+
+
+stderr | tests/frequency-success-rate-integration.test.ts > Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in calendar data
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+
+stderr | tests/frequency-success-rate-integration.test.ts > Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in quarter data
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+
+stdout | tests/frequency-success-rate-integration.test.ts > Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in all-time data
+[DRATE] 2025-06-11 0 0
+
+stderr | tests/frequency-success-rate-integration.test.ts > Frequency-Aware Success Rate Integration > Heat map data integration > includes success rates in all-time data
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+Unknown weight value undefined, defaulting to MEDIUM
+
+ ✓ tests/frequency-success-rate-integration.test.ts (11 tests) 96ms
+
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+stdout | tests/time-filter-integration.test.ts
+🚀 MOCK DATA: Loaded full dataset for development/demo
+🚀 STARTING mockData.ts with dynamic import...
+📋 Raw JSON data loaded: { habitsCount: 4, logsCount: 928 }
+🔍 RAW JSON - Total logs: 928
+🔍 RAW JSON - Date range: 2024-06-01 → 2025-07-02
+🔍 RAW JSON - Unique dates: 386
+🔍 RAW JSON - First 5 dates: [
+  '2024-06-01',
+  '2024-06-02',
+  '2024-06-03',
+  '2024-06-04',
+  '2024-06-05'
+]
+🔍 RAW JSON - Last 5 dates: [
+  '2025-06-27',
+  '2025-06-28',
+  '2025-06-30',
+  '2025-07-01',
+  '2025-07-02'
+]
+🔍 RAW JSON - 2025 logs found: 426
+🔍 RAW JSON - Sample 2025 logs: [
+  {
+    id: '1-2025-01-02',
+    habitId: '1',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-01-02',
+    habitId: '4',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '1-2025-01-03',
+    habitId: '1',
+    date: '2025-01-03',
+    state: 'good'
+  }
+]
+🔄 Phase 0 Migration: Filtered out bad state logs
+📊 Logs: 928 → 928 (removed 0 bad logs)
+📊 EXPORT VERIFICATION:
+📊 Habits exported: 4
+📊 Logs exported: 928
+📊 Full date range: 2024-06-01 → 2025-07-02
+📊 2025 logs found: 426
+📊 2025 date range: 2025-01-02 → 2025-07-02
+✅ SUCCESS: 2025 data loaded successfully!
+📊 Sample June 2025 logs: [
+  '2025-06-01: habit 2 = good',
+  '2025-06-01: habit 3 = good',
+  '2025-06-01: habit 4 = good',
+  '2025-06-02: habit 1 = good',
+  '2025-06-02: habit 2 = good'
+]
+📊 All unique dates count: 386
+📊 First 10 dates: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+📊 Last 10 dates: [
+  '2025-06-22', '2025-06-23',
+  '2025-06-24', '2025-06-25',
+  '2025-06-26', '2025-06-27',
+  '2025-06-28', '2025-06-30',
+  '2025-07-01', '2025-07-02'
+]
+🔄 Migration: Ensured default goal exists. Total goals: 4
+
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+stderr | tests/time-filter-integration.test.ts
+Unknown weight value 0.0003, defaulting to MEDIUM
+Unknown weight value 0.0003, defaulting to MEDIUM
+
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+
+ ❯ tests/chart-time-filter-debug.test.ts [queued]
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+ ❯ tests/goalCardSnapshot.test.tsx (2 tests | 2 failed) 16ms
+   × GoalCard Snapshot Tests > should match snapshot for expanded GoalCard with three habits and timeline picker 13ms
+     → createTestWrapper is not a function
+   × GoalCard Snapshot Tests > should match snapshot for collapsed GoalCard 1ms
+     → createTestWrapper is not a function
+
+ ❯ tests/chart-time-filter-debug.test.ts [queued]
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/goalCardPhase6.test.tsx 0/9
+ ❯ tests/goalCardPhase6.test.tsx (9 tests | 9 failed) 39ms
+   × GoalCard Phase 6 Features > should render timeline picker with correct options 27ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should show habit breakdown with max 5 habits visible by default 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should expand to show all habits when clicking "+ N more" 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should collapse back to 5 habits when clicking "Show less" 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should show collapsible "Why?" pane 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should show expected and completed logs in Why pane when expanded 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should display frequency and success rate for each habit 2ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should handle goals with no linked habits 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should handle goals with exactly 5 habits (no overflow) 1ms
+     → createTestWrapper is not a function
+
+ ❯ tests/chart-time-filter-debug.test.ts [queued]
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/frequencyHelpers.test.ts [queued]
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should filter data correctly for 'All Time'
+Time Filter: All Time selected, using all data
+Total logs available: 928
+Generating momentum history for All Time: 386 days
+Momentum history: 386 days from 2024-06-01 to 2025-07-15
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+Recent Avg Rate calc for All Time: 120 historical days from window of 120
+Latest Rate: Using most recent date with data: 2025-07-02
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should filter data correctly for '30 D'
+Time filtering: 30 D → 38/928 logs
+Generating momentum history for 30 D: 17 days
+Momentum history: 17 days from 2025-06-15 to 2025-07-15
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+Recent Avg Rate calc for 30 D: 7 historical days from window of 7
+[DRATE] 2025-06-11 0 0
+Latest Rate: Using most recent date with data: 2025-07-02
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should filter data correctly for '4 M'
+Time filtering: 4 M → 245/928 logs
+Generating momentum history for 4 M: 104 days
+Momentum history: 104 days from 2025-03-17 to 2025-07-15
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+Recent Avg Rate calc for 4 M: 90 historical days from window of 90
+Latest Rate: Using most recent date with data: 2025-07-02
+
+
+ ❯ tests/chart-time-filter-debug.test.ts [queued]
+ ❯ tests/data-flow-integration.test.ts [queued]
+
+ ❯ tests/chart-time-filter-debug.test.ts [queued]
+ ❯ tests/data-flow-integration.test.ts [queued]
+stdout | tests/chart-time-filter-debug.test.ts
+🚀 MOCK DATA: Loaded full dataset for development/demo
+🚀 STARTING mockData.ts with dynamic import...
+📋 Raw JSON data loaded: { habitsCount: 4, logsCount: 928 }
+🔍 RAW JSON - Total logs: 928
+🔍 RAW JSON - Date range: 2024-06-01 → 2025-07-02
+🔍 RAW JSON - Unique dates: 386
+🔍 RAW JSON - First 5 dates: [
+  '2024-06-01',
+  '2024-06-02',
+  '2024-06-03',
+  '2024-06-04',
+  '2024-06-05'
+]
+🔍 RAW JSON - Last 5 dates: [
+  '2025-06-27',
+  '2025-06-28',
+  '2025-06-30',
+  '2025-07-01',
+  '2025-07-02'
+]
+🔍 RAW JSON - 2025 logs found: 426
+🔍 RAW JSON - Sample 2025 logs: [
+  {
+    id: '1-2025-01-02',
+    habitId: '1',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-01-02',
+    habitId: '4',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '1-2025-01-03',
+    habitId: '1',
+    date: '2025-01-03',
+    state: 'good'
+  }
+]
+🔄 Phase 0 Migration: Filtered out bad state logs
+📊 Logs: 928 → 928 (removed 0 bad logs)
+📊 EXPORT VERIFICATION:
+📊 Habits exported: 4
+📊 Logs exported: 928
+📊 Full date range: 2024-06-01 → 2025-07-02
+📊 2025 logs found: 426
+📊 2025 date range: 2025-01-02 → 2025-07-02
+✅ SUCCESS: 2025 data loaded successfully!
+📊 Sample June 2025 logs: [
+  '2025-06-01: habit 2 = good',
+  '2025-06-01: habit 3 = good',
+  '2025-06-01: habit 4 = good',
+  '2025-06-02: habit 1 = good',
+  '2025-06-02: habit 2 = good'
+]
+📊 All unique dates count: 386
+📊 First 10 dates: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+📊 Last 10 dates: [
+  '2025-06-22', '2025-06-23',
+  '2025-06-24', '2025-06-25',
+  '2025-06-26', '2025-06-27',
+  '2025-06-28', '2025-06-30',
+  '2025-07-01', '2025-07-02'
+]
+🔄 Migration: Ensured default goal exists. Total goals: 4
+
+
+ ❯ tests/chart-time-filter-debug.test.ts 0/2
+ ❯ tests/data-flow-integration.test.ts [queued]
+stderr | tests/chart-time-filter-debug.test.ts
+Unknown weight value 0.0003, defaulting to MEDIUM
+Unknown weight value 0.0003, defaulting to MEDIUM
+
+
+ ❯ tests/chart-time-filter-debug.test.ts 0/2
+ ❯ tests/data-flow-integration.test.ts [queued]
+
+ ❯ tests/chart-time-filter-debug.test.ts 0/2
+ ❯ tests/data-flow-integration.test.ts [queued]
+
+ ❯ tests/chart-time-filter-debug.test.ts 0/2
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ✓ tests/frequencyHelpers.test.ts (16 tests) 17ms
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should filter data correctly for '1 Y'
+Time filtering: 1 Y → 824/928 logs
+Generating momentum history for 1 Y: 343 days
+Momentum history: 343 days from 2024-07-15 to 2025-07-15
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+Recent Avg Rate calc for 1 Y: 90 historical days from window of 90
+[DRATE] 2025-06-11 3 3
+Latest Rate: Using most recent date with data: 2025-07-02
+🔍 1Y Projection Debug:
+  Current Momentum (exact): 1.2311243732904555
+  Recent Avg Rate (exact): 0.00048777777777777795
+  Projection Days: 90
+  Manual Calc Check: 1.2311243732904555 * (1 + 0.00048777777777777795 )^ 90
+  Manual Result: 1.2863608345644824
+  App Result: 1.2863608345644824
+  Your Calc (1.988 * 1.0019^120): 2.4965574981664833
+
+
+ ❯ tests/chart-time-filter-debug.test.ts 0/2
+
+ ❯ tests/chart-time-filter-debug.test.ts 0/2
+ ❯ tests/data-flow-integration.test.ts [queued]
+
+ ❯ tests/chart-time-filter-debug.test.ts 0/2
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/goalDeletion.test.tsx [queued]
+stdout | tests/chart-time-filter-debug.test.ts > Chart Time Filter Data Flow Debug > should verify complete data flow from time filter to chart
+Time Filter: All Time selected, using all data
+Total logs available: 928
+Generating momentum history for All Time: 386 days
+Momentum history: 386 days from 2024-06-01 to 2025-07-15
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+Recent Avg Rate calc for All Time: 120 historical days from window of 120
+Latest Rate: Using most recent date with data: 2025-07-02
+Time filtering: 30 D → 38/928 logs
+Generating momentum history for 30 D: 17 days
+Momentum history: 17 days from 2025-06-15 to 2025-07-15
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+Recent Avg Rate calc for 30 D: 7 historical days from window of 7
+[DRATE] 2025-06-11 0 0
+Latest Rate: Using most recent date with data: 2025-07-02
+=== DATA FLOW DEBUG ===
+All Time momentum data length: 386
+30 Day momentum data length: 28
+All Time date range: { start: '2024-06-25', end: '2025-07-15' }
+30 Day date range: { start: '2025-06-28', end: '2025-07-22' }
+All Time current momentum: 1.2636680672968081
+30 Day current momentum: 1.0096429178574142
+
+stdout | tests/chart-time-filter-debug.test.ts > Chart Time Filter Data Flow Debug > should verify chart receives correct filtered data props
+Time filtering: 30 D → 38/928 logs
+Generating momentum history for 30 D: 17 days
+Momentum history: 17 days from 2025-06-15 to 2025-07-15
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+Recent Avg Rate calc for 30 D: 7 historical days from window of 7
+[DRATE] 2025-06-11 0 0
+Latest Rate: Using most recent date with data: 2025-07-02
+=== CHART PROPS DEBUG ===
+Chart will receive data points: 28
+Chart data date range: { start: '2025-06-28', end: '2025-07-22' }
+Chart current momentum: 1.0096429178574142
+Chart total growth: 0.16007600959998938
+
+ ✓ tests/chart-time-filter-debug.test.ts (2 tests) 2701ms
+   ✓ Chart Time Filter Data Flow Debug > should verify complete data flow from time filter to chart  2646ms
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should filter logs based on time range
+Time filtering: 30 D → 38/928 logs
+Generating momentum history for 30 D: 17 days
+Momentum history: 17 days from 2025-06-15 to 2025-07-15
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+Recent Avg Rate calc for 30 D: 7 historical days from window of 7
+[DRATE] 2025-06-11 0 0
+Latest Rate: Using most recent date with data: 2025-07-02
+Time Filter: All Time selected, using all data
+Total logs available: 928
+Generating momentum history for All Time: 386 days
+Momentum history: 386 days from 2024-06-01 to 2025-07-15
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+Recent Avg Rate calc for All Time: 120 historical days from window of 120
+Latest Rate: Using most recent date with data: 2025-07-02
+
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/goalDeletion.test.tsx [queued]
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should handle date filtering correctly in useMomentum hook
+Time filtering: 30 D → 38/928 logs
+Generating momentum history for 30 D: 17 days
+Momentum history: 17 days from 2025-06-15 to 2025-07-15
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+Recent Avg Rate calc for 30 D: 7 historical days from window of 7
+[DRATE] 2025-06-11 0 0
+Latest Rate: Using most recent date with data: 2025-07-02
+
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should recalculate when time filter changes
+Time filtering: 30 D → 38/928 logs
+Generating momentum history for 30 D: 17 days
+Momentum history: 17 days from 2025-06-15 to 2025-07-15
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+[DRATE] 2025-06-11 0 0
+Recent Avg Rate calc for 30 D: 7 historical days from window of 7
+[DRATE] 2025-06-11 0 0
+Latest Rate: Using most recent date with data: 2025-07-02
+Time filtering: 4 M → 245/928 logs
+Generating momentum history for 4 M: 104 days
+Momentum history: 104 days from 2025-03-17 to 2025-07-15
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+[DRATE] 2025-06-11 3 3
+Recent Avg Rate calc for 4 M: 90 historical days from window of 90
+Latest Rate: Using most recent date with data: 2025-07-02
+
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ❯ tests/goalDeletion.test.tsx [queued]
+stdout | tests/time-filter-integration.test.ts > Time Filter Integration > should handle edge case of no logs in time range
+Time filtering: Future 7 Days → 0/928 logs
+
+ ✓ tests/time-filter-integration.test.ts (9 tests) 6410ms
+   ✓ Time Filter Integration > should filter data correctly for 'All Time'  1622ms
+   ✓ Time Filter Integration > should filter data correctly for '4 M'  401ms
+   ✓ Time Filter Integration > should filter data correctly for '1 Y'  1770ms
+   ✓ Time Filter Integration > should filter logs based on time range  2090ms
+   ✓ Time Filter Integration > should recalculate when time filter changes  359ms
+
+ ❯ tests/data-flow-integration.test.ts [queued]
+ ✓ tests/goalUtils.test.ts (5 tests) 8ms
+
+ ✓ tests/timeWindows.test.ts (9 tests) 8ms
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Suites 2 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/data-flow-integration.test.ts [ tests/data-flow-integration.test.ts ]
+Error: Failed to resolve import "../client/src/data/myMockData.json" from "tests/data-flow-integration.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /home/runner/workspace/tests/data-flow-integration.test.ts:24:35
+  12 |    describe("Step 1: JSON Data Import Validation", () => {
+  13 |      it("should import raw JSON data correctly", async () => {
+  14 |        const rawData = await import("../client/src/data/myMockData.json");
+     |                                     ^
+  15 |        expect(rawData.habits).toBeDefined();
+  16 |        expect(rawData.logs).toBeDefined();
+ ❯ TransformPluginContext._formatError node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:49257:41
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:49252:16
+ ❯ normalizeUrl node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:64199:23
+ ❯ node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:64331:39
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:64258:7
+ ❯ PluginContainer.transform node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:49098:18
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:51931:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/29]⎯
+
+ FAIL  tests/goalDeletion.test.tsx [ tests/goalDeletion.test.tsx ]
+Error: Transform failed with 1 error:
+/home/runner/workspace/tests/goalDeletion.test.tsx:13:83: ERROR: Unexpected end of file
+  Plugin: vite:esbuild
+  File: /home/runner/workspace/tests/goalDeletion.test.tsx:13:83
+  
+  Unexpected end of file
+  11 |  
+  12 |  describe('Goal Deletion Cascade', () => {
+  13 |    it('strips deleted goal ID from all habits in single batch update', async () => {
+     |                                                                                     ^
+  
+ ❯ failureErrorWithLog node_modules/vite/node_modules/esbuild/lib/main.js:1472:15
+ ❯ node_modules/vite/node_modules/esbuild/lib/main.js:755:50
+ ❯ responseCallbacks.<computed> node_modules/vite/node_modules/esbuild/lib/main.js:622:9
+ ❯ handleIncomingPacket node_modules/vite/node_modules/esbuild/lib/main.js:677:12
+ ❯ Socket.readFromStdout node_modules/vite/node_modules/esbuild/lib/main.js:600:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/29]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 27 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/compound.test.ts > Compound Growth Calculations > should generate 30-day projection
+AssertionError: expected [ { date: '2025-07-16', …(4) }, …(6) ] to have a length of 30 but got 7
+
+- Expected
++ Received
+
+- 30
++ 7
+
+ ❯ tests/compound.test.ts:89:24
+     87|     const projection = generate30DayProjection(mockHabits, mockLogs);
+     88|     
+     89|     expect(projection).toHaveLength(30);
+       |                        ^
+     90|     expect(projection[0]).toHaveProperty('date');
+     91|     expect(projection[0]).toHaveProperty('value');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/29]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should render timeline picker with correct options
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:101:18
+     99|     render(
+    100|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    101|       { wrapper: createTestWrapper() }
+       |                  ^
+    102|     );
+    103| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/29]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should show habit breakdown with max 5 habits visible by default
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:115:18
+    113|     render(
+    114|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    115|       { wrapper: createTestWrapper() }
+       |                  ^
+    116|     );
+    117| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/29]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should expand to show all habits when clicking "+ N more"
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:138:18
+    136|     render(
+    137|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    138|       { wrapper: createTestWrapper() }
+       |                  ^
+    139|     );
+    140| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/29]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should collapse back to 5 habits when clicking "Show less"
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:158:18
+    156|     render(
+    157|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    158|       { wrapper: createTestWrapper() }
+       |                  ^
+    159|     );
+    160| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/29]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should show collapsible "Why?" pane
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:185:18
+    183|     render(
+    184|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    185|       { wrapper: createTestWrapper() }
+       |                  ^
+    186|     );
+    187| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/29]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should show expected and completed logs in Why pane when expanded
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:200:18
+    198|     render(
+    199|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    200|       { wrapper: createTestWrapper() }
+       |                  ^
+    201|     );
+    202| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/29]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should display frequency and success rate for each habit
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:218:18
+    216|     render(
+    217|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    218|       { wrapper: createTestWrapper() }
+       |                  ^
+    219|     );
+    220| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/29]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should handle goals with no linked habits
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:239:18
+    237|     render(
+    238|       <GoalCard goal={goalWithNoHabits} isExpanded={true} />,
+    239|       { wrapper: createTestWrapper() }
+       |                  ^
+    240|     );
+    241| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/29]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should handle goals with exactly 5 habits (no overflow)
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:252:18
+    250|     render(
+    251|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    252|       { wrapper: createTestWrapper() }
+       |                  ^
+    253|     );
+    254| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/29]⎯
+
+ FAIL  tests/goalCardSnapshot.test.tsx > GoalCard Snapshot Tests > should match snapshot for expanded GoalCard with three habits and timeline picker
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardSnapshot.test.tsx:75:18
+     73|     const { container } = render(
+     74|       <GoalCard goal={mockGoalSnapshot} isExpanded={true} />,
+     75|       { wrapper: createTestWrapper() }
+       |                  ^
+     76|     );
+     77| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/29]⎯
+
+ FAIL  tests/goalCardSnapshot.test.tsx > GoalCard Snapshot Tests > should match snapshot for collapsed GoalCard
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardSnapshot.test.tsx:85:18
+     83|     const { container } = render(
+     84|       <GoalCard goal={mockGoalSnapshot} isExpanded={false} />,
+     85|       { wrapper: createTestWrapper() }
+       |                  ^
+     86|     );
+     87| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/29]⎯
+
+ FAIL  tests/goalSelector.test.tsx > GoalSelector > toggles goal selection correctly
+AssertionError: expected "spy" to be called with arguments: [ [] ]
+
+Received: 
+
+  1st spy call:
+
+  [
+-   [],
++   [
++     "1",
++   ],
+  ]
+
+
+Number of calls: 1
+
+ ❯ tests/goalSelector.test.tsx:97:26
+     95|     const shortTermGoals = screen.getAllByText('Short-term Goal');
+     96|     fireEvent.click(shortTermGoals[0]);
+     97|     expect(mockOnChange).toHaveBeenCalledWith([]);
+       |                          ^
+     98|   });
+     99| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/29]⎯
+
+ FAIL  tests/goalSelector.test.tsx > GoalSelector > filters goals based on search term with debounce
+TestingLibraryElementError: Unable to find an element with the placeholder text of: Search goals...
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-2"
+    >
+      <button
+        class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-700 text-teal-700 dark:text-teal-300"
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <span
+            class="font-medium"
+          >
+            None
+          </span>
+          <svg
+            class="lucide lucide-check w-4 h-4 text-teal-600 dark:text-teal-400"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 6 9 17l-5-5"
+            />
+          </svg>
+        </div>
+      </button>
+      <div
+        class="max-h-48 overflow-y-auto space-y-1"
+      >
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Short-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Mid-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Long-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/goalSelector.test.tsx:107:32
+    105|     );
+    106| 
+    107|     const searchInput = screen.getByPlaceholderText('Search goals...');
+       |                                ^
+    108|     fireEvent.change(searchInput, { target: { value: 'Short' } });
+    109| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/29]⎯
+
+ FAIL  tests/goals.test.tsx > Goals Page > renders empty state with CTA when no goals exist
+TestingLibraryElementError: Unable to find an element with the text: Create your first goal. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-8"
+    >
+      <div
+        class="card-glass p-8"
+        style="opacity: 0; transform: translateY(20px);"
+      >
+        <div
+          class="flex items-center justify-between mb-6"
+        >
+          <h2
+            class="text-2xl font-bold text-gray-800 dark:text-white"
+          >
+            Goals
+          </h2>
+          <button
+            aria-controls="radix-:r3:"
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 bg-coral hover:bg-coral/90 text-white min-h-[44px] min-w-[44px] px-4 py-3 text-base font-medium touch-manipulation"
+            data-state="closed"
+            type="button"
+          >
+            <svg
+              class="lucide lucide-plus w-5 h-5 mr-2 flex-shrink-0"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12h14"
+              />
+              <path
+                d="M12 5v14"
+              />
+            </svg>
+            <span
+              class="hidden sm:inline"
+            >
+              New Goal
+            </span>
+            <span
+              class="sm:hidden"
+            >
+              Add
+            </span>
+          </button>
+        </div>
+        <div
+          class="text-gray-600 dark:text-gray-400 mb-6"
+        >
+          Define your objectives and connect them to your daily habits
+        </div>
+        <div
+          class="space-y-3"
+        >
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-2"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Improve Physical Health
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-coral/10 text-coral dark:bg-coral/20 dark:text-coral-light"
+                  >
+                    Short-term
+                     › 
+                    30 Jun 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-3"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Get Fit for Summer
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-coral/10 text-coral dark:bg-coral/20 dark:text-coral-light"
+                  >
+                    Short-term
+                     › 
+                    1 Aug 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-1"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Build Better Learning Habits
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300"
+                  >
+                    Mid-term
+                     › 
+                    31 Dec 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-general-goal"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      General Health
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/goals.test.tsx:17:19
+     15|     render(<Goals />, { wrapper: TestWrapper });
+     16|     
+     17|     expect(screen.getByText('Create your first goal')).toBeInTheDocument();
+       |                   ^
+     18|     expect(screen.getByRole('button', { name: /add your first goal/i })).toBeInTh…
+     19|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/29]⎯
+
+ FAIL  tests/goalsIntegration.test.tsx > Goals Integration > creates a goal via GoalDialog and adds it to the list
+ FAIL  tests/goalsIntegration.test.tsx > Goals Integration > toggles accordion expand/collapse state
+ FAIL  tests/goalsIntegration.test.tsx > Goals Integration > validates required title field
+ FAIL  tests/goalsIntegration.test.tsx > Goals Integration > hides FAB when list is empty and shows when goals exist
+TypeError: dataService.getHabits is not a function
+ ❯ client/src/hooks/useHabits.ts:62:27
+     60|     // Fallback to dataService
+     61|     return {
+     62|       habits: dataService.getHabits(),
+       |                           ^
+     63|       logs: dataService.getLogs(),
+     64|       settings: { theme: 'light', nerdMode: false }
+ ❯ mountState node_modules/react-dom/cjs/react-dom.development.js:16167:20
+ ❯ Object.useState node_modules/react-dom/cjs/react-dom.development.js:16880:16
+ ❯ Proxy.useState node_modules/react/cjs/react.development.js:1622:21
+ ❯ Module.useHabits client/src/hooks/useHabits.ts:38:27
+ ❯ HabitsProvider client/src/contexts/HabitsProvider.tsx:17:38
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27465:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/29]⎯
+
+ FAIL  tests/momentum-calculation-flow.test.ts > Momentum Calculation Data Flow > should have valid habit weights
+AssertionError: expected [ Array(5) ] to include 0.0002
+ ❯ tests/momentum-calculation-flow.test.ts:34:28
+     32| 
+     33|     mockHabits.forEach(habit => {
+     34|       expect(validWeights).toContain(habit.weight);
+       |                            ^
+     35|       expect(habit.weight).toBeGreaterThan(0);
+     36|     });
+ ❯ tests/momentum-calculation-flow.test.ts:33:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/29]⎯
+
+ FAIL  tests/momentum-calculation-flow.test.ts > Momentum Calculation Data Flow > should handle dates with no logs correctly
+AssertionError: expected [ { id: '2-2025-06-12', …(3) }, …(2) ] to have a length of +0 but got 3
+
+- Expected
++ Received
+
+- 0
++ 3
+
+ ❯ tests/momentum-calculation-flow.test.ts:62:26
+     60|     // Test dates that should have 0 logs (like 2025-06-12, 2025-06-13)
+     61|     const logs20250612 = mockLogs.filter(log => log.date === '2025-06-12');
+     62|     expect(logs20250612).toHaveLength(0);
+       |                          ^
+     63| 
+     64|     const rate20250612 = calculateDailyRate(mockHabits, mockLogs, '2025-06-12');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/29]⎯
+
+ FAIL  tests/rendering.test.tsx > Component Rendering > should render HabitRow with correct habit information
+TestingLibraryElementError: Unable to find an element with the text: +0.25%. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      animate="[object Object]"
+      class="card-glass p-4 transition-all duration-300 hover:shadow-lg relative"
+      initial="[object Object]"
+      transition="[object Object]"
+    >
+      <div
+        class="flex items-start justify-between min-w-0 gap-3"
+      >
+        <div
+          class="flex items-start space-x-3 min-w-0 flex-1"
+        >
+          <div
+            class="flex-shrink-0 mt-1"
+          >
+            <button
+              aria-label="Mark Read articles as completed"
+              class="p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+            >
+              <svg
+                class="lucide lucide-check h-4 w-4"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 6 9 17l-5-5"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="flex-1 min-w-0 py-1"
+          >
+            <div
+              aria-controls="radix-:r0:"
+              aria-expanded="false"
+              aria-haspopup="dialog"
+              class="font-semibold text-gray-800 dark:text-white relative cursor-default
+                    
+                    "
+              data-state="closed"
+              style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.3; max-height: 2.6em;"
+              type="button"
+            >
+              Read articles
+            </div>
+            <div
+              class="text-xs text-gray-500 mt-1 leading-tight"
+            >
+              Track daily progress
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-start space-x-2 flex-shrink-0 mt-1"
+        >
+          <div
+            class="text-right min-w-[70px]"
+          >
+            <div
+              class="text-xs text-gray-500 whitespace-nowrap leading-tight mt-0.5"
+            >
+              Medium
+               impact
+            </div>
+          </div>
+          <button
+            class="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
+            whiletap="[object Object]"
+          >
+            <div
+              animate="[object Object]"
+              transition="[object Object]"
+            >
+              <svg
+                class="lucide lucide-chevron-down w-4 h-4 text-gray-500"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m6 9 6 6 6-6"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/rendering.test.tsx:95:19
+     93| 
+     94|     expect(screen.getByText('Read articles')).toBeInTheDocument();
+     95|     expect(screen.getByText('+0.25%')).toBeInTheDocument();
+       |                   ^
+     96|     expect(screen.getByText('Medium impact')).toBeInTheDocument();
+     97|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/29]⎯
+
+ FAIL  tests/rendering.test.tsx > Component Rendering > should handle habit toggle interaction
+TestingLibraryElementError: Unable to find an accessible element with the role "checkbox"
+
+Here are the accessible roles:
+
+  button:
+
+  Name "Mark Test habit as completed":
+  <button
+    aria-label="Mark Test habit as completed"
+    class="p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+  />
+
+  Name "":
+  <button
+    class="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
+    whiletap="[object Object]"
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      animate="[object Object]"
+      class="card-glass p-4 transition-all duration-300 hover:shadow-lg relative"
+      initial="[object Object]"
+      transition="[object Object]"
+    >
+      <div
+        class="flex items-start justify-between min-w-0 gap-3"
+      >
+        <div
+          class="flex items-start space-x-3 min-w-0 flex-1"
+        >
+          <div
+            class="flex-shrink-0 mt-1"
+          >
+            <button
+              aria-label="Mark Test habit as completed"
+              class="p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+            >
+              <svg
+                class="lucide lucide-check h-4 w-4"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 6 9 17l-5-5"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="flex-1 min-w-0 py-1"
+          >
+            <div
+              aria-controls="radix-:r1:"
+              aria-expanded="false"
+              aria-haspopup="dialog"
+              class="font-semibold text-gray-800 dark:text-white relative cursor-default
+                    
+                    "
+              data-state="closed"
+              style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.3; max-height: 2.6em;"
+              type="button"
+            >
+              Test habit
+            </div>
+            <div
+              class="text-xs text-gray-500 mt-1 leading-tight"
+            >
+              Track daily progress
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-start space-x-2 flex-shrink-0 mt-1"
+        >
+          <div
+            class="text-right min-w-[70px]"
+          >
+            <div
+              class="text-xs text-gray-500 whitespace-nowrap leading-tight mt-0.5"
+            >
+              Unknown
+               impact
+            </div>
+          </div>
+          <button
+            class="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
+            whiletap="[object Object]"
+          >
+            <div
+              animate="[object Object]"
+              transition="[object Object]"
+            >
+              <svg
+                class="lucide lucide-chevron-down w-4 h-4 text-gray-500"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m6 9 6 6 6-6"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/rendering.test.tsx:119:29
+    117|     );
+    118| 
+    119|     const checkbox = screen.getByRole('checkbox');
+       |                             ^
+    120|     fireEvent.click(checkbox);
+    121| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/29]⎯
+
+ FAIL  tests/rendering.test.tsx > Component Rendering > should render WeightSlider with correct weight
+ FAIL  tests/rendering.test.tsx > Component Rendering > should handle weight slider changes
+TypeError: Cannot read properties of undefined (reading 'label')
+ ❯ WeightSlider client/src/components/WeightSlider.tsx:148:43
+    146|         className="sr-only"
+    147|         aria-label="Habit weight selector"
+    148|         aria-valuetext={`${WEIGHTS[value].label} impact: ${WEIGHTS[value].percent…
+       |                                           ^
+    149|       />
+    150| 
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27465:14
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom.development.js:26599:12
+ ❯ workLoopSync node_modules/react-dom/cjs/react-dom.development.js:26505:5
+ ❯ renderRootSync node_modules/react-dom/cjs/react-dom.development.js:26473:7
+ ❯ recoverFromConcurrentError node_modules/react-dom/cjs/react-dom.development.js:25889:20
+ ❯ performConcurrentWorkOnRoot node_modules/react-dom/cjs/react-dom.development.js:25789:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/29]⎯
+
+ FAIL  tests/rendering.test.tsx > Component Rendering > should expand habit row to show weekly view
+TestingLibraryElementError: Found multiple elements with the role "button"
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+<button
+  aria-label="Mark Test habit as completed"
+  class="p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+>
+  <svg
+    class="lucide lucide-check h-4 w-4"
+    fill="none"
+    height="24"
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    viewBox="0 0 24 24"
+    width="24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M20 6 9 17l-5-5"
+    />
+  </svg>
+</button>
+
+Ignored nodes: comments, script, style
+<button
+  class="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
+  whiletap="[object Object]"
+>
+  <div
+    animate="[object Object]"
+    transition="[object Object]"
+  >
+    <svg
+      class="lucide lucide-chevron-down w-4 h-4 text-gray-500"
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="m6 9 6 6 6-6"
+      />
+    </svg>
+  </div>
+</button>
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      animate="[object Object]"
+      class="card-glass p-4 transition-all duration-300 hover:shadow-lg relative"
+      initial="[object Object]"
+      transition="[object Object]"
+    >
+      <div
+        class="flex items-start justify-between min-w-0 gap-3"
+      >
+        <div
+          class="flex items-start space-x-3 min-w-0 flex-1"
+        >
+          <div
+            class="flex-shrink-0 mt-1"
+          >
+            <button
+              aria-label="Mark Test habit as completed"
+              class="p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
+            >
+              <svg
+                class="lucide lucide-check h-4 w-4"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 6 9 17l-5-5"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="flex-1 min-w-0 py-1"
+          >
+            <div
+              aria-controls="radix-:r2:"
+              aria-expanded="false"
+              aria-haspopup="dialog"
+              class="font-semibold text-gray-800 dark:text-white relative cursor-default
+                    
+                    "
+              data-state="closed"
+              style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.3; max-height: 2.6em;"
+              type="button"
+            >
+              Test habit
+            </div>
+            <div
+              class="text-xs text-gray-500 mt-1 leading-tight"
+            >
+              Track daily progress
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-start space-x-2 flex-shrink-0 mt-1"
+        >
+          <div
+            class="text-right min-w-[70px]"
+          >
+            <div
+              class="text-xs text-gray-500 whitespace-nowrap leading-tight mt-0.5"
+            >
+              Medium
+               impact
+            </div>
+          </div>
+          <button
+            class="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
+            whiletap="[object Object]"
+          >
+            <div
+              animate="[object Object]"
+              transition="[object Object]"
+            >
+              <svg
+                class="lucide lucide-chevron-down w-4 h-4 text-gray-500"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m6 9 6 6 6-6"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ getElementError node_modules/@testing-library/dom/dist/query-helpers.js:20:35
+ ❯ getMultipleElementsFoundError node_modules/@testing-library/dom/dist/query-helpers.js:23:10
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:55:13
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/rendering.test.tsx:183:33
+    181| 
+    182|     // Find and click the expand button
+    183|     const expandButton = screen.getByRole('button');
+       |                                 ^
+    184|     fireEvent.click(expandButton);
+    185| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/29]⎯
+
+ FAIL  tests/rendering.test.tsx > Component Rendering > should render momentum chart components
+Error: useHabitsContext must be used within a HabitsProvider
+ ❯ Module.useHabitsContext client/src/contexts/HabitsContext.tsx:38:11
+     36|   const context = useContext(HabitsContext);
+     37|   if (!context) {
+     38|     throw new Error('useHabitsContext must be used within a HabitsProvider');
+       |           ^
+     39|   }
+     40|   return context;
+ ❯ Home client/src/pages/Home.tsx:25:56
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27465:14
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom.development.js:26599:12
+ ❯ workLoopSync node_modules/react-dom/cjs/react-dom.development.js:26505:5
+ ❯ renderRootSync node_modules/react-dom/cjs/react-dom.development.js:26473:7
+ ❯ recoverFromConcurrentError node_modules/react-dom/cjs/react-dom.development.js:25889:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/29]⎯
+
+
+ Test Files  10 failed | 6 passed (16)
+      Tests  27 failed | 69 passed (96)
+   Start at  03:55:37
+   Duration  19.58s (transform 2.40s, setup 15.12s, collect 17.65s, tests 10.53s, environment 31.72s, prepare 7.28s)

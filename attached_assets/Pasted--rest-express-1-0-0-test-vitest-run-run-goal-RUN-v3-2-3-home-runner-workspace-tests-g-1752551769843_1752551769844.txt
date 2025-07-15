@@ -1,0 +1,1414 @@
+
+> rest-express@1.0.0 test
+> vitest run --run goal
+ RUN  v3.2.3 /home/runner/workspace
+
+
+
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+ ❯ tests/goalDeletion.test.tsx [queued]
+
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+ ❯ tests/goalDeletion.test.tsx [queued]
+
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+ ❯ tests/goalDeletion.test.tsx [queued]
+ ❯ tests/goalSelector.test.tsx (6 tests | 2 failed) 161ms
+   ✓ GoalSelector > renders none pill and goal options 67ms
+   ✓ GoalSelector > calls onChange with empty array when None is clicked 17ms
+   × GoalSelector > toggles goal selection correctly 37ms
+     → expected "spy" to be called with arguments: [ [] ]
+
+Received: 
+
+  1st spy call:
+
+  [
+-   [],
++   [
++     "1",
++   ],
+  ]
+
+
+Number of calls: 1
+
+   × GoalSelector > filters goals based on search term with debounce 17ms
+     → Unable to find an element with the placeholder text of: Search goals...
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-2"
+    >
+      <button
+        class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-700 text-teal-700 dark:text-teal-300"
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <span
+            class="font-medium"
+          >
+            None
+          </span>
+          <svg
+            class="lucide lucide-check w-4 h-4 text-teal-600 dark:text-teal-400"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 6 9 17l-5-5"
+            />
+          </svg>
+        </div>
+      </button>
+      <div
+        class="max-h-48 overflow-y-auto space-y-1"
+      >
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Short-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Mid-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Long-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+   ✓ GoalSelector > shows selection summary when goals are selected 10ms
+   ✓ GoalSelector > ensures goalIds array reflects final selections 10ms
+stdout | tests/goals.test.tsx
+🚀 MOCK DATA: Loaded full dataset for development/demo
+🚀 STARTING mockData.ts with dynamic import...
+📋 Raw JSON data loaded: { habitsCount: 4, logsCount: 928 }
+🔍 RAW JSON - Total logs: 928
+🔍 RAW JSON - Date range: 2024-06-01 → 2025-07-02
+🔍 RAW JSON - Unique dates: 386
+🔍 RAW JSON - First 5 dates: [
+  '2024-06-01',
+  '2024-06-02',
+  '2024-06-03',
+  '2024-06-04',
+  '2024-06-05'
+]
+🔍 RAW JSON - Last 5 dates: [
+  '2025-06-27',
+  '2025-06-28',
+  '2025-06-30',
+  '2025-07-01',
+  '2025-07-02'
+]
+🔍 RAW JSON - 2025 logs found: 426
+🔍 RAW JSON - Sample 2025 logs: [
+  {
+    id: '1-2025-01-02',
+    habitId: '1',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '4-2025-01-02',
+    habitId: '4',
+    date: '2025-01-02',
+    state: 'good'
+  },
+  {
+    id: '1-2025-01-03',
+    habitId: '1',
+    date: '2025-01-03',
+    state: 'good'
+  }
+]
+🔄 Phase 0 Migration: Filtered out bad state logs
+📊 Logs: 928 → 928 (removed 0 bad logs)
+📊 EXPORT VERIFICATION:
+📊 Habits exported: 4
+📊 Logs exported: 928
+📊 Full date range: 2024-06-01 → 2025-07-02
+📊 2025 logs found: 426
+📊 2025 date range: 2025-01-02 → 2025-07-02
+✅ SUCCESS: 2025 data loaded successfully!
+📊 Sample June 2025 logs: [
+  '2025-06-01: habit 2 = good',
+  '2025-06-01: habit 3 = good',
+  '2025-06-01: habit 4 = good',
+  '2025-06-02: habit 1 = good',
+  '2025-06-02: habit 2 = good'
+]
+📊 All unique dates count: 386
+📊 First 10 dates: [
+  '2024-06-01', '2024-06-02',
+  '2024-06-03', '2024-06-04',
+  '2024-06-05', '2024-06-06',
+  '2024-06-07', '2024-06-08',
+  '2024-06-09', '2024-06-10'
+]
+📊 Last 10 dates: [
+  '2025-06-22', '2025-06-23',
+  '2025-06-24', '2025-06-25',
+  '2025-06-26', '2025-06-27',
+  '2025-06-28', '2025-06-30',
+  '2025-07-01', '2025-07-02'
+]
+🔄 Migration: Ensured default goal exists. Total goals: 4
+
+
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+ ❯ tests/goalDeletion.test.tsx [queued]
+stderr | tests/goals.test.tsx
+Unknown weight value 0.0003, defaulting to MEDIUM
+Unknown weight value 0.0003, defaulting to MEDIUM
+
+
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+ ❯ tests/goalDeletion.test.tsx [queued]
+
+ ❯ tests/goalCardPhase6.test.tsx [queued]
+ ❯ tests/goalCardSnapshot.test.tsx [queued]
+ ❯ tests/goalCardPhase6.test.tsx (9 tests | 9 failed) 17ms
+   × GoalCard Phase 6 Features > should render timeline picker with correct options 9ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should show habit breakdown with max 5 habits visible by default 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should expand to show all habits when clicking "+ N more" 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should collapse back to 5 habits when clicking "Show less" 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should show collapsible "Why?" pane 0ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should show expected and completed logs in Why pane when expanded 0ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should display frequency and success rate for each habit 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should handle goals with no linked habits 1ms
+     → createTestWrapper is not a function
+   × GoalCard Phase 6 Features > should handle goals with exactly 5 habits (no overflow) 1ms
+     → createTestWrapper is not a function
+
+ ❯ tests/goalCardSnapshot.test.tsx [queued]
+stdout | tests/goals.test.tsx > Goals Page > renders empty state with CTA when no goals exist
+🔍 DataService.getHabits() (MOCK-DEMO) → 4 habits
+🔍 DataService.getLogs() (MOCK-DEMO) → 928 logs
+🔍 Log date range: 2024-06-01 to 2025-07-02
+🔍 DataService.getGoals() (MOCK-DEMO) → 4 goals
+🔍 DataService.getHabits() (MOCK-DEMO) → 4 habits
+🔍 DataService.getLogs() (MOCK-DEMO) → 928 logs
+🔍 Log date range: 2024-06-01 to 2025-07-02
+🔍 DataService.getHabits() (MOCK-DEMO) → 4 habits
+🔍 DataService.getLogs() (MOCK-DEMO) → 928 logs
+🔍 Log date range: 2024-06-01 to 2025-07-02
+🔍 DataService.getHabits() (MOCK-DEMO) → 4 habits
+🔍 DataService.getLogs() (MOCK-DEMO) → 928 logs
+🔍 Log date range: 2024-06-01 to 2025-07-02
+🔍 DataService.getHabits() (MOCK-DEMO) → 4 habits
+🔍 DataService.getLogs() (MOCK-DEMO) → 928 logs
+🔍 Log date range: 2024-06-01 to 2025-07-02
+
+
+ ❯ tests/goalCardSnapshot.test.tsx [queued]
+ ❯ tests/goals.test.tsx (1 test | 1 failed) 159ms
+   × Goals Page > renders empty state with CTA when no goals exist 157ms
+     → Unable to find an element with the text: Create your first goal. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-8"
+    >
+      <div
+        class="card-glass p-8"
+        style="opacity: 0; transform: translateY(20px);"
+      >
+        <div
+          class="flex items-center justify-between mb-6"
+        >
+          <h2
+            class="text-2xl font-bold text-gray-800 dark:text-white"
+          >
+            Goals
+          </h2>
+          <button
+            aria-controls="radix-:r3:"
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 bg-coral hover:bg-coral/90 text-white min-h-[44px] min-w-[44px] px-4 py-3 text-base font-medium touch-manipulation"
+            data-state="closed"
+            type="button"
+          >
+            <svg
+              class="lucide lucide-plus w-5 h-5 mr-2 flex-shrink-0"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12h14"
+              />
+              <path
+                d="M12 5v14"
+              />
+            </svg>
+            <span
+              class="hidden sm:inline"
+            >
+              New Goal
+            </span>
+            <span
+              class="sm:hidden"
+            >
+              Add
+            </span>
+          </button>
+        </div>
+        <div
+          class="text-gray-600 dark:text-gray-400 mb-6"
+        >
+          Define your objectives and connect them to your daily habits
+        </div>
+        <div
+          class="space-y-3"
+        >
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-2"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Improve Physical Health
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-coral/10 text-coral dark:bg-coral/20 dark:text-coral-light"
+                  >
+                    Short-term
+                     › 
+                    30 Jun 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-3"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Get Fit for Summer
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-coral/10 text-coral dark:bg-coral/20 dark:text-coral-light"
+                  >
+                    Short-term
+                     › 
+                    1 Aug 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-1"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Build Better Learning Habits
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300"
+                  >
+                    Mid-term
+                     › 
+                    31 Dec 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-general-goal"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      General Health
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+ ❯ tests/goalCardSnapshot.test.tsx [queued]
+stderr | tests/goalsIntegration.test.tsx > Goals Integration > creates a goal via GoalDialog and adds it to the list
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <HabitsProvider> component:
+
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:9:27)
+    at TestWrapper (/home/runner/workspace/tests/goalsIntegration.test.tsx:21:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+stderr | tests/goalsIntegration.test.tsx > Goals Integration > toggles accordion expand/collapse state
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <HabitsProvider> component:
+
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:9:27)
+    at TestWrapper (/home/runner/workspace/tests/goalsIntegration.test.tsx:21:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+stderr | tests/goalsIntegration.test.tsx > Goals Integration > validates required title field
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <HabitsProvider> component:
+
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:9:27)
+    at TestWrapper (/home/runner/workspace/tests/goalsIntegration.test.tsx:21:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+stderr | tests/goalsIntegration.test.tsx > Goals Integration > hides FAB when list is empty and shows when goals exist
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26599:12) TypeError: __vite_ssr_import_2__.dataService.getHabits is not a function
+    at /home/runner/workspace/client/src/hooks/useHabits.ts:62:27
+    at mountState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16167:20)
+    at Object.useState (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:16880:16)
+    at Proxy.useState (/home/runner/workspace/node_modules/react/cjs/react.development.js:1622:21)
+    at Module.useHabits (/home/runner/workspace/client/src/hooks/useHabits.ts:38:27)
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:17:38)
+    at renderWithHooks (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <HabitsProvider> component:
+
+    at HabitsProvider (/home/runner/workspace/client/src/contexts/HabitsProvider.tsx:9:27)
+    at TestWrapper (/home/runner/workspace/tests/goalsIntegration.test.tsx:21:24)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+
+ ❯ tests/goalCardSnapshot.test.tsx [queued]
+ ❯ tests/goalsIntegration.test.tsx (5 tests | 4 failed) 152ms
+   × Goals Integration > creates a goal via GoalDialog and adds it to the list 67ms
+     → dataService.getHabits is not a function
+   × Goals Integration > toggles accordion expand/collapse state 5ms
+     → dataService.getHabits is not a function
+   × Goals Integration > validates required title field 12ms
+     → dataService.getHabits is not a function
+   × Goals Integration > hides FAB when list is empty and shows when goals exist 9ms
+     → dataService.getHabits is not a function
+   ✓ Goals Integration > strips deleted goal ID from all habits in single batch update 56ms
+
+ ✓ tests/goalUtils.test.ts (5 tests) 8ms
+ ❯ tests/goalCardSnapshot.test.tsx (2 tests | 2 failed) 9ms
+   × GoalCard Snapshot Tests > should match snapshot for expanded GoalCard with three habits and timeline picker 7ms
+     → createTestWrapper is not a function
+   × GoalCard Snapshot Tests > should match snapshot for collapsed GoalCard 1ms
+     → createTestWrapper is not a function
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/goalDeletion.test.tsx [ tests/goalDeletion.test.tsx ]
+Error: Transform failed with 1 error:
+/home/runner/workspace/tests/goalDeletion.test.tsx:13:83: ERROR: Unexpected end of file
+  Plugin: vite:esbuild
+  File: /home/runner/workspace/tests/goalDeletion.test.tsx:13:83
+  
+  Unexpected end of file
+  11 |  
+  12 |  describe('Goal Deletion Cascade', () => {
+  13 |    it('strips deleted goal ID from all habits in single batch update', async () => {
+     |                                                                                     ^
+  
+ ❯ failureErrorWithLog node_modules/vite/node_modules/esbuild/lib/main.js:1472:15
+ ❯ node_modules/vite/node_modules/esbuild/lib/main.js:755:50
+ ❯ responseCallbacks.<computed> node_modules/vite/node_modules/esbuild/lib/main.js:622:9
+ ❯ handleIncomingPacket node_modules/vite/node_modules/esbuild/lib/main.js:677:12
+ ❯ Socket.readFromStdout node_modules/vite/node_modules/esbuild/lib/main.js:600:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/19]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 18 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should render timeline picker with correct options
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:101:18
+     99|     render(
+    100|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    101|       { wrapper: createTestWrapper() }
+       |                  ^
+    102|     );
+    103| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/19]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should show habit breakdown with max 5 habits visible by default
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:115:18
+    113|     render(
+    114|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    115|       { wrapper: createTestWrapper() }
+       |                  ^
+    116|     );
+    117| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/19]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should expand to show all habits when clicking "+ N more"
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:138:18
+    136|     render(
+    137|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    138|       { wrapper: createTestWrapper() }
+       |                  ^
+    139|     );
+    140| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/19]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should collapse back to 5 habits when clicking "Show less"
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:158:18
+    156|     render(
+    157|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    158|       { wrapper: createTestWrapper() }
+       |                  ^
+    159|     );
+    160| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/19]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should show collapsible "Why?" pane
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:185:18
+    183|     render(
+    184|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    185|       { wrapper: createTestWrapper() }
+       |                  ^
+    186|     );
+    187| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/19]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should show expected and completed logs in Why pane when expanded
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:200:18
+    198|     render(
+    199|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    200|       { wrapper: createTestWrapper() }
+       |                  ^
+    201|     );
+    202| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/19]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should display frequency and success rate for each habit
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:218:18
+    216|     render(
+    217|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    218|       { wrapper: createTestWrapper() }
+       |                  ^
+    219|     );
+    220| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/19]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should handle goals with no linked habits
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:239:18
+    237|     render(
+    238|       <GoalCard goal={goalWithNoHabits} isExpanded={true} />,
+    239|       { wrapper: createTestWrapper() }
+       |                  ^
+    240|     );
+    241| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/19]⎯
+
+ FAIL  tests/goalCardPhase6.test.tsx > GoalCard Phase 6 Features > should handle goals with exactly 5 habits (no overflow)
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardPhase6.test.tsx:252:18
+    250|     render(
+    251|       <GoalCard goal={mockGoal} isExpanded={true} />,
+    252|       { wrapper: createTestWrapper() }
+       |                  ^
+    253|     );
+    254| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/19]⎯
+
+ FAIL  tests/goalCardSnapshot.test.tsx > GoalCard Snapshot Tests > should match snapshot for expanded GoalCard with three habits and timeline picker
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardSnapshot.test.tsx:75:18
+     73|     const { container } = render(
+     74|       <GoalCard goal={mockGoalSnapshot} isExpanded={true} />,
+     75|       { wrapper: createTestWrapper() }
+       |                  ^
+     76|     );
+     77| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/19]⎯
+
+ FAIL  tests/goalCardSnapshot.test.tsx > GoalCard Snapshot Tests > should match snapshot for collapsed GoalCard
+TypeError: createTestWrapper is not a function
+ ❯ tests/goalCardSnapshot.test.tsx:85:18
+     83|     const { container } = render(
+     84|       <GoalCard goal={mockGoalSnapshot} isExpanded={false} />,
+     85|       { wrapper: createTestWrapper() }
+       |                  ^
+     86|     );
+     87| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/19]⎯
+
+ FAIL  tests/goalSelector.test.tsx > GoalSelector > toggles goal selection correctly
+AssertionError: expected "spy" to be called with arguments: [ [] ]
+
+Received: 
+
+  1st spy call:
+
+  [
+-   [],
++   [
++     "1",
++   ],
+  ]
+
+
+Number of calls: 1
+
+ ❯ tests/goalSelector.test.tsx:97:26
+     95|     const shortTermGoals = screen.getAllByText('Short-term Goal');
+     96|     fireEvent.click(shortTermGoals[0]);
+     97|     expect(mockOnChange).toHaveBeenCalledWith([]);
+       |                          ^
+     98|   });
+     99| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/19]⎯
+
+ FAIL  tests/goalSelector.test.tsx > GoalSelector > filters goals based on search term with debounce
+TestingLibraryElementError: Unable to find an element with the placeholder text of: Search goals...
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-2"
+    >
+      <button
+        class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-700 text-teal-700 dark:text-teal-300"
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <span
+            class="font-medium"
+          >
+            None
+          </span>
+          <svg
+            class="lucide lucide-check w-4 h-4 text-teal-600 dark:text-teal-400"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 6 9 17l-5-5"
+            />
+          </svg>
+        </div>
+      </button>
+      <div
+        class="max-h-48 overflow-y-auto space-y-1"
+      >
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Short-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Mid-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+        <button
+          class="w-full px-3 py-2 text-sm rounded-lg border transition-all duration-200 text-left bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <div
+            class="flex items-center justify-between"
+          >
+            <div
+              class="min-w-0 flex-1"
+            >
+              <div
+                class="font-medium truncate"
+              >
+                Long-term Goal
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/goalSelector.test.tsx:107:32
+    105|     );
+    106| 
+    107|     const searchInput = screen.getByPlaceholderText('Search goals...');
+       |                                ^
+    108|     fireEvent.change(searchInput, { target: { value: 'Short' } });
+    109| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/19]⎯
+
+ FAIL  tests/goals.test.tsx > Goals Page > renders empty state with CTA when no goals exist
+TestingLibraryElementError: Unable to find an element with the text: Create your first goal. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-8"
+    >
+      <div
+        class="card-glass p-8"
+        style="opacity: 0; transform: translateY(20px);"
+      >
+        <div
+          class="flex items-center justify-between mb-6"
+        >
+          <h2
+            class="text-2xl font-bold text-gray-800 dark:text-white"
+          >
+            Goals
+          </h2>
+          <button
+            aria-controls="radix-:r3:"
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 bg-coral hover:bg-coral/90 text-white min-h-[44px] min-w-[44px] px-4 py-3 text-base font-medium touch-manipulation"
+            data-state="closed"
+            type="button"
+          >
+            <svg
+              class="lucide lucide-plus w-5 h-5 mr-2 flex-shrink-0"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12h14"
+              />
+              <path
+                d="M12 5v14"
+              />
+            </svg>
+            <span
+              class="hidden sm:inline"
+            >
+              New Goal
+            </span>
+            <span
+              class="sm:hidden"
+            >
+              Add
+            </span>
+          </button>
+        </div>
+        <div
+          class="text-gray-600 dark:text-gray-400 mb-6"
+        >
+          Define your objectives and connect them to your daily habits
+        </div>
+        <div
+          class="space-y-3"
+        >
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-2"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Improve Physical Health
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-coral/10 text-coral dark:bg-coral/20 dark:text-coral-light"
+                  >
+                    Short-term
+                     › 
+                    30 Jun 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-3"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Get Fit for Summer
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-coral/10 text-coral dark:bg-coral/20 dark:text-coral-light"
+                  >
+                    Short-term
+                     › 
+                    1 Aug 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-goal-1"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      Build Better Learning Habits
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                >
+                  <div
+                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300"
+                  >
+                    Mid-term
+                     › 
+                    31 Dec 2025
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div
+              class="bg-gray-800 dark:bg-gray-800 border border-gray-700 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+            >
+              <button
+                aria-controls="goal-card-general-goal"
+                aria-expanded="false"
+                class="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-700/50 transition-colors"
+              >
+                <div
+                  class="flex items-center gap-4 flex-1 min-w-0"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <svg
+                      class="lucide lucide-chevron-right w-4 h-4 text-gray-400"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m9 18 6-6-6-6"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="flex-1 min-w-0"
+                  >
+                    <div
+                      class="font-medium text-white text-base leading-snug"
+                      style="display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden;"
+                    >
+                      General Health
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex-shrink-0 ml-3"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/goals.test.tsx:17:19
+     15|     render(<Goals />, { wrapper: TestWrapper });
+     16|     
+     17|     expect(screen.getByText('Create your first goal')).toBeInTheDocument();
+       |                   ^
+     18|     expect(screen.getByRole('button', { name: /add your first goal/i })).toBeInTh…
+     19|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/19]⎯
+
+ FAIL  tests/goalsIntegration.test.tsx > Goals Integration > creates a goal via GoalDialog and adds it to the list
+ FAIL  tests/goalsIntegration.test.tsx > Goals Integration > toggles accordion expand/collapse state
+ FAIL  tests/goalsIntegration.test.tsx > Goals Integration > validates required title field
+ FAIL  tests/goalsIntegration.test.tsx > Goals Integration > hides FAB when list is empty and shows when goals exist
+TypeError: dataService.getHabits is not a function
+ ❯ client/src/hooks/useHabits.ts:62:27
+     60|     // Fallback to dataService
+     61|     return {
+     62|       habits: dataService.getHabits(),
+       |                           ^
+     63|       logs: dataService.getLogs(),
+     64|       settings: { theme: 'light', nerdMode: false }
+ ❯ mountState node_modules/react-dom/cjs/react-dom.development.js:16167:20
+ ❯ Object.useState node_modules/react-dom/cjs/react-dom.development.js:16880:16
+ ❯ Proxy.useState node_modules/react/cjs/react.development.js:1622:21
+ ❯ Module.useHabits client/src/hooks/useHabits.ts:38:27
+ ❯ HabitsProvider client/src/contexts/HabitsProvider.tsx:17:38
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:15486:18
+ ❯ mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:20103:13
+ ❯ beginWork node_modules/react-dom/cjs/react-dom.development.js:21626:16
+ ❯ beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:27465:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/19]⎯
+
+
+ Test Files  6 failed | 1 passed (7)
+      Tests  18 failed | 10 passed (28)
+   Start at  03:55:29
+   Duration  7.32s (transform 1.16s, setup 4.71s, collect 9.05s, tests 505ms, environment 10.82s, prepare 3.60s)
