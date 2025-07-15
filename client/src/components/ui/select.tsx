@@ -1,7 +1,4 @@
-` tags to replace the original code.
 
-```
-<replit_final_file>
 "use client"
 
 import * as React from "react"
