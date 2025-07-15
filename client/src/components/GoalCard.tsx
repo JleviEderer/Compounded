@@ -124,7 +124,7 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
                 Success Rate (last {humanLabel(timeWindow)})
               </h4>
               <Select value={timeWindow} onValueChange={(value: TimeWindowKey) => setTimeWindow(value)}>
-                <SelectTrigger className="w-auto h-7 text-xs border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">
+                <SelectTrigger className="w-auto h-7 text-xs text-gray-900 dark:text-gray-100">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
