@@ -74,12 +74,16 @@ export function runPhase05Migration() {
     const currentGoals = dataService.getGoals();
     const currentHabits = dataService.getHabits();
     
+    console.log('🔄 Migration: Current state - Goals:', currentGoals.length, 'Habits:', currentHabits.length);
+    
     // Only run migration if there's actually old data to migrate
     // Don't overwrite existing goals unless they're empty
     if (currentGoals.length === 0) {
       const migratedGoals = ensureDefaultGoalExists(currentGoals);
       dataService.saveGoals(migratedGoals);
       console.log('🔄 Migration: Created default goal for empty goals list');
+    } else {
+      console.log('🔄 Migration: Goals already exist, skipping goal creation');
     }
     
     // Only migrate habits that don't have goalIds
@@ -88,6 +92,8 @@ export function runPhase05Migration() {
       const migratedHabits = migrateHabitsToDefaultGoal(currentHabits);
       dataService.saveHabits(migratedHabits);
       console.log('🔄 Migration: Updated habits with default goal assignments');
+    } else {
+      console.log('🔄 Migration: All habits already have goal assignments');
     }
     
     console.log('✅ Migration: Phase 0.5 migration completed');

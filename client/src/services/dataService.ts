@@ -184,7 +184,8 @@ class DataService {
     localStorage.setItem(key, JSON.stringify(data));
 
     if (this.debug) {
-      console.log('🔍 DataService.saveGoals() saved', goals.length, 'goals');
+      console.log('🔍 DataService.saveGoals() saved', goals.length, 'goals to key:', key);
+      console.log('🔍 Goals saved:', goals.map(g => ({ id: g.id, title: g.title })));
     }
   }
 
