@@ -12,6 +12,23 @@ export const useInsightsData = () => {
   const [weekAnchor, setWeekAnchor] = useState<Date>(new Date());
   const [quarterAnchor, setQuarterAnchor] = useState<Date>(new Date());
 
+  // Sync anchors when switching views to maintain temporal context
+  const setActiveViewWithSync = (newView: InsightsViewMode) => {
+    if (newView === 'week') {
+      // When switching to week view, sync weekAnchor to current month anchor
+      setWeekAnchor(anchor);
+    } else if (newView === 'month') {
+      // When switching to month view, sync anchor to current weekAnchor's month
+      const weekMonth = new Date(weekAnchor.getFullYear(), weekAnchor.getMonth(), 1);
+      setAnchor(weekMonth);
+    } else if (newView === 'quarter') {
+      // When switching to quarter view, sync to current anchor
+      setQuarterAnchor(anchor);
+    }
+    
+    setActiveView(newView);
+  };
+
   const getTimeFilterForView = (view: InsightsViewMode) => {
     switch (view) {
       case 'week':
@@ -134,7 +151,7 @@ export const useInsightsData = () => {
     logs,
     settings,
     activeView,
-    setActiveView,
+    setActiveView: setActiveViewWithSync,
     anchor,
     setAnchor,
     weekAnchor,
