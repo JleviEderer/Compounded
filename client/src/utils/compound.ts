@@ -40,16 +40,21 @@ export function momentumStep(
   dailyReturn: number, 
   decayFactor: number
 ): number {
-  const rawStep = (1 + dailyReturn) * decayFactor * prevMomentum;
-
   // Prevent zero trap: if momentum is 0 but we have positive return, restart from MIN_MOMENTUM
   if (prevMomentum === 0 && dailyReturn > 0) {
-    return Math.max(MIN_MOMENTUM, dailyReturn);
+    return Math.max(MIN_MOMENTUM, (1 + dailyReturn) * MIN_MOMENTUM);
   }
+
+  const rawStep = (1 + dailyReturn) * decayFactor * prevMomentum;
 
   // Clamp: M_t = Math.max(0, Math.min(prev * 1.5, rawStep))
   const maxAllowed = prevMomentum * 1.5;
   const clamped = Math.max(0, Math.min(maxAllowed, rawStep));
+
+  // If result would be zero due to precision issues but we have positive return, apply floor
+  if (clamped === 0 && dailyReturn > 0) {
+    return MIN_MOMENTUM;
+  }
 
   return clamped;
 }

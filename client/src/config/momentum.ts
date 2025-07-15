@@ -8,7 +8,7 @@ export interface MomentumParams {
 }
 
 // Global floor to prevent zero-trap: when momentum hits 0 but daily return > 0
-export const MIN_MOMENTUM = 1e-3; // 0.001 - small seed to escape zero-trap
+export const MIN_MOMENTUM = 0.01; // 0.01 - larger seed to escape zero-trap more effectively
 
 export const MOMENTUM_PRESETS: Record<MomentumPreset, MomentumParams> = {
   lenient: { σ: -0.00, B: -0.05, β: 0.9999 },
