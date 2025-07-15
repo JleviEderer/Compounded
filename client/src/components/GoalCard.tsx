@@ -1,19 +1,19 @@
 
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Trash2, Edit3 } from 'lucide-react';
+import { Trash2, Edit3, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Goal } from '@/types';
 import { useGoalsContext } from '@/contexts/GoalsContext';
 import { useHabits } from '@/hooks/useHabits';
 import { GoalDialog } from './GoalDialog';
 import { easeOutQuart } from '@/utils/motionConfig';
-import { calculateAggregatedSuccessRate } from '@/utils/frequencyHelpers';
+import { calculateAggregatedSuccessRate, calculateHabitSuccessRate, getFrequencyDisplayString } from '@/utils/frequencyHelpers';
 import { useHabitsContext } from '@/contexts/HabitsContext';
-
-// Consistent timeframe for success rate calculations
-const DEFAULT_SUCCESS_WINDOW_DAYS = 30;
+import { TIME_WINDOWS, TimeWindowKey, getWindowRange, humanLabel } from '@/utils/timeWindows';
+import { expectedForRange } from '@/utils/frequencyHelpers';
 
 interface GoalCardProps {
   goal: Goal;
@@ -24,21 +24,20 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
   const { deleteGoal } = useGoalsContext();
   const { habits } = useHabits();
   const { logs } = useHabitsContext();
+  const [timeWindow, setTimeWindow] = useState<TimeWindowKey>('30d');
+  const [showAllHabits, setShowAllHabits] = useState(false);
+  const [showWhyPane, setShowWhyPane] = useState(false);
 
   // Find habits linked to this goal
   const linkedHabits = habits.filter(habit => 
     habit.goalIds?.includes(goal.id)
   );
 
-  // Calculate success rate for configurable window
-  const calculateGoalSuccessRate = () => {
-    if (linkedHabits.length === 0) return null;
-    
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setDate(endDate.getDate() - DEFAULT_SUCCESS_WINDOW_DAYS);
-    
-    // Create habit logs map from completed logs in the period
+  // Get date range for selected time window
+  const { start: startDate, end: endDate } = getWindowRange(timeWindow, logs);
+
+  // Memoize habit logs map for performance
+  const habitLogsMap = useMemo(() => {
     const habitLogs: { [habitId: string]: number } = {};
     
     linkedHabits.forEach(habit => {
@@ -52,16 +51,49 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
       habitLogs[habit.id] = completedCount;
     });
     
-    return calculateAggregatedSuccessRate(linkedHabits, habitLogs, startDate, endDate);
-  };
+    return habitLogs;
+  }, [linkedHabits, logs, startDate, endDate]);
 
-  const successRate = calculateGoalSuccessRate();
+  // Calculate goal-level success rate
+  const goalSuccessRate = useMemo(() => {
+    if (linkedHabits.length === 0) return null;
+    return calculateAggregatedSuccessRate(linkedHabits, habitLogsMap, startDate, endDate);
+  }, [linkedHabits, habitLogsMap, startDate, endDate]);
+
+  // Calculate individual habit success rates
+  const habitSuccessRates = useMemo(() => {
+    const rates: { [habitId: string]: number } = {};
+    
+    linkedHabits.forEach(habit => {
+      const completedLogs = habitLogsMap[habit.id] || 0;
+      rates[habit.id] = calculateHabitSuccessRate(habit, completedLogs, startDate, endDate);
+    });
+    
+    return rates;
+  }, [linkedHabits, habitLogsMap, startDate, endDate]);
+
+  // Calculate totals for "Why?" pane
+  const totalExpected = useMemo(() => {
+    return linkedHabits.reduce((sum, habit) => {
+      return sum + expectedForRange(habit, startDate, endDate);
+    }, 0);
+  }, [linkedHabits, startDate, endDate]);
+
+  const totalCompleted = useMemo(() => {
+    return Object.values(habitLogsMap).reduce((sum, count) => sum + count, 0);
+  }, [habitLogsMap]);
 
   const handleDelete = () => {
     deleteGoal(goal.id);
   };
 
   if (!isExpanded) return null;
+
+  // Handle habit overflow display logic
+  const maxVisibleHabits = 5;
+  const visibleHabits = showAllHabits ? linkedHabits : linkedHabits.slice(0, maxVisibleHabits);
+  const remainingCount = linkedHabits.length - maxVisibleHabits;
+  const shouldShowMoreButton = linkedHabits.length > maxVisibleHabits;
 
   return (
     <motion.div
@@ -85,47 +117,115 @@ export function GoalCard({ goal, isExpanded }: GoalCardProps) {
             </p>
           </div>
 
-          {/* Success Rate */}
+          {/* Success Rate with Timeline Picker */}
           <div>
-            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Success Rate ({DEFAULT_SUCCESS_WINDOW_DAYS} days)
-            </h4>
+            <div className="flex items-center justify-between mb-1">
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Success Rate (last {humanLabel(timeWindow)})
+              </h4>
+              <Select value={timeWindow} onValueChange={(value: TimeWindowKey) => setTimeWindow(value)}>
+                <SelectTrigger className="w-auto h-7 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="30d">30 days</SelectItem>
+                  <SelectItem value="quarter">Quarter</SelectItem>
+                  <SelectItem value="year">Year</SelectItem>
+                  <SelectItem value="all">All time</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              {successRate !== null ? `${Math.round(successRate)}%` : '– %'}
+              {goalSuccessRate !== null ? `${Math.round(goalSuccessRate)}%` : '– %'}
             </p>
           </div>
 
-          {/* Linked Habits */}
-          <div>
-            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Linked Habits ({linkedHabits.length})
-            </h4>
-            {linkedHabits.length > 0 ? (
+          {/* Habit Breakdown */}
+          {linkedHabits.length > 0 && (
+            <div>
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Habit Breakdown ({linkedHabits.length})
+              </h4>
               <div className="space-y-1">
-                {linkedHabits.map(habit => (
+                {visibleHabits.map(habit => (
                   <div
                     key={habit.id}
                     className="flex items-center justify-between p-2 bg-gray-100 dark:bg-gray-700 rounded-md"
+                    title={`${habit.goodHabit} - ${getFrequencyDisplayString(habit)}`}
+                    aria-label={`${habit.goodHabit} - ${getFrequencyDisplayString(habit)} - ${Math.round(habitSuccessRates[habit.id] || 0)}% success rate`}
                   >
-                    <span className="text-sm text-gray-900 dark:text-gray-100 truncate">
+                    <span className="text-sm text-gray-900 dark:text-gray-100 truncate flex-1">
                       {habit.goodHabit}
                     </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 flex-shrink-0">
-                      {habit.targetCount && habit.targetUnit ? (
-                        `${habit.targetCount} × / ${habit.targetUnit === 'week' ? 'wk' : habit.targetUnit === 'month' ? 'mo' : 'yr'}`
-                      ) : (
-                        '7 × / wk'
-                      )}
-                    </span>
+                    <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        {getFrequencyDisplayString(habit)}
+                      </span>
+                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300 min-w-[35px] text-right">
+                        {Math.round(habitSuccessRates[habit.id] || 0)}%
+                      </span>
+                    </div>
                   </div>
                 ))}
+                
+                {/* "Show more" / "Show less" button */}
+                {shouldShowMoreButton && (
+                  <button
+                    onClick={() => setShowAllHabits(!showAllHabits)}
+                    className="w-full p-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 bg-gray-50 dark:bg-gray-800 rounded-md border border-dashed border-gray-300 dark:border-gray-600 transition-colors"
+                  >
+                    {showAllHabits ? 'Show less' : `+ ${remainingCount} more`}
+                  </button>
+                )}
               </div>
-            ) : (
+            </div>
+          )}
+
+          {/* Collapsible "Why?" Pane */}
+          <details 
+            className="group"
+            open={showWhyPane}
+            onToggle={(e) => setShowWhyPane((e.target as HTMLDetailsElement).open)}
+          >
+            <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+              <ChevronDown className="w-4 h-4 transition-transform group-open:rotate-180" />
+              Why this success rate?
+            </summary>
+            <div className="mt-2 p-3 bg-gray-100 dark:bg-gray-700 rounded-md space-y-2">
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="text-gray-600 dark:text-gray-400">Expected logs:</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100 ml-2">
+                    {totalExpected}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-gray-600 dark:text-gray-400">Completed logs:</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100 ml-2">
+                    {totalCompleted}
+                  </span>
+                </div>
+              </div>
+              <div className="text-sm">
+                <span className="text-gray-600 dark:text-gray-400">Window length:</span>
+                <span className="font-medium text-gray-900 dark:text-gray-100 ml-2">
+                  {humanLabel(timeWindow)}
+                </span>
+              </div>
+            </div>
+          </details>
+
+          {/* No habits message */}
+          {linkedHabits.length === 0 && (
+            <div>
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Linked Habits (0)
+              </h4>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 No habits linked to this goal yet
               </p>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Action Buttons */}
           <div className="flex gap-2 pt-2">

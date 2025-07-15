@@ -95,3 +95,6 @@ export function getFrequencyDisplayString(habit: HabitPair): string {
   const unitShort = unit === 'week' ? 'wk' : unit === 'month' ? 'mo' : 'yr';
   return `${count} × / ${unitShort}`;
 }
+
+// Re-export for GoalCard usage as specified in Phase 6
+export { calculateHabitSuccessRate, expectedForRange };
