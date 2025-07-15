@@ -11,6 +11,7 @@ import {
   calculateMomentumIndexV2
 } from '../client/src/utils/compound';
 import { HabitPair, HabitLog, HabitWeight, HabitLogState } from '../client/src/types';
+import { MIN_MOMENTUM } from '../client/src/config/momentum';
 
 describe('Compound Growth Calculations', () => {
   const mockHabits: HabitPair[] = [
@@ -251,6 +252,30 @@ describe('Momentum Index v2 (Decay Model)', () => {
       // Should be clamped to prev * 1.5 = 1.5
       const result = momentumStep(prevMomentum, hugeReturn, β);
       expect(result).toBe(1.5);
+    });
+
+    it('should escape zero-trap with MIN_MOMENTUM floor', () => {
+      const β = 0.995;
+      const prevMomentum = 0;
+      const positiveReturn = 0.002;
+      
+      // Should restart from MIN_MOMENTUM, not stay at 0
+      const result = momentumStep(prevMomentum, positiveReturn, β);
+      expect(result).toBeGreaterThanOrEqual(MIN_MOMENTUM);
+      expect(result).toBe(Math.max(MIN_MOMENTUM, positiveReturn));
+    });
+
+    it('should stay at zero for zero momentum with non-positive return', () => {
+      const β = 0.995;
+      const prevMomentum = 0;
+      
+      // Zero return should stay at 0
+      const resultZero = momentumStep(prevMomentum, 0, β);
+      expect(resultZero).toBe(0);
+      
+      // Negative return should stay at 0
+      const resultNegative = momentumStep(prevMomentum, -0.1, β);
+      expect(resultNegative).toBe(0);
     });
   });
 

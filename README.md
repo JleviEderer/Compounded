@@ -159,15 +159,6 @@ compounded/
 ```bash
 # Install dependencies
 npm install
-
-# Start development server
-npm run dev
-
-# Run tests
-npm test
-
-# Build for production
-npm run build
 ```
 
 ### Key Development Commands
@@ -178,77 +169,6 @@ npm run test         # Run test suite
 npm run test:data-flow # Test core data flow integration
 npm run check        # TypeScript type checking
 ```
-
-## 📊 Data Model
-
-### Core Types
-```typescript
-interface HabitPair {
-  id: string;
-  goodHabit: string;
-  weight: HabitWeight;
-  createdAt: Date;
-}
-
-interface HabitLog {
-  id: string;
-  habitId: string;
-  date: string; // YYYY-MM-DD
-  state: 'good' | 'unlogged';
-}
-
-enum HabitWeight {
-  MICRO = 0.0001,    // +0.010%
-  SMALL = 0.0002,    // +0.020%  
-  MEDIUM = 0.0003,   // +0.030%
-  LARGE = 0.0005,    // +0.050%
-  KEYSTONE = 0.001   // +0.100%
-}
-```
-
-## 🎮 User Experience
-
-### Onboarding Flow
-1. **Landing** → See compound growth demo
-2. **Create First Pair** → Bad habit → Good habit → Set weight
-3. **Interface Tour** → Quick feature highlights
-4. **Dashboard** → Start tracking with Momentum Index
-
-### Daily Workflow
-1. **Morning Check-in** → Review habits for today
-2. **Log Completion** → Tap checkmarks for completed habits
-3. **View Progress** → See momentum chart update in real-time
-4. **Weekly Review** → Check insights for patterns and trends
-
-## 📱 Mobile Optimization
-
-- **Touch-Friendly**: All interactive elements ≥44px tap targets
-- **Responsive Grids**: Adaptive layouts for all screen sizes
-- **Gesture Support**: Long-press for mobile context menus
-- **Viewport Units**: Uses `svh` units for mobile browser compatibility
-- **Keyboard Handling**: Mobile keyboard-aware modal positioning
-
-## 🧪 Testing
-
-- **Unit Tests**: Mathematical compound calculations
-- **Integration Tests**: End-to-end data flow validation
-- **Component Tests**: UI component rendering and interaction
-- **Data Flow Tests**: Mock data → calculations → UI display pipeline
-
-## 🔒 Privacy
-
-- **Local-Only**: All data stays in your browser
-- **No Tracking**: No analytics or user tracking
-- **Export Control**: Full data export/import for user control
-- **No Account**: No sign-up or personal information required
-
-## 🚀 Deployment
-
-The application is optimized for Replit deployment:
-- **Static Frontend**: Served via Express.js
-- **Environment Detection**: Auto-switches between development and production
-- **Asset Optimization**: Vite handles bundling and optimization
-- **Port Configuration**: Uses port 5000 for Replit compatibility
 
 ## 🎯 Success Metrics
 
@@ -275,3 +195,41 @@ MIT License - Feel free to use this code for your own habit tracking needs.
 ---
 
 **Built with ❤️ on Replit** | *Compounding your way to a better you, one habit at a time.*
+
+# Compounded
+
+A habit-tracking app that demonstrates the power of compound growth through consistent daily actions.
+
+## Features
+
+- **Momentum Index**: Track your compound growth over time
+- **Habit Tracking**: Log daily habits with weighted importance
+- **Visual Analytics**: See your progress through charts and heatmaps
+- **Goal Setting**: Organize habits into meaningful goals
+
+## Getting Started
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Start the development server:
+```bash
+npm run dev
+```
+
+3. Open your browser to `http://localhost:5173`
+
+## Momentum Formula
+
+The app uses a compound growth model where your daily habit completion rate determines your momentum:
+
+```
+Daily Rate = Σ(habit_weight × completion_status)
+Momentum = Previous_Momentum × (1 + Daily_Rate)
+```
+
+Each habit has a weight (Small: 0.0003, Medium: 0.001, Large: 0.003) that contributes to your daily rate.
+
+**Zero-trap prevention**: If momentum hits 0 but you have positive daily returns, it restarts from MIN_MOMENTUM (0.001 by default) to prevent staying at zero forever.

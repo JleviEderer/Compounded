@@ -1,6 +1,6 @@
 import { HabitPair, HabitLog, MomentumData, HabitWeight } from '../types';
 import { getTodayString } from './date';
-import { getMomentumParams, isMomentumV2Enabled } from '../config/momentum';
+import { getMomentumParams, isMomentumV2Enabled, MIN_MOMENTUM } from '../config/momentum';
 
 // Helper to parse date strings as local midnight instead of UTC
 export function toLocalMidnight(dateStr: string): number {
@@ -30,7 +30,10 @@ export function dailyReturn(
 /**
  * MOMENTUM V2 STEP FUNCTION
  * M_t = max(0, (1 + R_t) * β * M_{t-1})
- * With safety clamps to prevent extreme values and zero trap
+ * With safety clamps to prevent extreme values and zero trap.
+ * 
+ * Zero-trap floor: if momentum hits 0 but daily return > 0, restart from MIN_MOMENTUM
+ * to prevent momentum from staying at zero forever.
  */
 export function momentumStep(
   prevMomentum: number, 
@@ -39,9 +42,9 @@ export function momentumStep(
 ): number {
   const rawStep = (1 + dailyReturn) * decayFactor * prevMomentum;
 
-  // Prevent zero trap: if momentum is 0 but we have positive return, restart from small base
+  // Prevent zero trap: if momentum is 0 but we have positive return, restart from MIN_MOMENTUM
   if (prevMomentum === 0 && dailyReturn > 0) {
-    return Math.max(0.001, dailyReturn);
+    return Math.max(MIN_MOMENTUM, dailyReturn);
   }
 
   // Clamp: M_t = Math.max(0, Math.min(prev * 1.5, rawStep))
