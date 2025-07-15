@@ -31,6 +31,7 @@ export function humanLabel(timeWindow: TimeWindowKey): string {
 
 /**
  * Get date range for a given time window
+ * TODO: Consider switching 'quarter' from 90 days to true calendar quarters
  */
 export function getWindowRange(key: TimeWindowKey, logs: HabitLog[]): { start: Date; end: Date } {
   const end = endOfDay(new Date());
