@@ -102,4 +102,33 @@ Strong candidate for post-Goals v1 release. Consider including in a future "Habi
 
 ---
 
+## 8. Momentum Index v2 — Decay Model Implementation
+
+**Shippable Order:**
+- [ ] **Phase 1** — Math + flag implementation (tests green)
+- [ ] **Phase 2** — Full test suite including property tests  
+- [ ] **Phase 3** — Flip flag in staging for one week of internal data
+- [ ] **Phase 4** — Parameter ENV documentation
+- [ ] **Phase 5** — Chart polish with gradient following path
+
+**Technical Implementation:**
+- Config module: `client/src/config/momentum.ts` with tunable presets
+- Feature flag: `VITE_MOMENTUM_V2=true` enables decay model
+- New formulas: daily return with slip penalty + baseline drift
+- Backward compatibility: falls back to v1 when flag disabled
+- Comprehensive tests: unit, integration, and property-based testing
+
+**Environment Variables:**
+- `VITE_MOMENTUM_V2=true` — Enable decay model
+- `VITE_MOMENTUM_PRESET=default|lenient|hard` — Parameter preset
+
+## 9. Next Steps
+
+- [ ] **Phase 1:** Implement basic Goals CRUD
+- [ ] **Phase 2:** Add habit assignment interface
+- [ ] **Phase 3:** Build goal progress tracking
+- [ ] **Phase 4:** Integrate with existing components
+
+---
+
 *You can drop this block directly into your Replit docs or issue—devs have everything they need, and no one will accidentally resurrect the "bad habit" logic.*

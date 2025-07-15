@@ -1,3 +1,54 @@
+# Habit Tracker
+
+A modern habit tracking application built with React, TypeScript, and Vite.
+
+## Features
+
+- Track daily habits with customizable weights
+- Visualize momentum and progress over time
+- Goal-based habit organization
+- Momentum Index v2 with decay model
+- Responsive design for mobile and desktop
+
+## Environment Configuration
+
+### Momentum Index v2 (Decay Model)
+
+The app supports two momentum calculation models:
+
+**v1 (Original):** Always-growing index that compounds positively
+**v2 (Decay Model):** Realistic momentum with decay, slip penalties, and baseline drift
+
+#### Environment Variables:
+
+```bash
+# Enable/disable momentum v2 decay model
+VITE_MOMENTUM_V2=true          # false = use v1 (default)
+
+# Select parameter preset for v2 model
+VITE_MOMENTUM_PRESET=default   # lenient|default|hard
+```
+
+#### Parameter Presets:
+
+| Preset  | σ (slip) | B (baseline) | β (decay) | Description |
+|---------|----------|--------------|-----------|-------------|
+| lenient | -0.20    | -0.40        | 0.998     | Forgiving penalties |
+| default | -0.25    | -0.50        | 0.995     | Balanced approach |
+| hard    | -0.35    | -0.70        | 0.992     | Strict accountability |
+
+#### Formulas (v2):
+
+```
+Daily Return: R_t = logged ? (S_t + σ × misses) : B
+Momentum Step: M_t = max(0, min(M_{t-1} × 1.5, (1 + R_t) × β × M_{t-1}))
+```
+
+Where:
+- `S_t` = sum of completed habit weights
+- `σ` = slip penalty (negative)
+- `B` = baseline drift when no logs
+- `β` = daily decay factor
 
 # Compounded - Habit Tracker
 

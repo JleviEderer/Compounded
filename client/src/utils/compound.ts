@@ -1,10 +1,84 @@
 import { HabitPair, HabitLog, MomentumData, HabitWeight } from '../types';
 import { getTodayString } from './date';
+import { getMomentumParams, isMomentumV2Enabled } from '../config/momentum';
 
 // Helper to parse date strings as local midnight instead of UTC
 export function toLocalMidnight(dateStr: string): number {
   const [y, m, d] = dateStr.split('-').map(Number);
   return new Date(y, m - 1, d, 0, 0, 0, 0).getTime(); // local TZ
+}
+
+/**
+ * MOMENTUM V2 DECAY MODEL
+ * 
+ * Calculates daily return R_t using slip penalty and baseline drift:
+ * S_t = Σ (w_i * d_i)                // completed weight
+ * misses = Σ (w_i * (1−d_i))         // missed weight from enabled habits only
+ * P_t = S_t − σ * misses             // slip penalty
+ * R_t = logged ? P_t : B             // baseline drift if nothing logged
+ */
+export function dailyReturn(
+  habitsForDay: HabitPair[], 
+  logsForDay: HabitLog[]
+): number {
+  const { σ, B } = getMomentumParams();
+  
+  // If no logs at all, return baseline drift
+  if (logsForDay.length === 0) {
+    return B;
+  }
+  
+  let completedWeight = 0;  // S_t
+  let missedWeight = 0;     // misses from enabled habits only
+  
+  // Only consider habits that were enabled/available on this day
+  for (const habit of habitsForDay) {
+    const log = logsForDay.find(l => l.habitId === habit.id);
+    
+    // Ensure weight is valid
+    const validWeights = Object.values(HabitWeight) as number[];
+    let weight = habit.weight;
+    const tolerance = 0.000001;
+    const matchingWeight = validWeights.find(w => Math.abs(w - weight) < tolerance);
+    
+    if (matchingWeight !== undefined) {
+      weight = matchingWeight;
+    } else if (import.meta.env.DEV) {
+      console.warn(`Unknown weight value ${weight}, defaulting to MEDIUM`);
+      weight = HabitWeight.MEDIUM;
+    }
+    
+    if (log && (log.completed || log.state === 'good')) {
+      completedWeight += weight;
+    } else {
+      // Habit was enabled but not completed = miss
+      missedWeight += weight;
+    }
+  }
+  
+  // P_t = S_t − σ * misses
+  const P_t = completedWeight + (σ * missedWeight); // σ is negative, so this subtracts
+  
+  return P_t;
+}
+
+/**
+ * MOMENTUM V2 STEP FUNCTION
+ * M_t = max(0, (1 + R_t) * β * M_{t-1})
+ * With safety clamps to prevent extreme values
+ */
+export function momentumStep(
+  prevMomentum: number, 
+  dailyReturn: number, 
+  decayFactor: number
+): number {
+  const rawStep = (1 + dailyReturn) * decayFactor * prevMomentum;
+  
+  // Clamp: M_t = Math.max(0, Math.min(prev * 1.5, rawStep))
+  const maxAllowed = prevMomentum * 1.5;
+  const clamped = Math.max(0, Math.min(maxAllowed, rawStep));
+  
+  return clamped;
 }
 
 export function calculateMomentumIndex(
@@ -14,6 +88,12 @@ export function calculateMomentumIndex(
 ): number {
   if (habits.length === 0) return 1.0;
 
+  // Feature flag: use v2 decay model or fall back to v1
+  if (isMomentumV2Enabled()) {
+    return calculateMomentumIndexV2(habits, logs, targetDate);
+  }
+
+  // V1 (original) implementation
   // Convert targetDate to epoch if it's a Date
   const targetEpoch = typeof targetDate === 'number' ? targetDate : targetDate.getTime();
 
@@ -36,6 +116,52 @@ export function calculateMomentumIndex(
   return Math.max(0, momentum); // Clamp to >= 0
 }
 
+/**
+ * MOMENTUM V2 INDEX CALCULATION
+ * Implements the decay model: M_t = max(0, (1 + R_t) * β * M_{t-1})
+ */
+export function calculateMomentumIndexV2(
+  habits: HabitPair[],
+  logs: HabitLog[],
+  targetDate: Date | number
+): number {
+  if (habits.length === 0) return 1.0;
+
+  const { β } = getMomentumParams();
+  
+  // Convert targetDate to epoch if it's a Date
+  const targetEpoch = typeof targetDate === 'number' ? targetDate : targetDate.getTime();
+
+  // Find the earliest habit creation date or use a default
+  const startDate = habits.length > 0 
+    ? new Date(Math.min(...habits.map(h => new Date(h.createdAt).getTime())))
+    : new Date('2024-01-01');
+
+  let momentum = 1.0;
+
+  const currentDate = new Date(startDate);
+  while (currentDate.getTime() <= targetEpoch) {
+    // Use local date instead of UTC slice
+    const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+    
+    // Get habits that existed on this date
+    const habitsForDay = habits.filter(h => new Date(h.createdAt) <= currentDate);
+    
+    // Get logs for this specific date
+    const logsForDay = logs.filter(l => l.date === dateStr);
+    
+    // Calculate daily return using v2 formula
+    const R_t = dailyReturn(habitsForDay, logsForDay);
+    
+    // Apply momentum step with decay
+    momentum = momentumStep(momentum, R_t, β);
+    
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return momentum;
+}
+
 export function calculateDailyRate(
   habits: HabitPair[],
   logs: HabitLog[],
@@ -47,6 +173,15 @@ export function calculateDailyRate(
       logs.filter(l => l.date === date && (l.completed || l.state === 'good')).length
     );
   }
+
+  // Feature flag: use v2 daily return calculation
+  if (isMomentumV2Enabled()) {
+    const habitsForDay = habits.filter(h => new Date(h.createdAt) <= new Date(date));
+    const logsForDay = logs.filter(l => l.date === date);
+    return dailyReturn(habitsForDay, logsForDay);
+  }
+
+  // V1 (original) implementation
   // Count logs that are completed OR have state 'good' (good-only migration)
   const dayLogs = logs.filter(l => l.date === date && (l.completed || l.state === 'good'));
 
