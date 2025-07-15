@@ -10,6 +10,7 @@ import Settings from './pages/Settings';
 import NotFound from './pages/not-found';
 import { HabitsProvider } from './contexts/HabitsProvider';
 import { GoalsProvider } from './contexts/GoalsContext';
+import { ThemeProvider } from './hooks/useTheme';
 import { runPhase05Migration, runFrequencyMigration } from './utils/migration';
 import { dataService } from './services/dataService';
 
@@ -33,22 +34,24 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <HabitsProvider>
-        <GoalsProvider>
-          <Router>
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/habits" element={<Habits />} />
-                <Route path="/goals" element={<Goals />} />
-                <Route path="/insights" element={<Insights />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Layout>
-          </Router>
-        </GoalsProvider>
-      </HabitsProvider>
+      <ThemeProvider>
+        <HabitsProvider>
+          <GoalsProvider>
+            <Router>
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/habits" element={<Habits />} />
+                  <Route path="/goals" element={<Goals />} />
+                  <Route path="/insights" element={<Insights />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Layout>
+            </Router>
+          </GoalsProvider>
+        </HabitsProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
