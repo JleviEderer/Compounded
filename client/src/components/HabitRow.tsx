@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Check, X, Minus } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -33,11 +33,36 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
     delay: 500
   });
 
-  const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
+  // Close popover when clicking anywhere else
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      // Don't close if clicking on the popover itself
+      const target = event.target as Element;
+      if (target?.closest('[data-radix-popper-content-wrapper]')) {
+        return;
+      }
+      setShowPopover(false);
+    };
+
+    if (showPopover) {
+      // Small delay to prevent immediate closing from the same touch that opened it
+      const timeoutId = setTimeout(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside);
+      }, 100);
+
+      return () => {
+        clearTimeout(timeoutId);
+        document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener('touchstart', handleClickOutside);
+      };
+    }
+  }, [showPopover]);
+
+  const today = new Date().toLocaleDateString('en-CA');
   const todayLog = logs.find(log => log.habitId === habit.id && log.date === today);
 
-  // Check if text is truncated
-  const isTextTruncated = habit.goodHabit.length > 25; // Approximate truncation point
+  const isTextTruncated = habit.goodHabit.length > 25;
 
   // Get last 7 days for expanded view
   const getLast7Days = () => {
@@ -45,7 +70,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
     for (let i = 6; i >= 0; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i);
-      const dateStr = date.toLocaleDateString('en-CA'); // YYYY-MM-DD format in local timezone
+      const dateStr = date.toLocaleDateString('en-CA');
       const log = logs.find(l => l.habitId === habit.id && l.date === dateStr);
 
       days.push({
@@ -66,65 +91,80 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
   const getDayIcon = (state: HabitLogState) => {
     switch (state) {
       case HabitLogState.GOOD:
-        return <Check className="w-4 h-4 text-white" />;
+        return <Check className="w-3 h-3 text-white" />;
       default:
-        return <Minus className="w-4 h-4 text-gray-500" />;
+        return null;
     }
   };
 
-  const getDayColor = (state: HabitLogState) => {
+  const getDayColor = (state: HabitLogState, isToday: boolean) => {
     switch (state) {
       case HabitLogState.GOOD:
-        return 'bg-emerald-500';
+        return isToday ? 'bg-coral border-2 border-coral-light' : 'bg-emerald-500';
       default:
-        return 'bg-gray-300 dark:bg-gray-600';
+        return isToday ? 'bg-gray-400 border-2 border-gray-300' : 'bg-gray-600/30 border border-gray-500';
     }
   };
+
+  const getFrequencyDisplay = () => {
+    if (habit.targetCount && habit.targetUnit) {
+      const unit = habit.targetUnit === 'week' ? 'week' : 
+                   habit.targetUnit === 'month' ? 'month' : 'year';
+      return `${habit.targetCount} times/${unit}`;
+    }
+    return 'Daily tracking';
+  };
+
+  const getCompletionStatus = () => {
+    if (todayLog?.state === HabitLogState.GOOD) {
+      return { label: 'Completed', color: 'text-emerald-500' };
+    }
+    return { label: 'Pending', color: 'text-gray-400' };
+  };
+
+  const status = getCompletionStatus();
 
   return (
     <motion.div 
-      className="card-glass p-4 transition-all duration-300 hover:shadow-lg relative"
+      className="bg-white/5 dark:bg-gray-800/30 rounded-xl border border-white/10 p-5 transition-all duration-300 hover:bg-white/8 hover:border-white/20"
       layout
-      initial={{ opacity: 0, y: window.innerWidth < 768 ? 5 : 20 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ 
-        duration: window.innerWidth < 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.1 : 0.3 
-      }}
+      transition={{ duration: 0.2 }}
     >
-      <div className="flex items-start justify-between min-w-0 gap-3">
-        <div className="flex items-start space-x-3 min-w-0 flex-1">
-          <div className="flex-shrink-0 mt-1">
-            <button
-              onClick={handleGoodHabit}
-              className={cn(
-                "p-2 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center",
-                todayLog?.state === 'good' 
-                  ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400" 
-                  : "hover:bg-emerald-50 text-gray-400 dark:hover:bg-emerald-900/20 dark:text-gray-500 active:bg-emerald-100 dark:active:bg-emerald-900/30"
-              )}
-              aria-label={`Mark ${habit.goodHabit} as ${todayLog?.state === 'good' ? 'incomplete' : 'completed'}`}
-            >
-              <Check className="h-4 w-4" />
-            </button>
-          </div>
+      <div className="flex items-center justify-between">
+        {/* Left side: Checkbox + Content */}
+        <div className="flex items-center gap-4 flex-1 min-w-0">
+          {/* Completion Button */}
+          <button
+            onClick={handleGoodHabit}
+            className={cn(
+              "flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-200",
+              todayLog?.state === 'good' 
+                ? "bg-emerald-500 border-emerald-500 hover:bg-emerald-600 hover:border-emerald-600" 
+                : "border-gray-400 hover:border-emerald-400 hover:bg-emerald-50/10"
+            )}
+            aria-label={`Mark ${habit.goodHabit} as ${todayLog?.state === 'good' ? 'incomplete' : 'completed'}`}
+          >
+            {todayLog?.state === 'good' && <Check className="w-3 h-3 text-white" />}
+          </button>
 
-          <div className="flex-1 min-w-0 py-1">
-            <Popover
-              open={showPopover}
-              onOpenChange={setShowPopover}
-            >
+          {/* Habit Info */}
+          <div className="flex-1 min-w-0">
+            <Popover open={showPopover} onOpenChange={setShowPopover}>
               <PopoverTrigger asChild>
                 <div 
-                  className={`font-semibold text-gray-800 dark:text-white relative cursor-default
-                    ${todayLog?.state === HabitLogState.GOOD ? 'text-emerald-600' : ''}
-                    ${isTextTruncated ? 'line-clamp-2' : ''}`}
+                  className={cn(
+                    "font-medium text-lg leading-tight cursor-default transition-colors",
+                    todayLog?.state === HabitLogState.GOOD 
+                      ? 'text-emerald-400' 
+                      : 'text-gray-100'
+                  )}
                   style={{
                     display: '-webkit-box',
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                    lineHeight: '1.3',
-                    maxHeight: '2.6em'
+                    overflow: 'hidden'
                   }}
                   {...(isMobile && isTextTruncated ? longPressHandlers : {})}
                 >
@@ -132,12 +172,7 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
                 </div>
               </PopoverTrigger>
               {isTextTruncated && (
-                <PopoverContent
-                  className="w-48 p-2 text-xs"
-                  side="top"
-                  align="start"
-                  sideOffset={4}
-                >
+                <PopoverContent className="w-48 p-2 text-xs" side="top" align="start" sideOffset={4}>
                   <div className="font-normal text-gray-700 dark:text-gray-300 leading-tight">
                     {habit.goodHabit}
                   </div>
@@ -145,47 +180,40 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
               )}
             </Popover>
 
-            <div className="text-xs text-gray-500 mt-1 leading-tight">
-              {habit.targetCount && habit.targetUnit ? (
-                `${habit.targetCount} × / ${habit.targetUnit === 'week' ? 'wk' : habit.targetUnit === 'month' ? 'mo' : 'yr'}`
-              ) : (
-                'Track daily progress'
-              )}
+            <div className="flex items-center gap-3 mt-1">
+              <span className="text-sm text-gray-400">
+                {getFrequencyDisplay()}
+              </span>
+              <span className="text-xs px-2 py-1 rounded-full bg-gray-700/50 text-gray-300">
+                +{(habit.weight * 100).toFixed(2)}%
+              </span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-start space-x-2 flex-shrink-0 mt-1">
-          <div className="text-right min-w-[70px]">
-            {todayLog?.state === HabitLogState.GOOD && (
-              <div className="text-sm font-medium text-emerald-600 whitespace-nowrap leading-tight">
-                Completed
-              </div>
-            )}
-            {todayLog?.state === HabitLogState.UNLOGGED && (
-              <div className="text-sm font-medium text-gray-400 whitespace-nowrap leading-tight">
-                Not logged
-              </div>
-            )}
-            <div className="text-xs text-gray-500 whitespace-nowrap leading-tight mt-0.5">
-              {WEIGHT_LABELS[habit.weight]?.split(' ')[0] || 'Unknown'} impact
+        {/* Right side: Status + Expand */}
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="text-right">
+            <div className={cn("text-sm font-medium", status.color)}>
+              {status.label}
             </div>
           </div>
-          <motion.button
+
+          <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-1.5 hover:bg-white/50 dark:hover:bg-gray-600 rounded-lg transition-colors flex-shrink-0"
-            whileTap={{ scale: 0.95 }}
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
           >
             <motion.div
               animate={{ rotate: isExpanded ? 180 : 0 }}
               transition={{ duration: 0.2 }}
             >
-              <ChevronDown className="w-4 h-4 text-gray-500" />
+              <ChevronDown className="w-4 h-4 text-gray-400" />
             </motion.div>
-          </motion.button>
+          </button>
         </div>
       </div>
 
+      {/* Expanded Week View */}
       <AnimatePresence>
         {isExpanded && (
           <motion.div
@@ -195,19 +223,22 @@ export default function HabitRow({ habit, logs, onLogHabit, isToday = false, sho
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600 px-2 pr-4">
-              <div className="grid grid-cols-7 gap-3">
+            <div className="mt-6 pt-4 border-t border-gray-700/50">
+              <h4 className="text-sm font-medium text-gray-300 mb-4">This Week's Progress</h4>
+              <div className="grid grid-cols-7 gap-2">
                 {getLast7Days().map((day, index) => (
                   <div key={day.date} className="text-center">
-                    <div className={`text-xs mb-2 ${
-                      day.isToday ? 'text-coral font-medium' : 'text-gray-500'
-                    }`}>
+                    <div className={cn(
+                      "text-xs mb-2 font-medium",
+                      day.isToday ? 'text-coral' : 'text-gray-400'
+                    )}>
                       {day.label}
                     </div>
                     <motion.div
-                      className={`w-8 h-8 rounded-lg flex items-center justify-center mx-auto ${
-                        getDayColor(day.state)
-                      } ${day.isToday && day.state !== HabitLogState.UNLOGGED ? 'ring-2 ring-coral ring-offset-2' : ''}`}
+                      className={cn(
+                        "w-8 h-8 rounded-lg flex items-center justify-center mx-auto transition-all",
+                        getDayColor(day.state, day.isToday)
+                      )}
                       whileHover={{ scale: 1.1 }}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}

@@ -1,0 +1,114 @@
+# PRD — Momentum Index v1 (Phase 1)
+
+> **Status:** Draft
+> **Author:** @your‑name‑here
+> **Created:** {{today}}
+
+---
+
+## 1. Background & Problem
+
+Our current Momentum Index chart always trends upward, even when the user skips habits. This “hockey‑stick” creates false confidence and hides the cost of inconsistency. We need a formula that *rewards* streaks **and** *penalises* missed days so the graph tells a truthful story.
+
+## 2. Objective
+
+* Introduce a *momentum‑decay* model that allows negative daily returns.
+* Keep the chart motivational but honest: plateaus, dips and recoveries should all be visible.
+* Deliver a developer‑tunable implementation (all parameters in code, no future DB migrations).
+
+## 3. Scope (Phase 1)
+
+| Item                                        | Included | Notes                                      |
+| ------------------------------------------- | -------- | ------------------------------------------ |
+| **Math engine** (`utils/compounding.ts`)    | ✅        | Implements new formula (see §4)            |
+| Unit tests (happy & edge cases)             | ✅        | Jest/Vitest                                |
+| Regression guard for existing index history | ✅        | Index should migrate seamlessly (floor ≥0) |
+| UI wiring / colour changes                  | ❌        | Defer to Phase 2                           |
+| Docs + in‑code comments                     | ✅        | Explain each parameter                     |
+
+## 4. Functional Requirements
+
+### 4.1 Daily *return* `R_t`
+
+```
+S_t = Σ (w_i * d_i)                // completed weight
+misses = Σ (w_i * (1−d_i))
+P_t = S_t − σ * misses             // slip penalty
+R_t = logged ? P_t : B             // baseline drift if nothing logged
+```
+
+* **Inputs**
+
+  * `w_i` ∈ \[0,1] — weight per habit (already stored)
+  * `d_i` ∈ {0,1} — completion flag from daily log
+* **Config** (default)
+
+  * `σ` (slips) = **‑0.25**
+  * `B` (baseline when no logs) = **‑0.50**
+
+### 4.2 Momentum Index `M_t`
+
+```
+M_t = max(0, (1 + R_t) * β * M_{t‑1})
+```
+
+* `β` (decay) = **0.995** (≈‑0.5 % every day)
+
+### 4.3 Parameter knobs
+
+Expose `σ`, `B`, `β` in `src/config/momentum.ts` so they can be tuned via `.env.dev` or a **Developer Settings** panel.
+
+### 4.4 Data migration
+
+* If a historic `index` exists, reuse it for `M_{t‑1}` on first run.
+* Clamp any negatives to 0 to avoid NaNs.
+
+## 5. Non‑Functional Requirements
+
+| NFR               | Target                                          |
+| ----------------- | ----------------------------------------------- |
+| **Performance**   | <1 ms per day calculation on mid‑range laptop   |
+| **Test coverage** | ≥ 90 % lines in `compounding.ts`                |
+| **Developer DX**  | All params documented + default preset exported |
+
+## 6. Success Metrics
+
+* **Unit‑test pass** covering:
+
+  * All‑done streak grows steadily.
+  * Two missed days create a visible dip.
+  * Seven unlogged days drop the index by ≥ 10 %.
+* Qualitative: PM & design sign‑off after reviewing dev‑build chart.
+
+## 7. Milestones
+
+| Date        | Deliverable                              |
+| ----------- | ---------------------------------------- |
+|  T + 0      | PRD approved                             |
+|  T + 2 days | Implementation PR merged                 |
+|  T + 4 days | Demo build with toggleable decay presets |
+
+## 8. Open Questions
+
+1. Should the decay factor `β` be linear, or should we experiment with an adaptive half‑life?
+2. Is the baseline drift `B` too harsh for users with only 1–2 weekly habits?
+
+---
+
+### Appendix A — Parameter presets
+
+| Mode     |  σ     |  B     | β      |
+| -------- | ------ | ------ | ------ |
+|  Lenient |  ‑0.15 |  ‑0.25 |  0.998 |
+|  Default |  ‑0.25 |  ‑0.50 |  0.995 |
+|  Hard    |  ‑0.40 |  ‑0.75 |  0.990 |
+
+### Appendix B — Mini test script (pseudo‑code)
+
+```ts
+const idx = [1];
+for each day d in sampleDays {
+  idx.push(compound(idx.at(-1), d.logs));
+}
+plot(idx);
+```
