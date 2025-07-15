@@ -158,7 +158,10 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     
     console.log(`Latest Rate: Using most recent date with data: ${mostRecentDate}`);
     
-    return calculateDailyRate(filteredData.habits, filteredData.logs, mostRecentDate);
+    const rate = calculateDailyRate(filteredData.habits, filteredData.logs, mostRecentDate);
+    console.log(`Latest Rate calculated: ${rate} for date ${mostRecentDate}`);
+    
+    return rate;
   }, [filteredData.habits, filteredData.logs]);
 
   // Calculate success rate using dynamic calculation with exact filtered logs
