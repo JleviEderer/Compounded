@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
-import { rateToColour, labelForColour } from '@/constants/successRate';
 
 interface HeatMapCell {
   date: string;
@@ -88,8 +87,8 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
                 animate={{ scale: 1 }}
                 transition={{ delay: index * 0.01 }}
                 onClick={() => cell.day && onCellClick?.(cell.dateISO)}
-                title={cell.day && cell.successRate !== undefined ? `${cell.date}: ${Math.round(cell.successRate)}% success rate (${labelForColour(rateToColour(cell.successRate))})` : undefined}
-                aria-label={cell.day && cell.successRate !== undefined ? `${cell.date}: ${Math.round(cell.successRate)}% success rate (${labelForColour(rateToColour(cell.successRate))})` : cell.day ? `${cell.date}: No data` : undefined}
+                title={cell.day && cell.successRate !== undefined ? `${cell.date}: ${Math.round(cell.successRate)}% success rate` : undefined}
+                aria-label={cell.day && cell.successRate !== undefined ? `${cell.date}: ${Math.round(cell.successRate)}% success rate` : cell.day ? `${cell.date}: No data` : undefined}
               >
                 {cell.day}
               </motion.div>
@@ -140,8 +139,8 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
                   animate={{ scale: 1 }}
                   transition={{ delay: weekIndex * 0.05 + dayIndex * 0.01 }}
                   onClick={() => onCellClick?.(cell.dateISO)}
-                  title={cell.successRate !== undefined ? `${cell.dateISO}: ${Math.round(cell.successRate)}% success rate (${labelForColour(rateToColour(cell.successRate))})` : undefined}
-                  aria-label={cell.successRate !== undefined ? `${cell.dateISO}: ${Math.round(cell.successRate)}% success rate (${labelForColour(rateToColour(cell.successRate))})` : `${cell.dateISO}: No data`}
+                  title={cell.successRate !== undefined ? `${cell.dateISO}: ${Math.round(cell.successRate)}% success rate` : undefined}
+                  aria-label={cell.successRate !== undefined ? `${cell.dateISO}: ${Math.round(cell.successRate)}% success rate` : `${cell.dateISO}: No data`}
                 />
               ))
             ];
@@ -187,8 +186,8 @@ export default function HeatMapGrid({ cells, gridType, onCellClick, getIntensity
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: yearIndex * 0.1 + monthIndex * 0.02 }}
-                  title={cell.successRate !== undefined ? `${year}-${monthIndex + 1}: ${Math.round(cell.successRate)}% success rate (${labelForColour(rateToColour(cell.successRate))})` : `${year}-${monthIndex + 1}: No data`}
-                  aria-label={cell.successRate !== undefined ? `${year}-${monthIndex + 1}: ${Math.round(cell.successRate)}% success rate (${labelForColour(rateToColour(cell.successRate))})` : `${year}-${monthIndex + 1}: No data`}
+                  title={cell.successRate !== undefined ? `${year}-${monthIndex + 1}: ${Math.round(cell.successRate)}% success rate` : `${year}-${monthIndex + 1}: No data`}
+                  aria-label={cell.successRate !== undefined ? `${year}-${monthIndex + 1}: ${Math.round(cell.successRate)}% success rate` : `${year}-${monthIndex + 1}: No data`}
                   onClick={() => onCellClick?.(cell.dateISO)}
                 />
               ))
