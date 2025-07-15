@@ -79,10 +79,9 @@ export const useInsightsData = () => {
   };
   const filteredLogs = useMemo(() => {
     return logs.filter(log => {
-      const logDate = new Date(log.date);
       switch (activeView) {
         case 'week':
-          // Match the exact logic from getLast7Days in InsightsWeekView
+          // Match the exact logic from getLast7Days in InsightsWeekView using string comparison
           const offset = (weekAnchor.getDay() + 6) % 7; // Monday = 0
           const monday = new Date(weekAnchor);
           monday.setDate(weekAnchor.getDate() - offset);
@@ -90,17 +89,24 @@ export const useInsightsData = () => {
           const sunday = new Date(monday);
           sunday.setDate(monday.getDate() + 6);
           
-          return logDate >= monday && logDate <= sunday;
+          const startStr = monday.toLocaleDateString('en-CA');
+          const endStr = sunday.toLocaleDateString('en-CA');
+          
+          return log.date >= startStr && log.date <= endStr;
         case 'month':
           const startOfMonth = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
           const endOfMonth = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0);
-          return logDate >= startOfMonth && logDate <= endOfMonth;
+          const monthStartStr = startOfMonth.toLocaleDateString('en-CA');
+          const monthEndStr = endOfMonth.toLocaleDateString('en-CA');
+          return log.date >= monthStartStr && log.date <= monthEndStr;
         case 'quarter':
           const startOfQuarter = new Date(quarterAnchor.getFullYear(), Math.floor(quarterAnchor.getMonth() / 3) * 3, 1);
           const endOfQuarter = new Date(startOfQuarter);
           endOfQuarter.setMonth(startOfQuarter.getMonth() + 3);
           endOfQuarter.setDate(endOfQuarter.getDate() - 1);
-          return logDate >= startOfQuarter && logDate <= endOfQuarter;
+          const quarterStartStr = startOfQuarter.toLocaleDateString('en-CA');
+          const quarterEndStr = endOfQuarter.toLocaleDateString('en-CA');
+          return log.date >= quarterStartStr && log.date <= quarterEndStr;
         case 'all-time':
           return true;
         default:
