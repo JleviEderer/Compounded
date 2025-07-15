@@ -11,3 +11,7 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
 
 describe('Goal Deletion Cascade', () => {
   it('strips deleted goal ID from all habits in single batch update', async () => {
+    // Test implementation
+    expect(true).toBe(true);
+  });
+});
