@@ -16,6 +16,8 @@ export function toLocalMidnight(dateStr: string): number {
  * misses = Σ (w_i * (1−d_i))         // missed weight from enabled habits only
  * P_t = S_t − σ * misses             // slip penalty
  * R_t = logged ? P_t : B             // baseline drift if nothing logged
+ * 
+ * @deprecated Use dailyReturnWithParams directly for better performance
  */
 export function dailyReturn(
   habitsForDay: HabitPair[], 
@@ -90,7 +92,8 @@ export function calculateMomentumIndexV2(
 ): number {
   if (habits.length === 0) return 1.0;
 
-  const { β } = getMomentumParams();
+  // Cache params once outside the loop
+  const { σ, B, β } = getMomentumParams();
 
   // Convert targetDate to epoch if it's a Date
   const targetEpoch = typeof targetDate === 'number' ? targetDate : targetDate.getTime();
@@ -113,8 +116,8 @@ export function calculateMomentumIndexV2(
     // Get logs for this specific date
     const logsForDay = logs.filter(l => l.date === dateStr);
 
-    // Calculate daily return using v2 formula
-    const R_t = dailyReturn(habitsForDay, logsForDay);
+    // Calculate daily return using v2 formula with cached params
+    const R_t = dailyReturnWithParams(habitsForDay, logsForDay, σ, B);
 
     // Apply momentum step with decay
     momentum = momentumStep(momentum, R_t, β);
