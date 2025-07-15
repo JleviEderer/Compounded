@@ -77,25 +77,28 @@ export const MomentumChartQuickStats = ({
 
       {/* Bottom Row */}
       <div className="bg-white/50 dark:bg-gray-800/50 rounded-xl p-4 text-center">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <motion.div 
-                className="text-2xl font-bold text-coral cursor-help"
-                key={dynamicCurrentIndex}
-                initial={{ scale: 1.2 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                {dynamicCurrentIndex.toFixed(2)}
-              </motion.div>
-            </TooltipTrigger>
-            <TooltipContent className="max-w-xs">
-              <p>Total Growth since {selectedRange}: {timeFilterGrowth >= 0 ? '+' : ''}{timeFilterGrowth.toFixed(1)}%</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <div className="text-sm text-gray-600 dark:text-gray-400">Current Index</div>
+        <motion.div 
+          className="text-2xl font-bold text-coral"
+          key={dynamicCurrentIndex}
+          initial={{ scale: 1.2 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          {dynamicCurrentIndex.toFixed(2)}
+        </motion.div>
+        <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+          Current Index
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs">
+                <p>Total Growth since {selectedRange}: {timeFilterGrowth >= 0 ? '+' : ''}{timeFilterGrowth.toFixed(1)}%</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
         <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
           Growth since {formatDate(startDate)}
         </div>
