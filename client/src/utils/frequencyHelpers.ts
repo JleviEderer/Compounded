@@ -96,5 +96,4 @@ export function getFrequencyDisplayString(habit: HabitPair): string {
   return `${count} × / ${unitShort}`;
 }
 
-// Re-export for GoalCard usage as specified in Phase 6
-export { calculateHabitSuccessRate, expectedForRange };
+// Functions are already exported above - no need to re-export
