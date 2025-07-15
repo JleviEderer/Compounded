@@ -11,7 +11,7 @@ export interface MomentumParams {
 export const MIN_MOMENTUM = 1.0; // 1.0 - reset to baseline when escaping zero-trap
 
 export const MOMENTUM_PRESETS: Record<MomentumPreset, MomentumParams> = {
-  lenient: { σ: -0.00, B: 0.001, β: 0.99999 },
+  lenient: { σ: 0.00, B: 0.002, β: 0.9999 },
   default: { σ: -0.25, B: -0.25 * 2, β: 0.995 }, // B computed from σ
   hard: { σ: -0.35, B: -0.35 * 2, β: 0.992 }     // B computed from σ
 };

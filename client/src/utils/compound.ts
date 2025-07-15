@@ -40,9 +40,18 @@ export function momentumStep(
   dailyReturn: number, 
   decayFactor: number
 ): number {
-  // Prevent zero trap: if momentum is 0 but we have positive return, restart from MIN_MOMENTUM
-  if (prevMomentum === 0 && dailyReturn > 0) {
+  // Define near-zero threshold for floating point comparison
+  const NEAR_ZERO_THRESHOLD = 1e-10;
+  
+  // Prevent zero trap: if momentum is near zero but we have positive return, restart from MIN_MOMENTUM
+  if (prevMomentum < NEAR_ZERO_THRESHOLD && dailyReturn > 0) {
+    console.log(`🔄 Escaping zero-trap: momentum ${prevMomentum} → ${MIN_MOMENTUM} (daily return: ${dailyReturn})`);
     return Math.max(MIN_MOMENTUM, (1 + dailyReturn) * MIN_MOMENTUM);
+  }
+
+  // If momentum is near zero and return is not positive, stay at zero
+  if (prevMomentum < NEAR_ZERO_THRESHOLD) {
+    return 0;
   }
 
   const rawStep = (1 + dailyReturn) * decayFactor * prevMomentum;
@@ -52,7 +61,8 @@ export function momentumStep(
   const clamped = Math.max(0, Math.min(maxAllowed, rawStep));
 
   // If result would be zero due to precision issues but we have positive return, apply floor
-  if (clamped === 0 && dailyReturn > 0) {
+  if (clamped < NEAR_ZERO_THRESHOLD && dailyReturn > 0) {
+    console.log(`🔄 Applying MIN_MOMENTUM floor: ${clamped} → ${MIN_MOMENTUM}`);
     return MIN_MOMENTUM;
   }
 
