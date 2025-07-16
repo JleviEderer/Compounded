@@ -41,6 +41,7 @@ export interface MomentumData {
   date: string;
   value: number;
   dailyRate: number;
+  dailyReturn?: number;
   epoch?: number;
   isProjection?: boolean;
 }

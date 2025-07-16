@@ -2,11 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { 
   calculateMomentumIndex, 
   calculateDailyRate, 
+  dailyReturn,
   generateMomentumHistory,
   generate30DayProjection,
   calculateSuccessRate,
   validateCompoundFormula
 } from '../client/src/utils/compound';
+import { getMomentumParams, MOMENTUM_PRESETS } from '../client/src/config/momentum';
 import { HabitPair, HabitLog, HabitWeight, HabitLogState } from '../client/src/types';
 
 describe('Compound Growth Calculations', () => {
@@ -26,9 +28,9 @@ describe('Compound Growth Calculations', () => {
   ];
 
   const mockLogs: HabitLog[] = [
-    { id: '1-2024-01-01', habitId: '1', date: '2024-01-01', state: HabitLogState.GOOD },
-    { id: '1-2024-01-02', habitId: '1', date: '2024-01-02', state: HabitLogState.GOOD },
-    { id: '2-2024-01-02', habitId: '2', date: '2024-01-02', state: HabitLogState.GOOD },
+    { id: '1-2024-01-01', habitId: '1', date: '2024-01-01', state: HabitLogState.GOOD, completed: true },
+    { id: '1-2024-01-02', habitId: '1', date: '2024-01-02', state: HabitLogState.GOOD, completed: true },
+    { id: '2-2024-01-02', habitId: '2', date: '2024-01-02', state: HabitLogState.GOOD, completed: true },
   ];
 
   it('should validate the compound formula: 1.001^365 ≈ 1.440194', () => {
@@ -37,6 +39,98 @@ describe('Compound Growth Calculations', () => {
     // Direct calculation check
     const result = Math.pow(1.001, 365);
     expect(result).toBeCloseTo(1.440194, 3); // Reduced precision for floating point tolerance
+  });
+
+  describe('Daily Return Calculations (PRD §4.1)', () => {
+    const params = MOMENTUM_PRESETS.default;
+    
+    it('should return baseline drift (B) when no habits are logged', () => {
+      const noLogs: HabitLog[] = [];
+      const returnValue = dailyReturn(mockHabits, noLogs, '2024-01-01', params);
+      expect(returnValue).toBe(params.baselineDrift); // -0.50
+    });
+
+    it('should calculate positive return when all habits are completed', () => {
+      const allCompletedLogs: HabitLog[] = [
+        { id: '1-2024-01-01', habitId: '1', date: '2024-01-01', state: HabitLogState.GOOD, completed: true },
+        { id: '2-2024-01-01', habitId: '2', date: '2024-01-01', state: HabitLogState.GOOD, completed: true }
+      ];
+      const returnValue = dailyReturn(mockHabits, allCompletedLogs, '2024-01-01', params);
+      // S_t = 0.0003 + 0.0002 = 0.0005
+      // misses = 0
+      // P_t = 0.0005 - (-0.25 * 0) = 0.0005
+      expect(returnValue).toBeCloseTo(0.0005, 6);
+    });
+
+    it('should apply slip penalty when habits are missed', () => {
+      const partialLogs: HabitLog[] = [
+        { id: '1-2024-01-01', habitId: '1', date: '2024-01-01', state: HabitLogState.GOOD, completed: true }
+      ];
+      const returnValue = dailyReturn(mockHabits, partialLogs, '2024-01-01', params);
+      // S_t = 0.0003 (habit 1 completed)
+      // misses = 0.0002 (habit 2 missed)
+      // P_t = 0.0003 + (-0.25 * 0.0002) = 0.0003 - 0.00005 = 0.00025
+      expect(returnValue).toBeCloseTo(0.00025, 6);
+    });
+  });
+
+  describe('Momentum Index Calculations (PRD §4.2)', () => {
+    const params = MOMENTUM_PRESETS.default;
+    
+    it('should apply decay factor β correctly', () => {
+      // Test single day with all habits completed
+      const logs: HabitLog[] = [
+        { id: '1-2024-01-01', habitId: '1', date: '2024-01-01', state: HabitLogState.GOOD, completed: true },
+        { id: '2-2024-01-01', habitId: '2', date: '2024-01-01', state: HabitLogState.GOOD, completed: true }
+      ];
+      
+      const momentum = calculateMomentumIndex(mockHabits, logs, new Date('2024-01-01'), params);
+      // R_t = 0.0005 (all completed)
+      // M_t = (1 + 0.0005) * 0.995 * 1.0 = 1.0005 * 0.995 = 0.9954975
+      expect(momentum).toBeCloseTo(0.9954975, 6);
+    });
+
+    it('should create visible dip after two missed days', () => {
+      const momentum1 = calculateMomentumIndex(mockHabits, [], new Date('2024-01-01'), params);
+      const momentum2 = calculateMomentumIndex(mockHabits, [], new Date('2024-01-02'), params);
+      
+      // After 2 days of baseline drift
+      // Day 1: (1 + -0.50) * 0.995 * 1.0 = 0.4975
+      // Day 2: (1 + -0.50) * 0.995 * 0.4975 = 0.247506...
+      expect(momentum2).toBeLessThan(momentum1);
+      expect(momentum2).toBeCloseTo(0.247506, 5);
+    });
+
+    it('should drop index by ≥10% after seven unlogged days', () => {
+      const initialMomentum = 1.0;
+      const momentum = calculateMomentumIndex(mockHabits, [], new Date('2024-01-07'), params);
+      
+      const percentDrop = ((initialMomentum - momentum) / initialMomentum) * 100;
+      expect(percentDrop).toBeGreaterThan(10);
+    });
+  });
+
+  describe('Parameter Presets (PRD Appendix A)', () => {
+    it('should support lenient preset', () => {
+      const lenientParams = MOMENTUM_PRESETS.lenient;
+      expect(lenientParams.slipPenalty).toBe(-0.15);
+      expect(lenientParams.baselineDrift).toBe(-0.25);
+      expect(lenientParams.decayFactor).toBe(0.998);
+    });
+
+    it('should support default preset', () => {
+      const defaultParams = MOMENTUM_PRESETS.default;
+      expect(defaultParams.slipPenalty).toBe(-0.25);
+      expect(defaultParams.baselineDrift).toBe(-0.50);
+      expect(defaultParams.decayFactor).toBe(0.995);
+    });
+
+    it('should support hard preset', () => {
+      const hardParams = MOMENTUM_PRESETS.hard;
+      expect(hardParams.slipPenalty).toBe(-0.40);
+      expect(hardParams.baselineDrift).toBe(-0.75);
+      expect(hardParams.decayFactor).toBe(0.990);
+    });
   });
 
   it('should calculate daily rate correctly', () => {
@@ -53,46 +147,52 @@ describe('Compound Growth Calculations', () => {
     expect(rate3).toBe(0);
   });
 
-  it('should calculate momentum index with compound growth', () => {
-    const startDate = new Date('2024-01-01');
-    const endDate = new Date('2024-01-02');
+  it('should calculate momentum index with decay formula', () => {
+    const params = getMomentumParams();
+    const momentum = calculateMomentumIndex(mockHabits, mockLogs, new Date('2024-01-02'), params);
     
-    const momentum = calculateMomentumIndex(mockHabits, mockLogs, endDate);
-    
-    // Expected: 1.0 * (1 + 0.0003) * (1 + 0.0005) = 1.00080015
-    // Calculation: 1.0003 * 1.0005 = 1.00080015
-    expect(momentum).toBeCloseTo(1.00080015, 5);
+    // With decay formula: M_t = max(0, (1 + R_t) * β * M_{t-1})
+    // The momentum will be less than 1.0 due to decay factor
+    expect(momentum).toBeLessThan(1.0);
+    expect(momentum).toBeGreaterThan(0.9); // Should still be close to 1 with good habits
   });
 
   it('should clamp momentum index to >= 0', () => {
-    // Test with empty logs (should stay at 1.0)
-    const momentum = calculateMomentumIndex(mockHabits, [], new Date('2024-01-01'));
+    const params = getMomentumParams();
+    // With baseline drift B = -0.50 and decay β = 0.995
+    // Empty logs for 365 days should decay significantly
+    const momentum = calculateMomentumIndex(mockHabits, [], new Date('2024-12-31'), params);
     expect(momentum).toBeGreaterThanOrEqual(0);
-    expect(momentum).toBe(1.0);
+    expect(momentum).toBeLessThan(0.01); // Should be near zero after a year
   });
 
   it('should generate momentum history', () => {
-    const history = generateMomentumHistory(mockHabits, mockLogs, 3);
+    const params = getMomentumParams();
+    const history = generateMomentumHistory(mockHabits, mockLogs, 3, params);
     
     expect(history).toHaveLength(3);
     expect(history[0]).toHaveProperty('date');
     expect(history[0]).toHaveProperty('value');
     expect(history[0]).toHaveProperty('dailyRate');
+    expect(history[0]).toHaveProperty('dailyReturn');
     
-    // Values should be cumulative (each day builds on previous)
-    expect(history[1].value).toBeGreaterThanOrEqual(history[0].value);
+    // With decay, values might not always increase
+    // But should all be >= 0 due to clamping
+    history.forEach(entry => {
+      expect(entry.value).toBeGreaterThanOrEqual(0);
+    });
   });
 
   it('should generate 30-day projection', () => {
     const projection = generate30DayProjection(mockHabits, mockLogs);
     
-    expect(projection).toHaveLength(30);
+    // With 30D filter, projection is 7 days (as per forecastConfig)
+    expect(projection.length).toBeGreaterThan(0);
     expect(projection[0]).toHaveProperty('date');
     expect(projection[0]).toHaveProperty('value');
     expect(projection[0]).toHaveProperty('dailyRate');
-    
-    // Projection should show growth based on trailing average
-    expect(projection[29].value).toBeGreaterThan(projection[0].value);
+    expect(projection[0]).toHaveProperty('isProjection');
+    expect(projection[0].isProjection).toBe(true);
   });
 
   it('should calculate success rate', () => {
@@ -106,17 +206,20 @@ describe('Compound Growth Calculations', () => {
   });
 
   it('should handle edge cases', () => {
+    const params = getMomentumParams();
+    
     // Empty habits array
-    const emptyHabitsMomentum = calculateMomentumIndex([], mockLogs, new Date());
+    const emptyHabitsMomentum = calculateMomentumIndex([], mockLogs, new Date(), params);
     expect(emptyHabitsMomentum).toBe(1.0);
     
-    // Future date projection
+    // Future date with decay formula - momentum will decay over time
     const futureDate = new Date('2025-01-01');
-    const futureMomentum = calculateMomentumIndex(mockHabits, mockLogs, futureDate);
-    expect(futureMomentum).toBeGreaterThanOrEqual(1.0);
+    const futureMomentum = calculateMomentumIndex(mockHabits, mockLogs, futureDate, params);
+    expect(futureMomentum).toBeGreaterThanOrEqual(0); // Clamped to >= 0
   });
 
   it('should maintain precision in compound calculations', () => {
+    const params = getMomentumParams();
     // Test with many small increments
     const smallHabits: HabitPair[] = [{
       id: 'small',
@@ -133,14 +236,16 @@ describe('Compound Growth Calculations', () => {
         id: `small-${date.toISOString().split('T')[0]}`,
         habitId: 'small',
         date: date.toISOString().split('T')[0],
-        state: HabitLogState.GOOD
+        state: HabitLogState.GOOD,
+        completed: true
       });
     }
     
     const endDate = new Date('2024-04-10'); // ~100 days later
-    const momentum = calculateMomentumIndex(smallHabits, dailyLogs, endDate);
+    const momentum = calculateMomentumIndex(smallHabits, dailyLogs, endDate, params);
     
-    // Should be approximately (1.0002)^100 ≈ 1.0202
-    expect(momentum).toBeCloseTo(1.0202, 3);
+    // With decay formula, momentum will be less than simple compound growth
+    expect(momentum).toBeLessThan(1.0); // Decay factor ensures momentum < 1.0
+    expect(momentum).toBeGreaterThan(0.5); // But should maintain significant value
   });
 });

@@ -1,5 +1,6 @@
 import { HabitPair, HabitLog, MomentumData, HabitWeight } from '../types';
 import { getTodayString } from './date';
+import { getMomentumParams, MomentumParams } from '../config/momentum';
 
 // Helper to parse date strings as local midnight instead of UTC
 export function toLocalMidnight(dateStr: string): number {
@@ -7,12 +8,65 @@ export function toLocalMidnight(dateStr: string): number {
   return new Date(y, m - 1, d, 0, 0, 0, 0).getTime(); // local TZ
 }
 
+/**
+ * Calculate daily return R_t according to PRD formula:
+ * S_t = Σ (w_i * d_i)                // completed weight
+ * misses = Σ (w_i * (1−d_i))         // missed weight
+ * P_t = S_t − σ * misses             // slip penalty
+ * R_t = logged ? P_t : B             // baseline drift if nothing logged
+ */
+export function dailyReturn(
+  habits: HabitPair[],
+  logs: HabitLog[],
+  date: string,
+  params: MomentumParams
+): number {
+  // Get logs for this specific date
+  const dayLogs = logs.filter(l => l.date === date);
+  
+  // If no habits exist, return 0
+  if (habits.length === 0) return 0;
+  
+  // If nothing logged for any habit on this day, return baseline drift
+  if (dayLogs.length === 0) {
+    return params.baselineDrift;
+  }
+  
+  let completedWeight = 0;
+  let missedWeight = 0;
+  
+  // Calculate completed and missed weights
+  for (const habit of habits) {
+    const log = dayLogs.find(l => l.habitId === habit.id);
+    const weight = normalizeWeight(habit.weight);
+    
+    if (log && (log.completed || log.state === 'good')) {
+      completedWeight += weight;
+    } else {
+      missedWeight += weight;
+    }
+  }
+  
+  // Calculate P_t = S_t - σ * misses
+  const penalizedReturn = completedWeight + (params.slipPenalty * missedWeight);
+  
+  return penalizedReturn;
+}
+
+/**
+ * Calculate momentum index M_t according to PRD formula:
+ * M_t = max(0, (1 + R_t) * β * M_{t-1})
+ */
 export function calculateMomentumIndex(
   habits: HabitPair[],
   logs: HabitLog[],
-  targetDate: Date | number
+  targetDate: Date | number,
+  params?: MomentumParams
 ): number {
   if (habits.length === 0) return 1.0;
+  
+  // Get parameters once
+  const momentumParams = params || getMomentumParams();
 
   // Convert targetDate to epoch if it's a Date
   const targetEpoch = typeof targetDate === 'number' ? targetDate : targetDate.getTime();
@@ -28,14 +82,21 @@ export function calculateMomentumIndex(
   while (currentDate.getTime() <= targetEpoch) {
     // Use local date instead of UTC slice
     const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-    const dailyRate = calculateDailyRate(habits, logs, dateStr);
-    momentum *= (1 + dailyRate);
+    const R_t = dailyReturn(habits, logs, dateStr, momentumParams);
+    
+    // Apply formula: M_t = max(0, (1 + R_t) * β * M_{t-1})
+    momentum = Math.max(0, (1 + R_t) * momentumParams.decayFactor * momentum);
+    
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
-  return Math.max(0, momentum); // Clamp to >= 0
+  return momentum;
 }
 
+/**
+ * Legacy function for backward compatibility
+ * Calculates simple daily rate without penalties
+ */
 export function calculateDailyRate(
   habits: HabitPair[],
   logs: HabitLog[],
@@ -54,36 +115,45 @@ export function calculateDailyRate(
   for (const log of dayLogs) {
     const habit = habits.find(h => h.id === log.habitId);
     if (habit) {
-      // Ensure weight is a valid HabitWeight enum value
-      const validWeights = Object.values(HabitWeight) as number[];
-      let weight = habit.weight;
-      
-      // Check if weight is close to any valid enum value (handle floating point precision)
-      const tolerance = 0.000001;
-      const matchingWeight = validWeights.find(w => Math.abs(w - weight) < tolerance);
-      
-      if (matchingWeight !== undefined) {
-        weight = matchingWeight;
-      } else if (import.meta.env.DEV) {
-        console.warn(`Unknown weight value ${weight}, defaulting to MEDIUM`);
-        weight = HabitWeight.MEDIUM;
-      }
-      
-      rate += weight;
+      rate += normalizeWeight(habit.weight);
     }
   }
   return rate;     // already weighted sum per day
 }
 
+/**
+ * Normalize weight to handle floating point precision issues
+ */
+function normalizeWeight(weight: number): number {
+  const validWeights = Object.values(HabitWeight) as number[];
+  
+  // Check if weight is close to any valid enum value (handle floating point precision)
+  const tolerance = 0.000001;
+  const matchingWeight = validWeights.find(w => Math.abs(w - weight) < tolerance);
+  
+  if (matchingWeight !== undefined) {
+    return matchingWeight;
+  } else if (import.meta.env.DEV) {
+    console.warn(`Unknown weight value ${weight}, defaulting to MEDIUM`);
+    return HabitWeight.MEDIUM;
+  }
+  
+  return weight;
+}
+
 export function generateMomentumHistory(
   habits: HabitPair[], 
   logs: HabitLog[], 
-  days: number = 30
+  days: number = 30,
+  params?: MomentumParams
 ): MomentumData[] {
   const result: MomentumData[] = [];
 
   // If no logs, return empty array
   if (logs.length === 0) return result;
+
+  // Get parameters once
+  const momentumParams = params || getMomentumParams();
 
   // Get actual date range from filtered logs
   const logDates = logs.map(log => log.date).sort();
@@ -115,13 +185,15 @@ export function generateMomentumHistory(
     if (dateStr < logDates[0]) continue;
 
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
-    const momentum = calculateMomentumIndex(habits, logs, toLocalMidnight(dateStr));
+    const dailyReturn_ = dailyReturn(habits, logs, dateStr, momentumParams);
+    const momentum = calculateMomentumIndex(habits, logs, toLocalMidnight(dateStr), momentumParams);
     const epoch = toLocalMidnight(dateStr);
 
     result.push({
       date: dateStr,
       value: momentum,
       dailyRate,
+      dailyReturn: dailyReturn_,
       epoch,
       isProjection: false
     });

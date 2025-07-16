@@ -19,6 +19,30 @@ Compounded reimagines habit tracking by focusing on **compound growth** rather t
 - **No Account Required**: All data stored locally in your browser
 - **Export/Import**: Full data backup and restore functionality
 
+## 📊 Momentum Formula
+
+The Momentum Index uses a decay model that rewards consistency and penalizes missed days:
+
+### Daily Return (R_t)
+```
+S_t = Σ (w_i * d_i)          // completed weight sum
+misses = Σ (w_i * (1−d_i))   // missed weight sum
+P_t = S_t − σ * misses       // penalized return
+R_t = logged ? P_t : B       // baseline drift if nothing logged
+```
+
+### Momentum Index (M_t)
+```
+M_t = max(0, (1 + R_t) * β * M_{t-1})
+```
+
+### Default Parameters
+- **σ** (slip penalty) = -0.25
+- **B** (baseline drift) = -0.50
+- **β** (decay factor) = 0.995
+
+This formula ensures that consistent effort compounds positively (like 1.001^365 ≈ 1.440194), while missed days create visible dips that motivate recovery.
+
 ## 🚀 Live Demo
 
 The app comes pre-loaded with 4 sample habit pairs and 90+ days of mock data so you can immediately see the compound growth visualization in action.

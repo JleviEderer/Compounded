@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { HelpCircle } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
 
 interface InsightsQuickStatsProps {
   successRate: number;
@@ -17,82 +16,124 @@ export const InsightsQuickStats: React.FC<InsightsQuickStatsProps> = ({
   currentStreak,
   totalHabits
 }) => {
+  // Helper function to get color based on value and type
+  const getSuccessRateColor = (rate: number) => {
+    if (rate >= 75) return 'text-emerald-500 dark:text-emerald-400';
+    if (rate >= 50) return 'text-yellow-500 dark:text-yellow-400';
+    return 'text-red-500 dark:text-red-400';
+  };
+
+  const getStreakColor = (streak: number) => {
+    if (streak >= 7) return 'text-emerald-500 dark:text-emerald-400';
+    if (streak >= 3) return 'text-yellow-500 dark:text-yellow-400';
+    if (streak === 0) return 'text-red-500 dark:text-red-400';
+    return 'text-coral';
+  };
+
   return (
-    <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mb-8">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    <div className="border-t border-gray-700/50 pt-6 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-[800px] mx-auto">
+        {/* Success Rate */}
         <motion.div 
-          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center shadow-sm"
+          className="bg-white/5 dark:bg-gray-800/30 rounded-xl p-4 text-center border border-white/10 hover:bg-white/8 hover:border-white/20 transition-all duration-200"
           whileHover={{ scale: 1.02 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0 }}
         >
-          <div className="text-lg sm:text-xl font-bold text-emerald-600">
+          <div className={`text-2xl font-bold ${getSuccessRateColor(successRate)}`}>
             {successRate.toFixed(0)}%
           </div>
-          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
-            <span className="truncate">Success Rate</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-48 text-xs p-2">
-                <p>Completed logs vs expected frequency-based targets</p>
-              </TooltipContent>
-            </Tooltip>
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-400 mt-1">
+            <span>Success Rate</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <HelpCircle className="w-3 h-3 opacity-50 hover:opacity-80" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-[200px] text-xs p-2">
+                  <p>Completed logs vs expected frequency-based targets</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </motion.div>
 
+        {/* Average Daily Rate */}
         <motion.div 
-          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center shadow-sm"
+          className="bg-white/5 dark:bg-gray-800/30 rounded-xl p-4 text-center border border-white/10 hover:bg-white/8 hover:border-white/20 transition-all duration-200"
           whileHover={{ scale: 1.02 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
         >
-          <div className="text-lg sm:text-xl font-bold text-purple-600">
-            +{(recentAvgRate * 100).toFixed(2)}%
+          <div className="text-2xl font-bold text-purple-500 dark:text-purple-400">
+            {recentAvgRate >= 0 ? '+' : ''}{(recentAvgRate * 100).toFixed(2)}%
           </div>
-          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
-            <span className="truncate">Avg Daily Rate</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-48 text-xs p-2">
-                <p>Average daily compound rate of improvement</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </motion.div>
-
-        <motion.div 
-          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center shadow-sm"
-          whileHover={{ scale: 1.02 }}
-        >
-          <div className="text-lg sm:text-xl font-bold text-coral">{currentStreak}</div>
-          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
-            <span className="truncate">Current Streak</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-48 text-xs p-2">
-                <p>Consecutive days with at least one habit completed</p>
-              </TooltipContent>
-            </Tooltip>
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-400 mt-1">
+            <span>Avg Daily Rate</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <HelpCircle className="w-3 h-3 opacity-50 hover:opacity-80" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-[200px] text-xs p-2">
+                  <p>Average daily compound rate of improvement</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </motion.div>
 
+        {/* Current Streak */}
         <motion.div 
-          className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center shadow-sm"
+          className="bg-white/5 dark:bg-gray-800/30 rounded-xl p-4 text-center border border-white/10 hover:bg-white/8 hover:border-white/20 transition-all duration-200"
           whileHover={{ scale: 1.02 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
         >
-          <div className="text-lg sm:text-xl font-bold text-blue-600">{totalHabits}</div>
-          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1">
-            <span className="truncate">Active Habits</span>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <HelpCircle className="w-3 h-3 opacity-60 hover:opacity-100 cursor-help flex-shrink-0" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-48 text-xs p-2">
-                <p>Total number of habits currently being tracked</p>
-              </TooltipContent>
-            </Tooltip>
+          <div className={`text-2xl font-bold ${getStreakColor(currentStreak)}`}>
+            {currentStreak}
+          </div>
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-400 mt-1">
+            <span>Current Streak</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <HelpCircle className="w-3 h-3 opacity-50 hover:opacity-80" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-[200px] text-xs p-2">
+                  <p>Consecutive days with at least one habit completed</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </motion.div>
+
+        {/* Active Habits */}
+        <motion.div 
+          className="bg-white/5 dark:bg-gray-800/30 rounded-xl p-4 text-center border border-white/10 hover:bg-white/8 hover:border-white/20 transition-all duration-200"
+          whileHover={{ scale: 1.02 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <div className="text-2xl font-bold text-blue-500 dark:text-blue-400">
+            {totalHabits}
+          </div>
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-400 mt-1">
+            <span>Active Habits</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <HelpCircle className="w-3 h-3 opacity-50 hover:opacity-80" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-[200px] text-xs p-2">
+                  <p>Total number of habits currently being tracked</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </motion.div>
       </div>

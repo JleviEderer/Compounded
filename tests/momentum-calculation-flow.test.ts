@@ -3,10 +3,13 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { calculateDailyRate, calculateMomentumIndex } from '../client/src/utils/compound';
+import { calculateDailyRate, calculateMomentumIndex, dailyReturn } from '../client/src/utils/compound';
+import { getMomentumParams } from '../client/src/config/momentum';
 import { mockHabits, mockLogs } from '../client/src/data/mockData';
 
 describe('Momentum Calculation Data Flow', () => {
+  const params = getMomentumParams();
+  
   it('should calculate daily rates for available dates', () => {
     // Test with whatever data is available (mock or user data)
     const availableDates = [...new Set(mockLogs.map(log => log.date))].sort();
@@ -23,6 +26,23 @@ describe('Momentum Calculation Data Flow', () => {
       const lastRate = calculateDailyRate(mockHabits, mockLogs, lastDate);
       expect(typeof lastRate).toBe('number');
       expect(isFinite(lastRate)).toBe(true);
+    }
+  });
+
+  it('should calculate daily returns with momentum parameters', () => {
+    const availableDates = [...new Set(mockLogs.map(log => log.date))].sort();
+
+    if (availableDates.length > 0) {
+      // Test first available date
+      const firstDate = availableDates[0];
+      const dailyRet = dailyReturn(mockHabits, mockLogs, firstDate, params);
+      expect(typeof dailyRet).toBe('number');
+      expect(isFinite(dailyRet)).toBe(true);
+
+      // Test a date with no logs - should return baseline drift
+      const noLogDate = '2099-01-01'; // Future date with no logs
+      const noLogReturn = dailyReturn(mockHabits, mockLogs, noLogDate, params);
+      expect(noLogReturn).toBe(params.baselineDrift);
     }
   });
 

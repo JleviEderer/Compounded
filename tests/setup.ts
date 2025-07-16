@@ -19,14 +19,18 @@ export function createTestWrapper() {
   });
 
   return function TestWrapper({ children }: { children: React.ReactNode }) {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <GoalsProvider>
-          <HabitsProvider>
-            {children}
-          </HabitsProvider>
-        </GoalsProvider>
-      </QueryClientProvider>
+    return React.createElement(
+      QueryClientProvider,
+      { client: queryClient },
+      React.createElement(
+        GoalsProvider,
+        null,
+        React.createElement(
+          HabitsProvider,
+          null,
+          children
+        )
+      )
     );
   };
 }
