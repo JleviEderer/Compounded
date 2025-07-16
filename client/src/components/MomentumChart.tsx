@@ -38,9 +38,7 @@ export default function MomentumChart({
   projWindowDays
 }: MomentumChartProps) {
 
-  // Default to last historical point, not forecast endpoint
-  const lastHistoricalPoint = data.filter(d => !d.isProjection).pop() || data[data.length-1];
-  const [hover, setHover] = useState(lastHistoricalPoint);
+  const [hover, setHover] = useState(data[data.length-1]); // last point as default
   const [isDragging, setIsDragging] = useState(false);
 
   // Use the pre-calculated current momentum from filtered data
@@ -90,11 +88,8 @@ export default function MomentumChart({
         </p>
       </div>
 
-      {/* Floating HUD positioned directly under title - Always shows today's data */}
-      <MomentumChartHUD 
-        currentMomentum={currentMomentum} 
-        todayRate={todayRate} 
-      />
+      {/* Floating HUD positioned directly under title */}
+      <MomentumChartHUD hover={hover} />
 
       <motion.div 
           className="h-[300px] md:h-[300px] w-full mb-4"
