@@ -128,7 +128,8 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
           date: dateStr,
           value: momentumData[0]?.value || 1.0,
           dailyRate: 0,
-          isProjection: false
+          isProjection: false,
+          epoch: new Date(dateStr).getTime()
         });
       }
     }

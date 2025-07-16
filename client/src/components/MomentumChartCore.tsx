@@ -1,15 +1,6 @@
-
-import { useState } from 'react';
+import React, { useEffect } from 'react';
+import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip as RechartsTooltip, ReferenceLine } from 'recharts';
 import { format } from 'date-fns';
-import { 
-  AreaChart, 
-  Area, 
-  XAxis, 
-  YAxis, 
-  ResponsiveContainer, 
-  Tooltip as RechartsTooltip,
-  ReferenceLine 
-} from 'recharts';
 import { MomentumData } from '../types';
 import { getTodayEpoch } from '../utils/date';
 
@@ -89,7 +80,7 @@ export const MomentumChartCore = ({
             <stop offset="95%" stopColor="#D84C3E" stopOpacity={0.1}/>
           </linearGradient>
         </defs>
-        
+
         <XAxis 
           dataKey="epoch"
           type="number"
@@ -103,7 +94,7 @@ export const MomentumChartCore = ({
           padding={{ left: 0, right: 0 }}
           hide
         />
-        
+
         <YAxis 
           domain={[(dataMin: number) => {
             if (data.length === 0) return 0.9;
@@ -111,7 +102,7 @@ export const MomentumChartCore = ({
             const min = Math.min(...values);
             const max = Math.max(...values);
             const range = max - min;
-            
+
             // VERY aggressive scaling for tiny momentum ranges
             let buffer;
             if (range < 0.02) {
@@ -124,7 +115,7 @@ export const MomentumChartCore = ({
               // For larger ranges, use standard 10% buffer
               buffer = range * 0.1;
             }
-            
+
             return Math.max(0.9, min - buffer);
           }, (dataMax: number) => {
             if (data.length === 0) return 1.1;
@@ -132,7 +123,7 @@ export const MomentumChartCore = ({
             const min = Math.min(...values);
             const max = Math.max(...values);
             const range = max - min;
-            
+
             // VERY aggressive scaling for tiny momentum ranges
             let buffer;
             if (range < 0.02) {
@@ -145,7 +136,7 @@ export const MomentumChartCore = ({
               // For larger ranges, use standard 10% buffer
               buffer = range * 0.1;
             }
-            
+
             return max + buffer;
           }]}
           hide
