@@ -7,31 +7,24 @@ interface MomentumChartHUDProps {
   selectedRange: string;
   totalGrowth: number;
   data: MomentumData[];
-  currentMomentum: number;
 }
 
-export const MomentumChartHUD = ({ hover, selectedRange, totalGrowth, data, currentMomentum }: MomentumChartHUDProps) => {
+export const MomentumChartHUD = ({ hover, selectedRange, totalGrowth, data }: MomentumChartHUDProps) => {
   if (!hover) return null;
   
   // Calculate dynamic growth from start of timeframe to hovered point
   const getDynamicGrowth = () => {
     if (!data || data.length === 0) return 0;
     
+    // Find the first historical (non-projection) data point as baseline
+    const firstHistorical = data.find(point => !point.isProjection);
+    if (!firstHistorical) return 0;
+    
+    const startValue = firstHistorical.value;
     const currentValue = hover.value;
     
-    // For timeframes, use the same baseline calculation as currentMomentum stat
-    if (selectedRange !== 'All Time') {
-      // When hovering on the current/last point, show the same as totalGrowth
-      // For other points, calculate proportional growth
-      return (currentValue - 1.0) * 100;
-    } else {
-      // For All Time, calculate relative to first historical point
-      const firstHistorical = data.find(point => !point.isProjection);
-      if (!firstHistorical) return 0;
-      
-      const startValue = firstHistorical.value;
-      return ((currentValue - startValue) / startValue) * 100;
-    }
+    // Calculate relative growth from the timeframe start
+    return ((currentValue - startValue) / startValue) * 100;
   };
   
   const dynamicGrowth = getDynamicGrowth();
