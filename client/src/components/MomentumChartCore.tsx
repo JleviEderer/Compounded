@@ -55,7 +55,7 @@ export const MomentumChartCore = ({
     <ResponsiveContainer width="100%" height="100%" minWidth={300} minHeight={200}>
       <AreaChart 
         data={data}
-        margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
+        margin={{ top: 8, right: -1, left: -1, bottom: 0 }}
         onMouseMove={({activePayload}) => activePayload && onHover(activePayload[0].payload)}
         onMouseLeave={() => {
           // Return to last historical point, not last data point (which could be forecast)
