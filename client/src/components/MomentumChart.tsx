@@ -118,6 +118,7 @@ export default function MomentumChart({
         selectedRange={selectedRange}
         totalGrowth={totalGrowth}
         data={data}
+        currentMomentum={currentMomentum}
       />
 
       <motion.div 
