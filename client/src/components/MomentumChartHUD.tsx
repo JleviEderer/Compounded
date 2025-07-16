@@ -16,20 +16,15 @@ export const MomentumChartHUD = ({ hover, selectedRange, totalGrowth, data }: Mo
   const getDynamicGrowth = () => {
     if (!data || data.length === 0) return 0;
     
+    // Find the first historical (non-projection) data point as baseline
+    const firstHistorical = data.find(point => !point.isProjection);
+    if (!firstHistorical) return 0;
+    
+    const startValue = firstHistorical.value;
     const currentValue = hover.value;
     
-    if (selectedRange !== 'All Time') {
-      // For timeframes (30D, 3M, 1Y), use the same calculation as totalGrowth
-      // This assumes timeframe momentum starts from 1.0 baseline
-      return (currentValue - 1.0) * 100;
-    } else {
-      // For All Time, show actual growth from first momentum value
-      const firstHistorical = data.find(point => !point.isProjection);
-      if (!firstHistorical) return 0;
-      
-      const startValue = firstHistorical.value;
-      return ((currentValue - startValue) / startValue) * 100;
-    }
+    // Calculate relative growth from the timeframe start
+    return ((currentValue - startValue) / startValue) * 100;
   };
   
   const dynamicGrowth = getDynamicGrowth();
