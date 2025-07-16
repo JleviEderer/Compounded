@@ -145,7 +145,8 @@ export function generateMomentumHistory(
   habits: HabitPair[], 
   logs: HabitLog[], 
   days: number = 30,
-  params?: MomentumParams
+  params?: MomentumParams,
+  allLogs?: HabitLog[] // Add parameter for full historical logs
 ): MomentumData[] {
   const result: MomentumData[] = [];
 
@@ -187,9 +188,17 @@ export function generateMomentumHistory(
     // Skip dates before our filtered start date
     if (dateStr < logDates[0]) continue;
 
+    // Use full logs for momentum calculation, filtered logs for daily rate
+    const logsForMomentum = allLogs || logs; // Use full logs if provided, otherwise use filtered logs
+    
+    // Debug logging for momentum calculation
+    if (import.meta.env.DEV && result.length === 0) {
+      console.log(`🔧 Momentum Calc Debug: Using ${logsForMomentum.length} logs (${allLogs ? 'full' : 'filtered'}) for date ${dateStr}`);
+    }
+    
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
     const dailyReturn_ = dailyReturn(habits, logs, dateStr, momentumParams);
-    const momentum = calculateMomentumIndex(habits, logs, toLocalMidnight(dateStr), momentumParams);
+    const momentum = calculateMomentumIndex(habits, logsForMomentum, toLocalMidnight(dateStr), momentumParams);
     const epoch = toLocalMidnight(dateStr);
 
     momentumValues.push(momentum);

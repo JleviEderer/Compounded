@@ -52,8 +52,9 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
 
     console.log(`Generating momentum history for ${timeFilter?.label}: ${actualDays} days`);
 
-    return generateMomentumHistory(filteredData.habits, filteredData.logs, actualDays);
-  }, [filteredData.habits, filteredData.logs, timeFilter?.label]);
+    // Pass full logs for momentum calculation, filtered logs for display timeframe
+    return generateMomentumHistory(filteredData.habits, filteredData.logs, actualDays, undefined, logs);
+  }, [filteredData.habits, filteredData.logs, timeFilter?.label, logs]);
 
   // Calculate dynamic window sizes based on time filter FIRST
   const { avgWindowDays, projWindowDays } = useMemo(() => {
