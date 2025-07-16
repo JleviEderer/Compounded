@@ -38,7 +38,21 @@ export default function MomentumChart({
   projWindowDays
 }: MomentumChartProps) {
 
-  const [hover, setHover] = useState(data[data.length-1]); // last point as default
+  // Initialize hover to last historical point instead of last data point (which could be forecast)
+  const getLastHistoricalPoint = () => {
+    if (data.length === 0) return null;
+    // Find the last point that is not a projection
+    const lastHistorical = data.findLast(point => !point.isProjection);
+    return lastHistorical || data[data.length-1]; // fallback to last point if no historical found
+  };
+  
+  const [hover, setHover] = useState(() => getLastHistoricalPoint());
+  
+  // Update hover when data changes to ensure it stays on historical data
+  const lastHistoricalPoint = getLastHistoricalPoint();
+  if (hover === null && lastHistoricalPoint) {
+    setHover(lastHistoricalPoint);
+  }
   const [isDragging, setIsDragging] = useState(false);
 
   // Use the pre-calculated current momentum from filtered data
@@ -89,7 +103,11 @@ export default function MomentumChart({
       </div>
 
       {/* Floating HUD positioned directly under title */}
-      <MomentumChartHUD hover={hover} />
+      <MomentumChartHUD 
+        hover={hover} 
+        selectedRange={selectedRange}
+        totalGrowth={totalGrowth}
+      />
 
       <motion.div 
           className="h-[300px] md:h-[300px] w-full mb-4"
