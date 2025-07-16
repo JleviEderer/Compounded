@@ -12,16 +12,22 @@ interface MomentumChartHUDProps {
 export const MomentumChartHUD = ({ hover, selectedRange, totalGrowth, data }: MomentumChartHUDProps) => {
   if (!hover) return null;
   
-  // Calculate dynamic growth from start of timeframe to hovered point
+  // Calculate dynamic growth: if hovering on last historical point, use totalGrowth for consistency
   const getDynamicGrowth = () => {
     if (!data || data.length === 0) return 0;
     
-    // For timeframe calculations, we always use 1.0 as baseline (matches Current Index calculation)
-    // This ensures consistency between HUD growth and Current Index growth
+    // Find the last historical point (non-projection)
+    const lastHistorical = [...data].reverse().find(d => !d.isProjection);
+    
+    // If hovering on the last historical point, use the consistent totalGrowth value
+    // This ensures HUD matches Current Index when hovering on "current" data
+    if (lastHistorical && hover.date === lastHistorical.date) {
+      return totalGrowth;
+    }
+    
+    // For other points, calculate growth from 1.0 baseline
     const baselineValue = 1.0;
     const currentValue = hover.value;
-    
-    // Calculate relative growth from 1.0 baseline (same as timeframe momentum calculation)
     return ((currentValue - baselineValue) / baselineValue) * 100;
   };
   

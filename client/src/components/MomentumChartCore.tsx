@@ -58,7 +58,9 @@ export const MomentumChartCore = ({
         margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
         onMouseMove={({activePayload}) => activePayload && onHover(activePayload[0].payload)}
         onMouseLeave={() => {
-          onHover(data[data.length-1]);
+          // Return to last historical point, not last data point (which could be forecast)
+          const lastHistorical = [...data].reverse().find(d => !d.isProjection);
+          onHover(lastHistorical || data[data.length-1]);
           onDragEnd();
         }}
         onTouchStart={onDragStart}

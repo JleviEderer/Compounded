@@ -42,7 +42,7 @@ export default function MomentumChart({
   const getLastHistoricalPoint = () => {
     if (data.length === 0) return null;
     
-    // Find the last point that is not a projection (more compatible than findLast)
+    // Find the last point that is not a projection
     let lastHistorical = null;
     for (let i = data.length - 1; i >= 0; i--) {
       if (!data[i].isProjection) {
@@ -51,7 +51,18 @@ export default function MomentumChart({
       }
     }
     
-    return lastHistorical || data[data.length-1]; // fallback to last point if no historical found
+    // If no historical data found, find the "today" point or use a reasonable fallback
+    if (!lastHistorical) {
+      // Try to find today's data point
+      const today = new Date().toISOString().split('T')[0];
+      const todayPoint = data.find(d => d.date === today);
+      if (todayPoint) return todayPoint;
+      
+      // Fallback to last data point
+      return data[data.length - 1] || null;
+    }
+    
+    return lastHistorical;
   };
   
   const [hover, setHover] = useState(() => getLastHistoricalPoint());
