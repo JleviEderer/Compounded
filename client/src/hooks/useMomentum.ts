@@ -3,6 +3,7 @@ import { HabitPair, HabitLog, MomentumData } from '../types';
 import { 
   generateMomentumHistory, 
   calculateMomentumIndex, 
+  calculateTimeframeMomentumIndex,
   calculateDailyRate, 
   calculateSuccessRate,
   calculateDynamicSuccessRate,
@@ -135,19 +136,34 @@ export function useMomentum(habits: HabitPair[], logs: HabitLog[], timeFilter?: 
     return [...paddedHistorical, ...forecast];
   }, [momentumData, forecastData]);
 
-  // Calculate current momentum from the filtered data
+  // Calculate timeframe-specific current momentum (starts from timeframe beginning, not habit creation)
   const currentMomentum = useMemo(() => {
-    if (momentumData.length === 0) return 1.0;
-    return momentumData[momentumData.length - 1]?.value || 1.0;
-  }, [momentumData]);
+    if (filteredData.logs.length === 0) return 1.0;
+    
+    // For All Time, use the traditional momentum calculation
+    if (!timeFilter || timeFilter.days === null) {
+      return momentumData.length > 0 ? momentumData[momentumData.length - 1]?.value || 1.0 : 1.0;
+    }
+    
+    // For timeframe filters, calculate momentum from timeframe start
+    const today = new Date();
+    const timeframeStart = new Date();
+    timeframeStart.setDate(timeframeStart.getDate() - timeFilter.days);
+    
+    return calculateTimeframeMomentumIndex(
+      filteredData.habits, 
+      logs, // Use all logs for accurate calculation
+      today,
+      timeframeStart
+    );
+  }, [filteredData.habits, filteredData.logs, logs, timeFilter, momentumData]);
 
-  // Calculate total growth from filtered data
+  // Calculate total growth for timeframe (always relative to 1.0 baseline)
   const totalGrowth = useMemo(() => {
-    if (momentumData.length === 0) return 0;
-    const startValue = momentumData[0]?.value || 1.0;
-    const endValue = currentMomentum;
-    return ((endValue - startValue) / startValue) * 100;
-  }, [momentumData, currentMomentum]);
+    // For timeframes, growth is simply (current index - 1.0) * 100
+    // since timeframe momentum always starts from 1.0
+    return (currentMomentum - 1.0) * 100;
+  }, [currentMomentum]);
 
   // Calculate latest rate from most recent day with actual data
   const todayRate = useMemo(() => {

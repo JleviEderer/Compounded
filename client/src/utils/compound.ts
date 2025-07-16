@@ -93,7 +93,42 @@ export function calculateMomentumIndex(
   return momentum;
 }
 
+/**
+ * Calculate momentum index for a specific timeframe (starts from timeframe start, not habit creation)
+ * For timeframe-specific "Current Index" calculations
+ */
+export function calculateTimeframeMomentumIndex(
+  habits: HabitPair[],
+  logs: HabitLog[],
+  targetDate: Date | number,
+  startDate: Date | number,
+  params?: MomentumParams
+): number {
+  if (habits.length === 0) return 1.0;
 
+  // Get parameters once
+  const momentumParams = params || getMomentumParams();
+
+  // Convert dates to epoch if they're Date objects
+  const targetEpoch = typeof targetDate === 'number' ? targetDate : targetDate.getTime();
+  const startEpoch = typeof startDate === 'number' ? startDate : startDate.getTime();
+
+  let momentum = 1.0; // Always start from 1.0 for timeframe calculations
+
+  const currentDate = new Date(startEpoch);
+  while (currentDate.getTime() <= targetEpoch) {
+    // Use local date instead of UTC slice
+    const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+    const R_t = dailyReturn(habits, logs, dateStr, momentumParams);
+
+    // Apply formula: M_t = max(0, (1 + R_t) * β * M_{t-1})
+    momentum = Math.max(0, (1 + R_t) * momentumParams.decayFactor * momentum);
+
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return momentum;
+}
 
 /**
  * Legacy function for backward compatibility
