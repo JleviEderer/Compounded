@@ -23,33 +23,33 @@ export function dailyReturn(
 ): number {
   // Get logs for this specific date
   const dayLogs = logs.filter(l => l.date === date);
-  
+
   // If no habits exist, return 0
   if (habits.length === 0) return 0;
-  
+
   // If nothing logged for any habit on this day, return baseline drift
   if (dayLogs.length === 0) {
     return params.baselineDrift;
   }
-  
+
   let completedWeight = 0;
   let missedWeight = 0;
-  
+
   // Calculate completed and missed weights
   for (const habit of habits) {
     const log = dayLogs.find(l => l.habitId === habit.id);
     const weight = normalizeWeight(habit.weight);
-    
+
     if (log && (log.completed || log.state === 'good')) {
       completedWeight += weight;
     } else {
       missedWeight += weight;
     }
   }
-  
+
   // Calculate P_t = S_t - σ * misses
   const penalizedReturn = completedWeight + (params.slipPenalty * missedWeight);
-  
+
   return penalizedReturn;
 }
 
@@ -64,7 +64,7 @@ export function calculateMomentumIndex(
   params?: MomentumParams
 ): number {
   if (habits.length === 0) return 1.0;
-  
+
   // Get parameters once
   const momentumParams = params || getMomentumParams();
 
@@ -83,10 +83,10 @@ export function calculateMomentumIndex(
     // Use local date instead of UTC slice
     const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
     const R_t = dailyReturn(habits, logs, dateStr, momentumParams);
-    
+
     // Apply formula: M_t = max(0, (1 + R_t) * β * M_{t-1})
     momentum = Math.max(0, (1 + R_t) * momentumParams.decayFactor * momentum);
-    
+
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
@@ -126,18 +126,18 @@ export function calculateDailyRate(
  */
 function normalizeWeight(weight: number): number {
   const validWeights = Object.values(HabitWeight) as number[];
-  
+
   // Check if weight is close to any valid enum value (handle floating point precision)
   const tolerance = 0.000001;
   const matchingWeight = validWeights.find(w => Math.abs(w - weight) < tolerance);
-  
+
   if (matchingWeight !== undefined) {
     return matchingWeight;
   } else if (import.meta.env.DEV) {
     console.warn(`Unknown weight value ${weight}, defaulting to MEDIUM`);
     return HabitWeight.MEDIUM;
   }
-  
+
   return weight;
 }
 
@@ -176,8 +176,6 @@ export function generateMomentumHistory(
   const logDateSet = new Set(logDates); // O(1) lookup instead of O(n)
   const shouldIncludeToday = !logDateSet.has(todayStr);
 
-
-
   for (let i = actualDays - 1; i >= 0; i--) {
     const date = new Date(actualEndDate);
     date.setDate(date.getDate() - i);
@@ -203,8 +201,6 @@ export function generateMomentumHistory(
       isProjection: false
     });
   }
-
-
 
   return result;
 }
