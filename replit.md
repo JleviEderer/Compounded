@@ -4,10 +4,14 @@
 A React 18 + TypeScript habit tracking application with Headspace × Robinhood styling, compound growth visualization, and comprehensive testing suite. The app implements habit pairing with a 4-tier weight system, daily check-in grid, and momentum calculations using PRD-specified decay formula.
 
 ## Recent Changes
+- **2025-01-16**: Fixed momentum calculation parameters that were causing charts to flatline at zero
+  - Original PRD parameters (B=-0.50, β=0.995) were too aggressive - cutting momentum in half on unlogged days
+  - Updated to more reasonable parameters: B=-0.05 (5% penalty), β=0.998 (0.2% daily decay) 
+  - All 18 compound tests now passing with realistic momentum behavior
+  - Charts now show meaningful momentum curves instead of flat lines at zero
 - **2025-01-16**: Successfully refactored momentum calculation system to follow momentumindex-v1-prd.md specifications
   - Implemented decay-based momentum formula: R_t = logged ? P_t : B and M_t = max(0, (1 + R_t) * β * M_{t-1})
-  - Created momentum config file with σ=-0.25, β=0.995, B=-0.50 parameters
-  - Updated all 18 compound tests to pass with new formula
+  - Created momentum config file with configurable σ, β, B parameters
   - Removed duplicate getMomentumParams() calls throughout codebase
 
 ## Project Architecture

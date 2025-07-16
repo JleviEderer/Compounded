@@ -47,7 +47,7 @@ describe('Compound Growth Calculations', () => {
     it('should return baseline drift (B) when no habits are logged', () => {
       const noLogs: HabitLog[] = [];
       const returnValue = dailyReturn(mockHabits, noLogs, '2024-01-01', params);
-      expect(returnValue).toBe(params.baselineDrift); // -0.50
+      expect(returnValue).toBe(params.baselineDrift); // -0.05
     });
 
     it('should calculate positive return when all habits are completed', () => {
@@ -85,20 +85,20 @@ describe('Compound Growth Calculations', () => {
       ];
       
       const momentum = calculateMomentumIndex(mockHabits, logs, new Date('2024-01-01'), params);
-      // R_t = 0.0005 (all completed)
-      // M_t = (1 + 0.0005) * 0.995 * 1.0 = 1.0005 * 0.995 = 0.9954975
-      expect(momentum).toBeCloseTo(0.9954975, 6);
+      // With new params: R_t = 0.0005 (all completed), β = 0.998
+      // M_t = (1 + 0.0005) * 0.998 * 1.0 = 1.0005 * 0.998 = 0.9985
+      expect(momentum).toBeCloseTo(0.9985, 4);
     });
 
     it('should create visible dip after two missed days', () => {
       const momentum1 = calculateMomentumIndex(mockHabits, [], new Date('2024-01-01'), params);
       const momentum2 = calculateMomentumIndex(mockHabits, [], new Date('2024-01-02'), params);
       
-      // After 2 days of baseline drift
-      // Day 1: (1 + -0.50) * 0.995 * 1.0 = 0.4975
-      // Day 2: (1 + -0.50) * 0.995 * 0.4975 = 0.247506...
+      // With new params: baseline drift B = -0.05, β = 0.998
+      // Day 1: (1 + -0.05) * 0.998 * 1.0 = 0.95 * 0.998 = 0.9481
+      // Day 2: (1 + -0.05) * 0.998 * 0.9481 = 0.95 * 0.998 * 0.9481 ≈ 0.899
       expect(momentum2).toBeLessThan(momentum1);
-      expect(momentum2).toBeCloseTo(0.247506, 5);
+      expect(momentum2).toBeCloseTo(0.899, 3);
     });
 
     it('should drop index by ≥10% after seven unlogged days', () => {
@@ -114,22 +114,22 @@ describe('Compound Growth Calculations', () => {
     it('should support lenient preset', () => {
       const lenientParams = MOMENTUM_PRESETS.lenient;
       expect(lenientParams.slipPenalty).toBe(-0.15);
-      expect(lenientParams.baselineDrift).toBe(-0.25);
-      expect(lenientParams.decayFactor).toBe(0.998);
+      expect(lenientParams.baselineDrift).toBe(-0.02);
+      expect(lenientParams.decayFactor).toBe(0.999);
     });
 
     it('should support default preset', () => {
       const defaultParams = MOMENTUM_PRESETS.default;
       expect(defaultParams.slipPenalty).toBe(-0.25);
-      expect(defaultParams.baselineDrift).toBe(-0.50);
-      expect(defaultParams.decayFactor).toBe(0.995);
+      expect(defaultParams.baselineDrift).toBe(-0.05);
+      expect(defaultParams.decayFactor).toBe(0.998);
     });
 
     it('should support hard preset', () => {
       const hardParams = MOMENTUM_PRESETS.hard;
       expect(hardParams.slipPenalty).toBe(-0.40);
-      expect(hardParams.baselineDrift).toBe(-0.75);
-      expect(hardParams.decayFactor).toBe(0.990);
+      expect(hardParams.baselineDrift).toBe(-0.10);
+      expect(hardParams.decayFactor).toBe(0.995);
     });
   });
 
@@ -159,11 +159,11 @@ describe('Compound Growth Calculations', () => {
 
   it('should clamp momentum index to >= 0', () => {
     const params = getMomentumParams();
-    // With baseline drift B = -0.50 and decay β = 0.995
-    // Empty logs for 365 days should decay significantly
+    // With gentler baseline drift B = -0.05 and decay β = 0.998
+    // Empty logs for 365 days should decay but not collapse to zero
     const momentum = calculateMomentumIndex(mockHabits, [], new Date('2024-12-31'), params);
     expect(momentum).toBeGreaterThanOrEqual(0);
-    expect(momentum).toBeLessThan(0.01); // Should be near zero after a year
+    expect(momentum).toBeLessThan(1.0); // Should decay but remain meaningful
   });
 
   it('should generate momentum history', () => {

@@ -39,18 +39,18 @@ export interface MomentumParams {
 export const MOMENTUM_PRESETS = {
   lenient: {
     slipPenalty: -0.15,
-    baselineDrift: -0.25,
-    decayFactor: 0.998
+    baselineDrift: -0.02, // Much gentler: -2% for unlogged days
+    decayFactor: 0.999    // Very slow decay: -0.1% per day
   },
   default: {
     slipPenalty: -0.25,
-    baselineDrift: -0.50,
-    decayFactor: 0.995
+    baselineDrift: -0.05, // Gentler: -5% for unlogged days  
+    decayFactor: 0.998    // Slow decay: -0.2% per day
   },
   hard: {
     slipPenalty: -0.40,
-    baselineDrift: -0.75,
-    decayFactor: 0.990
+    baselineDrift: -0.10, // Moderate: -10% for unlogged days
+    decayFactor: 0.995    // Original decay: -0.5% per day
   }
 } as const;
 
