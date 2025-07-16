@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { MomentumData } from '../types';
 import { MomentumChartHUD } from './MomentumChartHUD';
 import { MomentumChartCore } from './MomentumChartCore';
@@ -41,28 +41,18 @@ export default function MomentumChart({
   // Initialize hover to last historical point instead of last data point (which could be forecast)
   const getLastHistoricalPoint = () => {
     if (data.length === 0) return null;
-    
-    // Find the last point that is not a projection (more compatible than findLast)
-    let lastHistorical = null;
-    for (let i = data.length - 1; i >= 0; i--) {
-      if (!data[i].isProjection) {
-        lastHistorical = data[i];
-        break;
-      }
-    }
-    
+    // Find the last point that is not a projection
+    const lastHistorical = data.findLast(point => !point.isProjection);
     return lastHistorical || data[data.length-1]; // fallback to last point if no historical found
   };
   
   const [hover, setHover] = useState(() => getLastHistoricalPoint());
   
-  // Update hover when data changes or timeframe changes to ensure it stays on historical data
-  useEffect(() => {
-    const lastHistoricalPoint = getLastHistoricalPoint();
-    if (lastHistoricalPoint) {
-      setHover(lastHistoricalPoint);
-    }
-  }, [data, selectedRange]); // Re-run when data or time range changes
+  // Update hover when data changes to ensure it stays on historical data
+  const lastHistoricalPoint = getLastHistoricalPoint();
+  if (hover === null && lastHistoricalPoint) {
+    setHover(lastHistoricalPoint);
+  }
   const [isDragging, setIsDragging] = useState(false);
 
   // Use the pre-calculated current momentum from filtered data
@@ -117,7 +107,6 @@ export default function MomentumChart({
         hover={hover} 
         selectedRange={selectedRange}
         totalGrowth={totalGrowth}
-        data={data}
       />
 
       <motion.div 
