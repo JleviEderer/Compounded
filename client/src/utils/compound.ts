@@ -93,6 +93,8 @@ export function calculateMomentumIndex(
   return momentum;
 }
 
+
+
 /**
  * Legacy function for backward compatibility
  * Calculates simple daily rate without penalties
@@ -169,6 +171,8 @@ export function generateMomentumHistory(
   const timeDiff = actualEndDate.getTime() - startDate.getTime();
   const actualDays = Math.min(days, Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1);
 
+
+
   console.log(`Momentum history: ${actualDays} days from ${startDate.toLocaleDateString('en-CA')} to ${actualEndDate.toLocaleDateString('en-CA')}`);
 
   // Use local timezone for "today" and optimize lookup with Set
@@ -189,6 +193,8 @@ export function generateMomentumHistory(
     const logsForMomentum = allLogs || logs; // Use full logs if provided, otherwise use filtered logs
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
     const dailyReturn_ = dailyReturn(habits, logs, dateStr, momentumParams);
+    
+    // Use existing momentum calculation for now
     const momentum = calculateMomentumIndex(habits, logsForMomentum, toLocalMidnight(dateStr), momentumParams);
     const epoch = toLocalMidnight(dateStr);
 

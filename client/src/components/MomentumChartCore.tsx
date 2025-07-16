@@ -94,7 +94,7 @@ export const MomentumChartCore = ({
           dataKey="epoch"
           type="number"
           scale="time"
-          domain={['dataMin', todayEpoch]}
+          domain={['dataMin', 'dataMax']}
           ticks={ticksArr.filter(Boolean)}
           tickFormatter={(t) => format(t, 'M/d')}
           axisLine={false}
@@ -112,17 +112,20 @@ export const MomentumChartCore = ({
             const max = Math.max(...values);
             const range = max - min;
             
-            // For small ranges (typical momentum), use more aggressive scaling
+            // VERY aggressive scaling for tiny momentum ranges
             let buffer;
-            if (range < 0.05) {
-              // For very small ranges, use minimum 2% buffer to show growth clearly
-              buffer = Math.max(range * 0.25, 0.02);
+            if (range < 0.02) {
+              // For tiny ranges (< 2%), use massive 200% buffer
+              buffer = Math.max(range * 2.0, 0.08);
+            } else if (range < 0.05) {
+              // For small ranges, use 100% buffer
+              buffer = Math.max(range * 1.0, 0.04);
             } else {
               // For larger ranges, use standard 10% buffer
               buffer = range * 0.1;
             }
             
-            return Math.max(0.9, min - buffer); // Never go below 0.9 for momentum charts
+            return Math.max(0.9, min - buffer);
           }, (dataMax: number) => {
             if (data.length === 0) return 1.1;
             const values = data.map(d => d.value);
@@ -130,11 +133,14 @@ export const MomentumChartCore = ({
             const max = Math.max(...values);
             const range = max - min;
             
-            // For small ranges (typical momentum), use more aggressive scaling
+            // VERY aggressive scaling for tiny momentum ranges
             let buffer;
-            if (range < 0.05) {
-              // For very small ranges, use minimum 2% buffer to show growth clearly
-              buffer = Math.max(range * 0.25, 0.02);
+            if (range < 0.02) {
+              // For tiny ranges (< 2%), use massive 200% buffer
+              buffer = Math.max(range * 2.0, 0.08);
+            } else if (range < 0.05) {
+              // For small ranges, use 100% buffer
+              buffer = Math.max(range * 1.0, 0.04);
             } else {
               // For larger ranges, use standard 10% buffer
               buffer = range * 0.1;
