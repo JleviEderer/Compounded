@@ -117,6 +117,7 @@ export default function MomentumChart({
         hover={hover} 
         selectedRange={selectedRange}
         totalGrowth={totalGrowth}
+        data={data}
       />
 
       <motion.div 
