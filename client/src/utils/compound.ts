@@ -176,8 +176,7 @@ export function generateMomentumHistory(
   const logDateSet = new Set(logDates); // O(1) lookup instead of O(n)
   const shouldIncludeToday = !logDateSet.has(todayStr);
 
-  // Debug: Track momentum range for this timeframe
-  const momentumValues: number[] = [];
+
 
   for (let i = actualDays - 1; i >= 0; i--) {
     const date = new Date(actualEndDate);
@@ -190,18 +189,10 @@ export function generateMomentumHistory(
 
     // Use full logs for momentum calculation, filtered logs for daily rate
     const logsForMomentum = allLogs || logs; // Use full logs if provided, otherwise use filtered logs
-    
-    // Debug logging for momentum calculation
-    if (import.meta.env.DEV && result.length === 0) {
-      console.log(`🔧 Momentum Calc Debug: Using ${logsForMomentum.length} logs (${allLogs ? 'full' : 'filtered'}) for date ${dateStr}`);
-    }
-    
     const dailyRate = calculateDailyRate(habits, logs, dateStr);
     const dailyReturn_ = dailyReturn(habits, logs, dateStr, momentumParams);
     const momentum = calculateMomentumIndex(habits, logsForMomentum, toLocalMidnight(dateStr), momentumParams);
     const epoch = toLocalMidnight(dateStr);
-
-    momentumValues.push(momentum);
 
     result.push({
       date: dateStr,
@@ -213,16 +204,7 @@ export function generateMomentumHistory(
     });
   }
 
-  // Debug: Log momentum range to understand chart flatlining
-  if (momentumValues.length > 0) {
-    const min = Math.min(...momentumValues);
-    const max = Math.max(...momentumValues);
-    const range = max - min;
-    console.log(`📊 Momentum Debug: min=${min.toFixed(6)}, max=${max.toFixed(6)}, range=${range.toFixed(6)}`);
-    if (range < 0.001) {
-      console.log(`⚠️ Small range detected - chart may appear flat for ${actualDays} days`);
-    }
-  }
+
 
   return result;
 }

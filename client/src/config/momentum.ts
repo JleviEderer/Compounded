@@ -45,7 +45,7 @@ export const MOMENTUM_PRESETS = {
   default: {
     slipPenalty: -0.25,
     baselineDrift: -0.05, // Gentler: -5% for unlogged days  
-    decayFactor: 0.998    // Slow decay: -0.2% per day
+    decayFactor: 0.9995   // Very slow decay: -0.05% per day
   },
   hard: {
     slipPenalty: -0.40,

@@ -17,11 +17,11 @@ export interface Goal {
 }
 
 export enum HabitWeight {
-  MICRO = 0.0001,     // 0.010%
-  SMALL = 0.0002,     // 0.020%
-  MEDIUM = 0.0003,    // 0.030%
-  LARGE = 0.0005,     // 0.050%
-  KEYSTONE = 0.001    // 0.100%
+  MICRO = 0.002,      // 0.2% - Small daily impact
+  SMALL = 0.005,      // 0.5% - Moderate daily impact  
+  MEDIUM = 0.008,     // 0.8% - Standard daily impact
+  LARGE = 0.012,      // 1.2% - High daily impact
+  KEYSTONE = 0.018    // 1.8% - Transformative daily impact
 }
 
 export enum HabitLogState {
@@ -59,11 +59,11 @@ export interface AppData {
 export type ViewMode = 'day' | 'week' | 'month';
 
 export const WEIGHT_LABELS = {
-  [HabitWeight.MICRO]: 'Micro (+0.010%)',
-  [HabitWeight.SMALL]: 'Small (+0.020%)',
-  [HabitWeight.MEDIUM]: 'Medium (+0.030%)',
-  [HabitWeight.LARGE]: 'Large (+0.050%)',
-  [HabitWeight.KEYSTONE]: 'Keystone (+0.100%)'
+  [HabitWeight.MICRO]: 'Micro (+0.2%)',
+  [HabitWeight.SMALL]: 'Small (+0.5%)',
+  [HabitWeight.MEDIUM]: 'Medium (+0.8%)',
+  [HabitWeight.LARGE]: 'Large (+1.2%)',
+  [HabitWeight.KEYSTONE]: 'Keystone (+1.8%)'
 };
 
 export const WEIGHT_VALUES = [
