@@ -106,13 +106,41 @@ export const MomentumChartCore = ({
         
         <YAxis 
           domain={[(dataMin: number) => {
-            const range = data.length > 0 ? Math.max(...data.map(d => d.value)) - Math.min(...data.map(d => d.value)) : 0;
-            const buffer = Math.max(0.005, range * 0.1);
-            return dataMin - buffer;
+            if (data.length === 0) return 0.9;
+            const values = data.map(d => d.value);
+            const min = Math.min(...values);
+            const max = Math.max(...values);
+            const range = max - min;
+            
+            // For small ranges (typical momentum), use more aggressive scaling
+            let buffer;
+            if (range < 0.05) {
+              // For very small ranges, use minimum 2% buffer to show growth clearly
+              buffer = Math.max(range * 0.25, 0.02);
+            } else {
+              // For larger ranges, use standard 10% buffer
+              buffer = range * 0.1;
+            }
+            
+            return Math.max(0.9, min - buffer); // Never go below 0.9 for momentum charts
           }, (dataMax: number) => {
-            const range = data.length > 0 ? Math.max(...data.map(d => d.value)) - Math.min(...data.map(d => d.value)) : 0;
-            const buffer = Math.max(0.005, range * 0.1);
-            return dataMax + buffer;
+            if (data.length === 0) return 1.1;
+            const values = data.map(d => d.value);
+            const min = Math.min(...values);
+            const max = Math.max(...values);
+            const range = max - min;
+            
+            // For small ranges (typical momentum), use more aggressive scaling
+            let buffer;
+            if (range < 0.05) {
+              // For very small ranges, use minimum 2% buffer to show growth clearly
+              buffer = Math.max(range * 0.25, 0.02);
+            } else {
+              // For larger ranges, use standard 10% buffer
+              buffer = range * 0.1;
+            }
+            
+            return max + buffer;
           }]}
           hide
         />
