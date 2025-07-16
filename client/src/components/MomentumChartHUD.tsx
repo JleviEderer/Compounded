@@ -16,15 +16,13 @@ export const MomentumChartHUD = ({ hover, selectedRange, totalGrowth, data }: Mo
   const getDynamicGrowth = () => {
     if (!data || data.length === 0) return 0;
     
-    // Find the first historical (non-projection) data point as baseline
-    const firstHistorical = data.find(point => !point.isProjection);
-    if (!firstHistorical) return 0;
-    
-    const startValue = firstHistorical.value;
+    // For timeframe calculations, we always use 1.0 as baseline (matches Current Index calculation)
+    // This ensures consistency between HUD growth and Current Index growth
+    const baselineValue = 1.0;
     const currentValue = hover.value;
     
-    // Calculate relative growth from the timeframe start
-    return ((currentValue - startValue) / startValue) * 100;
+    // Calculate relative growth from 1.0 baseline (same as timeframe momentum calculation)
+    return ((currentValue - baselineValue) / baselineValue) * 100;
   };
   
   const dynamicGrowth = getDynamicGrowth();
