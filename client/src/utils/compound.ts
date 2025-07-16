@@ -175,6 +175,9 @@ export function generateMomentumHistory(
   const logDateSet = new Set(logDates); // O(1) lookup instead of O(n)
   const shouldIncludeToday = !logDateSet.has(todayStr);
 
+  // Debug: Track momentum range for this timeframe
+  const momentumValues: number[] = [];
+
   for (let i = actualDays - 1; i >= 0; i--) {
     const date = new Date(actualEndDate);
     date.setDate(date.getDate() - i);
@@ -189,6 +192,8 @@ export function generateMomentumHistory(
     const momentum = calculateMomentumIndex(habits, logs, toLocalMidnight(dateStr), momentumParams);
     const epoch = toLocalMidnight(dateStr);
 
+    momentumValues.push(momentum);
+
     result.push({
       date: dateStr,
       value: momentum,
@@ -197,6 +202,17 @@ export function generateMomentumHistory(
       epoch,
       isProjection: false
     });
+  }
+
+  // Debug: Log momentum range to understand chart flatlining
+  if (momentumValues.length > 0) {
+    const min = Math.min(...momentumValues);
+    const max = Math.max(...momentumValues);
+    const range = max - min;
+    console.log(`📊 Momentum Debug: min=${min.toFixed(6)}, max=${max.toFixed(6)}, range=${range.toFixed(6)}`);
+    if (range < 0.001) {
+      console.log(`⚠️ Small range detected - chart may appear flat for ${actualDays} days`);
+    }
   }
 
   return result;

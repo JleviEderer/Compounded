@@ -18,7 +18,9 @@ export const MomentumChartHUD = ({ hover }: MomentumChartHUDProps) => {
         </div>
         <div className="text-center">
           <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">INDEX</div>
-          <div className="text-lg font-bold text-coral">{hover?.value?.toFixed(3)}</div>
+          <div className="text-lg font-bold text-coral">
+            {hover?.value ? (hover.value >= 0.001 ? hover.value.toFixed(3) : hover.value.toFixed(4)) : '0.000'}
+          </div>
         </div>
         <div className="text-center">
           <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-0.5">DAILY RATE</div>
